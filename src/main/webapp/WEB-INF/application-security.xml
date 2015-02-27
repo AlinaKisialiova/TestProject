@@ -13,7 +13,7 @@
         <intercept-url pattern="/participant/**" access="ROLE_PARTICIPANT" />
         <intercept-url pattern="/login.jsp*" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <form-login login-page="/signin"
-                    authentication-failure-url="/signin-failure" default-target-url="/" />
+                    authentication-failure-url="/signin-failure" default-target-url="/lector" />
     </http>
 
 
