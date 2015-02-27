@@ -5,7 +5,7 @@ import java.util.List;
 /**
  * Created by akiseleva on 26.02.2015.
  */
-public class Participant implements User {
+public class Participant  {
     private String name;
    // private String login;
    // private String password;
