@@ -13,7 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 @Controller
 public class LectorController {
     @ModelAttribute
-    public User populateCurrentUser(){
+    public User populateCurrentUser() {
         return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
