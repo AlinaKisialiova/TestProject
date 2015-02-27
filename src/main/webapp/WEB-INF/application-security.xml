@@ -9,9 +9,9 @@
     <http pattern="/css/**" security="none" />
 
     <http auto-config="true">
-        <intercept-url pattern="/lector/*" access="ROLE_LECTOR" />
+        <intercept-url pattern="/lector/**" access="ROLE_LECTOR" />
         <intercept-url pattern="/participant/**" access="ROLE_PARTICIPANT" />
-        <intercept-url pattern="/login.jsp**" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
+        <intercept-url pattern="/login.jsp*" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <form-login login-page="/signin"
                     authentication-failure-url="/signin-failure" default-target-url="/" />
     </http>

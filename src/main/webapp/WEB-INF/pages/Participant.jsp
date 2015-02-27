@@ -2,19 +2,9 @@
 <%@ page session="true"%>
 <html>
 <head>
-    <title>Secure</title>
+    <title>PARTICIPANT</title>
 </head>
 <body>
-<h1>Secure page</h1>
-
-<p>${user.username}</p>
-
-<table>
-    <c:forEach var="a" items="${user.authorities}">
-        <tr>
-            <td>${a.authority}</td>
-        </tr>
-    </c:forEach>
-</table>
+<h1>PARTICIPANT zone</h1>
 </body>
 </html>
