@@ -56,6 +56,14 @@
             <version>4.11</version>
             <scope>test</scope>
         </dependency>
+
+        <!-- Add Jstl Dependencies -->
+        <dependency>
+            <groupId>org.apache.taglibs</groupId>
+            <artifactId>taglibs-standard-jstlel</artifactId>
+            <version>1.2.1</version>
+        </dependency>
+
     </dependencies>
 
     <build>
