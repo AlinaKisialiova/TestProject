@@ -19,6 +19,7 @@ public class LectorController {
 
     @RequestMapping(value = "/lector", method = RequestMethod.GET)
     public String secure() {
+
         return "lector";
     }
 }
