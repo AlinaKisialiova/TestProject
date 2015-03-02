@@ -7,8 +7,8 @@ import org.springframework.stereotype.Service;
 import java.util.HashMap;
 
 /**
-* Created by akiseleva on 27.02.2015.
-*/
+ * Created by akiseleva on 27.02.2015.
+ */
 @Service
 public class UserManager {
     private HashMap<String, User> users;
@@ -21,10 +21,10 @@ public class UserManager {
     }
 
     public User getUser(String username) throws UsernameNotFoundException {
-        if( !users.containsKey( username ) ){
-            throw new UsernameNotFoundException( username + " not found" );
+        if (!users.containsKey(username)) {
+            throw new UsernameNotFoundException(username + " not found");
         }
 
-        return users.get( username );
+        return users.get(username);
     }
 }
