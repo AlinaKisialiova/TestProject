@@ -8,17 +8,16 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 
 /**
- * Created by akiseleva on 27.02.2015.
+ * Created by akiseleva on 02.03.2015.
  */
 @Controller
-public class LectorController {
+public class InformationBoardController {
 //    @ModelAttribute
 //    public User populateCurrentUser(){
 //        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 //    }
-
-    @RequestMapping(value = "/lector", method = RequestMethod.GET)
-    public String goLector() {
-        return "lector";
+    @RequestMapping(value = "/informationBoard", method = RequestMethod.GET)
+    public String goInfBoard() {
+        return "informationBoard";
     }
 }
