@@ -59,6 +59,7 @@ I am know that you are lector!
 
     </form>
 
+
     <tr bgcolor="#b0c4de">
         <th>Lector Name</th>
         <th>Course Name</th>
@@ -70,15 +71,22 @@ I am know that you are lector!
         <th>Actions</th>
     </tr>
 
-    <c:forEach var="course" items="${courseList}">
-        <tr>bb
-            <td>"${course.nameLector}"</td>
-            <td>"${course.nameCourse}"</td>
-            <td>"${course.category}"</td>
-            <td>"${course.numbOfSubscribers}"</td>
-            <td>"${course.numbOfAttendee}"</td>
-            <td>"${course.delivered}"</td>
-            <td>"${course.evaluation}"</td>
+    <c:forEach  items="${courseList}" var="course">
+
+
+        <tr>
+            <td><c:out value="${course.nameLector}" escapeXml="true"/></td>
+            <td>${course.nameCourse}</td>
+            <td>${course.category}</td>
+            <td>${course.numbOfSubscribers}</td>
+            <td>${course.numbOfAttendee}</td>
+            <td>${course.delivered}</td>
+            <td>${course.evaluation}</td>
+            <td>
+               <c:if test="${ user eq course.nameLector}">
+                   <input type="submit" value="Delete"/>
+                   <input type="submit" value="Evaluation Reminder"/>
+                   </c:if>
         </tr>
     </c:forEach>
 </table>

@@ -37,13 +37,7 @@ public class Course {
         this.attendee = attendee;
     }
 
-  public static List<Course> courseList = new ArrayList<Course>();
 
-      {
-
-        courseList.add(new Course("Project Management", "Project Management", "Aleksander Ivanov", "24 hour", " ", " ",15, 10, 5, true, new ArrayList<Participant>()));
-        courseList.add(new Course("NET Technology", "Development", " Ivan Aleksandr", "36 hour", " ", " ",25, 15, 5, true, new ArrayList<Participant>()));
-    }
         public String getCategory() {
         return category;
     }
@@ -133,13 +127,7 @@ public class Course {
         this.attendee = attendee;
     }
 
-    public static List<Course> getCourseList() {
-        return courseList;
-    }
 
-    public static void setCourseList(List<Course> courseList) {
-        Course.courseList = courseList;
-    }
 
 
 }

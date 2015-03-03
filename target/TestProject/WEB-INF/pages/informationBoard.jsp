@@ -2,6 +2,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 
+
 <%--
   Created by IntelliJ IDEA.
   User: akiseleva
@@ -37,15 +38,16 @@ I am know that you are lector!
 <table align="justify">
     <tr> <td><a href="<c:url value=""/>">My seminars</a></td>
    <td><a href="<c:url value=""/>">Register Course</a></td>
-    <td>
-        <form> <td>Fiter</td>
+
+        <form> <td><br></td> <br><td><br></td><br><td><br><td><br></td> <td>Filter</td>
            <td> <select>
                 <option selected value="All Course">All Course</option>
                 <option value="Given Courses">Given Courses </option>
                 <option value="Popular Courses "> Popular Courses</option>
                 <option value="Evaluation"> Evaluation </option>
-            </select> </td>  </form>
-
+            </select> </td>  </form></tr>
+<form><tr>
+    <td><br></td> <td><br></td> <td><br></td> <td><br></td> <td><br><td>
         <td>Course Category</td>
 <td>
         <select>
@@ -54,7 +56,9 @@ I am know that you are lector!
 
         </select> </td></tr>
 
+
     </form>
+
 
     <tr bgcolor="#b0c4de">
         <th>Lector Name</th>
@@ -66,6 +70,25 @@ I am know that you are lector!
         <th>Evaluation</th>
         <th>Actions</th>
     </tr>
+
+    <c:forEach  items="${courseList}" var="course">
+
+
+        <tr>
+            <td><c:out value="${course.nameLector}" escapeXml="true"/></td>
+            <td>${course.nameCourse}</td>
+            <td>${course.category}</td>
+            <td>${course.numbOfSubscribers}</td>
+            <td>${course.numbOfAttendee}</td>
+            <td>${course.delivered}</td>
+            <td>${course.evaluation}</td>
+            <td>
+               <c:if test="${ user eq course.nameLector}">
+                   <input type="submit" value="Delete"/>
+                   <input type="submit" value="Evaluation Reminder"/>
+                   </c:if>
+        </tr>
+    </c:forEach>
 </table>
 </body>
 </html>
