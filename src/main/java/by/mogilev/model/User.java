@@ -1,6 +1,7 @@
 package by.mogilev.model;
 
 import org.springframework.security.core.GrantedAuthority;
+import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import java.util.Collection;
@@ -15,28 +16,23 @@ public class User implements UserDetails {
     private String password;
     Collection<GrantedAuthority> authorities;
 
-    public User(String username, String password, String roles) {
+    public User(String username, String password, UserRole roles) {
         super();
         this.username = username;
         this.password = password;
         this.setRoles(roles);
     }
 
-    public void setRoles(String roles) {
+    public void setRoles(UserRole roles) {
         this.authorities = new HashSet<GrantedAuthority>();
-        for (final String role : roles.split(",")) {
-            if (role != null && !"".equals(role.trim())) {
-                GrantedAuthority grandAuthority = new GrantedAuthority() {
-                    private static final long serialVersionUID = 3958183417696804555L;
 
-                    public String getAuthority() {
-                        return role.trim();
-                    }
-                };
+
+                GrantedAuthority grandAuthority =  new SimpleGrantedAuthority(roles.name());
+
                 this.authorities.add(grandAuthority);
-            }
+
         }
-    }
+
 
     public void setUsername(String username) {
         this.username = username;

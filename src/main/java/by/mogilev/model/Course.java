@@ -20,7 +20,7 @@ public class Course {
     private int evaluation;
     private boolean delivered;
     private List<Participant> attendee;
-
+    public Course() {}
     public Course(String category, String nameCourse, String nameLector, String duration, String description,
                   String links, int numbOfSubscribers, int numbOfAttendee, int evaluation, boolean delivered,
                   List<Participant> attendee) {
@@ -36,7 +36,6 @@ public class Course {
         this.delivered = delivered;
         this.attendee = attendee;
     }
-
 
         public String getCategory() {
         return category;
