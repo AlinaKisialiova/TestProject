@@ -1,6 +1,8 @@
+<%@ page import="by.mogilev.controller.InformationBoardController" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core"%>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 
 
 <%--
@@ -16,28 +18,58 @@
     <title>Seminars Information Board</title>
 </head>
 <body>
+
+
+
 <h1>Seminars  Information Board</h1>
 Hello, <security:authentication property="principal.username" var="user" /> ${user}! <a href="<c:url value="j_spring_security_logout"/>"> Logout</a>
 </br>
 
 <sec:authorize access="hasRole('ROLE_LECTOR')">
-I am know that you are lector!
+I am know that you are a lector!
 </sec:authorize>
 
 <sec:authorize access="hasRole('ROLE_PARTICIPANT')">
-    I am know that you are participant!
+    I am know that you are a participant!
 </sec:authorize>
 
 <sec:authorize access="hasRole('ROLE_MANAGER')">
-    I am know that you are manager!
+    I am know that you are a manager!
 </sec:authorize>
 </br>
 </br>
+
+<div id='EvalRemindBlock' style="display: block;" >
+<form:form method="post"  commandName="_course" >
+    <table>
+    <tr>
+    <td>Course Lector</td>
+    <td> ${lectorName}</td>
+    </tr>
+    <tr>
+    <td>Course name</td>
+    <td> ${courseName}</td>
+    </tr>
+    <tr>
+    <td>Course Grade</td>
+    <td><input type="text" name="grade"/></td>
+    </tr>
+    <tr>
+    <td>
+    <input type="submit" value="Save"/>
+        </td>
+        <td>
+    <input type="button" value="Cancel"/>
+    </td>
+    </tr>
+    </table>
+</form:form>
+</div>
 
 
 <table align="justify">
     <tr> <td><a href="<c:url value=""/>">My seminars</a></td>
-   <td><a href="<c:url value=""/>">Register Course</a></td>
+   <td><a href="<c:url value="registrationCourse.jsp"/>">Register Course</a></td>
 
         <form> <td><br></td> <br><td><br></td><br><td><br><td><br></td> <td>Filter</td>
            <td> <select>
@@ -46,7 +78,8 @@ I am know that you are lector!
                 <option value="Popular Courses "> Popular Courses</option>
                 <option value="Evaluation"> Evaluation </option>
             </select> </td>  </form></tr>
-<form><tr>
+<form>
+    <tr>
     <td><br></td> <td><br></td> <td><br></td> <td><br></td> <td><br><td>
         <td>Course Category</td>
 <td>
@@ -55,7 +88,6 @@ I am know that you are lector!
             <option value="Development">Development </option>
 
         </select> </td></tr>
-
 
     </form>
 
@@ -72,23 +104,36 @@ I am know that you are lector!
     </tr>
 
     <c:forEach  items="${courseList}" var="course">
-
-
         <tr>
             <td><c:out value="${course.nameLector}" escapeXml="true"/></td>
-            <td>${course.nameCourse}</td>
-            <td>${course.category}</td>
-            <td>${course.numbOfSubscribers}</td>
-            <td>${course.numbOfAttendee}</td>
-            <td>${course.delivered}</td>
-            <td>${course.evaluation}</td>
+            <td><c:out value="${course.nameCourse}" escapeXml="true"/></td>
+            <td><c:out value="${course.category}" escapeXml="true"/></td>
+            <td><c:out value="${course.numbOfSubscribers}" escapeXml="true"/></td>
+            <td><c:out value="${course.numbOfAttendee}" escapeXml="true"/></td>
+            <td><c:out value="${course.delivered}" escapeXml="true"/></td>
+            <td><c:out value="${course.evaluation}" escapeXml="true"/></td>
             <td>
                <c:if test="${ user eq course.nameLector}">
+                <form:form action="informationBoard" method="post" commandName="course">
                    <input type="submit" value="Delete"/>
-                   <input type="submit" value="Evaluation Reminder"/>
+                       <input type="text" name="<%=InformationBoardController.EDIT_ID%>" value="${course.id}"/>
+                   <input type="button" value="Evaluation Reminder"  onclick="show();"/>
+
+
+                </form:form>
                    </c:if>
         </tr>
     </c:forEach>
 </table>
+
+
+<script language="JavaScript" type="text/javascript">
+
+    function show() {
+        document.getElementById("EvalRemindBlock").style.display = "block";
+    }
+
+</script>
+
 </body>
 </html>

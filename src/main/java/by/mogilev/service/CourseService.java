@@ -13,16 +13,30 @@ import java.util.List;
 @Service
 public class CourseService implements CourseActions {
 
-    private List<Course> courseList = new ArrayList<Course>();
+    static List<Course> courseList = new ArrayList<Course>();
     {
-       courseList.add(new Course("Project Management", "Project Management", "Aleksander Ivanov", "24 hour", " ", " ",15, 10, 5, true, new ArrayList<Participant>()));
-       courseList.add(new Course("NET Technology", "Development", "elvis", "36 hour", " ", " ",25, 15, 5, true, new ArrayList<Participant>()));
-       courseList.add(new Course("COM/DCOM Technology", "Development", " Mihail Petrov", "14 hour", " ", " ",7, 5, 5, false, new ArrayList<Participant>()));
+       courseList.add(new Course(1,"Project Management", "Project Management", "Aleksander Ivanov", "24 hour", " ", " ",15, 10, 5, true, new ArrayList<Participant>()));
+       courseList.add(new Course(2,"NET Technology", "Development", "elvis", "36 hour", " ", " ",25, 15, 5, true, new ArrayList<Participant>()));
+       courseList.add(new Course(3,"COM/DCOM Technology", "Development", " Mihail Petrov", "14 hour", " ", " ",7, 5, 5, false, new ArrayList<Participant>()));
     }
 
     @Override
     public List<Course> getAllCourse() {
         return courseList;
+    }
+
+    @Override
+    public Course findCourse(int id) {
+        for(Course course : courseList)        {
+            if (id==course.getId())
+                return course;
+        }
+        return null;
+    }
+
+    @Override
+    public void registerCourse(String category, String nameCourse, String description, String links, String duration) {
+
     }
 
     @Override

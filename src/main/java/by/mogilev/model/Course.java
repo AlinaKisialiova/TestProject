@@ -7,6 +7,16 @@ import java.util.List;
  * Created by akiseleva on 26.02.2015.
  */
 public class Course {
+    private int id;
+
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
+    }
+
     private String category;
     private String nameCourse;
     private String nameLector;
@@ -21,9 +31,10 @@ public class Course {
     private boolean delivered;
     private List<Participant> attendee;
     public Course() {}
-    public Course(String category, String nameCourse, String nameLector, String duration, String description,
+    public Course(int id, String category, String nameCourse, String nameLector, String duration, String description,
                   String links, int numbOfSubscribers, int numbOfAttendee, int evaluation, boolean delivered,
                   List<Participant> attendee) {
+        this.id=id;
         this.category = category;
         this.nameCourse = nameCourse;
         this.nameLector = nameLector;

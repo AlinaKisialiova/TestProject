@@ -19,6 +19,9 @@
         <form-login login-page="/signin "
                     authentication-failure-url="/signin-failure" default-target-url="/informationBoard" />
         <logout logout-success-url="/signin" />
+
+
+
     </http>
 
 

@@ -1,0 +1,13 @@
+by\mogilev\model\Lector.class
+by\mogilev\model\User.class
+by\mogilev\service\CustomUserDetailsService.class
+by\mogilev\model\Participant.class
+by\mogilev\controller\ParticipantController.class
+by\mogilev\model\UserRole.class
+by\mogilev\controller\SigninController.class
+by\mogilev\controller\LectorController.class
+by\mogilev\model\Course.class
+by\mogilev\service\UserService.class
+by\mogilev\controller\InformationBoardController.class
+by\mogilev\service\CourseService.class
+by\mogilev\service\CourseActions.class
