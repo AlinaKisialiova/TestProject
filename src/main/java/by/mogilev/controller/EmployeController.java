@@ -11,14 +11,14 @@ import org.springframework.web.bind.annotation.RequestMethod;
  * Created by akiseleva on 27.02.2015.
  */
 @Controller
-public class ParticipantController{
+public class EmployeController{
 //        @ModelAttribute
 //        public User populateCurrentUser(){
 //            return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
 //        }
 
-        @RequestMapping(value = "/participant", method = RequestMethod.GET)
+        @RequestMapping(value = "/employe", method = RequestMethod.GET)
         public String goParticipant() {
-            return "participant";
+            return "employe";
         }
 }

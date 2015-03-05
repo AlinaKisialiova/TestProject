@@ -1,7 +1,7 @@
 package by.mogilev.service;
 
 import by.mogilev.model.Course;
-import by.mogilev.model.Participant;
+import by.mogilev.model.Employe;
 import org.springframework.stereotype.Service;
 
 import java.util.ArrayList;
@@ -15,9 +15,9 @@ public class CourseService implements CourseActions {
 
     static List<Course> courseList = new ArrayList<Course>();
     {
-       courseList.add(new Course(1,"Project Management", "Project Management", "Aleksander Ivanov", "24 hour", " ", " ",15, 10, 5, true, new ArrayList<Participant>()));
-       courseList.add(new Course(2,"NET Technology", "Development", "elvis", "36 hour", " ", " ",25, 15, 5, true, new ArrayList<Participant>()));
-       courseList.add(new Course(3,"COM/DCOM Technology", "Development", " Mihail Petrov", "14 hour", " ", " ",7, 5, 5, false, new ArrayList<Participant>()));
+       courseList.add(new Course(1,"Project Management", "Project Management", "Aleksander Ivanov", "24 hour", " ", " ",15, 10, 5, true, new ArrayList<Employe>()));
+       courseList.add(new Course(2,"NET Technology", "Development", "elvis", "36 hour", " ", " ",25, 15, 5, true, new ArrayList<Employe>()));
+       courseList.add(new Course(3,"COM/DCOM Technology", "Development", " Mihail Petrov", "14 hour", " ", " ",7, 5, 5, false, new ArrayList<Employe>()));
     }
 
     @Override

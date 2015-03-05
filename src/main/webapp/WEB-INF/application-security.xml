@@ -11,6 +11,7 @@
     <http auto-config="true" use-expressions="true">
         <remember-me key="spitterKey" token-validity-seconds="2419200"/>
 
+        <!--access="hasRole('#{(by.mogilev.model.UserRole.ROLE_LECTOR}}')"-->
         <intercept-url pattern="/lector/**" access="hasRole('ROLE_LECTOR')" />
         <intercept-url pattern="/participant/**" access="hasRole('ROLE_PARTICIPANT')" />
         <intercept-url pattern="/manager/**" access="hasRole('ROLE_MANAGER')" />
@@ -21,17 +22,12 @@
         <logout logout-success-url="/signin" />
 
 
-
     </http>
-
 
     <authentication-manager>
         <authentication-provider user-service-ref="customUserDetailsService">
         </authentication-provider>
     </authentication-manager>
-
-
-
 
 
 </beans:beans>

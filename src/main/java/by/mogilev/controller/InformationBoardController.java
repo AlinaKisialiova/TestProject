@@ -2,7 +2,7 @@ package by.mogilev.controller;
 
 import by.mogilev.model.User;
 import by.mogilev.model.Course;
-import by.mogilev.model.Participant;
+
 import by.mogilev.model.User;
 import by.mogilev.service.CourseActions;
 import by.mogilev.service.CourseService;

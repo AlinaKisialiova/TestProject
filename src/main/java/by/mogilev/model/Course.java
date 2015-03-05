@@ -29,11 +29,11 @@ public class Course {
 //    private final int MINNUMBOFATTENDEE=30;
     private int evaluation;
     private boolean delivered;
-    private List<Participant> attendee;
+    private List<Employe> attendee;
     public Course() {}
     public Course(int id, String category, String nameCourse, String nameLector, String duration, String description,
                   String links, int numbOfSubscribers, int numbOfAttendee, int evaluation, boolean delivered,
-                  List<Participant> attendee) {
+                  List<Employe> attendee) {
         this.id=id;
         this.category = category;
         this.nameCourse = nameCourse;
@@ -129,11 +129,11 @@ public class Course {
         this.delivered = delivered;
     }
 
-    public List<Participant> getAttendee() {
+    public List<Employe> getAttendee() {
         return attendee;
     }
 
-    public void setAttendee(List<Participant> attendee) {
+    public void setAttendee(List<Employe> attendee) {
         this.attendee = attendee;
     }
 
