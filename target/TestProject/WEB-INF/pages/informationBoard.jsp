@@ -41,15 +41,19 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
 </br>
 
 <div id='EvalRemindBlock' style="display: none;">
-    <form method="post">
-        <table id="evalRemindTable" border="3">
+    <form method="post" action="informationBoard">
+        <input type="hidden" class="idC" name="id" />
+        <table id="evalRemindTable">
             <tr>
                 <td>Course Lector</td>
-                <td> ${courseName} </td>
+                <td class="lect"> </p>
+                </td>
             </tr>
             <tr>
                 <td>Course name</td>
-                <td id="nameC"> ${courseName}</td>
+                <td class="cours">
+
+                    </td>
             </tr>
             <tr>
                 <td>Course Grade</td>
@@ -63,6 +67,7 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
                     <input type="button" value="Cancel"/>
                 </td>
             </tr>
+
         </table>
     </form>
 </div>
@@ -122,8 +127,8 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
 
     <c:forEach items="${courseList}" var="course">
         <tr>
-            <td><c:out value="${course.nameLector}" escapeXml="true"/></td>
-            <td><c:out value="${course.nameCourse}" escapeXml="true"/></td>
+            <td class="lector_${course.id}" > <c:out value="${course.nameLector}" escapeXml="true" /> </td>
+            <td class="course_${course.id}"><c:out value="${course.nameCourse}" escapeXml="true"/></td>
             <td><c:out value="${course.category}" escapeXml="true"/></td>
             <td><c:out value="${course.numbOfSubscribers}" escapeXml="true"/></td>
             <td><c:out value="${course.numbOfAttendee}" escapeXml="true"/></td>
@@ -136,11 +141,10 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
                 <c:if test="${course.delivered}">
                     <c:set var="visibleDelete" value="disabled='disabled'"/>
                 </c:if>
-                <input type="submit" value="Delete" <c:out value="${visibleDelete}" escapeXml="true"/>>
-                <input type="hidden" type="text" name="<%=InformationBoardController.EDIT_ID%>" value="${course.id}"/>
+                <input type="submit" value="Delete" <c:out value="${visibleDelete}" escapeXml="true"/>
+                    <input type="hidden" type="text" name="<%=InformationBoardController.EDIT_ID%>" value="${course.id}"/>
 
-                <input type="button" id="butt" value="Evaluation Reminder"
-                       onclick="show()"/>
+                <input type="button" value="Evaluation Reminder" onclick="show(${course.id})"/>
 
 
                 </form:form>
@@ -151,20 +155,14 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
 
 <script language="JavaScript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
 <script>
-    function show(){
+    function show(id){
         $("#EvalRemindBlock").show();
-//
-//        $('#evalRemindTable').append('<tr><td>Course Name</td></tr>');
-//
-//        $('#evalRemindTable > tbody > tr:last').append('<td>' + courseName1 + '</td>');
-//
-//        $('#evalRemindTable').append('<tr><td>Lector Name</td></tr>');
-//        $('#evalRemindTable > tbody > tr:last').append('<td>' + lectorName1 + '</td>')
-//        $('#evalRemindTable').append('<tr><td>Course Grade</td></tr>');
-//
-//        $('#evalRemindTable > tbody > tr:last').append('<td>' + '<input type="text" name="grade">' + '</td>')
-//        $('#evalRemindTable > tbody > tr:last').append('<td>' + '<input type="submit" value="Save">' + '</td>')
-//        $('#evalRemindTable > tbody > tr:last').append('<td>' + '<input type="button" value="Cancel">' + '</td>')
+
+        var nCourse=$(".lector_"+id).html();
+        var lCourse=$(".course_"+id).html();
+        $(".lect").text(nCourse);
+        $(".cours").text(lCourse);
+        $(".idC").val(id);
 
     }
 

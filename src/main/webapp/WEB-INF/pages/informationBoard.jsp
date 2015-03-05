@@ -41,7 +41,8 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
 </br>
 
 <div id='EvalRemindBlock' style="display: none;">
-    <form method="post">
+    <form method="post" action="informationBoard">
+        <input type="hidden" class="idC" name="id" />
         <table id="evalRemindTable">
             <tr>
                 <td>Course Lector</td>
@@ -66,6 +67,7 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
                     <input type="button" value="Cancel"/>
                 </td>
             </tr>
+
         </table>
     </form>
 </div>
@@ -140,7 +142,7 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
                     <c:set var="visibleDelete" value="disabled='disabled'"/>
                 </c:if>
                 <input type="submit" value="Delete" <c:out value="${visibleDelete}" escapeXml="true"/>
-                <input type="hidden" type="text" name="<%=InformationBoardController.EDIT_ID%>" value="${course.id}"/>
+                    <input type="hidden" type="text" name="<%=InformationBoardController.EDIT_ID%>" value="${course.id}"/>
 
                 <input type="button" value="Evaluation Reminder" onclick="show(${course.id})"/>
 
@@ -160,8 +162,7 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
         var lCourse=$(".course_"+id).html();
         $(".lect").text(nCourse);
         $(".cours").text(lCourse);
-
-
+        $(".idC").val(id);
 
     }
 

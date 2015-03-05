@@ -40,16 +40,12 @@ public class InformationBoardController {
     }
 
     @RequestMapping(value = "/informationBoard", method = RequestMethod.POST)
-    public ModelAndView evRemind( @RequestParam(value = EDIT_ID, required = false) Integer id) {
+    public ModelAndView evRemind(@RequestParam(value = "grade", required = false) Integer grade, @RequestParam(value = "id", required = false) Integer id) {
 
-        ModelAndView mav = new ModelAndView("informationBoard", "courseList", course.getAllCourse());
-        if (id!= null) {
-            Course findCourse = course.findCourse(id);
-            mav.addObject("lectorName", findCourse.getNameLector());
-            mav.addObject("courseName", findCourse.getNameCourse());
-        }
 
-        return mav;
+        Course changeEvalCourse= course.findCourse(id);
+       changeEvalCourse.setEvaluation(grade);
+        return new ModelAndView("informationBoard", "courseList", course.getAllCourse());
 
     }
 }
