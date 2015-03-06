@@ -1,14 +1,5 @@
-<%@ taglib uri="http://java.sun.com/jsp/jstl/core" prefix="c"%>
-<%@ taglib uri="http://www.springframework.org/tags/form" prefix="form"%>
-<%@ taglib uri="http://www.springframework.org/tags" prefix="spring"%>
-<%@ page session="true"%>
-<html>
-<head>
-    <title>Sign In</title>
-</head>
-<body>
-<h1>Sign In</h1>
 
+<h1>Sign In</h1>
 
 <h1>${message}</h1>
 
@@ -28,5 +19,4 @@
         <label for="remember_me"
                class="inline">Remember me</label>
 </form>
-</body>
-</html>
+
