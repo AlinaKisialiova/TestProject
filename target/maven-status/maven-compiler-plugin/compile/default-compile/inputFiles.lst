@@ -1,4 +1,3 @@
-D:\Alina\TestProject\src\main\java\by\mogilev\controller\ParticipantController.java
 D:\Alina\TestProject\src\main\java\by\mogilev\model\Lector.java
 D:\Alina\TestProject\src\main\java\by\mogilev\model\User.java
 D:\Alina\TestProject\src\main\java\by\mogilev\service\CustomUserDetailsService.java
@@ -7,7 +6,8 @@ D:\Alina\TestProject\src\main\java\by\mogilev\controller\InformationBoardControl
 D:\Alina\TestProject\src\main\java\by\mogilev\model\Course.java
 D:\Alina\TestProject\src\main\java\by\mogilev\controller\SigninController.java
 D:\Alina\TestProject\src\main\java\by\mogilev\model\UserRole.java
-D:\Alina\TestProject\src\main\java\by\mogilev\model\Participant.java
 D:\Alina\TestProject\src\main\java\by\mogilev\service\CourseService.java
 D:\Alina\TestProject\src\main\java\by\mogilev\service\UserService.java
+D:\Alina\TestProject\src\main\java\by\mogilev\controller\EmployeController.java
+D:\Alina\TestProject\src\main\java\by\mogilev\model\Employe.java
 D:\Alina\TestProject\src\main\java\by\mogilev\service\CourseActions.java

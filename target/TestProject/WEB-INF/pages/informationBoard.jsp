@@ -42,7 +42,7 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
 
 <div id='EvalRemindBlock' style="display: none;">
     <form method="post" action="informationBoard">
-        <input type="hidden" class="idC" name="id" />
+        <input type="hidden" class="idC" name="id"/>
         <table id="evalRemindTable">
             <tr>
                 <td>Course Lector</td>
@@ -53,18 +53,18 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
                 <td>Course name</td>
                 <td class="cours">
 
-                    </td>
+                </td>
             </tr>
             <tr>
                 <td>Course Grade</td>
-                <td><input type="text" name="grade"/></td>
+                <td><input type="text" name="grade" class="grade"/></td>
             </tr>
             <tr>
                 <td>
                     <input type="submit" value="Save"/>
                 </td>
                 <td>
-                    <input type="button" value="Cancel"/>
+                    <input type="button" value="Cancel" onclick="hide();"/>
                 </td>
             </tr>
 
@@ -73,12 +73,18 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
 </div>
 
 
-<table align="justify">
-    <tr>
+<table align="justify" class="tablesorter">
+    <tbody>
+    <tr >
         <td><a href="<c:url value=""/>">My seminars</a></td>
         <td><a href="<c:url value="registrationCourse.jsp"/>">Register Course</a></td>
-
+        <td><br></td>
+        <td><br></td>
+</tr>
+    <tr class="t_head" id="1">
         <form>
+            <td><br></td>
+            <td><br></td>
             <td><br></td>
             <br>
             <td><br></td>
@@ -86,15 +92,15 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
             <td><br>
             <td><br></td>
             <td>Filter</td>
-            <td><select>
+            <td  class="filter-select filter-match"  data-placeholder="All Course"><select>
                 <option selected value="All Course">All Course</option>
                 <option value="Given Courses">Given Courses</option>
                 <option value="Popular Courses "> Popular Courses</option>
                 <option value="Evaluation"> Evaluation</option>
             </select></td>
-        </form>
+
     </tr>
-    <form>
+
         <tr>
             <td><br></td>
             <td><br></td>
@@ -127,13 +133,13 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
 
     <c:forEach items="${courseList}" var="course">
         <tr>
-            <td class="lector_${course.id}" > <c:out value="${course.nameLector}" escapeXml="true" /> </td>
+            <td class="lector_${course.id}"><c:out value="${course.nameLector}" escapeXml="true"/></td>
             <td class="course_${course.id}"><c:out value="${course.nameCourse}" escapeXml="true"/></td>
             <td><c:out value="${course.category}" escapeXml="true"/></td>
             <td><c:out value="${course.numbOfSubscribers}" escapeXml="true"/></td>
             <td><c:out value="${course.numbOfAttendee}" escapeXml="true"/></td>
             <td><c:out value="${course.delivered}" escapeXml="true"/></td>
-            <td><c:out value="${course.evaluation}" escapeXml="true"/></td>
+            <td class="grade_${course.id}"><c:out value="${course.evaluation}" escapeXml="true"/></td>
             <td>
 
                 <c:if test="${ user eq course.nameLector}">
@@ -141,8 +147,9 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
                 <c:if test="${course.delivered}">
                     <c:set var="visibleDelete" value="disabled='disabled'"/>
                 </c:if>
-                <input type="submit" value="Delete" <c:out value="${visibleDelete}" escapeXml="true"/>
-                    <input type="hidden" type="text" name="<%=InformationBoardController.EDIT_ID%>" value="${course.id}"/>
+                <input type="submit" value="Delete"
+                    <c:out value="${visibleDelete}" escapeXml="true"/>
+                <input type="hidden" type="text" name="<%=InformationBoardController.EDIT_ID%>" value="${course.id}"/>
 
                 <input type="button" value="Evaluation Reminder" onclick="show(${course.id})"/>
 
@@ -151,20 +158,29 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
                 </c:if>
         </tr>
     </c:forEach>
+    </tbody>
 </table>
 
 <script language="JavaScript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
 <script>
-    function show(id){
+    function show(id) {
         $("#EvalRemindBlock").show();
-
-        var nCourse=$(".lector_"+id).html();
-        var lCourse=$(".course_"+id).html();
+        var nCourse = $(".lector_" + id).html();
+        var lCourse = $(".course_" + id).html();
+        var gCourse = $(".grade_"+id).html();
         $(".lect").text(nCourse);
         $(".cours").text(lCourse);
+        $(".grade").val(gCourse);
         $(".idC").val(id);
-
     }
+    function hide(){
+        $("#EvalRemindBlock").hide();
+    }
+
+
+
+
+
 
 </script>
 

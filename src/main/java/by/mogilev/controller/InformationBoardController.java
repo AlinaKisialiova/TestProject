@@ -42,7 +42,6 @@ public class InformationBoardController {
     @RequestMapping(value = "/informationBoard", method = RequestMethod.POST)
     public ModelAndView evRemind(@RequestParam(value = "grade", required = false) Integer grade, @RequestParam(value = "id", required = false) Integer id) {
 
-
         Course changeEvalCourse= course.findCourse(id);
        changeEvalCourse.setEvaluation(grade);
         return new ModelAndView("informationBoard", "courseList", course.getAllCourse());
