@@ -11,7 +11,7 @@
         <put-attribute name="footer" value="/WEB-INF/pages/layout/defaultFooter.jsp" />
     </definition>
 
-    <definition name="singin" extends="defaultTemplate">
+    <definition name="signin" extends="defaultTemplate">
         <put-attribute name="content" value="/WEB-INF/pages/user/signin.jsp" />
     </definition>
 
@@ -22,6 +22,11 @@
     <definition name="informationBoard" extends="defaultTemplate">
         <put-attribute name="content" value="/WEB-INF/pages/informationBoard.jsp" />
     </definition>
+
+    <definition name="lector" extends="defaultTemplate">
+        <put-attribute name="content" value="/WEB-INF/pages/lector.jsp" />
+    </definition>
+
 
 
 </tiles-definitions>

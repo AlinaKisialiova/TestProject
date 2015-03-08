@@ -1,4 +1,3 @@
-
 <%--
   Created by IntelliJ IDEA.
   User: akiseleva
@@ -18,12 +17,12 @@
 
 <html>
 <head>
-    <title></title>
+    <title>Hello</title>
 </head>
 <body>
 
 <div id="banner">
-<tiles:insertAttribute name="header" />
+    <tiles:insertAttribute name="header" />
 </div>
 
 <div id="page">
@@ -33,8 +32,6 @@
 <div id="footer_wrapper">
     <tiles:insertAttribute name="footer" />
 </div>
-
-</body>
 
 </body>
 </html>

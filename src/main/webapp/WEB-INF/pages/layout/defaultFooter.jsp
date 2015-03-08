@@ -5,4 +5,4 @@
   Time: 8:45
   To change this template use File | Settings | File Templates.
 --%>
-<div style="height: 50px; background-color: #dddddd; text-align: center;">> FOOTER </div>
+<div style=" margin: 0px; height: 50px; background-color: #dddddd; text-align: center;"> FOOTER </div>

@@ -9,5 +9,6 @@ by\mogilev\model\Course.class
 by\mogilev\service\UserService.class
 by\mogilev\controller\InformationBoardController.class
 by\mogilev\service\CourseService.class
+by\mogilev\service\UserActions.class
 by\mogilev\controller\EmployeController.class
 by\mogilev\service\CourseActions.class

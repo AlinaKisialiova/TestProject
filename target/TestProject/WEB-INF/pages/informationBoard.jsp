@@ -1,7 +1,10 @@
-
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <h1>Seminars Information Board</h1>
-Hello, <security:authentication property="principal.username" var="user"/> ${user}! <a
-        href="<c:url value="j_spring_security_logout"/>"> Logout</a>
+Hello, <security:authentication property="principal.username" var="user"/> ${user}!
+<a href=j_spring_security_logout> Logout</a>
 </br>
 
 <sec:authorize access="hasRole('ROLE_LECTOR')">
@@ -52,14 +55,14 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
 
 
 <table align="justify" class="tablesorter">
-    <tbody>
+
     <tr >
-        <td><a href="<c:url value=""/>">My seminars</a></td>
-        <td><a href="<c:url value="registrationCourse.jsp"/>">Register Course</a></td>
+        <td>My seminars</td>
+        <td><a href=registrationCourse.jsp>Register Course</a></td>
         <td><br></td>
         <td><br></td>
 </tr>
-    <tr class="t_head" id="1">
+    <tr>
         <form>
             <td><br></td>
             <td><br></td>
@@ -77,7 +80,8 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
                 <option value="Evaluation"> Evaluation</option>
             </select></td>
 
-    </tr>
+   </form>
+        </tr>
 
         <tr>
             <td><br></td>
@@ -123,20 +127,17 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
                 <c:if test="${ user eq course.nameLector}">
                 <form:form action="informationBoard" method="post" commandName="course">
                 <c:if test="${course.delivered}">
-                    <c:set var="visibleDelete" value="disabled='disabled'"/>
+                    <c:set var="visibleDelete" value="disabled"/>
                 </c:if>
-                <input type="submit" value="Delete"
-                    <c:out value="${visibleDelete}" escapeXml="true"/>
-                <input type="hidden" type="text" name="<%=InformationBoardController.EDIT_ID%>" value="${course.id}"/>
+                <input type="submit" value="Delete" disabled="${visibleDelete}"/>
 
                 <input type="button" value="Evaluation Reminder" onclick="show(${course.id})"/>
-
 
                 </form:form>
                 </c:if>
         </tr>
     </c:forEach>
-    </tbody>
+
 </table>
 
 <script language="JavaScript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>

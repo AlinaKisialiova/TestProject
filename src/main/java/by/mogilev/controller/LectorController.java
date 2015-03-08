@@ -1,6 +1,7 @@
 package by.mogilev.controller;
 
 //import by.mogilev.model.User;
+import by.mogilev.model.User;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.ModelAttribute;
@@ -12,10 +13,10 @@ import org.springframework.web.bind.annotation.RequestMethod;
  */
 @Controller
 public class LectorController {
-//    @ModelAttribute
-//    public User populateCurrentUser(){
-//        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-//    }
+    @ModelAttribute
+    public User populateCurrentUser(){
+        return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+    }
 
     @RequestMapping(value = "/lector", method = RequestMethod.GET)
     public String goLector() {

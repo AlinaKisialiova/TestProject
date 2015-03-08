@@ -13,8 +13,8 @@
           <element id="library" level="project" name="Maven: org.springframework:spring-aop:4.1.1.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-beans:4.1.1.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-context:4.1.1.RELEASE" />
-          <element id="library" level="project" name="Maven: javax.servlet:servlet-api:2.5" />
           <element id="library" level="project" name="Maven: javax.servlet:jstl:1.2" />
+          <element id="library" level="project" name="Maven: javax.servlet:javax.servlet-api:3.1.0" />
           <element id="library" level="project" name="Maven: org.springframework:spring-webmvc:4.1.1.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework:spring-expression:4.1.1.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework.security:spring-security-core:3.1.0.RELEASE" />
@@ -27,12 +27,6 @@
           <element id="library" level="project" name="Maven: org.springframework.security:spring-security-taglibs:3.1.0.RELEASE" />
           <element id="library" level="project" name="Maven: org.springframework.security:spring-security-acl:3.1.0.RELEASE" />
           <element id="library" level="project" name="Maven: org.apache.tiles:tiles-extras:3.0.0" />
-          <element id="library" level="project" name="Maven: org.apache.tiles:tiles-core:3.0.0" />
-          <element id="library" level="project" name="Maven: org.apache.tiles:tiles-api:3.0.0" />
-          <element id="library" level="project" name="Maven: commons-digester:commons-digester:2.0" />
-          <element id="library" level="project" name="Maven: commons-beanutils:commons-beanutils:1.8.0" />
-          <element id="library" level="project" name="Maven: org.slf4j:jcl-over-slf4j:1.5.8" />
-          <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.5.8" />
           <element id="library" level="project" name="Maven: org.apache.tiles:tiles-request-servlet-wildcard:1.0.0" />
           <element id="library" level="project" name="Maven: org.apache.tiles:tiles-request-servlet:1.0.0" />
           <element id="library" level="project" name="Maven: org.apache.tiles:tiles-request-mustache:1.0.0" />
@@ -42,11 +36,6 @@
           <element id="library" level="project" name="Maven: org.codehaus.jackson:jackson-core-asl:1.5.2" />
           <element id="library" level="project" name="Maven: com.google.guava:guava:r09" />
           <element id="library" level="project" name="Maven: com.github.spullara.mustache.java:builder:0.6.2" />
-          <element id="library" level="project" name="Maven: org.apache.tiles:tiles-jsp:3.0.0" />
-          <element id="library" level="project" name="Maven: org.apache.tiles:tiles-servlet:3.0.0" />
-          <element id="library" level="project" name="Maven: org.apache.tiles:tiles-template:3.0.0" />
-          <element id="library" level="project" name="Maven: org.apache.tiles:tiles-autotag-core-runtime:1.0.0" />
-          <element id="library" level="project" name="Maven: org.apache.tiles:tiles-request-jsp:1.0.0" />
           <element id="library" level="project" name="Maven: org.apache.tiles:tiles-freemarker:3.0.0" />
           <element id="library" level="project" name="Maven: org.apache.tiles:tiles-request-freemarker:1.0.0" />
           <element id="library" level="project" name="Maven: org.freemarker:freemarker:2.3.15" />
@@ -64,6 +53,19 @@
           <element id="library" level="project" name="Maven: ognl:ognl:2.7.3" />
           <element id="library" level="project" name="Maven: jboss:javassist:3.7.ga" />
           <element id="library" level="project" name="Maven: org.apache.tiles:tiles-compat:3.0.0" />
+          <element id="library" level="project" name="Maven: org.apache.tiles:tiles-core:3.0.0" />
+          <element id="library" level="project" name="Maven: org.apache.tiles:tiles-api:3.0.0" />
+          <element id="library" level="project" name="Maven: commons-digester:commons-digester:2.0" />
+          <element id="library" level="project" name="Maven: commons-beanutils:commons-beanutils:1.8.0" />
+          <element id="library" level="project" name="Maven: org.slf4j:jcl-over-slf4j:1.5.8" />
+          <element id="library" level="project" name="Maven: org.apache.tiles:tiles-jsp:3.0.0" />
+          <element id="library" level="project" name="Maven: org.apache.tiles:tiles-servlet:3.0.0" />
+          <element id="library" level="project" name="Maven: org.apache.tiles:tiles-template:3.0.0" />
+          <element id="library" level="project" name="Maven: org.apache.tiles:tiles-autotag-core-runtime:1.0.0" />
+          <element id="library" level="project" name="Maven: org.apache.tiles:tiles-request-jsp:1.0.0" />
+          <element id="library" level="project" name="Maven: org.slf4j:slf4j-log4j12:1.5.10" />
+          <element id="library" level="project" name="Maven: org.slf4j:slf4j-api:1.5.10" />
+          <element id="library" level="project" name="Maven: log4j:log4j:1.2.14" />
         </element>
       </element>
       <element id="directory" name="META-INF">

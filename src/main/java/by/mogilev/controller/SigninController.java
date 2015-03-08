@@ -13,13 +13,13 @@ import org.springframework.web.bind.annotation.RequestMethod;
 public class SigninController {
     @RequestMapping(value = "/signin", method = RequestMethod.GET)
     public String signin(Model model) {
-        return "user/signin";
+        return "signin";
     }
 
 
     @RequestMapping(value = "/signin-failure", method = RequestMethod.GET)
     public String signinFailure() {
-        return "user/signin_failure";
+        return "signin_failure";
     }
 
 }
