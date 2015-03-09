@@ -1,17 +1,24 @@
 package by.mogilev.model;
 
+
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
+import javax.persistence.*;
 import java.util.Collection;
 import java.util.HashSet;
 
 /**
 * Created by akiseleva on 27.02.2015.
 */
+@PersistenceContext(unitName = "trainingCenter", type = PersistenceContextType.EXTENDED)
+
+@Entity
+@Table(name ="USERS")
 public class User implements UserDetails {
-    private static final long serialVersionUID = 8266525488057072269L;
+
+    private int id;
     private String username;
     private String password;
     Collection<GrantedAuthority> authorities;
@@ -22,17 +29,13 @@ public class User implements UserDetails {
         this.password = password;
         this.setRoles(roles);
     }
+    public User(){}
 
     public void setRoles(UserRole roles) {
         this.authorities = new HashSet<GrantedAuthority>();
-
-
                 GrantedAuthority grandAuthority =  new SimpleGrantedAuthority(roles.name());
-
                 this.authorities.add(grandAuthority);
-
         }
-
 
     public void setUsername(String username) {
         this.username = username;
@@ -41,18 +44,32 @@ public class User implements UserDetails {
     public void setPassword(String password) {
         this.password = password;
     }
-
+    @Column(name ="authorities")
+    @Enumerated(EnumType.STRING)
     public Collection<? extends GrantedAuthority> getAuthorities() {
         return this.authorities;
     }
 
-    public String getPassword() {
-        return password;
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    public int getId() {
+        return id;
     }
 
-    public String getUsername() {
+    public void setId(int id) {
+        this.id = id;
+    }
+
+    @Column(name = "password")
+            public String getPassword() {
+        return password;
+    }
+    @Column(name ="username")
+            public String getUsername() {
         return username;
     }
+
 
     public boolean isAccountNonExpired() {
         return true;

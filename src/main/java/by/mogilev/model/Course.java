@@ -1,11 +1,15 @@
 package by.mogilev.model;
 
+import javax.persistence.*;
 import java.util.ArrayList;
 import java.util.List;
 
 /**
  * Created by akiseleva on 26.02.2015.
  */
+
+@Entity
+@Table(name ="COURSE")
 public class Course {
     private int id;
 
@@ -17,13 +21,6 @@ public class Course {
         this.duration=duration;
     }
 
-    public int getId() {
-        return id;
-    }
-
-    public void setId(int id) {
-        this.id = id;
-    }
 
     private String category;
     private String nameCourse;
@@ -54,6 +51,17 @@ public class Course {
         this.evaluation = evaluation;
         this.delivered = delivered;
         this.attendee = attendee;
+    }
+
+    @Id
+    @GeneratedValue(strategy = GenerationType.IDENTITY)
+    @Column(name = "id")
+    public int getId() {
+        return id;
+    }
+
+    public void setId(int id) {
+        this.id = id;
     }
 
         public String getCategory() {

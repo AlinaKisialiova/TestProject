@@ -10,9 +10,10 @@ import org.springframework.stereotype.Component;
 @Component
 public class UserService implements UserActions{
 
-
         public User getUser(String userName) {
             return new User(userName, "1", UserRole.ROLE_LECTOR);
         }
+
+
     }
 
