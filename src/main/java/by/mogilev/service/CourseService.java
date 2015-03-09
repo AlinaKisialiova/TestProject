@@ -40,6 +40,8 @@ public class CourseService implements CourseActions {
     @Override
     public void registerCourse(String category, String nameCourse, String description, String links, String duration) {
 
+       courseList.add(new Course(category, nameCourse, description, links, duration));
+
     }
 
     @Override

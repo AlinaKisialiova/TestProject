@@ -3,7 +3,6 @@ package by.mogilev.service;
 /**
 * Created by akiseleva on 27.02.2015.
 */
-import by.mogilev.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;

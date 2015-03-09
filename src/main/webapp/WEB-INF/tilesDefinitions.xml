@@ -23,6 +23,10 @@
         <put-attribute name="content" value="/WEB-INF/pages/informationBoard.jsp" />
     </definition>
 
+    <definition name="registrationCourse" extends="defaultTemplate">
+        <put-attribute name="content" value="/WEB-INF/pages/registrationCourse.jsp" />
+    </definition>
+
     <definition name="lector" extends="defaultTemplate">
         <put-attribute name="content" value="/WEB-INF/pages/lector.jsp" />
     </definition>

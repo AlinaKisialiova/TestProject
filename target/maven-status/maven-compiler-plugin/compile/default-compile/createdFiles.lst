@@ -1,6 +1,7 @@
 by\mogilev\model\Lector.class
 by\mogilev\model\User.class
 by\mogilev\service\CustomUserDetailsService.class
+by\mogilev\controller\ActionCourseController.class
 by\mogilev\model\Employe.class
 by\mogilev\model\UserRole.class
 by\mogilev\controller\SigninController.class
@@ -10,5 +11,4 @@ by\mogilev\service\UserService.class
 by\mogilev\controller\InformationBoardController.class
 by\mogilev\service\CourseService.class
 by\mogilev\service\UserActions.class
-by\mogilev\controller\EmployeController.class
 by\mogilev\service\CourseActions.class

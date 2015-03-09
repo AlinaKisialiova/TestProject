@@ -9,6 +9,14 @@ import java.util.List;
 public class Course {
     private int id;
 
+    public Course(String category, String nameCourse, String description, String links, String duration) {
+        this.category=category;
+        this.nameCourse=nameCourse;
+        this.description=description;
+        this.links=links;
+        this.duration=duration;
+    }
+
     public int getId() {
         return id;
     }

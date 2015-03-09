@@ -34,6 +34,7 @@ public class InformationBoardController {
         return (User) SecurityContextHolder.getContext().getAuthentication().getPrincipal();
     }
 
+
     @RequestMapping(value = "/informationBoard", method = RequestMethod.GET)
     public ModelAndView listCourse() {
         return new ModelAndView("informationBoard", "courseList", course.getAllCourse());

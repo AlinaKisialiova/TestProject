@@ -18,8 +18,7 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
 <sec:authorize access="hasRole('ROLE_MANAGER')">
     I am know that you are a manager!
 </sec:authorize>
-</br>
-</br>
+
 
 <div id='EvalRemindBlock' style="display: none;">
     <form method="post" action="informationBoard">
@@ -58,7 +57,7 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
 
     <tr >
         <td>My seminars</td>
-        <td><a href=registrationCourse.jsp>Register Course</a></td>
+        <td><a href=registrationCourse>Register Course</a></td>
         <td><br></td>
         <td><br></td>
 </tr>
@@ -73,7 +72,8 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
             <td><br>
             <td><br></td>
             <td>Filter</td>
-            <td  class="filter-select filter-match"  data-placeholder="All Course"><select>
+            <td  class="filter-select filter-match"  data-placeholder="All Course">
+                <select>
                 <option selected value="All Course">All Course</option>
                 <option value="Given Courses">Given Courses</option>
                 <option value="Popular Courses "> Popular Courses</option>
