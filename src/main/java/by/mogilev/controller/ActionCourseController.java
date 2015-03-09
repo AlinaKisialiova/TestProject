@@ -1,14 +1,14 @@
 package by.mogilev.controller;
 
+import by.mogilev.model.Course;
 import by.mogilev.model.User;
 import by.mogilev.service.CourseActions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.*;
+import org.springframework.web.servlet.ModelAndView;
 
 
 import javax.servlet.http.HttpServletRequest;
@@ -41,4 +41,12 @@ public class ActionCourseController {
 
         return "informationBoard";
     }
+    @RequestMapping(value = "/courseDetails/{course.id}", method = RequestMethod.GET)
+    public ModelAndView detailsCourse(@PathVariable("course.id") Integer id)  {
+
+        return  new ModelAndView("courseDetails",
+                "checkCourse",
+                course.findCourse(id) );
+    }
+
 }

@@ -116,7 +116,10 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
     <c:forEach items="${courseList}" var="course">
         <tr>
             <td class="lector_${course.id}"><c:out value="${course.nameLector}" escapeXml="true"/></td>
-            <td class="course_${course.id}"><c:out value="${course.nameCourse}" escapeXml="true"/></td>
+            <td class="course_${course.id}">
+                <a href="<c:out value="courseDetails/${course.id}" escapeXml="true"/>">
+            <c:out value="${course.nameCourse}" escapeXml="true"/></a>
+            </td>
             <td><c:out value="${course.category}" escapeXml="true"/></td>
             <td><c:out value="${course.numbOfSubscribers}" escapeXml="true"/></td>
             <td><c:out value="${course.numbOfAttendee}" escapeXml="true"/></td>
@@ -135,10 +138,13 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
 
                 </form:form>
                 </c:if>
-        </tr>
-    </c:forEach>
 
+        </tr>
+
+
+    </c:forEach>
 </table>
+
 
 <script language="JavaScript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
 <script>

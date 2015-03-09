@@ -17,6 +17,7 @@
         <intercept-url pattern="/manager/**" access="hasRole('ROLE_MANAGER')" />
         <intercept-url pattern="/informationBoard/**" access="hasAnyRole('ROLE_LECTOR', 'ROLE_PARTICIPANT', 'ROLE_MANAGER')"/>
         <intercept-url pattern="/registrationCourse/**" access="hasAnyRole('ROLE_LECTOR', 'ROLE_PARTICIPANT', 'ROLE_MANAGER')"/>
+        <intercept-url pattern="/courseDetails/**" access="hasAnyRole('ROLE_LECTOR', 'ROLE_PARTICIPANT', 'ROLE_MANAGER')"/>
         <intercept-url pattern="/login.jsp*" access="IS_AUTHENTICATED_ANONYMOUSLY"/>
         <form-login login-page="/signin"
                     authentication-failure-url="/signin-failure" default-target-url="/informationBoard" />

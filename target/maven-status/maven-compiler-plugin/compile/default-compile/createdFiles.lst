@@ -1,6 +1,7 @@
 by\mogilev\model\Lector.class
 by\mogilev\model\User.class
 by\mogilev\service\CustomUserDetailsService.class
+by\mogilev\service\Launcher.class
 by\mogilev\controller\ActionCourseController.class
 by\mogilev\model\Employe.class
 by\mogilev\model\UserRole.class
