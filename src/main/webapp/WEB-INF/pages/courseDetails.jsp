@@ -1,7 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <div style="text-align: center;">
 <h1>Course Details</h1>
-<a href="/informationBoard"> Seminar Information Board</a>
+    <a href="<c:url value="/informationBoard"/>"> Seminar Information Board</a>
 <c:set var="course" value="${checkCourse}"/>
 <table align="center">
     <tr><td><strong>Course Category</strong></td>

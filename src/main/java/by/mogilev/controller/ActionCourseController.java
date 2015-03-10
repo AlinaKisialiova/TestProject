@@ -44,9 +44,7 @@ public class ActionCourseController {
     @RequestMapping(value = "/courseDetails/{course.id}", method = RequestMethod.GET)
     public ModelAndView detailsCourse(@PathVariable("course.id") Integer id)  {
 
-        return  new ModelAndView("courseDetails",
-                "checkCourse",
-                course.findCourse(id) );
+        return  new ModelAndView("courseDetails", "checkCourse", course.findCourse(id) );
     }
 
 }

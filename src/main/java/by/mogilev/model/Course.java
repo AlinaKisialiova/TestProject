@@ -12,16 +12,6 @@ import java.util.List;
 @Table(name ="COURSE")
 public class Course {
     private int id;
-
-    public Course(String category, String nameCourse, String description, String links, String duration) {
-        this.category=category;
-        this.nameCourse=nameCourse;
-        this.description=description;
-        this.links=links;
-        this.duration=duration;
-    }
-
-
     private String category;
     private String nameCourse;
     private String nameLector;
@@ -30,15 +20,21 @@ public class Course {
     private String links;
     private  int numbOfSubscribers;
     private int numbOfAttendee;
-//    private final int MAXNUMBOFATTENDEE=15; v zapis na kurs
-//    private final int MINNUMBOFATTENDEE=30;
     private int evaluation;
     private boolean delivered;
-    private List<Employe> attendee;
+    private List<User> attendee;
+
+    public Course(String category, String nameCourse, String description, String links, String duration) {
+        this.category=category;
+        this.nameCourse=nameCourse;
+        this.description=description;
+        this.links=links;
+        this.duration=duration;
+    }
     public Course() {}
     public Course(int id, String category, String nameCourse, String nameLector, String duration, String description,
                   String links, int numbOfSubscribers, int numbOfAttendee, int evaluation, boolean delivered,
-                  List<Employe> attendee) {
+                  List<User> attendee) {
         this.id=id;
         this.category = category;
         this.nameCourse = nameCourse;
@@ -53,86 +49,86 @@ public class Course {
         this.attendee = attendee;
     }
 
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "id_course")
     public int getId() {
         return id;
     }
-
     public void setId(int id) {
         this.id = id;
     }
 
+    @Column(name = "category", nullable = false)
         public String getCategory() {
         return category;
     }
-
     public void setCategory(String category) {
         this.category = category;
     }
 
+    @Column(name = "nameCourse", nullable = false)
     public String getNameCourse() {
         return nameCourse;
     }
-
     public void setNameCourse(String nameCourse) {
         this.nameCourse = nameCourse;
     }
 
+    @Column(name = "nameLector", nullable = false)
     public String getNameLector() {
         return nameLector;
     }
-
     public void setNameLector(String nameLector) {
         this.nameLector = nameLector;
     }
 
+    @Column(name = "duration", nullable = false)
     public String getDuration() {
         return duration;
 
     }
-
     public void setDuration(String duration) {
         this.duration = duration;
     }
 
+    @Column(name = "description")
     public String getDescription() {
         return description;
     }
-
     public void setDescription(String description) {
         this.description = description;
     }
 
+    @Column(name = "links")
     public String getLinks() {
         return links;
     }
-
     public void setLinks(String links) {
         this.links = links;
     }
 
+    @Column(name = "numbOfSubscribers")
     public int getNumbOfSubscribers() {
         return numbOfSubscribers;
     }
-
     public void setNumbOfSubscribers(int numbOfSubscribers) {
         this.numbOfSubscribers = numbOfSubscribers;
     }
 
+    @Column(name = "numbOfAttendee")
     public int getNumbOfAttendee() {
         return numbOfAttendee;
     }
-
     public void setNumbOfAttendee(int numbOfAttendee) {
         this.numbOfAttendee = numbOfAttendee;
     }
 
+    @Column(name = "evaluation")
     public int getEvaluation() {
         return evaluation;
     }
-
     public void setEvaluation(int evaluation) {
         this.evaluation = evaluation;
     }
@@ -140,16 +136,15 @@ public class Course {
     public boolean isDelivered() {
         return delivered;
     }
-
     public void setDelivered(boolean delivered) {
         this.delivered = delivered;
     }
 
-    public List<Employe> getAttendee() {
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "User")
+    public List<User> getAttendee() {
         return attendee;
     }
-
-    public void setAttendee(List<Employe> attendee) {
+    public void setAttendee(List<User> attendee) {
         this.attendee = attendee;
     }
 

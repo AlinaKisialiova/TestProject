@@ -6,8 +6,10 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
+import java.util.ArrayList;
 import java.util.Collection;
 import java.util.HashSet;
+import java.util.List;
 
 /**
 * Created by akiseleva on 27.02.2015.
@@ -15,44 +17,30 @@ import java.util.HashSet;
 @PersistenceContext(unitName = "trainingCenter", type = PersistenceContextType.EXTENDED)
 
 @Entity
-@Table(name ="USERS")
+@Table(name ="USER")
 public class User implements UserDetails {
 
     private int id;
     private String username;
     private String password;
-    Collection<GrantedAuthority> authorities;
+    UserRole authority;
+    private String name;
+    private String email;
+    private List<Course> course;
 
-    public User(String username, String password, UserRole roles) {
+
+    public User(){}
+
+    public User(String username, String password, UserRole role) {
         super();
         this.username = username;
         this.password = password;
-        this.setRoles(roles);
-    }
-    public User(){}
-
-    public void setRoles(UserRole roles) {
-        this.authorities = new HashSet<GrantedAuthority>();
-                GrantedAuthority grandAuthority =  new SimpleGrantedAuthority(roles.name());
-                this.authorities.add(grandAuthority);
-        }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public void setPassword(String password) {
-        this.password = password;
-    }
-    @Column(name ="authorities")
-    @Enumerated(EnumType.STRING)
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return this.authorities;
+        this.authority=role;
     }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
-    @Column(name = "id")
+    @Column(name = "id_user")
     public int getId() {
         return id;
     }
@@ -61,15 +49,62 @@ public class User implements UserDetails {
         this.id = id;
     }
 
+
+    @Override
+    public Collection<? extends GrantedAuthority> getAuthorities() {
+        return authority.getAuthority();
+    }
+
     @Column(name = "password")
-            public String getPassword() {
+    public String getPassword() {
         return password;
     }
     @Column(name ="username")
-            public String getUsername() {
+    public String getUsername() {
         return username;
     }
 
+    @Column(name ="authority")
+    @Enumerated(EnumType.STRING)
+    public UserRole getAuthority() {
+        return authority;    }
+
+    public void setAuthority(UserRole authority) {
+        this.authority = authority;
+    }
+
+    @Column(name = "name")
+    public String getName() {
+        return name;
+    }
+
+    public void setName(String name) {
+        this.name = name;
+    }
+    @Column(name = "email")
+    public String getEmail() {
+        return email;
+    }
+
+    public void setEmail(String email) {
+        this.email = email;
+    }
+    @OneToMany(fetch = FetchType.LAZY, mappedBy = "Course")
+    public List<Course> getCourse() {
+        return course;
+    }
+
+    public void setCourse(List<Course> course) {
+        this.course = course;
+    }
+
+    public void setUsername(String username) {
+        this.username = username;
+    }
+
+    public void setPassword(String password) {
+        this.password = password;
+    }
 
     public boolean isAccountNonExpired() {
         return true;

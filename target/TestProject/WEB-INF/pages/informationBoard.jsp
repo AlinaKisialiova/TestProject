@@ -19,20 +19,19 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
     I am know that you are a manager!
 </sec:authorize>
 
-
+<br/>
 <div id='EvalRemindBlock' style="display: none;">
     <form method="post" action="informationBoard">
         <input type="hidden" class="idC" name="id"/>
         <table id="evalRemindTable">
             <tr>
                 <td>Course Lector</td>
-                <td class="lect"> </p>
+                <td class="lect">
                 </td>
             </tr>
             <tr>
                 <td>Course name</td>
                 <td class="cours">
-
                 </td>
             </tr>
             <tr>
@@ -116,9 +115,9 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
     <c:forEach items="${courseList}" var="course">
         <tr>
             <td class="lector_${course.id}"><c:out value="${course.nameLector}" escapeXml="true"/></td>
-            <td class="course_${course.id}">
+            <td >
                 <a href="<c:out value="courseDetails/${course.id}" escapeXml="true"/>">
-            <c:out value="${course.nameCourse}" escapeXml="true"/></a>
+           <span class="course_${course.id}"> <c:out  value="${course.nameCourse}" escapeXml="true"/></span></a>
             </td>
             <td><c:out value="${course.category}" escapeXml="true"/></td>
             <td><c:out value="${course.numbOfSubscribers}" escapeXml="true"/></td>
@@ -150,11 +149,11 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
 <script>
     function show(id) {
         $("#EvalRemindBlock").show();
-        var nCourse = $(".lector_" + id).html();
-        var lCourse = $(".course_" + id).html();
+        var lCourse = $(".lector_" + id).html();
+        var nCourse = $(".course_" + id).html();
         var gCourse = $(".grade_"+id).html();
-        $(".lect").text(nCourse);
-        $(".cours").text(lCourse);
+        $(".lect").text(lCourse);
+        $(".cours").text(nCourse);
         $(".grade").val(gCourse);
         $(".idC").val(id);
     }
