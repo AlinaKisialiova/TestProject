@@ -13,8 +13,7 @@ import javax.persistence.Table;
 
 public enum UserRole implements GrantedAuthority  {
     ROLE_LECTOR,
-    ROLE_EMPLOYE,
-    ROLE_MANAGER;
+    ROLE_USER;
 
     UserRole() {
     }

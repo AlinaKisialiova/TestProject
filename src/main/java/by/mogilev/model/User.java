@@ -18,7 +18,7 @@ import java.util.List;
 
 @Entity
 @Table(name ="USER")
-public class User implements UserDetails {
+public class User  {
 
     private int id;
     private String username;
@@ -44,15 +44,8 @@ public class User implements UserDetails {
     public int getId() {
         return id;
     }
-
     public void setId(int id) {
         this.id = id;
-    }
-
-
-    @Override
-    public Collection<? extends GrantedAuthority> getAuthorities() {
-        return authority.getAuthority();
     }
 
     @Column(name = "password")
@@ -89,7 +82,11 @@ public class User implements UserDetails {
     public void setEmail(String email) {
         this.email = email;
     }
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "Course")
+    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
+    @JoinTable(name = "USER_COURSE", joinColumns = {
+            @JoinColumn(name = "id_user", nullable = false, updatable = false) },
+            inverseJoinColumns = { @JoinColumn(name = "id_course",
+                    nullable = false, updatable = false) })
     public List<Course> getCourse() {
         return course;
     }
@@ -106,19 +103,4 @@ public class User implements UserDetails {
         this.password = password;
     }
 
-    public boolean isAccountNonExpired() {
-        return true;
-    }
-
-    public boolean isAccountNonLocked() {
-        return true;
-    }
-
-    public boolean isCredentialsNonExpired() {
-        return true;
-    }
-
-    public boolean isEnabled() {
-        return true;
-    }
-}
+  }

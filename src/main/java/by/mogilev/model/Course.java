@@ -140,7 +140,7 @@ public class Course {
         this.delivered = delivered;
     }
 
-    @OneToMany(fetch = FetchType.LAZY, mappedBy = "User")
+    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "course")
     public List<User> getAttendee() {
         return attendee;
     }
