@@ -10,7 +10,6 @@
     <context:component-scan base-package="by.mogilev"/>
 
     <bean class="org.springframework.web.servlet.view.UrlBasedViewResolver">
-        <!--Don't add suffix or prefix like you do with .jsp files-->
         <property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView"/>
     </bean>
 
@@ -18,4 +17,6 @@
         <property name="definitions" value="/WEB-INF/tilesDefinitions.xml"/>
     </bean>
 
-</beans>
+
+
+        </beans>

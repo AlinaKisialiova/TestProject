@@ -118,7 +118,7 @@
             <version>${org.slf4j-version}</version>
          </dependency>
 
-<!--HIBERNATE-->
+<!--HIBERNATE H2-->
 
         <dependency>
             <groupId>javax.persistence</groupId>

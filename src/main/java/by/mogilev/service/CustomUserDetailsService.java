@@ -12,22 +12,24 @@ import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
+import javax.transaction.Transactional;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
 
 @Service
+@Transactional
 public class CustomUserDetailsService implements  UserDetailsService{
 
     @Autowired
     private UserService userDAO;
-    //private CustomUserDetails user;
 
 @Override
     public UserDetails loadUserByUsername(String username)
             throws UsernameNotFoundException {
        by.mogilev.model.User user= userDAO.getUser(username);
+
         List<GrantedAuthority> authorities = buildUserAuthority(user.getAuthority());
         return buildUserForAuthentication(user, authorities);
     }
@@ -35,8 +37,7 @@ public class CustomUserDetailsService implements  UserDetailsService{
     private org.springframework.security.core.userdetails.User buildUserForAuthentication(by.mogilev.model.User user,
                                             List<GrantedAuthority> authorities) {
         return new org.springframework.security.core.userdetails.User(user.getUsername(),
-                user.getPassword(), user.isEnabled(),
-                true, true, true, authorities);
+                user.getPassword(),true, true, true, true, authorities);
     }
 
     private List<GrantedAuthority> buildUserAuthority(UserRole userRole) {
