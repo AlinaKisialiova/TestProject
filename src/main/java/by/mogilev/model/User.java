@@ -27,6 +27,7 @@ public class User  {
     private String name;
     private String email;
     private List<Course> course;
+    private boolean enabled;
 
 
     public User(){}
@@ -103,4 +104,10 @@ public class User  {
         this.password = password;
     }
 
-  }
+    public boolean isEnabled() {
+        return this.enabled;
+    }
+    public void setEnabled(boolean enabled) {
+        this.enabled = enabled;
+    }
+}

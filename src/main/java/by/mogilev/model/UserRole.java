@@ -11,15 +11,12 @@ import javax.persistence.Table;
  */
 
 
-public enum UserRole implements GrantedAuthority  {
+public enum UserRole  {
     ROLE_LECTOR,
     ROLE_USER;
 
     UserRole() {
     }
 
-    @Override
-    public String getAuthority() {
-        return UserRole.values().toString();
-    }
+
 }

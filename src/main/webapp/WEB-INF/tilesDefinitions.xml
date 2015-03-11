@@ -30,9 +30,7 @@
         <put-attribute name="content" value="/WEB-INF/pages/courseDetails.jsp" />
     </definition>
 
-    <definition name="lector" extends="defaultTemplate">
-        <put-attribute name="content" value="/WEB-INF/pages/lector.jsp" />
-    </definition>
+
 
 
 
