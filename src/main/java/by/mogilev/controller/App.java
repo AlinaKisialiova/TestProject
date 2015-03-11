@@ -3,34 +3,30 @@ package by.mogilev.controller;
 import by.mogilev.model.User;
 import by.mogilev.model.UserRole;
 
+import by.mogilev.service.Factory;
+import by.mogilev.service.UserDAO;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.context.support.ClassPathXmlApplicationContext;
+
+import javax.jws.soap.SOAPBinding;
+import java.sql.SQLException;
+import java.util.List;
 
 /**
 * Created by akiseleva on 11.03.2015.
 */
 public class App {
-    private SessionFactory sessionFactory;
 
-    public SessionFactory getSessionFactory() {
-        return sessionFactory;
+    public static void main( String[] args ) {
+        ClassPathXmlApplicationContext context = new ClassPathXmlApplicationContext(
+                new String[]{"hibernateConfig.xml"}, true);
+        UserDAO userDao = (UserDAO) context.getBean("dataDaoUser");
+        User data1 = new User("Alex", "1",UserRole.ROLE_LECTOR);
+        userDao.addUser(data1);
+
+
+
     }
-
-    public void setSessionFactory(SessionFactory sessionFactory) {
-        this.sessionFactory = sessionFactory;
-    }
-
-    public static void main( String[] args )
-{
-    App sessionFactory=new App();
-
-    System.out.println("Maven + Hibernate");
-    Session session=sessionFactory.getSessionFactory().getCurrentSession();
-
-    session.beginTransaction();
-    User user = new User("user", "1", UserRole.ROLE_LECTOR);
-
-    session.save(user);
-    session.getTransaction().commit();
-}
 }

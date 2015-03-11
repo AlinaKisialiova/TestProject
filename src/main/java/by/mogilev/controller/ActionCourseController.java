@@ -2,7 +2,10 @@ package by.mogilev.controller;
 
 import by.mogilev.model.Course;
 import by.mogilev.model.User;
-import by.mogilev.service.CourseActions;
+
+import by.mogilev.service.CourseDAO;
+import by.mogilev.service.CourseDAOImp;
+import by.mogilev.service.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -13,14 +16,16 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 import javax.servlet.http.HttpServletRequest;
+import java.sql.SQLException;
 
 /**
  * Created by akiseleva on 09.03.2015.
  */
 @Controller
 public class ActionCourseController {
+
     @Autowired
-    private CourseActions course;
+     private CourseDAO course;
 
     @ModelAttribute
     public String populateCurrentUser() {

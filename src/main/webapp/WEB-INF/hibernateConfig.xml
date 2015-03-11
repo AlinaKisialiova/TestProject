@@ -11,17 +11,26 @@
 
     <context:component-scan base-package="by.mogilev"/>
 
-<bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
-    <property name="driverClass" value="org.h2.Driver"/>
-    <property name="url" value="jdbc:h2:~/test"/>
-    <property name="username" value="sa"/>
-    <property name="password" value="sa"/>
-</bean>
+    <tx:advice id="txAdvice" transaction-manager="transactionManager">
+        <tx:attributes>
+            <tx:method name="get*" propagation="REQUIRED" read-only="true" />
+            <tx:method name="find*" propagation="REQUIRED" read-only="true" />
+            <tx:method name="save*" propagation="REQUIRED" />
+        </tx:attributes>
+    </tx:advice>
+
+    <bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+        <property name="driverClass" value="org.h2.Driver"/>
+        <property name="url" value="jdbc:h2:~/test"/>
+        <property name="username" value="sa"/>
+        <property name="password" value="sa"/>
+    </bean>
 
     <bean id="sessionFactory"
           class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
-        <property name="packagesToScan" value="by.mogilev.model"/>
+        <!--<property name="packagesToScan" value="by.mogilev.model"/>-->
+        <property name="configLocation" value="classpath:/hibernate.cfg.xml" />
 
         <property name="hibernateProperties">
             <props>
@@ -31,13 +40,18 @@
             </props>
         </property>
     </bean>
-
-
-
-    <!-- MUST have transaction manager, using aop and aspects  -->
-    <bean id="transactionManager"
-          class="org.springframework.orm.hibernate4.HibernateTransactionManager">
-        <property name="sessionFactory" ref="sessionFactory"></property>
+    <bean id="dataDaoCourse" class="by.mogilev.service.CourseDAOImp">
+        <property name="sessionFactory" ref="sessionFactory" />
     </bean>
+    <bean id="dataDaoUser" class="by.mogilev.service.CourseDAOImp">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+    <bean id="transactionManager"
+          class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+        <property name="sessionFactory" ref="sessionFactory" />
+    </bean>
+
+
 
 </beans>

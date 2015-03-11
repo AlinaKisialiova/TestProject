@@ -13,6 +13,7 @@ import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
+import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -21,14 +22,13 @@ import java.util.Set;
 @Service
 public class CustomUserDetailsService implements  UserDetailsService{
 
-    @Autowired
-    private UserService userDAO;
-    private UserService userDao;
 
+    @Autowired
+    private UserDAO userDAO;
 
     @Override
     public UserDetails loadUserByUsername(String username)
-            throws UsernameNotFoundException {
+            throws UsernameNotFoundException{
        by.mogilev.model.User user= userDAO.getUser(username);
 
         List<GrantedAuthority> authorities = buildUserAuthority(user.getAuthority());
@@ -49,11 +49,11 @@ public class CustomUserDetailsService implements  UserDetailsService{
         return Result;
     }
 
-    public void setUserDao(UserService userDao) {
-        this.userDao = userDao;
+    public void setUserDao(UserDAOImp userDao) {
+        this.userDAO = userDao;
     }
 
-    public UserService getUserDao() {
-        return userDao;
+    public UserDAO getUserDao() {
+        return userDAO;
     }
 }
