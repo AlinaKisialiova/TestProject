@@ -31,5 +31,6 @@
     <tr><td><strong>Course Evaluation</strong></td>
         <td><c:out value="${course.evaluation}"/></td>
     </tr>
+    <th><a href="<c:url value="/editCourse"/>"> Edit</a></th>
 </table>
 </div>

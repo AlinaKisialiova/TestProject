@@ -14,7 +14,6 @@ import java.util.List;
 /**
 * Created by akiseleva on 27.02.2015.
 */
-@PersistenceContext(unitName = "trainingCenter", type = PersistenceContextType.EXTENDED)
 
 @Entity
 @Table(name ="USER")

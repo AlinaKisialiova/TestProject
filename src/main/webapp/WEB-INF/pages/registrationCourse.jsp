@@ -30,6 +30,7 @@
             <td><input type="text" name="newCourseDuration">
                 <span style="color:red" id="errDuration"></span></td>
         </tr>
+
         <tr>
             <td><input type="reset" value="Cancel"/> </td>
             <td><input type="submit" value="Save" onclick="return validate();"/></td>

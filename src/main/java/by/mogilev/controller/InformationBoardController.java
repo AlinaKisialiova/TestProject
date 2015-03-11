@@ -6,6 +6,7 @@ import by.mogilev.model.Course;
 import by.mogilev.model.User;
 import by.mogilev.service.CourseActions;
 import by.mogilev.service.CourseService;
+import org.hibernate.Session;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -29,6 +30,7 @@ public class InformationBoardController {
     public static final String EDIT_ID = "id";
     @Autowired
     private CourseActions course;
+
 
     @ModelAttribute
     public String populateCurrentUser() {

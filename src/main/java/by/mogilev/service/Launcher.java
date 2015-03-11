@@ -1,35 +1,37 @@
 package by.mogilev.service;
 
 import by.mogilev.model.User;
+import by.mogilev.model.UserRole;
 
-import javax.persistence.EntityManager;
-import javax.persistence.EntityManagerFactory;
-import javax.persistence.EntityTransaction;
-import javax.persistence.Persistence;
+import javax.persistence.*;
 
 /**
- * Created by akiseleva on 09.03.2015.
- */
+* Created by akiseleva on 09.03.2015.
+*/
 public class Launcher {
 
+    private static final String PERSISTENCE_UNIT_NAME = "center";
+     static EntityManager em;
+   private static EntityManagerFactory factory;
+
     public static void main(String[] args) {
-        EntityManagerFactory entityManagerFactory = Persistence.createEntityManagerFactory("trainingCenter");
-        EntityManager entityManager = entityManagerFactory.createEntityManager();
-        EntityTransaction entityTransaction = entityManager.getTransaction();
+        factory = Persistence.createEntityManagerFactory(PERSISTENCE_UNIT_NAME);
+        em = factory.createEntityManager();
+        EntityTransaction entityTransaction = em.getTransaction();
 
         entityTransaction.begin();
 
-        User user = new User();
-        entityManager.persist(user);
+        User user = new User("user", "1", UserRole.ROLE_LECTOR);
+        em.persist(user);
 
         entityTransaction.commit();
 
-        User checkEntity = entityManager.find(User.class, user.getId());
+        User checkEntity = em.find(User.class, user.getId());
 
         System.out.println("User " + checkEntity.getId());
-
-        entityManager.close();
-        entityManagerFactory.close();
+        em.flush();
+       em.close();
+       factory.close();
     }
 
 }

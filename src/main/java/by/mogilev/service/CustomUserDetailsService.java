@@ -19,13 +19,14 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-@Transactional
 public class CustomUserDetailsService implements  UserDetailsService{
 
     @Autowired
     private UserService userDAO;
+    private UserService userDao;
 
-@Override
+
+    @Override
     public UserDetails loadUserByUsername(String username)
             throws UsernameNotFoundException {
        by.mogilev.model.User user= userDAO.getUser(username);
@@ -48,4 +49,11 @@ public class CustomUserDetailsService implements  UserDetailsService{
         return Result;
     }
 
+    public void setUserDao(UserService userDao) {
+        this.userDao = userDao;
+    }
+
+    public UserService getUserDao() {
+        return userDao;
+    }
 }

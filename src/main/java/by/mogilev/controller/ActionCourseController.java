@@ -53,4 +53,18 @@ public class ActionCourseController {
         return  new ModelAndView("courseDetails", "checkCourse", course.findCourse(id) );
     }
 
+    @RequestMapping(value = "/editCourse", method = RequestMethod.GET)
+    public String editRegCourse() {
+        return "editCourse";
+    }
+
+    @RequestMapping(value = "/editCourse", method = RequestMethod.POST)
+    public String editCourse(HttpServletRequest request, Model model) {
+        course.registerCourse(request.getParameter("updCourseCategory"), request.getParameter("updCourseName"),
+                request.getParameter("updCourseDescription"), request.getParameter("updCourseLinks"),
+                request.getParameter("updCourseDuration"));
+        model.addAttribute("message", "Course Updated!");
+
+        return "editCourse";
+    }
 }

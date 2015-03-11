@@ -29,6 +29,9 @@
     <definition name="courseDetails" extends="defaultTemplate">
         <put-attribute name="content" value="/WEB-INF/pages/courseDetails.jsp" />
     </definition>
+    <definition name="editCourse" extends="defaultTemplate">
+        <put-attribute name="content" value="/WEB-INF/pages/editCourse.jsp" />
+    </definition>
 
 
 
