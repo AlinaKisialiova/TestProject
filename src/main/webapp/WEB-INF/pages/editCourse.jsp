@@ -31,7 +31,7 @@
         <td><textarea name="updCourseLinks"> </textarea></td>
     </tr>
     <tr><td><strong>Course Duration</strong></td>
-        <td>input type="text" name="updCourseDuration">
+        <td><input type="text" name="updCourseDuration">
             <span style="color:red" id="errDuration"/>
         </td>
     </tr>

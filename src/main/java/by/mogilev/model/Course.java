@@ -60,7 +60,7 @@ public class Course {
         this.id = id;
     }
 
-    @Column(name = "category", nullable = false)
+    @Column(name = "category")
         public String getCategory() {
         return category;
     }
@@ -68,7 +68,7 @@ public class Course {
         this.category = category;
     }
 
-    @Column(name = "nameCourse", nullable = false)
+    @Column(name = "nameCourse")
     public String getNameCourse() {
         return nameCourse;
     }
@@ -76,7 +76,7 @@ public class Course {
         this.nameCourse = nameCourse;
     }
 
-    @Column(name = "nameLector", nullable = false)
+    @Column(name = "nameLector")
     public String getNameLector() {
         return nameLector;
     }
@@ -84,7 +84,7 @@ public class Course {
         this.nameLector = nameLector;
     }
 
-    @Column(name = "duration", nullable = false)
+    @Column(name = "duration")
     public String getDuration() {
         return duration;
 

@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+
 <div style="text-align: center;">
 <h1>Course Details</h1>
     <a href="<c:url value="/informationBoard"/>"> Seminar Information Board</a>
@@ -32,5 +33,6 @@
         <td><c:out value="${course.evaluation}"/></td>
     </tr>
     <th><a href="<c:url value="/editCourse"/>"> Edit</a></th>
+
 </table>
 </div>

@@ -83,7 +83,7 @@ public class User  {
     }
     @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
     @JoinTable(name = "USER_COURSE", joinColumns = {
-            @JoinColumn(name = "id_user", nullable = false, updatable = false) },
+            @JoinColumn(name = "id_user") },
             inverseJoinColumns = { @JoinColumn(name = "id_course",
                     nullable = false, updatable = false) })
     public List<Course> getCourse() {

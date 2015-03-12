@@ -45,18 +45,17 @@ public class ActionCourseController {
     }
 
     @RequestMapping(value = "/registrationCourse", method = RequestMethod.POST)
-    public String regCourse(HttpServletRequest request, Model model) {
+    public ModelAndView regCourse(HttpServletRequest request, Model model) {
 
             course.registerCourse(request.getParameter("newCourseCategory"), request.getParameter("newCourseName"),
                     request.getParameter("newCourseDescription"), request.getParameter("newCourseLinks"),
                     request.getParameter("newCourseDuration"));
         model.addAttribute("message", "Course added!");
 
-        return "informationBoard";
+          return new ModelAndView("informationBoard", "courseList", course.getAllCourse());
     }
     @RequestMapping(value = "/courseDetails/{course.id}", method = RequestMethod.GET)
     public ModelAndView detailsCourse(@PathVariable("course.id") Integer id)  {
-
         return  new ModelAndView("courseDetails", "checkCourse", course.findCourse(id) );
     }
 

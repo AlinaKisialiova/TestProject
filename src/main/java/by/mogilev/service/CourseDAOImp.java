@@ -2,8 +2,10 @@ package by.mogilev.service;
 
 import by.mogilev.model.Course;
 import by.mogilev.model.User;
+import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
@@ -31,11 +33,9 @@ public class CourseDAOImp  implements CourseDAO {
     public CourseDAOImp(){};
 @Transactional
     public void registerCourse(String category, String nameCourse, String description, String links, String duration)  {
-
         Session session = this.sessionFactory.getCurrentSession();
-            session.save(new Course(category, nameCourse, description, links, duration));
-            session.getTransaction().commit();
-        //courseList.add(new Course(category, nameCourse, description, links, duration));
+        session.save(new Course(category, nameCourse, description, links, duration));
+
     }
 @Transactional
     public List<Course> getAllCourse()  {
@@ -45,23 +45,23 @@ public class CourseDAOImp  implements CourseDAO {
         return  coursesList;
     }
 
-
+    @Transactional
     public Course findCourse(int id) {
         Session session = this.sessionFactory.getCurrentSession();
-          Course  course = (Course) session.load(Course.class, id);
-        return course;
-
+        Criteria criteria=session.createCriteria(Course.class);
+        criteria.add(Restrictions.eq("id", id));
+        return (Course) criteria.uniqueResult();
+   // return (Course) session.load(Course.class, id);
     }
 
+    @Transactional
     public void addCourse(Course course)  {
-
         Session session = this.sessionFactory.getCurrentSession();
         session.save(course);
         session.getTransaction().commit();
-
     }
 
-
+    @Transactional
     public void deleteCourse(Course course)  {
         Session session = this.sessionFactory.openSession();
             session.delete(course);
