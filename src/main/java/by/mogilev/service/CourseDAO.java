@@ -10,10 +10,12 @@ import java.util.List;
  */
 
 public interface CourseDAO {
-    public void addCourse(Course course) ;
+
     public void deleteCourse(Course course) ;
     public List<Course> getAllCourse();
     public Course findCourse(int id);
+    public void remidEv(int id, int grade);
     public void registerCourse(String category, String nameCourse, String description, String links, String duration ) ;
+    public void updateCourse(int id, String category, String nameCourse, String description, String links, String duration ) ;
 
 }

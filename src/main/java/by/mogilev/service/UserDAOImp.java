@@ -34,14 +34,14 @@ public class UserDAOImp  implements UserDAO {
 
     public void save(User user) {
         Session session = this.sessionFactory.getCurrentSession();
-        session.persist(user);
+        session.save(user);
 
     }
 
-    public User getUser(String userName)  {
+    public User getUser(String username)  {
         Session session = this.sessionFactory.getCurrentSession();
         Criteria criteria=session.createCriteria(User.class);
-        criteria.add(Restrictions.eq("username",userName));
+        criteria.add(Restrictions.eq("username",username));
         return (User) criteria.uniqueResult();
     }
 

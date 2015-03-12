@@ -25,17 +25,25 @@ import java.util.List;
 @Repository
 @Transactional
 public class CourseDAOImp  implements CourseDAO {
+    @Override
+    public void updateCourse(int id, String category, String nameCourse, String description, String links, String duration) {
+        Session session = this.sessionFactory.getCurrentSession();
+        Course changeCourse= findCourse(id);
+        changeCourse.setCategory(category);
+        changeCourse.setNameCourse(nameCourse);
+        changeCourse.setDescription(description);
+        changeCourse.setLinks(links);
+        changeCourse.setDuration(duration);
+        session.saveOrUpdate(changeCourse);
+    }
 
     @Autowired
     private SessionFactory sessionFactory;
-
-
     public CourseDAOImp(){};
 @Transactional
     public void registerCourse(String category, String nameCourse, String description, String links, String duration)  {
         Session session = this.sessionFactory.getCurrentSession();
         session.save(new Course(category, nameCourse, description, links, duration));
-
     }
 @Transactional
     public List<Course> getAllCourse()  {
@@ -51,31 +59,26 @@ public class CourseDAOImp  implements CourseDAO {
         Criteria criteria=session.createCriteria(Course.class);
         criteria.add(Restrictions.eq("id", id));
         return (Course) criteria.uniqueResult();
-   // return (Course) session.load(Course.class, id);
+
     }
 
-    @Transactional
-    public void addCourse(Course course)  {
+
+
+    @Override
+    public void remidEv(int id, int grade) {
         Session session = this.sessionFactory.getCurrentSession();
-        session.save(course);
-        session.getTransaction().commit();
+        Course changeEvalCourse= findCourse(id);
+        changeEvalCourse.setEvaluation(grade);
+        session.saveOrUpdate(changeEvalCourse);
+
     }
 
     @Transactional
     public void deleteCourse(Course course)  {
         Session session = this.sessionFactory.openSession();
             session.delete(course);
-            session.getTransaction().commit();
+              session.flush();
 
     }
 
 }
-//    static List<Course> courseList = new ArrayList<Course>();
-//
-//    {
-//        if (courseList.isEmpty()) {
-//            courseList.add(new Course(1, "Project Management", "Project Management", "Aleksander Ivanov", "24 hour", " ", " ", 15, 10, 5, true, new ArrayList<User>()));
-//            courseList.add(new Course(2, "NET Technology", "Development", "elvis", "36 hour", " ", " ", 25, 15, 5, true, new ArrayList<User>()));
-//            courseList.add(new Course(3, "COM/DCOM Technology", "Development", " Mihail Petrov", "14 hour", " ", " ", 7, 5, 5, false, new ArrayList<User>()));
-//        }
-//    }

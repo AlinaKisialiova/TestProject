@@ -32,7 +32,8 @@
     <tr><td><strong>Course Evaluation</strong></td>
         <td><c:out value="${course.evaluation}"/></td>
     </tr>
-    <th><a href="<c:url value="/editCourse"/>"> Edit</a></th>
-
+    <form action="editCourse.jsp" >
+    <th><a href="<c:url value="/editCourse/${course.id}"/>"> Edit</a></th>
+    </form>
 </table>
 </div>

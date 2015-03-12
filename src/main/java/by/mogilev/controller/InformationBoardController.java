@@ -4,6 +4,8 @@ import by.mogilev.model.Course;
 import by.mogilev.service.CourseDAO;
 import by.mogilev.service.CourseDAOImp;
 import by.mogilev.service.UserDAO;
+import org.hibernate.Session;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -47,10 +49,9 @@ public class InformationBoardController {
 
     @RequestMapping(value = "/informationBoard", method = RequestMethod.POST)
     public ModelAndView evRemind(@RequestParam(value = "grade", required = false) Integer grade,
-                                 @RequestParam(value = "id", required = false) Integer id) throws SQLException{
+                                 @RequestParam(value = "id", required = false) Integer id) {
 
-        Course changeEvalCourse= course.findCourse(id);
-       changeEvalCourse.setEvaluation(grade);
+       course.remidEv(id, grade);
         return new ModelAndView("informationBoard", "courseList", course.getAllCourse());
 
     }

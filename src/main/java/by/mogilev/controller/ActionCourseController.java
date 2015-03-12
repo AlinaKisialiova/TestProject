@@ -27,7 +27,7 @@ public class ActionCourseController {
 
     @Autowired
     @Qualifier("courseDAOImp")
-     private CourseDAO course;
+    private CourseDAO course;
 
     @ModelAttribute
     public String populateCurrentUser() {
@@ -47,30 +47,41 @@ public class ActionCourseController {
     @RequestMapping(value = "/registrationCourse", method = RequestMethod.POST)
     public ModelAndView regCourse(HttpServletRequest request, Model model) {
 
-            course.registerCourse(request.getParameter("newCourseCategory"), request.getParameter("newCourseName"),
-                    request.getParameter("newCourseDescription"), request.getParameter("newCourseLinks"),
-                    request.getParameter("newCourseDuration"));
+        course.registerCourse(request.getParameter("newCourseCategory"), request.getParameter("newCourseName"),
+                request.getParameter("newCourseDescription"), request.getParameter("newCourseLinks"),
+                request.getParameter("newCourseDuration"));
         model.addAttribute("message", "Course added!");
 
-          return new ModelAndView("informationBoard", "courseList", course.getAllCourse());
+        return new ModelAndView("informationBoard", "courseList", course.getAllCourse());
     }
+
     @RequestMapping(value = "/courseDetails/{course.id}", method = RequestMethod.GET)
-    public ModelAndView detailsCourse(@PathVariable("course.id") Integer id)  {
-        return  new ModelAndView("courseDetails", "checkCourse", course.findCourse(id) );
+    public ModelAndView detailsCourse(@PathVariable("course.id") Integer id) {
+        return new ModelAndView("courseDetails", "checkCourse", course.findCourse(id));
     }
 
-    @RequestMapping(value = "/editCourse", method = RequestMethod.GET)
-    public String editRegCourse() {
+    @RequestMapping(value = "/editCourse/{course.id}", method = RequestMethod.GET)
+    public ModelAndView editRegCourse(@PathVariable("course.id") Integer id) {
+        return new ModelAndView("editCourse", "checkCourse", course.findCourse(id));
+    }
+
+    @RequestMapping(value = "/editCourse/{course.id}", method = RequestMethod.POST)
+    public String editCourse(@PathVariable("course.id") Integer id,
+                             HttpServletRequest request, Model model) {
+        String p = request.getParameter("deleteCourse");
+        if ("on".equals(p)) {
+            Course delCourse = course.findCourse(id);
+            course.deleteCourse(delCourse);
+            model.addAttribute("message", "Course Deleted!");
+
+        }
+        else {
+            course.updateCourse(id,request.getParameter("updCourseCategory"), request.getParameter("updCourseName"),
+                    request.getParameter("updCourseDescription"), request.getParameter("updCourseLinks"),
+                    request.getParameter("updCourseDuration"));
+            model.addAttribute("message", "Course Updated!");
+                }
         return "editCourse";
     }
 
-    @RequestMapping(value = "/editCourse", method = RequestMethod.POST)
-    public String editCourse(HttpServletRequest request, Model model) {
-        course.registerCourse(request.getParameter("updCourseCategory"), request.getParameter("updCourseName"),
-                request.getParameter("updCourseDescription"), request.getParameter("updCourseLinks"),
-                request.getParameter("updCourseDuration"));
-        model.addAttribute("message", "Course Updated!");
-
-        return "editCourse";
-    }
 }
