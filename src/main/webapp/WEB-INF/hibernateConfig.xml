@@ -11,47 +11,44 @@
 
     <context:component-scan base-package="by.mogilev"/>
 
-    <tx:advice id="txAdvice" transaction-manager="transactionManager">
-        <tx:attributes>
-            <tx:method name="get*" propagation="REQUIRED" read-only="true" />
-            <tx:method name="find*" propagation="REQUIRED" read-only="true" />
-            <tx:method name="save*" propagation="REQUIRED" />
-        </tx:attributes>
-    </tx:advice>
 
     <bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
+
         <property name="driverClass" value="org.h2.Driver"/>
-        <property name="url" value="jdbc:h2:~/test"/>
+        <property name="url" value="jdbc:h2:tcp://localhost/~/test"/>
         <property name="username" value="sa"/>
-        <property name="password" value="sa"/>
+        <property name="password" value=""/>
+
     </bean>
 
     <bean id="sessionFactory"
           class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
         <property name="dataSource" ref="dataSource" />
-        <!--<property name="packagesToScan" value="by.mogilev.model"/>-->
-        <property name="configLocation" value="classpath:/hibernate.cfg.xml" />
+        <property name="packagesToScan" value="by.mogilev.model"/>
+        <!--<property name="configLocation" value="classpath:/hibernate.cfg.xml" />-->
 
         <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.dialect">
                     org.hibernate.dialect.H2Dialect
                 </prop>
+
             </props>
         </property>
     </bean>
-    <bean id="dataDaoCourse" class="by.mogilev.service.CourseDAOImp">
+
+    <context:component-scan base-package="by.mogilev.service"/>
+
+    <bean id="userDAO" class="by.mogilev.service.UserDAOImp">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
-    <bean id="dataDaoUser" class="by.mogilev.service.CourseDAOImp">
-        <property name="sessionFactory" ref="sessionFactory" />
-    </bean>
+
+    <tx:annotation-driven transaction-manager="transactionManager" />
 
     <bean id="transactionManager"
-          class="org.springframework.orm.hibernate3.HibernateTransactionManager">
+          class="org.springframework.orm.hibernate4.HibernateTransactionManager">
+
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
-
-
 
 </beans>

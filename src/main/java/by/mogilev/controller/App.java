@@ -3,7 +3,6 @@ package by.mogilev.controller;
 import by.mogilev.model.User;
 import by.mogilev.model.UserRole;
 
-import by.mogilev.service.Factory;
 import by.mogilev.service.UserDAO;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;

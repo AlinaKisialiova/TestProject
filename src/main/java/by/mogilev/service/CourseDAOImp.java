@@ -4,6 +4,7 @@ import by.mogilev.model.Course;
 import by.mogilev.model.User;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
+import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.orm.hibernate3.HibernateTemplate;
 import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Component;
@@ -11,6 +12,7 @@ import org.springframework.stereotype.Repository;
 import org.springframework.stereotype.Service;
 
 import javax.swing.*;
+import javax.transaction.Transactional;
 import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
@@ -18,29 +20,34 @@ import java.util.List;
 /**
  * Created by akiseleva on 03.03.2015.
  */
-@Component
-public class CourseDAOImp extends HibernateDaoSupport implements CourseDAO {
+@Repository
+@Transactional
+public class CourseDAOImp  implements CourseDAO {
+
+    @Autowired
+    private SessionFactory sessionFactory;
+
 
     public CourseDAOImp(){};
-
+@Transactional
     public void registerCourse(String category, String nameCourse, String description, String links, String duration)  {
 
-          Session  session = getSessionFactory().openSession();
+        Session session = this.sessionFactory.getCurrentSession();
             session.save(new Course(category, nameCourse, description, links, duration));
             session.getTransaction().commit();
         //courseList.add(new Course(category, nameCourse, description, links, duration));
     }
-
+@Transactional
     public List<Course> getAllCourse()  {
         List<Course> coursesList = new ArrayList<Course>();
-        Session session = getSessionFactory().openSession();
+        Session session = this.sessionFactory.getCurrentSession();
         coursesList = session.createCriteria(Course.class).list();
         return  coursesList;
     }
 
 
     public Course findCourse(int id) {
-         Session   session = getSessionFactory().openSession();
+        Session session = this.sessionFactory.getCurrentSession();
           Course  course = (Course) session.load(Course.class, id);
         return course;
 
@@ -48,7 +55,7 @@ public class CourseDAOImp extends HibernateDaoSupport implements CourseDAO {
 
     public void addCourse(Course course)  {
 
-       Session session = getSessionFactory().openSession();
+        Session session = this.sessionFactory.getCurrentSession();
         session.save(course);
         session.getTransaction().commit();
 
@@ -56,19 +63,12 @@ public class CourseDAOImp extends HibernateDaoSupport implements CourseDAO {
 
 
     public void deleteCourse(Course course)  {
-
-           Session session = getSessionFactory().openSession();
+        Session session = this.sessionFactory.openSession();
             session.delete(course);
             session.getTransaction().commit();
 
     }
 
-    @Override
-    protected HibernateTemplate createHibernateTemplate(SessionFactory sessionFactory) {
-        HibernateTemplate result = super.createHibernateTemplate(sessionFactory);
-        result.setAllowCreate(false);
-        return result;
-    }
 }
 //    static List<Course> courseList = new ArrayList<Course>();
 //

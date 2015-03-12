@@ -4,6 +4,7 @@ package by.mogilev.service;
 * Created by akiseleva on 27.02.2015.
 */
 import by.mogilev.model.UserRole;
+import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
@@ -20,25 +21,27 @@ import java.util.List;
 import java.util.Set;
 
 @Service
-public class CustomUserDetailsService implements  UserDetailsService{
 
+public class CustomUserDetailsService implements  UserDetailsService {
 
     @Autowired
     private UserDAO userDAO;
 
+
     @Override
+    @Transactional
     public UserDetails loadUserByUsername(String username)
-            throws UsernameNotFoundException{
-       by.mogilev.model.User user= userDAO.getUser(username);
+            throws UsernameNotFoundException {
+        by.mogilev.model.User user = userDAO.getUser(username);
 
         List<GrantedAuthority> authorities = buildUserAuthority(user.getAuthority());
         return buildUserForAuthentication(user, authorities);
     }
 
     private org.springframework.security.core.userdetails.User buildUserForAuthentication(by.mogilev.model.User user,
-                                            List<GrantedAuthority> authorities) {
+                                                                                          List<GrantedAuthority> authorities) {
         return new org.springframework.security.core.userdetails.User(user.getUsername(),
-                user.getPassword(),true, true, true, true, authorities);
+                user.getPassword(), true, true, true, true, authorities);
     }
 
     private List<GrantedAuthority> buildUserAuthority(UserRole userRole) {
@@ -49,11 +52,11 @@ public class CustomUserDetailsService implements  UserDetailsService{
         return Result;
     }
 
-    public void setUserDao(UserDAOImp userDao) {
-        this.userDAO = userDao;
+    public UserDAO getUserDAO() {
+        return userDAO;
     }
 
-    public UserDAO getUserDao() {
-        return userDAO;
+    public void setUserDAO(UserDAO userDAO) {
+        this.userDAO = userDAO;
     }
 }

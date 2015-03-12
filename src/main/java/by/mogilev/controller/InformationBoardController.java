@@ -5,6 +5,7 @@ import by.mogilev.service.CourseDAO;
 import by.mogilev.service.CourseDAOImp;
 import by.mogilev.service.UserDAO;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -25,6 +26,7 @@ import java.sql.SQLException;
 public class InformationBoardController {
 
     @Autowired
+    @Qualifier("courseDAOImp")
     private CourseDAO course;
 
     @ModelAttribute
