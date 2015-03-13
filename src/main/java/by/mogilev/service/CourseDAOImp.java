@@ -87,7 +87,7 @@ public class CourseDAOImp implements CourseDAO {
     public void deleteCourse(Course course) {
         Session session = this.sessionFactory.openSession();
         session.delete(course);
-        session.flush();
+      //  session.flush();
 
     }
 

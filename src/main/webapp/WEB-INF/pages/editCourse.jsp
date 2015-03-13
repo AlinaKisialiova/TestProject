@@ -15,7 +15,7 @@
     <a href="<c:url value="/informationBoard"/>"> Seminar Information Board</a>
     <tr><td><strong>Course Category</strong></td>
         <td>
-            <select name="newCourseCategory">
+            <select name="updCourseCategory">
                 <option selected value="Project Management">Project Management </option>
                 <option value="Development"> Development</option>
                 </select>
@@ -69,18 +69,18 @@
 
 <script type="text/javascript">
 
-    function validate() {
-        var nameCourse = document.forms["editForm"]["updCourseName"].value;
-        var durCourse = document.forms["editForm"]["updCourseDuration"].value;
-        if (nameCourse.length==0 ){
-            document.getElementById("errName").innerHTML="*required field";
-            return false;
-        }
-
-        if (durCourse.length==0 || parseInt(durCourse) < 1 ){
-            document.getElementById("errDuration").innerHTML="*incorrectly field";
-            return false;
-        }
-
-    }
+//    function validate() {
+//        var nameCourse = document.forms["editForm"]["updCourseName"].value;
+//        var durCourse = document.forms["editForm"]["updCourseDuration"].value;
+//        if (nameCourse.length==0 ){
+//            document.getElementById("errName").innerHTML="*required field";
+//            return false;
+//        }
+//        var par_pattern=/^[0-9]$/;
+//        if (durCourse.length==0 || parseInt(durCourse) < 1 || !(par_pattern.test(durCourse)) ){
+//            document.getElementById("errDuration").innerHTML="*incorrectly field";
+//            return false;
+//        }
+//
+//    }
 </script>

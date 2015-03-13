@@ -11,26 +11,36 @@
         <put-attribute name="footer" value="/WEB-INF/pages/layout/defaultFooter.jsp" />
     </definition>
 
+
+
     <definition name="signin" extends="defaultTemplate">
         <put-attribute name="content" value="/WEB-INF/pages/user/signin.jsp" />
+        <put-attribute name="title" value="Training Center - Sign In"/>
     </definition>
 
     <definition name="signin_failure" extends="defaultTemplate">
         <put-attribute name="content" value="/WEB-INF/pages/user/signin_failure.jsp" />
+        <put-attribute name="title" value="Training Center - Sign Failure"/>
     </definition>
 
     <definition name="informationBoard" extends="defaultTemplate">
         <put-attribute name="content" value="/WEB-INF/pages/informationBoard.jsp" />
+        <put-attribute name="title" value="Training Center - Information Board"/>
     </definition>
 
     <definition name="registrationCourse" extends="defaultTemplate">
     <put-attribute name="content" value="/WEB-INF/pages/registrationCourse.jsp" />
+        <put-attribute name="title" value="Training Center - Registration Course"/>
+
 </definition>
     <definition name="courseDetails" extends="defaultTemplate">
         <put-attribute name="content" value="/WEB-INF/pages/courseDetails.jsp" />
+        <put-attribute name="title" value="Training Center - Course Details"/>
     </definition>
+
     <definition name="editCourse" extends="defaultTemplate">
         <put-attribute name="content" value="/WEB-INF/pages/editCourse.jsp" />
+        <put-attribute name="title" value="Training Center - Edit Course "/>
     </definition>
 
 

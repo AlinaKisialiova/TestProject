@@ -5,4 +5,4 @@
   Time: 8:45
   To change this template use File | Settings | File Templates.
 --%>
-<div style="width: 100%; height: 90px; background-color: #eeeeee; text-align: center;"> HEADER</div>
+TRAINING CENTER

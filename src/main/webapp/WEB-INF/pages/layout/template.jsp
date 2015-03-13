@@ -17,21 +17,25 @@
 
 <html>
 <head>
-    <title>Hello</title>
+    <title><tiles:insertAttribute name="title" ignore="true"/></title>
+    <link href="<c:url value="/resources/css/bootstrap.css" />" rel="stylesheet">
+
 </head>
 <body>
 
-<div id="banner">
-    <tiles:insertAttribute name="header" />
-</div>
+<div class="container">
 
-<div id="page">
+
+    <tiles:insertAttribute name="header" />
+
+<div class="modal-body">
     <tiles:insertAttribute name="content" />
 </div>
 
-<div id="footer_wrapper">
+<div>
     <tiles:insertAttribute name="footer" />
 </div>
 
+</div>
 </body>
 </html>

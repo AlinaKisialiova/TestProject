@@ -62,26 +62,28 @@ public class ActionCourseController {
 
     @RequestMapping(value = "/editCourse/{course.id}", method = RequestMethod.GET)
     public ModelAndView editRegCourse(@PathVariable("course.id") Integer id) {
-        return new ModelAndView("editCourse", "checkCourse", course.findCourse(id));
+        return new ModelAndView("editCourse")
+                .addObject("checkCourse", course.findCourse(id));
     }
 
     @RequestMapping(value = "/editCourse/{course.id}", method = RequestMethod.POST)
-    public String editCourse(@PathVariable("course.id") Integer id,
-                             HttpServletRequest request, Model model) {
+    public ModelAndView editCourse(@PathVariable("course.id") Integer id,
+                                   HttpServletRequest request, Model model) {
+
         String p = request.getParameter("deleteCourse");
         if ("on".equals(p)) {
             Course delCourse = course.findCourse(id);
             course.deleteCourse(delCourse);
-            model.addAttribute("message", "Course Deleted!");
 
-        }
-        else {
-            course.updateCourse(id,request.getParameter("updCourseCategory"), request.getParameter("updCourseName"),
+        } else {
+            course.updateCourse(id, request.getParameter("updCourseCategory"), request.getParameter("updCourseName"),
                     request.getParameter("updCourseDescription"), request.getParameter("updCourseLinks"),
                     request.getParameter("updCourseDuration"));
             model.addAttribute("message", "Course Updated!");
-                }
-        return "editCourse";
+
+        }
+        return new ModelAndView("informationBoard", "courseList", course.getAllCourse());
+
     }
 
 }

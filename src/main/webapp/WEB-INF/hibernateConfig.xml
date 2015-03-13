@@ -11,7 +11,6 @@
 
     <context:component-scan base-package="by.mogilev"/>
 
-
     <bean id="dataSource" class="org.springframework.jdbc.datasource.SimpleDriverDataSource">
 
         <property name="driverClass" value="org.h2.Driver"/>
@@ -26,9 +25,7 @@
         <property name="dataSource" ref="dataSource" />
         <property name="packagesToScan" value="by.mogilev.model"/>
 
-
-
-        <property name="hibernateProperties">
+ <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.dialect">
                     org.hibernate.dialect.H2Dialect

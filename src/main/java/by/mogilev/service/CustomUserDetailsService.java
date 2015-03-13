@@ -1,13 +1,15 @@
 package by.mogilev.service;
 
 /**
-* Created by akiseleva on 27.02.2015.
-*/
+ * Created by akiseleva on 27.02.2015.
+ */
+
 import by.mogilev.model.UserRole;
 import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
+import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
 import org.springframework.security.core.userdetails.UsernameNotFoundException;
@@ -22,7 +24,7 @@ import java.util.Set;
 
 @Service
 
-public class CustomUserDetailsService implements  UserDetailsService {
+public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired
     private UserDAO userDAO;
@@ -30,17 +32,17 @@ public class CustomUserDetailsService implements  UserDetailsService {
 
     @Override
     @Transactional
-    public UserDetails loadUserByUsername(String username)
-            throws UsernameNotFoundException {
+    public UserDetails loadUserByUsername(String username) {
+
         by.mogilev.model.User user = userDAO.getUser(username);
 
         List<GrantedAuthority> authorities = buildUserAuthority(user.getAuthority());
         return buildUserForAuthentication(user, authorities);
     }
 
-    private org.springframework.security.core.userdetails.User buildUserForAuthentication(by.mogilev.model.User user,
-                                                                                          List<GrantedAuthority> authorities) {
-        return new org.springframework.security.core.userdetails.User(user.getUsername(),
+    private User buildUserForAuthentication(by.mogilev.model.User user,
+                                            List<GrantedAuthority> authorities) {
+        return new User(user.getUsername(),
                 user.getPassword(), true, true, true, true, authorities);
     }
 
