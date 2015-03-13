@@ -24,12 +24,14 @@ public class Course {
     private boolean delivered;
     private List<User> attendee;
 
-    public Course(String category, String nameCourse, String description, String links, String duration) {
+    public Course(String category, String nameCourse, String description, String links, String duration, String nameLector) {
         this.category=category;
         this.nameCourse=nameCourse;
         this.description=description;
         this.links=links;
         this.duration=duration;
+        this.nameLector=nameLector;
+
     }
     public Course() {}
     public Course(int id, String category, String nameCourse, String nameLector, String duration, String description,

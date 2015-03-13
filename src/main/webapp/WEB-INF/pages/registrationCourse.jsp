@@ -1,4 +1,5 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <h1>Register Course</h1>
 <a href="informationBoard"> Seminar Information Board</a>
 
@@ -30,7 +31,8 @@
             <td><input type="text" name="newCourseDuration">
                 <span style="color:red" id="errDuration"></span></td>
         </tr>
-
+        <security:authentication property="principal.username" var="user"/>
+<input type="hidden" name="lectorName" value="${user}"/>
         <tr>
             <td><input type="reset" value="Cancel"/> </td>
             <td><input type="submit" value="Save" onclick="return validate();"/></td>
@@ -49,8 +51,11 @@
             document.getElementById("errName").innerHTML="*required field";
             return false;
         }
+        var par_pattern=/^[0-9]$/;
 
-        if (durCourse.length==0 || parseInt(durCourse) < 1 ){
+
+        if (durCourse.length==0 || parseInt(durCourse) < 1  ||  !(par_pattern.test(durCourse))){
+
             document.getElementById("errDuration").innerHTML="*incorrectly field";
             return false;
         }

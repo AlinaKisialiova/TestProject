@@ -49,7 +49,7 @@ public class ActionCourseController {
 
         course.registerCourse(request.getParameter("newCourseCategory"), request.getParameter("newCourseName"),
                 request.getParameter("newCourseDescription"), request.getParameter("newCourseLinks"),
-                request.getParameter("newCourseDuration"));
+                request.getParameter("newCourseDuration"), request.getParameter("lectorName"));
         model.addAttribute("message", "Course added!");
 
         return new ModelAndView("informationBoard", "courseList", course.getAllCourse());

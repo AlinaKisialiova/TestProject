@@ -3,21 +3,14 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <h1>Seminars Information Board</h1>
-<%--Hello, <security:authentication property="principal.username" var="user"/> ${user}!--%>
-<%--<a href=j_spring_security_logout> Logout</a>--%>
-<%--</br>--%>
+Hello, <security:authentication property="principal.username" var="user"/> ${user}!
+<a href=j_spring_security_logout> Logout</a>
+</br>
 
-<%--<sec:authorize access="hasRole('ROLE_LECTOR')">--%>
-    <%--I am know that you are a lector!--%>
-<%--</sec:authorize>--%>
+<sec:authorize access="hasRole('ROLE_LECTOR')">
+    I am know that you are a lector!
+</sec:authorize>
 
-<%--<sec:authorize access="hasRole('ROLE_PARTICIPANT')">--%>
-    <%--I am know that you are a participant!--%>
-<%--</sec:authorize>--%>
-
-<%--<sec:authorize access="hasRole('ROLE_MANAGER')">--%>
-    <%--I am know that you are a manager!--%>
-<%--</sec:authorize>--%>
 
 <br/>
 <div id='EvalRemindBlock' style="display: none;">
