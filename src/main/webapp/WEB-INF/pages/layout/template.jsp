@@ -18,18 +18,21 @@
 <html>
 <head>
     <title><tiles:insertAttribute name="title" ignore="true"/></title>
-    <link href="<c:url value="/resources/css/bootstrap.css" />" rel="stylesheet">
+    <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
+
 
 </head>
 <body>
 
+
 <div class="container">
-
-
+<div>
     <tiles:insertAttribute name="header" />
+</div>
 
-<div class="modal-body">
-    <tiles:insertAttribute name="content" />
+<div class="content">
+  <tiles:insertAttribute name="content" />
+
 </div>
 
 <div>

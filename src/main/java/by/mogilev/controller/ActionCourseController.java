@@ -6,6 +6,7 @@ import by.mogilev.model.User;
 import by.mogilev.service.CourseDAO;
 import by.mogilev.service.CourseDAOImp;
 import by.mogilev.service.UserDAO;
+import javassist.NotFoundException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -52,12 +53,14 @@ public class ActionCourseController {
                 request.getParameter("newCourseDuration"), request.getParameter("lectorName"));
         model.addAttribute("message", "Course added!");
 
-        return new ModelAndView("informationBoard", "courseList", course.getAllCourse());
+        return new ModelAndView("informationBoard")
+        .addObject("courseList", course.getAllCourse());
     }
 
     @RequestMapping(value = "/courseDetails/{course.id}", method = RequestMethod.GET)
     public ModelAndView detailsCourse(@PathVariable("course.id") Integer id) {
-        return new ModelAndView("courseDetails", "checkCourse", course.findCourse(id));
+        return new ModelAndView("courseDetails")
+        .addObject("checkCourse", course.findCourse(id));
     }
 
     @RequestMapping(value = "/editCourse/{course.id}", method = RequestMethod.GET)
@@ -68,7 +71,7 @@ public class ActionCourseController {
 
     @RequestMapping(value = "/editCourse/{course.id}", method = RequestMethod.POST)
     public ModelAndView editCourse(@PathVariable("course.id") Integer id,
-                                   HttpServletRequest request, Model model) {
+                                   HttpServletRequest request, Model model) throws NotFoundException {
 
         String p = request.getParameter("deleteCourse");
         if ("on".equals(p)) {
@@ -82,7 +85,8 @@ public class ActionCourseController {
             model.addAttribute("message", "Course Updated!");
 
         }
-        return new ModelAndView("informationBoard", "courseList", course.getAllCourse());
+        return new ModelAndView("informationBoard")
+                .addObject("courseList", course.getAllCourse());
 
     }
 

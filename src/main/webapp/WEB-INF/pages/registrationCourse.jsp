@@ -2,7 +2,7 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <h1>Register Course</h1>
 <a href="informationBoard"> Seminar Information Board</a>
-
+<br/>
 <form action="registrationCourse" method="post" name="regForm">
     <table>
         <tr>
@@ -11,20 +11,24 @@
                 <option selected value="Project Management">Project Management </option>
                 <option value="Development"> Development</option>
             </select></td>
+
         </tr>
         <tr>
             <td>Course Name</td>
             <td><input type="text" name="newCourseName"/>
                 <span style="color:red" id="errName"></span></td>
+
         </tr>
         <tr>
             <td>Course Description</td>
             <td><input type="text" name="newCourseDescription"/>
                 <span style="color:red" id="errDescription"></span></td>
+
         </tr>
         <tr>
             <td>Course Links</td>
             <td><textarea name="newCourseLinks"></textarea> </td>
+            <td>   <img src="resources/reg.jpg"/></td>
         </tr>
         <tr>
             <td>Course Duration</td>

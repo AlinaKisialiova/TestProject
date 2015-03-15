@@ -1,6 +1,7 @@
 package by.mogilev.service;
 
 import by.mogilev.model.Course;
+import javassist.NotFoundException;
 
 import java.sql.SQLException;
 import java.util.List;
@@ -11,7 +12,7 @@ import java.util.List;
 
 public interface CourseDAO {
 
-    public void deleteCourse(Course course) ;
+    public void deleteCourse(Course course);
     public List<Course> getAllCourse();
     public Course findCourse(int id);
     public void remidEv(int id, int grade);

@@ -2,6 +2,7 @@ package by.mogilev.service;
 
 import by.mogilev.model.Course;
 import by.mogilev.model.User;
+import javassist.NotFoundException;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
@@ -85,10 +86,10 @@ public class CourseDAOImp implements CourseDAO {
 
     @Transactional
     public void deleteCourse(Course course) {
+        if (course==null) return;
         Session session = this.sessionFactory.openSession();
         session.delete(course);
-      //  session.flush();
-
+        session.flush();
     }
 
 }
