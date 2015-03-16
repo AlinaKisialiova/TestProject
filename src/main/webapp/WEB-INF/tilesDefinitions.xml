@@ -12,7 +12,6 @@
     </definition>
 
 
-
     <definition name="signin" extends="defaultTemplate">
         <put-attribute name="content" value="/WEB-INF/pages/user/signin.jsp" />
         <put-attribute name="title" value="Training Center - Sign In"/>

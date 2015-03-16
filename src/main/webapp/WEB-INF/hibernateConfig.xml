@@ -37,9 +37,11 @@
 
     <context:component-scan base-package="by.mogilev.service"/>
 
-    <bean id="userDAO" class="by.mogilev.service.UserDAOImp">
+    <bean id="userDAO" class="by.mogilev.dao.UserDAOImp">
         <property name="sessionFactory" ref="sessionFactory" />
     </bean>
+
+
 
     <tx:annotation-driven transaction-manager="transactionManager" />
 

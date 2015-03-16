@@ -9,7 +9,7 @@
 --%>
 <h1>Course Details Update</h1>
 
-<form:form method="post" name="editForm" commandName="course" modelAttribute="updCourse">
+<form:form method="post" name="editForm" commandName="course" modelAttribute="Course">
 <table align="center">
     <a href="<c:url value="/informationBoard"/>"> Seminar Information Board</a>
     <tr><td><strong>Course Category</strong></td>

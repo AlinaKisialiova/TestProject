@@ -1,22 +1,19 @@
-package by.mogilev.service;
+package by.mogilev.dao;
 
+import by.mogilev.dao.CourseDAO;
 import by.mogilev.model.Course;
 import by.mogilev.model.User;
-import javassist.NotFoundException;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.hibernate3.HibernateTemplate;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
-import org.springframework.stereotype.Service;
+import org.springframework.web.bind.annotation.ModelAttribute;
 
-import javax.swing.*;
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.List;
 
@@ -27,24 +24,28 @@ import java.util.List;
 @Transactional
 public class CourseDAOImp implements CourseDAO {
 
-
     @Autowired
     private SessionFactory sessionFactory;
+//
+//    @Autowired
+//    private CourseDAO course;
 
     public CourseDAOImp() {
     }
 
-
     @Transactional
-    public void registerCourse(String category, String nameCourse, String description, String links, String duration, String loginLector) {
+    public void registerCourse(Course newCourse, String loginLector) {
         Session session = this.sessionFactory.getCurrentSession();
+        if (newCourse == null) return;
         User lector;
         Criteria criteria = session.createCriteria(User.class);
         criteria.add(Restrictions.eq("username", loginLector));
         lector= (User) criteria.uniqueResult();
-        session.save(new Course(category, nameCourse, description, links, duration, lector.getName()));
+        newCourse.setLector(lector);
+        session.save(newCourse);
     }
 
+    @SuppressWarnings("unchecked")
     @Transactional
     public List<Course> getAllCourse() {
         List<Course> coursesList = new ArrayList<Course>();
@@ -59,14 +60,42 @@ public class CourseDAOImp implements CourseDAO {
         Criteria criteria = session.createCriteria(Course.class);
         criteria.add(Restrictions.eq("id", id));
         return (Course) criteria.uniqueResult();
-
     }
-
 
  @Override
     public void updateCourse(Course course) {
         Session session = this.sessionFactory.getCurrentSession();
-        session.update(course);
+     session.update(course);
+    }
+
+    @Override
+    public boolean isOwner(int idCourse, HttpSession session) {
+//        Course checkCourse = course.findCourse(idCourse);
+//        User user = (User)session.getAttribute("user");
+//        if(checkCourse.getLector().getName().equals(user.getName()))
+//            return true;
+        return false;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Course> getCoursesForUser() {
+        return null;
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Course> getCoursesForLector() {
+        return sessionFactory.getCurrentSession().createQuery("from Course").list();
+    }
+    @SuppressWarnings("unchecked")
+    @Override
+    public List<Course> getSelected(String category) {
+        if(category.equals("All"))
+            return getAllCourse();
+        else
+            return sessionFactory.getCurrentSession().createQuery("from Course u where u.category=:category")
+                    .setParameter("category",category).list();
     }
 
     @Override
@@ -77,6 +106,7 @@ public class CourseDAOImp implements CourseDAO {
         session.saveOrUpdate(changeEvalCourse);
 
     }
+
 
     @Transactional
     public void deleteCourse(Course course) {

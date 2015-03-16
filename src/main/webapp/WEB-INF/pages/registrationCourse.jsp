@@ -3,48 +3,59 @@
 <h1>Register Course</h1>
 <a href="informationBoard"> Seminar Information Board</a>
 <br/>
-<form action="registrationCourse" method="post" name="regForm">
-    <table>
-        <tr>
-            <td>Course Category</td>
-            <td> <select name="newCourseCategory">
-                <option selected value="Project Management">Project Management </option>
-                <option value="Development"> Development</option>
-            </select></td>
+<form:form action="registrationCourse" method="post" name="regForm" class="form-horizontal" modelAttribute="Course">    <fieldset>
 
-        </tr>
-        <tr>
-            <td>Course Name</td>
-            <td><input type="text" name="newCourseName"/>
-                <span style="color:red" id="errName"></span></td>
+    <div class="control-group">
+    <label class="control-label">  Course Category</label>
+        <div class="controls">
+    <form:select path="category" name="category"  class="span5">
+    <form:option value="Project Management" label="Project Management" />
+    <form:option value="Development" label="Development" />
+            </form:select>
+        </div>
+</div>
+        <div class="control-group">
+    <label class="control-label">Course Name </label>
+        <div class="controls">
+<form:input path="nameCourse" class="span5"/>
+                <span style="color:red" id="errName"></span>
+        </div>
+        </div>
 
-        </tr>
-        <tr>
-            <td>Course Description</td>
-            <td><input type="text" name="newCourseDescription"/>
-                <span style="color:red" id="errDescription"></span></td>
+        <div class="control-group">
+            <label class="control-label">Course Description</label>
+        <div class="controls">
+            <form:input path="description" name="newCourseDescription" cssClass="span5"/>
+            <span style="color:red" id="errDescription"></span>
+            </div>
+            </div>
 
-        </tr>
-        <tr>
-            <td>Course Links</td>
-            <td><textarea name="newCourseLinks"></textarea> </td>
-            <td>   <img src="resources/reg.jpg"/></td>
-        </tr>
-        <tr>
-            <td>Course Duration</td>
-            <td><input type="text" name="newCourseDuration">
-                <span style="color:red" id="errDuration"></span></td>
-        </tr>
+        <div class="control-group">
+            <label class="control-label">Course Links</label>
+            <div class="controls">
+           <form:textarea name="newCourseLinks" path="links"/>
+             <img src="resources/reg.jpg"/>
+       </div>
+            </div>
+
+        <div class="control-group">
+            <label class="control-label">Course Duration</label>
+            <div class="controls">
+            <form:input type="text" name="newCourseDuration" path="duration"/>
+                <span style="color:red" id="errDuration"/>
+                </div>
+            </div>
+
         <security:authentication property="principal.username" var="user"/>
-<input type="hidden" name="lectorName" value="${user}"/>
-        <tr>
-            <td><input type="reset" value="Cancel"/> </td>
-            <td><input type="submit" value="Save" onclick="return validate();"/></td>
-        </tr>
+        <div class="form-actions">
+            <input type="submit" value="Save" onclick="return validate();" class="btn btn-primary"/>
+            <a href="informationBoard"> Cancel</a>
 
-    </table>
- <font face="Arial" size=5 color="blue" >  ${message}</font>
-</form>
+            </div>
+
+
+    </fieldset>
+</form:form>
 
 <script type="text/javascript">
 

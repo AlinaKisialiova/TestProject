@@ -4,19 +4,17 @@ package by.mogilev.service;
  * Created by akiseleva on 27.02.2015.
  */
 
+import by.mogilev.dao.UserDAO;
 import by.mogilev.model.UserRole;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.GrantedAuthority;
 import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.User;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.security.core.userdetails.UserDetailsService;
-import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.stereotype.Service;
 
 import javax.transaction.Transactional;
-import java.sql.SQLException;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -28,7 +26,6 @@ public class CustomUserDetailsService implements UserDetailsService {
 
     @Autowired
     private UserDAO userDAO;
-
 
     @Override
     @Transactional

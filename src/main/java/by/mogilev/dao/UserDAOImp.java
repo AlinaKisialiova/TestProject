@@ -1,21 +1,16 @@
-package by.mogilev.service;
+package by.mogilev.dao;
 
+import by.mogilev.dao.UserDAO;
 import by.mogilev.model.User;
-import by.mogilev.model.UserRole;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.Transaction;
 import org.hibernate.criterion.Restrictions;
-import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.orm.hibernate3.HibernateTemplate;
-import org.springframework.orm.hibernate3.support.HibernateDaoSupport;
 import org.springframework.stereotype.Component;
+import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
-import java.sql.SQLException;
 import java.util.ArrayList;
-import java.util.Collection;
 import java.util.List;
 
 @Component
@@ -26,7 +21,6 @@ public class UserDAOImp  implements UserDAO {
 
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
-
     }
 
     public  UserDAOImp() {}

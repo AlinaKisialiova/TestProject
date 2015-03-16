@@ -2,7 +2,9 @@ package by.mogilev.model;
 
 import javax.persistence.*;
 import java.util.ArrayList;
+import java.util.HashSet;
 import java.util.List;
+import java.util.Set;
 
 /**
  * Created by akiseleva on 26.02.2015.
@@ -14,7 +16,7 @@ public class Course {
     private int id;
     private String category;
     private String nameCourse;
-    private String nameLector;
+    private User lector;
     private String duration;
     private String description;
     private String links;
@@ -22,36 +24,20 @@ public class Course {
     private int numbOfAttendee;
     private int evaluation;
     private boolean delivered;
-    private List<User> attendee;
+    private Set<User> attendees = new HashSet<User>();
+    private Set<User> subscribers = new HashSet<User>();
 
-    public Course(String category, String nameCourse, String description, String links, String duration, String nameLector) {
-        this.category=category;
-        this.nameCourse=nameCourse;
-        this.description=description;
-        this.links=links;
-        this.duration=duration;
-        this.nameLector=nameLector;
+
+                public Course(String category, String nameCourse, String description, String links, String duration, User lector) {
+                this.category=category;
+                this.nameCourse=nameCourse;
+                this.description=description;
+                this.links=links;
+                this.duration=duration;
+                this.lector=lector;
 
     }
     public Course() {}
-    public Course(int id, String category, String nameCourse, String nameLector, String duration, String description,
-                  String links, int numbOfSubscribers, int numbOfAttendee, int evaluation, boolean delivered,
-                  List<User> attendee) {
-        this.id=id;
-        this.category = category;
-        this.nameCourse = nameCourse;
-        this.nameLector = nameLector;
-        this.duration = duration;
-        this.description = description;
-        this.links = links;
-        this.numbOfSubscribers = numbOfSubscribers;
-        this.numbOfAttendee = numbOfAttendee;
-        this.evaluation = evaluation;
-        this.delivered = delivered;
-        this.attendee = attendee;
-    }
-
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_course")
@@ -76,14 +62,6 @@ public class Course {
     }
     public void setNameCourse(String nameCourse) {
         this.nameCourse = nameCourse;
-    }
-
-    @Column(name = "nameLector")
-    public String getNameLector() {
-        return nameLector;
-    }
-    public void setNameLector(String nameLector) {
-        this.nameLector = nameLector;
     }
 
     @Column(name = "duration")
@@ -142,15 +120,29 @@ public class Course {
         this.delivered = delivered;
     }
 
-    @ManyToMany(fetch = FetchType.LAZY, mappedBy = "course")
-    public List<User> getAttendee() {
-        return attendee;
+    @ManyToOne
+    @JoinColumn(name="id_user",nullable=false)
+    public User getLector() {
+        return lector;
     }
-    public void setAttendee(List<User> attendee) {
-        this.attendee = attendee;
+    public void setLector(User lector) {
+        this.lector = lector;
+    }
+    @ManyToMany(fetch=FetchType.EAGER,mappedBy="coursesSubscribe",
+            cascade=CascadeType.ALL)
+    public Set<User> getAttendees() {
+        return attendees;
+    }
+    public void setAttendees(Set<User> attendees) {
+        this.attendees = attendees;
+    }
+    @ManyToMany(fetch=FetchType.EAGER,mappedBy="coursesAttendee",
+            cascade=CascadeType.ALL)
+    public Set<User> getSubscribers() {
+        return subscribers;
     }
 
-
-
-
+    public void setSubscribers(Set<User> subscribers) {
+        this.subscribers = subscribers;
+    }
 }

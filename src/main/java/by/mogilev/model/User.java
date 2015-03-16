@@ -6,10 +6,7 @@ import org.springframework.security.core.authority.SimpleGrantedAuthority;
 import org.springframework.security.core.userdetails.UserDetails;
 
 import javax.persistence.*;
-import java.util.ArrayList;
-import java.util.Collection;
-import java.util.HashSet;
-import java.util.List;
+import java.util.*;
 
 /**
 * Created by akiseleva on 27.02.2015.
@@ -25,17 +22,19 @@ public class User  {
     UserRole authority;
     private String name;
     private String email;
-    private List<Course> course;
+    private Set<Course> course;
     private boolean enabled;
+    private Set<Course> coursesSubscribe = new HashSet<Course>();
+    private Set<Course> coursesAttendee = new HashSet<Course>();
 
 
     public User(){}
 
-    public User(String username, String password, UserRole role) {
-        this.username = username;
-        this.password = password;
-        this.authority=role;
-    }
+//    public User(String username, String password, UserRole role) {
+//        this.username = username;
+//        this.password = password;
+//        this.authority=role;
+//    }
 
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
@@ -81,18 +80,6 @@ public class User  {
     public void setEmail(String email) {
         this.email = email;
     }
-    @ManyToMany(fetch = FetchType.LAZY, cascade = CascadeType.ALL)
-    @JoinTable(name = "USER_COURSE", joinColumns = {
-            @JoinColumn(name = "id_user") },
-            inverseJoinColumns = { @JoinColumn(name = "id_course",
-                    nullable = false, updatable = false) })
-    public List<Course> getCourse() {
-        return course;
-    }
-
-    public void setCourse(List<Course> course) {
-        this.course = course;
-    }
 
     public void setUsername(String username) {
         this.username = username;
@@ -108,4 +95,36 @@ public class User  {
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
+
+    @OneToMany(fetch = FetchType.EAGER,mappedBy="lector" )
+    public Set<Course> getCourse() {
+        return course;
+    }
+    public void setCourse(Set<Course> course) {
+        this.course = course;
+    }
+
+    @ManyToMany(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
+    @JoinTable(name="COURSE_SUBSCRIBERS",
+            joinColumns=@JoinColumn(name="id_course"),
+            inverseJoinColumns=@JoinColumn(name="id_user"))
+    public Set<Course> getCoursesSubscribe() {
+        return coursesSubscribe;
+    }
+
+    public void setCoursesSubscribe(Set<Course> coursesSubscribe) {
+        this.coursesSubscribe = coursesSubscribe;
+    }
+    @ManyToMany(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
+    @JoinTable(name="COURSE_ATTENDERS",
+            joinColumns=@JoinColumn(name="id_user"),
+            inverseJoinColumns=@JoinColumn(name="id_course"))
+    public Set<Course> getCoursesAttendee() {
+        return coursesAttendee;
+    }
+
+    public void setCoursesAttendee(Set<Course> coursesAttendee) {
+        this.coursesAttendee = coursesAttendee;
+    }
+
 }

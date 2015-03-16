@@ -1,12 +1,9 @@
 package by.mogilev.controller;
 
 import by.mogilev.model.Course;
-import by.mogilev.model.User;
 
-import by.mogilev.service.CourseDAO;
-import by.mogilev.service.CourseDAOImp;
-import by.mogilev.service.UserDAO;
-import javassist.NotFoundException;
+import by.mogilev.dao.CourseDAO;
+import by.mogilev.model.User;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -19,7 +16,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 import javax.servlet.http.HttpServletRequest;
-import java.sql.SQLException;
+import javax.servlet.http.HttpSession;
 
 /**
  * Created by akiseleva on 09.03.2015.
@@ -28,7 +25,6 @@ import java.sql.SQLException;
 public class ActionCourseController {
 
     @Autowired
-    @Qualifier("courseDAOImp")
     private CourseDAO course;
 
     @ModelAttribute
@@ -41,50 +37,57 @@ public class ActionCourseController {
         return userName;
     }
 
+    @ModelAttribute("Course")
+    public Course newCourse() {
+        return new Course();
+    }
+
     @RequestMapping(value = "/registrationCourse", method = RequestMethod.GET)
     public String displayRegCourse() {
         return "registrationCourse";
     }
 
     @RequestMapping(value = "/registrationCourse", method = RequestMethod.POST)
-    public ModelAndView regCourse(HttpServletRequest request, Model model) {
+    public ModelAndView regCourse(@ModelAttribute("Course")  Course newCourse,  BindingResult result, Model model, HttpSession session) {
+           if (!result.hasErrors()) new ModelAndView("redirect:/informationBoard");
+            String userName = populateCurrentUser();
 
-        course.registerCourse(request.getParameter("newCourseCategory"), request.getParameter("newCourseName"),
-                request.getParameter("newCourseDescription"), request.getParameter("newCourseLinks"),
-                request.getParameter("newCourseDuration"), request.getParameter("lectorName"));
-        model.addAttribute("message", "Course added!");
+            course.registerCourse(newCourse, userName);
+            return new ModelAndView("redirect:/informationBoard");
 
-        return new ModelAndView("informationBoard")
-        .addObject("courseList", course.getAllCourse());
     }
 
     @RequestMapping(value = "/courseDetails/{course.id}", method = RequestMethod.GET)
     public ModelAndView detailsCourse(@PathVariable("course.id") Integer id) {
         return new ModelAndView("courseDetails")
-        .addObject("checkCourse", course.findCourse(id));
+                .addObject("checkCourse", course.findCourse(id));
     }
 
     @RequestMapping(value = "/editCourse/{course.id}", method = RequestMethod.GET)
     public String editRegCourse(@PathVariable("course.id") Integer id, Model model) {
         model.addAttribute("course",course.findCourse(id));
         return "editCourse";
-
     }
-
 
     @RequestMapping(value = "/editCourse/{course.id}", method = RequestMethod.POST)
     public String editCourse(@PathVariable("course.id") Integer id,
-                             @ModelAttribute("updCourse") Course updCourse,
-                             BindingResult result,
-                             HttpServletRequest request) {
+                             @ModelAttribute("Course") Course updCourse,
+                             HttpServletRequest request, HttpSession session, Model model) {
+
+        if (course.findCourse(id) == null) return "redirect:/informationBoard";
+
+        if (course.isOwner(id, session)) {
+
         String p = request.getParameter("deleteCourse");
         if ("on".equals(p)) {
             Course delCourse = course.findCourse(id);
             course.deleteCourse(delCourse);
-        } else
-        {
-            course.updateCourse(updCourse);
         }
+        else
+            course.updateCourse(updCourse);
+            }
+        else
+            model.addAttribute("message", "Forbidden update");
 
         return "redirect:/informationBoard";
 

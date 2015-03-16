@@ -1,11 +1,6 @@
 package by.mogilev.controller;
 
-import by.mogilev.model.Course;
-import by.mogilev.service.CourseDAO;
-import by.mogilev.service.CourseDAOImp;
-import by.mogilev.service.UserDAO;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import by.mogilev.dao.CourseDAO;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -40,7 +35,6 @@ public class InformationBoardController {
         }
         return userName;
     }
-
 
     @RequestMapping(value = "/informationBoard", method = RequestMethod.GET)
     public ModelAndView listCourse() throws SQLException{

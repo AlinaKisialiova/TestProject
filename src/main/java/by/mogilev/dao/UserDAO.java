@@ -1,4 +1,4 @@
-package by.mogilev.service;
+package by.mogilev.dao;
 
 import by.mogilev.model.User;
 

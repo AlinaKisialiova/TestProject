@@ -107,7 +107,7 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
 
     <c:forEach items="${courseList}" var="course">
         <tr>
-            <td class="lector_${course.id}"><c:out value="${course.nameLector}" escapeXml="true"/></td>
+            <td class="lector_${course.id}"><c:out value="${course.lector.name}" escapeXml="true"/></td>
             <td >
                 <a href="<c:out value="courseDetails/${course.id}" escapeXml="true"/>">
            <span class="course_${course.id}"> <c:out  value="${course.nameCourse}" escapeXml="true"/></span></a>
@@ -119,7 +119,7 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
             <td class="grade_${course.id}"><c:out value="${course.evaluation}" escapeXml="true"/></td>
             <td>
 
-                <c:if test="${ user eq course.nameLector}">
+                <c:if test="${ user eq course.lector.name}">
                 <form:form action="informationBoard" method="post" commandName="course">
                 <c:if test="${course.delivered}">
                     <c:set var="visibleDelete" value="disabled"/>
