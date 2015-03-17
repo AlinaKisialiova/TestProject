@@ -63,16 +63,10 @@ public class CourseDAOImp implements CourseDAO {
     }
 
 
-    @Override
-    public void updateCourse(int id, String category, String nameCourse, String description, String links, String duration) {
+ @Override
+    public void updateCourse(Course course) {
         Session session = this.sessionFactory.getCurrentSession();
-        Course changeCourse = findCourse(id);
-        changeCourse.setCategory(category);
-        changeCourse.setNameCourse(nameCourse);
-        changeCourse.setDescription(description);
-        changeCourse.setLinks(links);
-        changeCourse.setDuration(duration);
-        session.saveOrUpdate(changeCourse);
+        session.update(course);
     }
 
     @Override

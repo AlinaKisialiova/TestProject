@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: akiseleva
@@ -8,38 +9,37 @@
 --%>
 <h1>Course Details Update</h1>
 
-<c:set var="course" value="${checkCourse}"/>
-
-<form method="post" name="editForm">
+<form:form method="post" name="editForm" commandName="course" modelAttribute="updCourse">
 <table align="center">
     <a href="<c:url value="/informationBoard"/>"> Seminar Information Board</a>
     <tr><td><strong>Course Category</strong></td>
         <td>
-            <select name="updCourseCategory">
-                <option selected value="Project Management">Project Management </option>
-                <option value="Development"> Development</option>
-                </select>
+         <form:select path="category" name="updCourseCategory">
+             <form:option value="0" label="Project Management" />
+             <form:option value="1" label="Development" />
+         </form:select>
         </td>
     </tr>
-    <tr><td><strong>Course Name</strong></td>
+    <tr><th>Course Name</th>
         <td>
-            <input type="text" name="updCourseName" value="<c:out value="${course.nameCourse}"/>"/>
+            <form:input path="nameCourse" name="updCourseName"/>
             <span style="color:red" id="errName"></span></td>
         </td>
     </tr>
-    <tr><td><strong>Course Description</strong></td>
-        <td><input type="text" name="updCourseDescription" value="<c:out value="${course.description}"/>"/></td>
+    <tr><th>Course Description</th>
+        <td><form:input path="description" name="updCourseDescription"/>
+        </td>
     </tr>
-    <tr><td><strong>Course Links</strong></td>
-        <td><textarea name="updCourseLinks"> <c:out value="${course.links}"/>
-        </textarea></td>
+    <tr><th>Course Links</th>
+        <td><form:textarea path="links" name="updCourseLinks"/>
+        </td>
     </tr>
-    <tr><td><strong>Course Duration</strong></td>
-        <td><input type="text" name="updCourseDuration" value="<c:out value="${course.duration}"/>"/>
+    <tr><th>Course Duration</th>
+        <td><form:input path="duration" name="updCourseDuration"/>
             <span style="color:red" id="errDuration"/>
         </td>
     </tr>
-    <tr><td><strong>Numbers of Subscribers</strong></td>
+    <tr><th>Numbers of Subscribers</th>
         <td><c:out value="${course.numbOfSubscribers}"/></td>
     </tr>
     <tr><td><strong>Numbers of Attende</strong></td>
@@ -49,10 +49,12 @@
         <td><c:out value="${course.delivered}"/></td>
     </tr>
     <tr><td><strong>Course Evaluation</strong></td>
-        <td><c:out value="${course.evaluation}"/></td>
+        <td>
+            <c:out value="${course.evaluation}"/>
+        </td>
     </tr>
 
-    <tr><td><strong>Delete Course</strong></td>
+    <tr><th>Delete Course</th>
         <td>
             <input type="checkbox" name="deleteCourse" />
         </td>
@@ -60,11 +62,11 @@
     </tr>
     <tr>
         <td><input type="reset" value="Cancel"/> </td>
-        <td><input type="submit" value="Save" onclick="return validate();"/></td>
+        <td><input type="submit" value="OK" onclick="return validate();"/></td>
     </tr>
 </table>
-</form>
-<font face="Arial" size=5 color="blue" >  ${message}</font>
+</form:form>
+
 </div>
 
 <script type="text/javascript">

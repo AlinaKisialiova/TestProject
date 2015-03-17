@@ -13,6 +13,7 @@ import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
+import org.springframework.validation.BindingResult;
 import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
@@ -64,26 +65,27 @@ public class ActionCourseController {
     }
 
     @RequestMapping(value = "/editCourse/{course.id}", method = RequestMethod.GET)
-    public ModelAndView editRegCourse(@PathVariable("course.id") Integer id) {
-        return new ModelAndView("editCourse")
-                .addObject("checkCourse", course.findCourse(id));
+    public String editRegCourse(@PathVariable("course.id") Integer id, Model model) {
+        model.addAttribute("course",course.findCourse(id));
+        return "editCourse";
+
     }
+
 
     @RequestMapping(value = "/editCourse/{course.id}", method = RequestMethod.POST)
     public String editCourse(@PathVariable("course.id") Integer id,
-                             HttpServletRequest request, Model model) throws NotFoundException {
-
+                             @ModelAttribute("updCourse") Course updCourse,
+                             BindingResult result,
+                             HttpServletRequest request) {
         String p = request.getParameter("deleteCourse");
         if ("on".equals(p)) {
             Course delCourse = course.findCourse(id);
             course.deleteCourse(delCourse);
-
-        } else {
-            course.updateCourse(id, request.getParameter("updCourseCategory"), request.getParameter("updCourseName"),
-                    request.getParameter("updCourseDescription"), request.getParameter("updCourseLinks"),
-                    request.getParameter("updCourseDuration"));
-
+        } else
+        {
+            course.updateCourse(updCourse);
         }
+
         return "redirect:/informationBoard";
 
     }

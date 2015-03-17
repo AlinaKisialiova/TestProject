@@ -17,6 +17,6 @@ public interface CourseDAO {
     public Course findCourse(int id);
     public void remidEv(int id, int grade);
     public void registerCourse(String category, String nameCourse, String description, String links, String duration, String nameLector ) ;
-    public void updateCourse(int id, String category, String nameCourse, String description, String links, String duration ) ;
+    public void updateCourse( Course course) ;
 
 }
