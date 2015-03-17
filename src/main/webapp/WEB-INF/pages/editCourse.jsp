@@ -9,33 +9,32 @@
 --%>
 <h1>Course Details Update</h1>
 
-<form:form method="post" name="editForm" commandName="course" modelAttribute="Course">
+<h2> ${message}</h2>
+
+<form:form method="post" name="editForm"  modelAttribute="Course">
 <table align="center">
     <a href="<c:url value="/informationBoard"/>"> Seminar Information Board</a>
     <tr><td><strong>Course Category</strong></td>
         <td>
-         <form:select path="category" name="updCourseCategory">
-             <form:option value="0" label="Project Management" />
-             <form:option value="1" label="Development" />
-         </form:select>
+            <form:select path="category" items="${categoryMap}"/>
         </td>
     </tr>
     <tr><th>Course Name</th>
         <td>
-            <form:input path="nameCourse" name="updCourseName"/>
+            <form:input path="nameCourse" name="updCourseName" value="${course.nameCourse}"/>
             <span style="color:red" id="errName"></span></td>
         </td>
     </tr>
     <tr><th>Course Description</th>
-        <td><form:input path="description" name="updCourseDescription"/>
+        <td><form:input path="description" name="updCourseDescription" value="${course.description}"/>
         </td>
     </tr>
     <tr><th>Course Links</th>
-        <td><form:textarea path="links" name="updCourseLinks"/>
+        <td><form:textarea path="links" name="updCourseLinks" value="${course.links}">
         </td>
     </tr>
     <tr><th>Course Duration</th>
-        <td><form:input path="duration" name="updCourseDuration"/>
+        <td><form:input path="duration" name="updCourseDuration" value="${course.duration}" />
             <span style="color:red" id="errDuration"/>
         </td>
     </tr>

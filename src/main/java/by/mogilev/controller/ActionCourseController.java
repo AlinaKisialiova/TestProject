@@ -65,6 +65,7 @@ public class ActionCourseController {
 
     @RequestMapping(value = "/editCourse/{course.id}", method = RequestMethod.GET)
     public String editRegCourse(@PathVariable("course.id") Integer id, Model model) {
+        model.addAttribute("categoryMap", course.getCategotyMap());
         model.addAttribute("course",course.findCourse(id));
         return "editCourse";
     }
@@ -77,19 +78,24 @@ public class ActionCourseController {
         if (course.findCourse(id) == null) return "redirect:/informationBoard";
 
         if (course.isOwner(id, session)) {
-
         String p = request.getParameter("deleteCourse");
+            Course checkCourse = course.findCourse(id);
         if ("on".equals(p)) {
-            Course delCourse = course.findCourse(id);
-            course.deleteCourse(delCourse);
+            course.deleteCourse(checkCourse);
+            return "redirect:/informationBoard";
         }
-        else
+        else {
+            updCourse.setLector(checkCourse.getLector());
             course.updateCourse(updCourse);
+            return "redirect:/informationBoard";
+        }
             }
+
         else
             model.addAttribute("message", "Forbidden update");
+        return "editCourse";
 
-        return "redirect:/informationBoard";
+
 
     }
 

@@ -7,6 +7,7 @@ import javassist.NotFoundException;
 import javax.servlet.http.HttpSession;
 import java.sql.SQLException;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by akiseleva on 03.03.2015.
@@ -25,4 +26,5 @@ public interface CourseDAO {
     List<Course> getCoursesForLector();
     List<Course> getSelected(String category);
 
+    Map<String, String> getCategotyMap();
 }

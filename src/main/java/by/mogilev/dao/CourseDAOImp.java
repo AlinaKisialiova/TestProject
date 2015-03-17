@@ -15,7 +15,9 @@ import org.springframework.web.bind.annotation.ModelAttribute;
 import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by akiseleva on 03.03.2015.
@@ -73,8 +75,8 @@ public class CourseDAOImp implements CourseDAO {
 //        Course checkCourse = course.findCourse(idCourse);
 //        User user = (User)session.getAttribute("user");
 //        if(checkCourse.getLector().getName().equals(user.getName()))
-//            return true;
-        return false;
+            return true;
+//        return false;
     }
 
     @SuppressWarnings("unchecked")
@@ -96,6 +98,14 @@ public class CourseDAOImp implements CourseDAO {
         else
             return sessionFactory.getCurrentSession().createQuery("from Course u where u.category=:category")
                     .setParameter("category",category).list();
+    }
+
+    @Override
+    public Map<String, String> getCategotyMap() {
+        Map<String,String> categoryMap = new HashMap<String,String>();
+        categoryMap.put("PM", "Project Management");
+        categoryMap.put("DV", "Development");
+        return categoryMap;
     }
 
     @Override
