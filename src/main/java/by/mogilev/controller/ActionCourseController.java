@@ -70,8 +70,8 @@ public class ActionCourseController {
     }
 
     @RequestMapping(value = "/editCourse/{course.id}", method = RequestMethod.POST)
-    public ModelAndView editCourse(@PathVariable("course.id") Integer id,
-                                   HttpServletRequest request, Model model) throws NotFoundException {
+    public String editCourse(@PathVariable("course.id") Integer id,
+                             HttpServletRequest request, Model model) throws NotFoundException {
 
         String p = request.getParameter("deleteCourse");
         if ("on".equals(p)) {
@@ -82,11 +82,9 @@ public class ActionCourseController {
             course.updateCourse(id, request.getParameter("updCourseCategory"), request.getParameter("updCourseName"),
                     request.getParameter("updCourseDescription"), request.getParameter("updCourseLinks"),
                     request.getParameter("updCourseDuration"));
-            model.addAttribute("message", "Course Updated!");
 
         }
-        return new ModelAndView("informationBoard")
-                .addObject("courseList", course.getAllCourse());
+        return "redirect:/informationBoard";
 
     }
 
