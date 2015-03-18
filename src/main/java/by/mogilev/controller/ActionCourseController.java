@@ -85,6 +85,7 @@ public class ActionCourseController {
             return "redirect:/informationBoard";
         }
         else {
+            updCourse.setId(id);
             updCourse.setLector(checkCourse.getLector());
             course.updateCourse(updCourse);
             return "redirect:/informationBoard";

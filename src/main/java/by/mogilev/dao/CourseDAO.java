@@ -20,7 +20,7 @@ public interface CourseDAO {
     public Course findCourse(int id);
     public void remidEv(int id, int grade);
     public void registerCourse(Course course, String nameLector ) ;
-    public void updateCourse( Course course);
+    public void updateCourse(Course course);
     boolean isOwner(int idCourse, HttpSession session);
     List<Course> getCoursesForUser();
     List<Course> getCoursesForLector();

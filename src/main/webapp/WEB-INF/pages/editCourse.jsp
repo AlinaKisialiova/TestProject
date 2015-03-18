@@ -30,7 +30,7 @@
         </td>
     </tr>
     <tr><th>Course Links</th>
-        <td><form:textarea path="links" name="updCourseLinks" value="${course.links}">
+        <td><form:textarea path="links" name="updCourseLinks" value="${course.links}"/>
         </td>
     </tr>
     <tr><th>Course Duration</th>
