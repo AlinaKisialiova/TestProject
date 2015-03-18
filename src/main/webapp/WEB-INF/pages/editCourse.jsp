@@ -60,7 +60,7 @@
 
     </tr>
     <tr>
-        <td><input type="reset" value="Cancel"/> </td>
+        <td><a href="informationBoard"> Cancel</a> </td>
         <td><input type="submit" value="OK" onclick="return validate();"/></td>
     </tr>
 </table>
@@ -70,18 +70,18 @@
 
 <script type="text/javascript">
 
-//    function validate() {
-//        var nameCourse = document.forms["editForm"]["updCourseName"].value;
-//        var durCourse = document.forms["editForm"]["updCourseDuration"].value;
-//        if (nameCourse.length==0 ){
-//            document.getElementById("errName").innerHTML="*required field";
-//            return false;
-//        }
-//        var par_pattern=/^[0-9]$/;
-//        if (durCourse.length==0 || parseInt(durCourse) < 1 || !(par_pattern.test(durCourse)) ){
-//            document.getElementById("errDuration").innerHTML="*incorrectly field";
-//            return false;
-//        }
-//
-//    }
+    function validate() {
+        var nameCourse = document.forms["editForm"]["updCourseName"].value;
+        var durCourse = document.forms["editForm"]["updCourseDuration"].value;
+        if (nameCourse.length==0 ){
+            document.getElementById("errName").innerHTML="*required field";
+            return false;
+        }
+        var par_pattern=/^\d+$/;
+        if (durCourse.length==0 || parseInt(durCourse) < 1 || !(par_pattern.test(durCourse)) ){
+            document.getElementById("errDuration").innerHTML="*incorrectly field";
+            return false;
+        }
+
+    }
 </script>

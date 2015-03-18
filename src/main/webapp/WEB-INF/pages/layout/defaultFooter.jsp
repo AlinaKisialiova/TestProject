@@ -6,4 +6,4 @@
   To change this template use File | Settings | File Templates.
 --%>
 
- <center> Mogilev, 2015</center>
+<div class="modal-footer"> Mogilev, 2015</div>

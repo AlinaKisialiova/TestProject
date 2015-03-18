@@ -66,7 +66,7 @@
             document.getElementById("errName").innerHTML="*required field";
             return false;
         }
-        var par_pattern=/^[0-9]$/;
+        var par_pattern=/^\d+$/;
         if (durCourse.length==0 || parseInt(durCourse) < 1  ||  !(par_pattern.test(durCourse))){
 
             document.getElementById("errDuration").innerHTML="*incorrectly field";

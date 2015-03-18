@@ -1,6 +1,7 @@
 package by.mogilev.model;
 
 import javax.persistence.*;
+import java.io.Serializable;
 import java.util.ArrayList;
 import java.util.HashSet;
 import java.util.List;
@@ -12,7 +13,7 @@ import java.util.Set;
 
 @Entity
 @Table(name ="COURSE")
-public class Course {
+public class Course implements Serializable {
     private int id;
     private String category;
     private String nameCourse;

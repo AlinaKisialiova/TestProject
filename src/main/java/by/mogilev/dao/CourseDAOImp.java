@@ -103,8 +103,8 @@ public class CourseDAOImp implements CourseDAO {
     @Override
     public Map<String, String> getCategotyMap() {
         Map<String,String> categoryMap = new HashMap<String,String>();
-        categoryMap.put("PM", "Project Management");
-        categoryMap.put("DV", "Development");
+        categoryMap.put("Project Management", "Project Management");
+        categoryMap.put("Development", "Development");
         return categoryMap;
     }
 

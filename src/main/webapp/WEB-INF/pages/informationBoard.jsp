@@ -119,14 +119,14 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
             <td class="grade_${course.id}"><c:out value="${course.evaluation}" escapeXml="true"/></td>
             <td>
 
-                <c:if test="${ user eq course.lector.name}">
+                <c:if test="${ user eq course.lector.username}">
                 <form:form action="informationBoard" method="post" commandName="course">
-                <c:if test="${course.delivered}">
-                    <c:set var="visibleDelete" value="disabled"/>
-                </c:if>
-                <input type="submit" value="Delete" disabled="${visibleDelete}"/>
+                <%--<c:if test="${course.delivered}">--%>
+                    <%--<c:set var="visibleDelete" value="disabled"/>--%>
+                <%--</c:if>--%>
+                <%--<input type="submit" value="Delete" disabled="${visibleDelete}" class="btn"/>--%>
 
-                <input type="button" value="Evaluation Reminder" onclick="show(${course.id})"/>
+                <input type="button" value="Evaluation Reminder" onclick="show(${course.id})" class="btn"/>
 
                 </form:form>
                 </c:if>

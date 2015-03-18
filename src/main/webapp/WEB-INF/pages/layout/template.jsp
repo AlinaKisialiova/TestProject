@@ -19,7 +19,9 @@
 <head>
     <title><tiles:insertAttribute name="title" ignore="true"/></title>
     <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
-
+    <script type="text/javascript" src="/resources/js/bootstrap.min.js"></script>
+    <script type="text/javascript" src="/resources/js/jquery.js"></script>
+    <script type="text/javascript" src="/resources/js/bootstrap.js"></script>
 
 </head>
 <body>
