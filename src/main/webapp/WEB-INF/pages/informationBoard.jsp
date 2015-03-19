@@ -121,10 +121,9 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
 
                 <c:if test="${ user eq course.lector.username}">
                 <form:form action="informationBoard" method="post" commandName="course">
-                <%--<c:if test="${course.delivered}">--%>
-                    <%--<c:set var="visibleDelete" value="disabled"/>--%>
-                <%--</c:if>--%>
-                <%--<input type="submit" value="Delete" disabled="${visibleDelete}" class="btn"/>--%>
+                <c:if test="${course.delivered}">
+                    <input type="submit" value="Delete" class="btn"/>
+                </c:if>
 
                 <input type="button" value="Evaluation Reminder" onclick="show(${course.id})" class="btn"/>
 

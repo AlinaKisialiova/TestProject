@@ -21,12 +21,12 @@
     </tr>
     <tr><th>Course Name</th>
         <td>
-            <form:input path="nameCourse" name="updCourseName" value="${course.nameCourse}"/>
+            <form:input path="nameCourse" id="updCourseName" value="${course.nameCourse}"/>
             <span style="color:red" id="errName"></span></td>
         </td>
     </tr>
     <tr><th>Course Description</th>
-        <td><form:input path="description" name="updCourseDescription" value="${course.description}"/>
+        <td><form:input path="description" id="updCourseDescription" value="${course.description}"/>
         </td>
     </tr>
     <tr><th>Course Links</th>
@@ -34,7 +34,7 @@
         </td>
     </tr>
     <tr><th>Course Duration</th>
-        <td><form:input path="duration" name="updCourseDuration" value="${course.duration}" />
+        <td><form:input path="duration" id="updCourseDuration" value="${course.duration}" />
             <span style="color:red" id="errDuration"/>
         </td>
     </tr>

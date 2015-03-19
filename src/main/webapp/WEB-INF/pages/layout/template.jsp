@@ -37,8 +37,9 @@
 
 </div>
 
-<div>
+<div class="navbar-static">
     <tiles:insertAttribute name="footer" />
+
 </div>
 
 </div>
