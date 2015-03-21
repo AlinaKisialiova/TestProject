@@ -29,7 +29,11 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
             </tr>
             <tr>
                 <td>Course Grade</td>
-                <td><input type="text" name="grade" class="grade"/></td>
+                <td><input type="text" name="grade" class="grade"/>
+                    <input type="hidden" name="fieldForSubmit" class="fieldForSubmit"/>
+
+                </td>
+
             </tr>
             <tr>
                 <td>
@@ -37,6 +41,7 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
                 </td>
                 <td>
                     <input type="button" value="Cancel" onclick="hide();"/>
+
                 </td>
             </tr>
 
@@ -71,6 +76,7 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
                 <option value="Popular Courses "> Popular Courses</option>
                 <option value="Evaluation"> Evaluation</option>
             </select></td>
+
 
    </form>
         </tr>
@@ -118,18 +124,16 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
             <td><c:out value="${course.delivered}" escapeXml="true"/></td>
             <td class="grade_${course.id}"><c:out value="${course.evaluation}" escapeXml="true"/></td>
             <td>
-
-                <c:if test="${ user eq course.lector.username}">
-                <form:form action="informationBoard" method="post" commandName="course">
+                <form action="informationBoard" method="post">
+                    <c:if test="${ user eq course.lector.username}">
                 <c:if test="${course.delivered}">
-                    <input type="submit" value="Delete" class="btn"/>
+                    <input type="submit" value="Delete" onclick="del(${course.id})" class="btn"/>
                 </c:if>
-
-                <input type="button" value="Evaluation Reminder" onclick="show(${course.id})" class="btn"/>
-
-                </form:form>
+                <input type="button" id="Eval" value="Evaluation Reminder" onclick="show(${course.id})" class="btn"/>
                 </c:if>
-
+                    <input type="hidden" name="fieldForSubmit" class="fieldForSubmit"/>
+                    <input type="hidden" class="idC" name="id"/>
+                </form>
         </tr>
 
 
@@ -139,6 +143,7 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
 
 <script language="JavaScript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
 <script>
+
     function show(id) {
         $("#EvalRemindBlock").show();
         var lCourse = $(".lector_" + id).html();
@@ -148,9 +153,17 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
         $(".cours").text(nCourse);
         $(".grade").val(gCourse);
         $(".idC").val(id);
+        $(".fieldForSubmit").val("evalRem");
     }
     function hide(){
         $("#EvalRemindBlock").hide();
     }
+
+    function del (id) {
+        $(".idC").val(id);
+        $(".fieldForSubmit").val("del");
+
+    }
+
 
 </script>

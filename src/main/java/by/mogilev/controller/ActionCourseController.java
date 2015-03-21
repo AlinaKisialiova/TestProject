@@ -3,9 +3,8 @@ package by.mogilev.controller;
 import by.mogilev.model.Course;
 
 import by.mogilev.dao.CourseDAO;
-import by.mogilev.model.User;
+import by.mogilev.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
@@ -25,7 +24,12 @@ import javax.servlet.http.HttpSession;
 public class ActionCourseController {
 
     @Autowired
-    private CourseDAO course;
+    private CourseDAO courseDAO;
+
+    @Autowired
+    private CourseService courseService;
+
+
 
     @ModelAttribute
     public String populateCurrentUser() {
@@ -52,7 +56,7 @@ public class ActionCourseController {
            if (!result.hasErrors()) new ModelAndView("redirect:/informationBoard");
             String userName = populateCurrentUser();
 
-            course.registerCourse(newCourse, userName);
+            courseDAO.registerCourse(newCourse, userName);
             return new ModelAndView("redirect:/informationBoard");
 
     }
@@ -60,13 +64,13 @@ public class ActionCourseController {
     @RequestMapping(value = "/courseDetails/{course.id}", method = RequestMethod.GET)
     public ModelAndView detailsCourse(@PathVariable("course.id") Integer id) {
         return new ModelAndView("courseDetails")
-                .addObject("checkCourse", course.findCourse(id));
+                .addObject("checkCourse", courseDAO.getCourse(id));
     }
 
     @RequestMapping(value = "/editCourse/{course.id}", method = RequestMethod.GET)
     public String editRegCourse(@PathVariable("course.id") Integer id, Model model) {
-        model.addAttribute("categoryMap", course.getCategotyMap());
-        model.addAttribute("course",course.findCourse(id));
+        model.addAttribute("categoryMap", courseService.getCategotyMap());
+        model.addAttribute("course", courseDAO.getCourse(id));
         return "editCourse";
     }
 
@@ -75,20 +79,28 @@ public class ActionCourseController {
                              @ModelAttribute("Course") Course updCourse,
                              HttpServletRequest request, HttpSession session, Model model) {
 
-        if (course.findCourse(id) == null) return "redirect:/informationBoard";
+        if (courseDAO.getCourse(id) == null) return "redirect:/informationBoard";
 
-        if (course.isOwner(id, session)) {
+        if (courseService.isOwner(id, session)) {
         String p = request.getParameter("deleteCourse");
-            Course checkCourse = course.findCourse(id);
+            Course checkCourse = courseDAO.getCourse(id);
         if ("on".equals(p)) {
-            course.deleteCourse(checkCourse);
+            courseDAO.deleteCourse(checkCourse);
             return "redirect:/informationBoard";
         }
         else {
-            updCourse.setId(id);
-            updCourse.setLector(checkCourse.getLector());
-            course.updateCourse(updCourse);
+            Course editCourse = courseDAO.getCourse(id);
+
+            editCourse.setCategory(updCourse.getCategory());
+            editCourse.setNameCourse(updCourse.getNameCourse());
+            editCourse.setDescription(updCourse.getDescription());
+            editCourse.setLinks(updCourse.getLinks());
+            editCourse.setDuration(updCourse.getDuration());
+
+            courseDAO.updateCourse(editCourse);
+
             return "redirect:/informationBoard";
+
         }
             }
 
@@ -99,5 +111,6 @@ public class ActionCourseController {
 
 
     }
+
 
 }

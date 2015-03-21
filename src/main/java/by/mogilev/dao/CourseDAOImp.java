@@ -28,9 +28,7 @@ public class CourseDAOImp implements CourseDAO {
 
     @Autowired
     private SessionFactory sessionFactory;
-//
-//    @Autowired
-//    private CourseDAO course;
+
 
     public CourseDAOImp() {
     }
@@ -57,7 +55,7 @@ public class CourseDAOImp implements CourseDAO {
     }
 
     @Transactional
-    public Course findCourse(int id) {
+    public Course getCourse(int id) {
         Session session = this.sessionFactory.getCurrentSession();
         Criteria criteria = session.createCriteria(Course.class);
         criteria.add(Restrictions.eq("id", id));
@@ -65,19 +63,11 @@ public class CourseDAOImp implements CourseDAO {
     }
 
  @Override
-    public void updateCourse( Course course) {
+    public void updateCourse(Course course) {
         Session session = this.sessionFactory.getCurrentSession();
      session.update(course);
     }
 
-    @Override
-    public boolean isOwner(int idCourse, HttpSession session) {
-//        Course checkCourse = course.findCourse(idCourse);
-//        User user = (User)session.getAttribute("user");
-//        if(checkCourse.getLector().getName().equals(user.getName()))
-            return true;
-//        return false;
-    }
 
     @SuppressWarnings("unchecked")
     @Override
@@ -98,23 +88,6 @@ public class CourseDAOImp implements CourseDAO {
         else
             return sessionFactory.getCurrentSession().createQuery("from Course u where u.category=:category")
                     .setParameter("category",category).list();
-    }
-
-    @Override
-    public Map<String, String> getCategotyMap() {
-        Map<String,String> categoryMap = new HashMap<String,String>();
-        categoryMap.put("Project Management", "Project Management");
-        categoryMap.put("Development", "Development");
-        return categoryMap;
-    }
-
-    @Override
-    public void remidEv(int id, int grade) {
-        Session session = this.sessionFactory.getCurrentSession();
-        Course changeEvalCourse = findCourse(id);
-        changeEvalCourse.setEvaluation(grade);
-        session.saveOrUpdate(changeEvalCourse);
-
     }
 
 

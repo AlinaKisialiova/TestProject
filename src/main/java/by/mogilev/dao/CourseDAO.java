@@ -17,14 +17,11 @@ public interface CourseDAO {
 
     public void deleteCourse(Course course);
     public List<Course> getAllCourse();
-    public Course findCourse(int id);
-    public void remidEv(int id, int grade);
+    public Course getCourse(int id);
     public void registerCourse(Course course, String nameLector ) ;
-    public void updateCourse(Course course);
-    boolean isOwner(int idCourse, HttpSession session);
+    public void updateCourse( Course course);
+    List<Course> getSelected(String category);
     List<Course> getCoursesForUser();
     List<Course> getCoursesForLector();
-    List<Course> getSelected(String category);
 
-    Map<String, String> getCategotyMap();
 }

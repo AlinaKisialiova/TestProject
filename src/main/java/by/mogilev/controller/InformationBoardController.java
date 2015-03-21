@@ -1,6 +1,8 @@
 package by.mogilev.controller;
 
 import by.mogilev.dao.CourseDAO;
+import by.mogilev.model.Course;
+import by.mogilev.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -13,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
 import java.sql.SQLException;
 
 
@@ -26,6 +29,9 @@ public class InformationBoardController {
     @Autowired
     @Qualifier("courseDAOImp")
     private CourseDAO course;
+
+    @Autowired
+    private CourseService courseService;
 
     @ModelAttribute
     public String populateCurrentUser() {
@@ -43,10 +49,16 @@ public class InformationBoardController {
     }
 
     @RequestMapping(value = "/informationBoard", method = RequestMethod.POST)
-    public ModelAndView evRemind(@RequestParam(value = "grade", required = false) Integer grade,
-                                 @RequestParam(value = "id", required = false) Integer id ) {
+    public ModelAndView evRemindAndDelete(@RequestParam(value = "grade", required = false) Integer grade,
+                                          @RequestParam(value = "fieldForSubmit", required = false) String action,
+                                          @RequestParam(value = "id", required = false) Integer id) {
 
-       course.remidEv(id, grade);
+        if ("del".equals(action))
+            course.deleteCourse(course.getCourse(id));
+
+        if ("evalRem".equals(action))
+            courseService.remidEv(id, grade);
+
         return new ModelAndView("informationBoard", "courseList", course.getAllCourse());
 
     }
