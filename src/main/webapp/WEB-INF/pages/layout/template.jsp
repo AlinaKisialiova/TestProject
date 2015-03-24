@@ -26,9 +26,10 @@
 </head>
 <body>
 
-
 <div class="container">
-<div>
+
+    <div class="row">
+<div class="span9 offset5">
     <tiles:insertAttribute name="header" />
 </div>
 
@@ -37,8 +38,10 @@
 
 </div>
 
-<div class="navbar-static">
+<div class="span9 offset5">
     <tiles:insertAttribute name="footer" />
+
+</div>
 
 </div>
 

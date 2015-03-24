@@ -39,6 +39,7 @@
            <form:textarea name="newCourseLinks" path="links"/>
              <img src="resources/reg.jpg"/>
 
+
        </div>
             </div>
 

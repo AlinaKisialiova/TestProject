@@ -42,6 +42,11 @@
         <put-attribute name="title" value="Training Center - Edit Course "/>
     </definition>
 
+    <definition name="deniedPage" extends="defaultTemplate">
+        <put-attribute name="content" value="/WEB-INF/pages/deniedPage.jsp" />
+        <put-attribute name="title" value="Training Center - Access is denied "/>
+    </definition>
+
 
 
 

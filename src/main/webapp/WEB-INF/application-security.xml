@@ -12,10 +12,14 @@
 
         <intercept-url pattern="/informationBoard/**" access="hasAnyRole('ROLE_LECTOR', 'ROLE_USER')"/>
         <intercept-url pattern="/registrationCourse/**" access="hasAnyRole('ROLE_LECTOR')"/>
-        <intercept-url pattern="/courseDetails/**" access="hasAnyRole('ROLE_LECTOR',  'ROLE_USER')"/>
+        <intercept-url pattern="/editCourse/**" access="hasRole('ROLE_LECTOR')"/>
+        <intercept-url pattern="/courseDetails/**" access="hasAnyRole('ROLE_LECTOR', 'ROLE_USER')"/>
+
         <form-login login-page="/signin"
                     authentication-failure-url="/signin-failure" default-target-url="/informationBoard" />
         <logout logout-success-url="/signin" />
+
+        <access-denied-handler error-page="/deniedPage" />
 
 
     </http>

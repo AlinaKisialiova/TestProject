@@ -5,4 +5,4 @@
   Time: 8:45
   To change this template use File | Settings | File Templates.
 --%>
-<center> TRAINING CENTER</center>
+ TRAINING CENTER
