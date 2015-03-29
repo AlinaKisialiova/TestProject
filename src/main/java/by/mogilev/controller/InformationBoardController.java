@@ -15,6 +15,8 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import java.util.ArrayList;
+import java.util.List;
 
 
 /**
@@ -49,7 +51,9 @@ public class InformationBoardController {
     @RequestMapping(value = "/informationBoard", method = RequestMethod.POST)
     public ModelAndView evRemindAndDelete(@RequestParam(value = "grade", required = false) Integer grade,
                                           @RequestParam(value = "fieldForSubmit", required = false) String action,
-                                          @RequestParam(value = "id", required = false) Integer id) {
+                                          @RequestParam(value = "id", required = false) Integer id,
+                                          @RequestParam(value = "selectCategory", required = false) String selectCategory) {
+
 
         if ("del".equals(action))
             course.deleteCourse(course.getCourse(id));
@@ -57,7 +61,8 @@ public class InformationBoardController {
         if ("evalRem".equals(action))
             courseService.remidEv(id, grade);
 
-        return new ModelAndView("informationBoard", "courseList", course.getAllCourse());
+
+        return new ModelAndView("informationBoard", "courseList", course.getSelected(selectCategory) );
 
     }
 }

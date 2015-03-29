@@ -50,7 +50,7 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
 </div>
 
 
-<table align="justify" class="tablesorter">
+<table align="justify" >
 
     <tr >
         <td>My seminars</td>
@@ -58,28 +58,28 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
         <td><br></td>
         <td><br></td>
 </tr>
-    <tr>
-        <form>
-            <td><br></td>
-            <td><br></td>
-            <td><br></td>
-            <br>
-            <td><br></td>
-            <br>
-            <td><br>
-            <td><br></td>
-            <td>Filter</td>
-            <td  class="filter-select filter-match"  data-placeholder="All Course">
-                <select>
-                <option selected value="All Course">All Course</option>
-                <option value="Given Courses">Given Courses</option>
-                <option value="Popular Courses "> Popular Courses</option>
-                <option value="Evaluation"> Evaluation</option>
-            </select></td>
+    <%--<tr>--%>
+        <%--<form>--%>
+            <%--<td><br></td>--%>
+            <%--<td><br></td>--%>
+            <%--<td><br></td>--%>
+            <%--<br>--%>
+            <%--<td><br></td>--%>
+            <%--<br>--%>
+            <%--<td><br>--%>
+            <%--<td><br></td>--%>
+            <%--<td>Filter</td>--%>
+            <%--<td>--%>
+                <%--<select class="btn dropdown-toggle">--%>
+                <%--<option selected value="All Course">All Course</option>--%>
+                <%--<option value="Given Courses">Given Courses</option>--%>
+                <%--<option value="Popular Courses "> Popular Courses</option>--%>
+                <%--<option value="Evaluation"> Evaluation</option>--%>
+            <%--</select></td>--%>
+   <%--</form>--%>
+        <%--</tr>--%>
 
 
-   </form>
-        </tr>
 
         <tr>
             <td><br></td>
@@ -90,11 +90,15 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
             <td>
             <td>Course Category</td>
             <td>
-                <select>
-                    <option selected value="Project Management">Project Management</option>
+                <form action="informationBoard" method="post">
+                <select name="selectCategory" class="btn dropdown-toggle">
+                    <option value="All">All</option>
+                    <option  value="Project Management">Project Management</option>
                     <option value="Development">Development</option>
-
-                </select></td>
+                </select>
+                <input type="submit" value="ok" class="btn"/>
+                </form>
+            </td>
         </tr>
 
     </form>
@@ -124,6 +128,7 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
             <td><c:out value="${course.delivered}" escapeXml="true"/></td>
             <td class="grade_${course.id}"><c:out value="${course.evaluation}" escapeXml="true"/></td>
             <td>
+                <div class="btn-group">
                 <form action="informationBoard" method="post">
                     <c:if test="${ user eq course.lector.username}">
                 <c:if test="${course.delivered}">
@@ -134,12 +139,15 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
                     <input type="hidden" name="fieldForSubmit" class="fieldForSubmit"/>
                     <input type="hidden" class="idC" name="id"/>
                 </form>
+                </div>
         </tr>
 
 
     </c:forEach>
 </table>
 
+<script src="<c:url value="/resources/css/bootstrap-2.2.2.min.js"/>"></script>
+<script  src="<c:url value="/resources/css/jquery-1.8.1.min.js"/>"></script>
 
 <script language="JavaScript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
 <script>
@@ -164,6 +172,7 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
         $(".fieldForSubmit").val("del");
 
     }
+
 
 
 </script>
