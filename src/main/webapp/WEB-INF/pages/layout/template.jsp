@@ -29,8 +29,10 @@
 <div class="container">
 
     <div class="row">
-<div class="span9 offset5">
+<div class="span9 offset5" >
+    <div  role="banner" class="navbar navbar-inverse navbar-fixed-top">
     <tiles:insertAttribute name="header" />
+    </div>
 </div>
 
 <div class="content">

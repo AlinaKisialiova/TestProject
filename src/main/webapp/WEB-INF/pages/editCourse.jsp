@@ -39,10 +39,10 @@
         </td>
     </tr>
     <tr><th>Numbers of Subscribers</th>
-        <td><c:out value="${course.numbOfSubscribers}"/></td>
+        <td><c:out value="${course.subscribers.size()}"/></td>
     </tr>
     <tr><td><strong>Numbers of Attende</strong></td>
-        <td><c:out value="${course.numbOfAttendee}"/></td>
+        <td><c:out value="${course.attenders.size()}"/></td>
     </tr>
     <tr><td><strong>Devilered</strong></td>
         <td><c:out value="${course.delivered}"/></td>

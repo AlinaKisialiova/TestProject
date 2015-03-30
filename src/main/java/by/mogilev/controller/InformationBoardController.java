@@ -1,22 +1,17 @@
 package by.mogilev.controller;
 
 import by.mogilev.dao.CourseDAO;
-import by.mogilev.model.Course;
 import by.mogilev.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
-import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.ModelAttribute;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
-import java.util.ArrayList;
-import java.util.List;
 
 
 /**
@@ -27,8 +22,7 @@ import java.util.List;
 public class InformationBoardController {
 
     @Autowired
-    @Qualifier("courseDAOImp")
-    private CourseDAO course;
+    private CourseDAO courseDAO;
 
     @Autowired
     private CourseService courseService;
@@ -45,7 +39,7 @@ public class InformationBoardController {
 
     @RequestMapping(value = "/informationBoard", method = RequestMethod.GET)
     public ModelAndView listCourse() {
-        return new ModelAndView("informationBoard", "courseList", course.getAllCourse());
+        return new ModelAndView("informationBoard", "courseList", courseDAO.getAllCourse());
     }
 
     @RequestMapping(value = "/informationBoard", method = RequestMethod.POST)
@@ -53,17 +47,14 @@ public class InformationBoardController {
                                           @RequestParam(value = "fieldForSubmit", required = false) String action,
                                           @RequestParam(value = "id", required = false) Integer id,
                                           @RequestParam(value = "selectCategory", required = false) String selectCategory) {
-
-
         if ("del".equals(action))
-            course.deleteCourse(course.getCourse(id));
+            courseDAO.deleteCourse(courseDAO.getCourse(id));
 
         if ("evalRem".equals(action))
             courseService.remidEv(id, grade);
 
-
-        return new ModelAndView("informationBoard", "courseList", course.getSelected(selectCategory) );
-
+        return new ModelAndView("informationBoard").
+                addObject("courseList", courseDAO.getSelected(selectCategory));
     }
 }
 

@@ -2,9 +2,7 @@ package by.mogilev.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
-import java.util.ArrayList;
 import java.util.HashSet;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -21,11 +19,9 @@ public class Course implements Serializable {
     private String duration;
     private String description;
     private String links;
-    private  int numbOfSubscribers;
-    private int numbOfAttendee;
     private int evaluation;
     private boolean delivered;
-    private Set<User> attendees = new HashSet<User>();
+    private Set<User> attenders = new HashSet<User>();
     private Set<User> subscribers = new HashSet<User>();
 
 
@@ -90,22 +86,6 @@ public class Course implements Serializable {
         this.links = links;
     }
 
-    @Column(name = "numbOfSubscribers")
-    public int getNumbOfSubscribers() {
-        return numbOfSubscribers;
-    }
-    public void setNumbOfSubscribers(int numbOfSubscribers) {
-        this.numbOfSubscribers = numbOfSubscribers;
-    }
-
-    @Column(name = "numbOfAttendee")
-    public int getNumbOfAttendee() {
-        return numbOfAttendee;
-    }
-    public void setNumbOfAttendee(int numbOfAttendee) {
-        this.numbOfAttendee = numbOfAttendee;
-    }
-
     @Column(name = "evaluation")
     public int getEvaluation() {
         return evaluation;
@@ -129,15 +109,16 @@ public class Course implements Serializable {
     public void setLector(User lector) {
         this.lector = lector;
     }
-    @ManyToMany(fetch=FetchType.EAGER,mappedBy="coursesSubscribe",
-            cascade=CascadeType.ALL)
-    public Set<User> getAttendees() {
-        return attendees;
-    }
-    public void setAttendees(Set<User> attendees) {
-        this.attendees = attendees;
-    }
+
     @ManyToMany(fetch=FetchType.EAGER,mappedBy="coursesAttendee",
+            cascade=CascadeType.ALL)
+    public Set<User> getAttenders() {
+        return attenders;
+    }
+    public void setAttenders(Set<User> attendees) {
+        this.attenders = attendees;
+    }
+    @ManyToMany(fetch=FetchType.EAGER,mappedBy="coursesSubscribe",
             cascade=CascadeType.ALL)
     public Set<User> getSubscribers() {
         return subscribers;

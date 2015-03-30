@@ -117,14 +117,21 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
 
     <c:forEach items="${courseList}" var="course">
         <tr>
+
             <td class="lector_${course.id}"><c:out value="${course.lector.name}" escapeXml="true"/></td>
             <td >
                 <a href="<c:out value="courseDetails/${course.id}" escapeXml="true"/>">
-           <span class="course_${course.id}"> <c:out  value="${course.nameCourse}" escapeXml="true"/></span></a>
+           <span class="course_${course.id}">
+               <c:out  value="${course.nameCourse}" escapeXml="true"/></span>
+                </a>
             </td>
             <td><c:out value="${course.category}" escapeXml="true"/></td>
-            <td><c:out value="${course.numbOfSubscribers}" escapeXml="true"/></td>
-            <td><c:out value="${course.numbOfAttendee}" escapeXml="true"/></td>
+            <td><c:out value="${course.subscribers.size()}" escapeXml="true"/></td>
+            <td>
+                <a href="<c:out value="participantsList/${course.id}" escapeXml="true"/>">
+                <c:out value="${course.attenders.size()}" escapeXml="true"/>
+                </a>
+            </td>
             <td><c:out value="${course.delivered}" escapeXml="true"/></td>
             <td class="grade_${course.id}"><c:out value="${course.evaluation}" escapeXml="true"/></td>
             <td>
