@@ -2,6 +2,7 @@ package by.mogilev.controller;
 
 import by.mogilev.dao.CourseDAO;
 import by.mogilev.service.CourseService;
+import com.itextpdf.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.beans.factory.annotation.Qualifier;
 import org.springframework.security.core.context.SecurityContextHolder;
@@ -12,6 +13,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import java.io.FileNotFoundException;
+import java.io.IOException;
 
 
 /**
@@ -46,12 +50,18 @@ public class InformationBoardController {
     public ModelAndView evRemindAndDelete(@RequestParam(value = "grade", required = false) Integer grade,
                                           @RequestParam(value = "fieldForSubmit", required = false) String action,
                                           @RequestParam(value = "id", required = false) Integer id,
-                                          @RequestParam(value = "selectCategory", required = false) String selectCategory) {
+                                          @RequestParam(value = "selectCategory", required = false) String selectCategory)
+            throws IOException, DocumentException {
+
         if ("del".equals(action))
             courseDAO.deleteCourse(courseDAO.getCourse(id));
 
         if ("evalRem".equals(action))
             courseService.remidEv(id, grade);
+
+        if ("outPdf".equals(action))
+            courseService.outInPdfAllCourse();
+
 
         return new ModelAndView("informationBoard").
                 addObject("courseList", courseDAO.getSelected(selectCategory));

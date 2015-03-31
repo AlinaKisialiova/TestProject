@@ -58,6 +58,7 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
         <td><br></td>
         <td><br></td>
 </tr>
+
     <%--<tr>--%>
         <%--<form>--%>
             <%--<td><br></td>--%>
@@ -80,7 +81,7 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
         <%--</tr>--%>
 
 
-
+    <form action="informationBoard" method="post">
         <tr>
             <td><br></td>
             <td><br></td>
@@ -90,19 +91,25 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
             <td>
             <td>Course Category</td>
             <td>
-                <form action="informationBoard" method="post">
                 <select name="selectCategory" class="btn dropdown-toggle">
                     <option value="All">All</option>
                     <option  value="Project Management">Project Management</option>
                     <option value="Development">Development</option>
                 </select>
                 <input type="submit" value="ok" class="btn"/>
-                </form>
+
             </td>
         </tr>
 
-    </form>
 
+
+
+        <th>
+
+            <input type="submit" onclick="outPdf()" name="pdfOut"
+                   value="Output in PDF" class="btn-primary">
+
+        </th>
 
     <tr bgcolor="#b0c4de">
         <th>Lector Name</th>
@@ -136,15 +143,18 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
             <td class="grade_${course.id}"><c:out value="${course.evaluation}" escapeXml="true"/></td>
             <td>
                 <div class="btn-group">
-                <form action="informationBoard" method="post">
+
                     <c:if test="${ user eq course.lector.username}">
                 <c:if test="${course.delivered}">
                     <input type="submit" value="Delete" onclick="del(${course.id})" class="btn"/>
                 </c:if>
+
+
                 <input type="button" id="Eval" value="Evaluation Reminder" onclick="show(${course.id})" class="btn"/>
                 </c:if>
                     <input type="hidden" name="fieldForSubmit" class="fieldForSubmit"/>
                     <input type="hidden" class="idC" name="id"/>
+
                 </form>
                 </div>
         </tr>
@@ -177,6 +187,10 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
     function del (id) {
         $(".idC").val(id);
         $(".fieldForSubmit").val("del");
+    }
+
+    function outPdf () {
+        $(".fieldForSubmit").val("outPdf");
 
     }
 

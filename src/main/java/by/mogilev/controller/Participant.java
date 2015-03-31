@@ -18,7 +18,6 @@ public class Participant {
     @Autowired
     private CourseDAO courseDAO;
 
-
     @RequestMapping(value = "/participantsList/{course.id}", method = RequestMethod.GET)
     public ModelAndView participantsList(@PathVariable("course.id") Integer id) {
         return new ModelAndView("participantsList")

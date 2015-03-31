@@ -164,6 +164,13 @@
             <version>${spring.version}</version>
         </dependency>
 
+        <!--for pdf-->
+        <dependency>
+            <groupId>com.itextpdf</groupId>
+            <artifactId>itextpdf</artifactId>
+            <version>5.0.6</version>
+        </dependency>
+
     </dependencies>
 
 
