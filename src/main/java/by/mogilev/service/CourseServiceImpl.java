@@ -3,20 +3,23 @@ package by.mogilev.service;
 import by.mogilev.dao.CourseDAO;
 import by.mogilev.model.Course;
 import com.itextpdf.text.*;
-import com.itextpdf.text.List;
 import com.itextpdf.text.pdf.CMYKColor;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
 import com.itextpdf.text.pdf.PdfWriter;
+import org.apache.poi.hssf.usermodel.HSSFWorkbook;
+import org.apache.poi.ss.usermodel.Cell;
+import org.apache.poi.ss.usermodel.Row;
+import org.apache.poi.ss.usermodel.Sheet;
+import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
 import javax.servlet.http.HttpSession;
-import java.io.FileNotFoundException;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.util.*;
+import java.util.HashMap;
+import java.util.Map;
 
 /**
  * Created by Администратор on 21.03.2015.
@@ -44,7 +47,7 @@ public class CourseServiceImpl implements CourseService {
 
         Document document = new Document(PageSize.A4, 50, 50, 50, 50);
         PdfWriter writer = PdfWriter.getInstance(document,
-                new FileOutputStream("C:\\listOfCourses.pdf"));
+                new FileOutputStream("D:\\listOfCourses.pdf"));
         document.open();
         Paragraph paragraph1 = new Paragraph("This is list of courses a Training Center",
                 FontFactory.getFont(FontFactory.COURIER, 14, Font.BOLD,
@@ -95,8 +98,8 @@ public class CourseServiceImpl implements CourseService {
         }
         document.add(t);
 
-        Image image1 = Image.getInstance("C:\\1.JPG");
-        image1.scaleAbsolute(550f, 225f);
+        Image image1 = Image.getInstance("D:\\1.JPG");
+        image1.scaleAbsolute(400f, 225f);
 
         document.add(image1);
 
@@ -105,6 +108,53 @@ public class CourseServiceImpl implements CourseService {
 
 
         document.close();
+    }
+
+    @Override
+    public void outInExcelAllCourse() throws IOException {
+
+        final String[] titles = {
+                "Lector Name", "Course Name", "Course Category", "Subscribed", "Participated", "Delivered Course", "Evaluation"};
+        Workbook wb = new HSSFWorkbook();
+        Sheet sheet = wb.createSheet("List of Courses");
+        int numbRow=0;
+
+        Row headerRow = sheet.createRow(numbRow);
+        numbRow++;
+        Cell cellHeader = headerRow.createCell(numbRow);
+        cellHeader.setCellValue("List of Courses of Training Center");
+
+
+        Row titleRow = sheet.createRow(numbRow);
+        numbRow++;
+        for (int i = 0; i < titles.length; i++) {
+            Cell cell = titleRow.createCell(i);
+            cell.setCellValue(titles[i]);
+        }
+
+        java.util.List<Course> courses=courseDAO.getAllCourse();
+
+        for (Course c : courses)
+        {
+
+         String[] data =
+                {c.getLector().getName(), c.getNameCourse(), c.getCategory(), String.valueOf(c.getSubscribers().size()),
+                String.valueOf(c.getAttenders().size()), String.valueOf(c.isDelivered()), String.valueOf(c.getEvaluation())};
+
+            Row row = sheet.createRow(numbRow);
+                for (int j = 0; j < titles.length; j++) {
+                    Cell cell = row.createCell(j);
+                    cell.setCellValue(data[j]);
+                }
+numbRow++;
+
+
+    }
+
+        String file = "D:\\listOfCourse.xls";
+        FileOutputStream out = new FileOutputStream(file);
+        wb.write(out);
+        out.close();
     }
 
     @Override

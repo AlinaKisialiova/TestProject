@@ -1,13 +1,9 @@
 package by.mogilev.service;
 
-import by.mogilev.model.Course;
 import com.itextpdf.text.DocumentException;
 
 import javax.servlet.http.HttpSession;
-import java.io.FileNotFoundException;
 import java.io.IOException;
-import java.net.MalformedURLException;
-import java.util.List;
 import java.util.Map;
 
 /**
@@ -24,5 +20,11 @@ public interface CourseService {
      *
      */
     public void outInPdfAllCourse() throws IOException, DocumentException;
+    /**
+     *
+     * Method out in Excel list of courses
+     *
+     */
+    public void outInExcelAllCourse() throws IOException;
 
 }

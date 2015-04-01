@@ -107,7 +107,15 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
         <th>
 
             <input type="submit" onclick="outPdf()" name="pdfOut"
-                   value="Output in PDF" class="btn-primary">
+                   value="Click for Output in PDF" class="btn-primary">
+
+        </th>
+
+
+        <th>
+
+            <input type="submit" onclick="outExcel()" name="pdfOut"
+                   value="Click for Output in Excel" class="btn-primary">
 
         </th>
 
@@ -191,6 +199,11 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
 
     function outPdf () {
         $(".fieldForSubmit").val("outPdf");
+
+    }
+
+    function outExcel() {
+        $(".fieldForSubmit").val("outExcel");
 
     }
 
