@@ -52,7 +52,10 @@
         <put-attribute name="title" value="Training Center - Participants List "/>
     </definition>
 
-
+    <definition name="mySeminars" extends="defaultTemplate">
+        <put-attribute name="content" value="/WEB-INF/pages/mySeminars.jsp" />
+        <put-attribute name="title" value="Training Center - My Seminars"/>
+    </definition>
 
 
 

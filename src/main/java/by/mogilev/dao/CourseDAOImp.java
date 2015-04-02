@@ -1,6 +1,5 @@
 package by.mogilev.dao;
 
-import by.mogilev.dao.CourseDAO;
 import by.mogilev.model.Course;
 import by.mogilev.model.User;
 import org.hibernate.Criteria;
@@ -8,16 +7,11 @@ import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.stereotype.Component;
 import org.springframework.stereotype.Repository;
-import org.springframework.web.bind.annotation.ModelAttribute;
 
-import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
 import java.util.ArrayList;
-import java.util.HashMap;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by akiseleva on 03.03.2015.
@@ -71,15 +65,13 @@ public class CourseDAOImp implements CourseDAO {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<Course> getCoursesForUser() {
+    public List<Course> getCoursesForUser(int id) {
+
+
         return null;
     }
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public List<Course> getCoursesForLector() {
-        return sessionFactory.getCurrentSession().createQuery("from Course").list();
-    }
+
     @SuppressWarnings("unchecked")
     @Override
     public List<Course> getSelected(String category) {

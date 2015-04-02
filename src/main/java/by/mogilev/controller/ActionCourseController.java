@@ -4,6 +4,7 @@ import by.mogilev.model.Course;
 
 import by.mogilev.dao.CourseDAO;
 import by.mogilev.service.CourseService;
+import com.itextpdf.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
@@ -15,7 +16,9 @@ import org.springframework.web.servlet.ModelAndView;
 
 
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.IOException;
 
 /**
  * Created by akiseleva on 09.03.2015.
@@ -110,6 +113,28 @@ public class ActionCourseController {
 
 
 
+    }
+
+    @RequestMapping(value = "/mySeminars", method = RequestMethod.GET)
+    public ModelAndView listCourse() {
+        return new ModelAndView("mySeminars", "courseList", courseDAO.getAllCourse());
+    }
+
+    @RequestMapping(value = "/mySeminars", method = RequestMethod.POST)
+    public ModelAndView evRemindAndDelete(@RequestParam(value = "grade", required = false) Integer grade,
+                                          @RequestParam(value = "fieldForSubmit", required = false) String action,
+                                          @RequestParam(value = "id", required = false) Integer id,
+                                          @RequestParam(value = "selectCategory", required = false) String selectCategory,
+                                          HttpServletResponse response)
+            throws IOException, DocumentException {
+
+
+        if ("evalRem".equals(action))
+            courseService.remidEv(id, grade);
+
+
+        return new ModelAndView("mySeminars").
+                addObject("courseList", courseDAO.getCoursesForUser(id));
     }
 
 

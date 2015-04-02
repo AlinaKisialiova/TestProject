@@ -53,7 +53,7 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
 <table align="justify" >
 
     <tr >
-        <td>My seminars</td>
+        <td><a href="mySeminars"> My seminars </a></td>
         <td><a href=registrationCourse>Register Course</a></td>
         <td><br></td>
         <td><br></td>

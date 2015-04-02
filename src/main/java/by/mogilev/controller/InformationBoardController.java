@@ -1,6 +1,7 @@
 package by.mogilev.controller;
 
 import by.mogilev.dao.CourseDAO;
+import by.mogilev.model.Course;
 import by.mogilev.service.CourseService;
 import com.itextpdf.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -55,6 +56,8 @@ public class InformationBoardController {
 
         if ("del".equals(action))
             courseDAO.deleteCourse(courseDAO.getCourse(id));
+        Course course;
+
 
         if ("evalRem".equals(action))
             courseService.remidEv(id, grade);
