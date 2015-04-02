@@ -13,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 
 
@@ -48,7 +49,8 @@ public class InformationBoardController {
     public ModelAndView evRemindAndDelete(@RequestParam(value = "grade", required = false) Integer grade,
                                           @RequestParam(value = "fieldForSubmit", required = false) String action,
                                           @RequestParam(value = "id", required = false) Integer id,
-                                          @RequestParam(value = "selectCategory", required = false) String selectCategory)
+                                          @RequestParam(value = "selectCategory", required = false) String selectCategory,
+                                          HttpServletResponse response)
             throws IOException, DocumentException {
 
         if ("del".equals(action))
@@ -58,10 +60,10 @@ public class InformationBoardController {
             courseService.remidEv(id, grade);
 
         if ("outPdf".equals(action))
-            courseService.outInPdfAllCourse();
+            courseService.outInPdfAllCourse(response);
 
         if ("outExcel".equals(action))
-            courseService.outInExcelAllCourse();
+            courseService.outInExcelAllCourse(response);
 
 
 

@@ -101,9 +101,6 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
             </td>
         </tr>
 
-
-
-
         <th>
 
             <input type="submit" onclick="outPdf()" name="pdfOut"
@@ -114,8 +111,10 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
 
         <th>
 
-            <input type="submit" onclick="outExcel()" name="pdfOut"
+            <input type="submit" onclick="outExcel()" name="excelOut"
                    value="Click for Output in Excel" class="btn-primary">
+
+
 
         </th>
 

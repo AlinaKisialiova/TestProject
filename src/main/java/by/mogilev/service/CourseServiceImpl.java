@@ -15,7 +15,10 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.servlet.ServletOutputStream;
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
@@ -26,6 +29,9 @@ import java.util.Map;
  */
 @Service
 public class CourseServiceImpl implements CourseService {
+
+    final String nameFile="listOfCourses";
+    final String imageForPdf="D:\\1.JPG";
 
     CourseServiceImpl(){}
 
@@ -43,11 +49,11 @@ public class CourseServiceImpl implements CourseService {
 
 
     @Override
-    public void outInPdfAllCourse() throws IOException, DocumentException {
+    public void outInPdfAllCourse(HttpServletResponse response) throws IOException, DocumentException {
 
         Document document = new Document(PageSize.A4, 50, 50, 50, 50);
         PdfWriter writer = PdfWriter.getInstance(document,
-                new FileOutputStream("D:\\listOfCourses.pdf"));
+                new FileOutputStream(nameFile+".pdf"));
         document.open();
         Paragraph paragraph1 = new Paragraph("This is list of courses a Training Center",
                 FontFactory.getFont(FontFactory.COURIER, 14, Font.BOLD,
@@ -98,20 +104,28 @@ public class CourseServiceImpl implements CourseService {
         }
         document.add(t);
 
-        Image image1 = Image.getInstance("D:\\1.JPG");
+        Image image1 = Image.getInstance(imageForPdf);
         image1.scaleAbsolute(400f, 225f);
 
         document.add(image1);
-
-
-
-
-
         document.close();
+
+        ServletOutputStream out = response.getOutputStream();
+        response.setContentType("application/pdf");
+        response.setHeader("Content-Disposition", "attachment; filename=" + nameFile + ".pdf");
+        FileInputStream fileInputStream = new FileInputStream( nameFile + ".pdf");
+
+        int bytes;
+        while ((bytes = fileInputStream.read()) != -1) {
+            out.write(bytes);
+        }
+        out.close();
+
+
     }
 
     @Override
-    public void outInExcelAllCourse() throws IOException {
+    public void outInExcelAllCourse( HttpServletResponse response) throws IOException {
 
         final String[] titles = {
                 "Lector Name", "Course Name", "Course Category", "Subscribed", "Participated", "Delivered Course", "Evaluation"};
@@ -151,8 +165,9 @@ numbRow++;
 
     }
 
-        String file = "D:\\listOfCourse.xls";
-        FileOutputStream out = new FileOutputStream(file);
+        ServletOutputStream out = response.getOutputStream();
+        response.setContentType("application/xml");
+        response.setHeader("Content-Disposition", "attachment; filename=" + nameFile + ".xls");
         wb.write(out);
         out.close();
     }

@@ -2,6 +2,7 @@ package by.mogilev.service;
 
 import com.itextpdf.text.DocumentException;
 
+import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.Map;
@@ -19,12 +20,12 @@ public interface CourseService {
      * Method out in pdf-file list of courses
      *
      */
-    public void outInPdfAllCourse() throws IOException, DocumentException;
+    public void outInPdfAllCourse(HttpServletResponse response) throws IOException, DocumentException;
     /**
      *
      * Method out in Excel list of courses
      *
      */
-    public void outInExcelAllCourse() throws IOException;
+    public void outInExcelAllCourse(HttpServletResponse response) throws IOException;
 
 }
