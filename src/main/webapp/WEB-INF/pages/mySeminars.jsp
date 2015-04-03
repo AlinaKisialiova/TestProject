@@ -71,17 +71,23 @@
                     <td><c:out value="${course.delivered}" escapeXml="true"/></td>
                     <td class="grade_${course.id}"><c:out value="${course.evaluation}" escapeXml="true"/></td>
                     <td>
-                        <div class="btn-group">
+                        <c:choose>
+                            <c:when test="${attCourseOfUser.contains(course)}">
+                                <a href=""> + </a>
+                            </c:when>
+                            <c:otherwise>
+                                <a href=""> - </a>
+                            </c:otherwise>
+                        </c:choose>
 
-                            <c:if test="${ course.attenders.contains(user)}">
-                            <a href="">-</a>
-                            </c:if>
-                               <a href="">+</a>
+
+
+                        </td>
                             <input type="hidden" name="fieldForSubmit" class="fieldForSubmit"/>
                             <input type="hidden" class="idC" name="id"/>
 
 
-</div>
+
 </tr>
 
 

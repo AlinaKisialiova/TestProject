@@ -107,8 +107,8 @@ public class User implements Serializable {
 
     @ManyToMany(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
     @JoinTable(name="COURSE_SUBSCRIBERS",
-            joinColumns=@JoinColumn(name="id_course"),
-            inverseJoinColumns=@JoinColumn(name="id_user"))
+            joinColumns=@JoinColumn(name="id_user"),
+            inverseJoinColumns=@JoinColumn(name="id_course"))
     public Set<Course> getCoursesSubscribe() {
         return coursesSubscribe;
     }

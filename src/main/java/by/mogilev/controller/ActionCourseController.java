@@ -1,24 +1,22 @@
 package by.mogilev.controller;
 
-import by.mogilev.model.Course;
-
 import by.mogilev.dao.CourseDAO;
+import by.mogilev.model.Course;
 import by.mogilev.service.CourseService;
-import com.itextpdf.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.security.core.context.SecurityContextHolder;
 import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.PathVariable;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
-
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
-import java.io.IOException;
 
 /**
  * Created by akiseleva on 09.03.2015.
@@ -31,8 +29,6 @@ public class ActionCourseController {
 
     @Autowired
     private CourseService courseService;
-
-
 
     @ModelAttribute
     public String populateCurrentUser() {
@@ -115,26 +111,14 @@ public class ActionCourseController {
 
     }
 
-    @RequestMapping(value = "/mySeminars", method = RequestMethod.GET)
-    public ModelAndView listCourse() {
-        return new ModelAndView("mySeminars", "courseList", courseDAO.getAllCourse());
-    }
-
-    @RequestMapping(value = "/mySeminars", method = RequestMethod.POST)
-    public ModelAndView evRemindAndDelete(@RequestParam(value = "grade", required = false) Integer grade,
-                                          @RequestParam(value = "fieldForSubmit", required = false) String action,
-                                          @RequestParam(value = "id", required = false) Integer id,
-                                          @RequestParam(value = "selectCategory", required = false) String selectCategory,
-                                          HttpServletResponse response)
-            throws IOException, DocumentException {
-
-
-        if ("evalRem".equals(action))
-            courseService.remidEv(id, grade);
-
-
-        return new ModelAndView("mySeminars").
-                addObject("courseList", courseDAO.getCoursesForUser(id));
+    @ModelAttribute
+    public String popCurrentUser() {
+        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
+        String userName = "";
+        if (principal instanceof UserDetails) {
+            userName = ((org.springframework.security.core.userdetails.User) principal).getUsername();
+        }
+        return userName;
     }
 
 
