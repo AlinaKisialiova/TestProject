@@ -56,7 +56,6 @@ public class InformationBoardController {
 
         if ("del".equals(action))
             courseDAO.deleteCourse(courseDAO.getCourse(id));
-        Course course;
 
 
         if ("evalRem".equals(action))

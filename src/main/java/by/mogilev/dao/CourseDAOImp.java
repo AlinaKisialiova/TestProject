@@ -43,8 +43,8 @@ public class CourseDAOImp implements CourseDAO {
     @Transactional
     public List<Course> getAllCourse() {
         List<Course> coursesList = new ArrayList<Course>();
-        Session session = this.sessionFactory.getCurrentSession();
-        coursesList = session.createCriteria(Course.class).list();
+        coursesList = this.sessionFactory.getCurrentSession().createQuery("from Course").list();
+
         return coursesList;
     }
 
