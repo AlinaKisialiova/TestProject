@@ -1,7 +1,9 @@
 package by.mogilev.service;
 
 import by.mogilev.dao.CourseDAO;
+import by.mogilev.dao.UserDAO;
 import by.mogilev.model.Course;
+import by.mogilev.model.User;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.CMYKColor;
 import com.itextpdf.text.pdf.PdfPCell;
@@ -18,11 +20,12 @@ import org.springframework.stereotype.Service;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
+import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Map;
+import java.util.*;
+import java.util.List;
 
 /**
  * Created by Администратор on 21.03.2015.
@@ -30,13 +33,17 @@ import java.util.Map;
 @Service
 public class CourseServiceImpl implements CourseService {
 
-    final String nameFile="listOfCourses";
-    final String imageForPdf="D:\\1.JPG";
+    final String NAME_FILE = "listOfCourses";
+    final String IMAGE_FOR_PDF = "D:\\1.JPG";
 
-    CourseServiceImpl(){}
+    CourseServiceImpl() {
+    }
 
     @Autowired
     private CourseDAO courseDAO;
+
+    @Autowired
+    private UserDAO userDAO;
 
     @Override
     public boolean isOwner(int idCourse, HttpSession session) {
@@ -53,7 +60,7 @@ public class CourseServiceImpl implements CourseService {
 
         Document document = new Document(PageSize.A4, 50, 50, 50, 50);
         PdfWriter writer = PdfWriter.getInstance(document,
-                new FileOutputStream(nameFile+".pdf"));
+                new FileOutputStream(NAME_FILE + ".pdf"));
         document.open();
         Paragraph paragraph1 = new Paragraph("This is list of courses a Training Center",
                 FontFactory.getFont(FontFactory.COURIER, 14, Font.BOLD,
@@ -66,33 +73,32 @@ public class CourseServiceImpl implements CourseService {
         t.setSpacingBefore(25);
         t.setSpacingAfter(25);
 
-        PdfPCell c1 = new PdfPCell(new Phrase("Lector Name",FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.BOLD,
+        PdfPCell c1 = new PdfPCell(new Phrase("Lector Name", FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.BOLD,
                 new CMYKColor(100, 78, 0, 44))));
 
         t.addCell(c1);
-        PdfPCell c2 = new PdfPCell(new Phrase("Course Name",FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.BOLD,
+        PdfPCell c2 = new PdfPCell(new Phrase("Course Name", FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.BOLD,
                 new CMYKColor(100, 78, 0, 44))));
         t.addCell(c2);
-        PdfPCell c3 = new PdfPCell(new Phrase("Course Category",FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.BOLD,
+        PdfPCell c3 = new PdfPCell(new Phrase("Course Category", FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.BOLD,
                 new CMYKColor(100, 78, 0, 44))));
         t.addCell(c3);
-        PdfPCell c4 = new PdfPCell(new Phrase("Subscribed",FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.BOLD,
+        PdfPCell c4 = new PdfPCell(new Phrase("Subscribed", FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.BOLD,
                 new CMYKColor(100, 78, 0, 44))));
         t.addCell(c4);
-        PdfPCell c5 = new PdfPCell(new Phrase("Participated",FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.BOLD,
+        PdfPCell c5 = new PdfPCell(new Phrase("Participated", FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.BOLD,
                 new CMYKColor(100, 78, 0, 44))));
         t.addCell(c5);
-        PdfPCell c6 = new PdfPCell(new Phrase("Delivered Course",FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.BOLD,
+        PdfPCell c6 = new PdfPCell(new Phrase("Delivered Course", FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.BOLD,
                 new CMYKColor(100, 78, 0, 44))));
         t.addCell(c6);
-        PdfPCell c7 = new PdfPCell(new Phrase("Evaluation",FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.BOLD,
+        PdfPCell c7 = new PdfPCell(new Phrase("Evaluation", FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.BOLD,
                 new CMYKColor(100, 78, 0, 44))));
         t.addCell(c7);
 
-        java.util.List<Course> courses=courseDAO.getAllCourse();
+        java.util.List<Course> courses = courseDAO.getAllCourse();
 
-        for (Course c : courses)
-        {
+        for (Course c : courses) {
             t.addCell(c.getLector().getName());
             t.addCell(c.getNameCourse());
             t.addCell(c.getCategory());
@@ -103,17 +109,17 @@ public class CourseServiceImpl implements CourseService {
 
         }
         document.add(t);
-
-        Image image1 = Image.getInstance(imageForPdf);
-        image1.scaleAbsolute(400f, 225f);
-
-        document.add(image1);
+        if (new File(IMAGE_FOR_PDF).exists()) {
+            Image image1 = Image.getInstance(IMAGE_FOR_PDF);
+            image1.scaleAbsolute(400f, 225f);
+            document.add(image1);
+        }
         document.close();
 
         ServletOutputStream out = response.getOutputStream();
         response.setContentType("application/pdf");
-        response.setHeader("Content-Disposition", "attachment; filename=" + nameFile + ".pdf");
-        FileInputStream fileInputStream = new FileInputStream( nameFile + ".pdf");
+        response.setHeader("Content-Disposition", "attachment; filename=" + NAME_FILE + ".pdf");
+        FileInputStream fileInputStream = new FileInputStream(NAME_FILE + ".pdf");
 
         int bytes;
         while ((bytes = fileInputStream.read()) != -1) {
@@ -125,13 +131,13 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public void outInExcelAllCourse( HttpServletResponse response) throws IOException {
+    public void outInExcelAllCourse(HttpServletResponse response) throws IOException {
 
         final String[] titles = {
                 "Lector Name", "Course Name", "Course Category", "Subscribed", "Participated", "Delivered Course", "Evaluation"};
         Workbook wb = new HSSFWorkbook();
         Sheet sheet = wb.createSheet("List of Courses");
-        int numbRow=0;
+        int numbRow = 0;
 
         Row headerRow = sheet.createRow(numbRow);
         numbRow++;
@@ -146,49 +152,93 @@ public class CourseServiceImpl implements CourseService {
             cell.setCellValue(titles[i]);
         }
 
-        java.util.List<Course> courses=courseDAO.getAllCourse();
+        java.util.List<Course> courses = courseDAO.getAllCourse();
 
-        for (Course c : courses)
-        {
+        for (Course c : courses) {
 
-         String[] data =
-                {c.getLector().getName(), c.getNameCourse(), c.getCategory(), String.valueOf(c.getSubscribers().size()),
-                String.valueOf(c.getAttenders().size()), String.valueOf(c.isDelivered()), String.valueOf(c.getEvaluation())};
+            String[] data =
+                    {c.getLector().getName(), c.getNameCourse(), c.getCategory(), String.valueOf(c.getSubscribers().size()),
+                            String.valueOf(c.getAttenders().size()), String.valueOf(c.isDelivered()), String.valueOf(c.getEvaluation())};
 
             Row row = sheet.createRow(numbRow);
-                for (int j = 0; j < titles.length; j++) {
-                    Cell cell = row.createCell(j);
-                    cell.setCellValue(data[j]);
-                }
-numbRow++;
+            for (int j = 0; j < titles.length; j++) {
+                Cell cell = row.createCell(j);
+                cell.setCellValue(data[j]);
+            }
+            numbRow++;
 
 
-    }
+        }
 
         ServletOutputStream out = response.getOutputStream();
         response.setContentType("application/xml");
-        response.setHeader("Content-Disposition", "attachment; filename=" + nameFile + ".xls");
+        response.setHeader("Content-Disposition", "attachment; filename=" + NAME_FILE + ".xls");
         wb.write(out);
         out.close();
     }
 
     @Override
     public Map<String, String> getCategotyMap() {
-        Map<String,String> categoryMap = new HashMap<String,String>();
+        Map<String, String> categoryMap = new HashMap<String, String>();
         categoryMap.put("Project Management", "Project Management");
         categoryMap.put("Development", "Development");
         return categoryMap;
     }
 
 
-
     @Override
     public void remidEv(int id, int grade) {
         Course changeEvalCourse = courseDAO.getCourse(id);
         changeEvalCourse.setEvaluation(grade);
-       courseDAO.updateCourse(changeEvalCourse);
+        courseDAO.updateCourse(changeEvalCourse);
 
 
+    }
+
+    @SuppressWarnings("unchecked")
+    @Override
+    public java.util.List<Course> getSelected(String category) {
+        if (category == null) category = "All";
+        if (category.equals("All"))
+            return courseDAO.getAllCourse();
+        else
+            return courseDAO.getSelectedDao(category);
+    }
+
+    @Override
+    public void addInAttSet(String username, int id_course) {
+        if (username == null || id_course == 0) return;
+
+        User checkUser = userDAO.getUser(username);
+        Course checkCourse = courseDAO.getCourse(id_course);
+        checkCourse.getAttenders().add(checkUser);
+    }
+
+    @Override
+    public List<Course> getAllCourse() {
+        return courseDAO.getAllCourse();
+    }
+
+    @Override
+    public void deleteCourse(int id) {
+        Course course = courseDAO.getCourse(id);
+        if (course==null) throw  new NullPointerException("Course is null");
+        courseDAO.deleteCourse(course);
+    }
+
+    @Override
+    public Course getCourse(int id) {
+      return courseDAO.getCourse(id);
+    }
+
+    @Override
+    public void registerCourse(Course course, String nameLector) {
+        courseDAO.registerCourse(course, nameLector);
+    }
+
+    @Override
+    public void updateCourse(Course course) {
+        courseDAO.updateCourse(course);
     }
 
 

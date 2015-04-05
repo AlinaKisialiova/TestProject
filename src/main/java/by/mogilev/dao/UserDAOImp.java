@@ -19,13 +19,12 @@ import java.util.List;
 @Transactional
 public class UserDAOImp  implements UserDAO {
 
+@Autowired
     private SessionFactory sessionFactory;
 
     public void setSessionFactory(SessionFactory sessionFactory) {
         this.sessionFactory = sessionFactory;
     }
-
-    public  UserDAOImp() {}
 
 
     public void save(User user) {
@@ -51,8 +50,11 @@ public class UserDAOImp  implements UserDAO {
     public List<User> getAllUser()  {
         List<User> users = new ArrayList<User>();
         Session session = this.sessionFactory.getCurrentSession();
-          users=session.createQuery("from USER").list();
-        return users;
+        Criteria criteria=session.createCriteria(User.class);
+        return  criteria.list();
+
+//          users=session.createQuery("from USER").list();
+//        return users;
     }
 }
 

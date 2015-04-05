@@ -1,6 +1,7 @@
 package by.mogilev.controller;
 
 import by.mogilev.dao.CourseDAO;
+import by.mogilev.model.ActionsOnPage;
 import by.mogilev.model.Course;
 import by.mogilev.service.CourseService;
 import com.itextpdf.text.DocumentException;
@@ -25,8 +26,6 @@ import java.io.IOException;
 @Controller
 public class InformationBoardController {
 
-    @Autowired
-    private CourseDAO courseDAO;
 
     @Autowired
     private CourseService courseService;
@@ -43,34 +42,33 @@ public class InformationBoardController {
 
     @RequestMapping(value = "/informationBoard", method = RequestMethod.GET)
     public ModelAndView listCourse() {
-        return new ModelAndView("informationBoard", "courseList", courseDAO.getAllCourse());
+        return new ModelAndView("informationBoard", "courseList", courseService.getAllCourse());
     }
 
     @RequestMapping(value = "/informationBoard", method = RequestMethod.POST)
     public ModelAndView evRemindAndDelete(@RequestParam(value = "grade", required = false) Integer grade,
-                                          @RequestParam(value = "fieldForSubmit", required = false) String action,
+                                          @RequestParam(value = "fieldForSubmit", required = false) ActionsOnPage action,
                                           @RequestParam(value = "id", required = false) Integer id,
                                           @RequestParam(value = "selectCategory", required = false) String selectCategory,
                                           HttpServletResponse response)
             throws IOException, DocumentException {
+        ModelAndView mav = new ModelAndView("informationBoard");
+        if (ActionsOnPage.DEL.equals(action))
+            courseService.deleteCourse(id);
 
-        if ("del".equals(action))
-            courseDAO.deleteCourse(courseDAO.getCourse(id));
-
-
-        if ("evalRem".equals(action))
+        if (ActionsOnPage.EVAL_REM.equals(action))
             courseService.remidEv(id, grade);
 
-        if ("outPdf".equals(action))
+        if (ActionsOnPage.OUT_PDF.equals(action))
             courseService.outInPdfAllCourse(response);
 
-        if ("outExcel".equals(action))
+        if (ActionsOnPage.OUT_EXCEL.equals(action))
             courseService.outInExcelAllCourse(response);
 
+        mav.addObject("courseList", courseService.getSelected(selectCategory));
 
+        return mav;
 
-        return new ModelAndView("informationBoard").
-                addObject("courseList", courseDAO.getSelected(selectCategory));
     }
 }
 

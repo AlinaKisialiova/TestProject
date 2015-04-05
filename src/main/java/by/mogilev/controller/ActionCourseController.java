@@ -25,9 +25,6 @@ import javax.servlet.http.HttpSession;
 public class ActionCourseController {
 
     @Autowired
-    private CourseDAO courseDAO;
-
-    @Autowired
     private CourseService courseService;
 
     @ModelAttribute
@@ -52,24 +49,28 @@ public class ActionCourseController {
 
     @RequestMapping(value = "/registrationCourse", method = RequestMethod.POST)
     public ModelAndView regCourse(@ModelAttribute("Course")  Course newCourse,  BindingResult result, Model model, HttpSession session) {
-           if (!result.hasErrors()) new ModelAndView("redirect:/informationBoard");
+           if (result.hasErrors())
+               new ModelAndView("redirect:/informationBoard");
+
             String userName = populateCurrentUser();
 
-            courseDAO.registerCourse(newCourse, userName);
+            courseService.registerCourse(newCourse, userName);
             return new ModelAndView("redirect:/informationBoard");
 
     }
 
     @RequestMapping(value = "/courseDetails/{course.id}", method = RequestMethod.GET)
     public ModelAndView detailsCourse(@PathVariable("course.id") Integer id) {
-        return new ModelAndView("courseDetails")
-                .addObject("checkCourse", courseDAO.getCourse(id));
+        ModelAndView mav= new ModelAndView("courseDetails");
+        mav.addObject("checkCourse", courseService.getCourse(id));
+        return mav;
+
     }
 
     @RequestMapping(value = "/editCourse/{course.id}", method = RequestMethod.GET)
     public String editRegCourse(@PathVariable("course.id") Integer id, Model model) {
         model.addAttribute("categoryMap", courseService.getCategotyMap());
-        model.addAttribute("course", courseDAO.getCourse(id));
+        model.addAttribute("course", courseService.getCourse(id));
         return "editCourse";
     }
 
@@ -78,17 +79,17 @@ public class ActionCourseController {
                              @ModelAttribute("Course") Course updCourse,
                              HttpServletRequest request, HttpSession session, Model model) {
 
-        if (courseDAO.getCourse(id) == null) return "redirect:/informationBoard";
+        if (! (courseService.isOwner(id, session)) || courseService.getCourse(id) == null)
+              return "redirect:/informationBoard";
 
-        if (courseService.isOwner(id, session)) {
+
         String p = request.getParameter("deleteCourse");
-            Course checkCourse = courseDAO.getCourse(id);
-        if ("on".equals(p)) {
-            courseDAO.deleteCourse(checkCourse);
-            return "redirect:/informationBoard";
-        }
+
+        if ("on".equals(p))
+            courseService.deleteCourse(id);
+
         else {
-            Course editCourse = courseDAO.getCourse(id);
+            Course editCourse = courseService.getCourse(id);
 
             editCourse.setCategory(updCourse.getCategory());
             editCourse.setNameCourse(updCourse.getNameCourse());
@@ -96,19 +97,10 @@ public class ActionCourseController {
             editCourse.setLinks(updCourse.getLinks());
             editCourse.setDuration(updCourse.getDuration());
 
-            courseDAO.updateCourse(editCourse);
-
-            return "redirect:/informationBoard";
-
+            courseService.updateCourse(editCourse);
         }
-            }
 
-        else
-            model.addAttribute("message", "Forbidden update");
-        return "editCourse";
-
-
-
+          return "redirect:/informationBoard";
     }
 
     @ModelAttribute

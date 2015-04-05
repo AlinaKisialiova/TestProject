@@ -10,17 +10,18 @@
 
     <context:component-scan base-package="by.mogilev"/>
 
-<import resource="hibernateConfig.xml"/>
+    <import resource="hibernateConfig.xml"/>
+
     <bean class="org.springframework.web.servlet.view.UrlBasedViewResolver">
         <property name="viewClass" value="org.springframework.web.servlet.view.tiles3.TilesView"/>
     </bean>
 
-    <bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer" >
+    <bean id="tilesConfigurer" class="org.springframework.web.servlet.view.tiles3.TilesConfigurer">
         <property name="definitions" value="/WEB-INF/tilesDefinitions.xml"/>
     </bean>
 
-    <mvc:resources mapping="/resources/**" location="/resources/mytheme/" />
-    <mvc:annotation-driven />
+    <mvc:resources mapping="/resources/**" location="/resources/mytheme/"/>
+    <mvc:annotation-driven/>
 
 
-        </beans>
+</beans>

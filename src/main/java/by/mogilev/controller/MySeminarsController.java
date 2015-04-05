@@ -1,6 +1,9 @@
 package by.mogilev.controller;
 
 import by.mogilev.dao.CourseDAO;
+import by.mogilev.model.ActionsOnPage;
+import by.mogilev.model.Course;
+import by.mogilev.model.User;
 import by.mogilev.service.CourseService;
 import by.mogilev.service.UserService;
 import com.itextpdf.text.DocumentException;
@@ -15,15 +18,14 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.security.Principal;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by akiseleva on 03.04.2015.
  */
 @Controller
 public class MySeminarsController {
-
-    @Autowired
-    private CourseDAO courseDAO;
 
     @Autowired
     private CourseService courseService;
@@ -33,14 +35,14 @@ public class MySeminarsController {
 
     @RequestMapping(value = "/mySeminars", method = RequestMethod.GET)
     public ModelAndView listCourseUser(HttpServletRequest request) {
-        ModelAndView mav= new ModelAndView("mySeminars");
+        ModelAndView mav = new ModelAndView("mySeminars");
 
-        String userName="";
+        String userName = "";
         Principal principal = request.getUserPrincipal();
-        if (principal != null && principal.getName()!=null) {
+        if (principal != null && principal.getName() != null) {
             userName = principal.getName();
         }
-        int id=userService.getIdByUsername(userName);
+        int id = userService.getIdByUsername(userName);
 
         mav.addObject("courseList", userService.getCoursesSubscribeOfUser(id));
         mav.addObject("attCourseOfUser", userService.getCoursesAttendeeOfUser(id));
@@ -50,18 +52,21 @@ public class MySeminarsController {
 
     @RequestMapping(value = "/mySeminars", method = RequestMethod.POST)
     public ModelAndView evRemindAndDelete(@RequestParam(value = "grade", required = false) Integer grade,
-                                          @RequestParam(value = "fieldForSubmit", required = false) String action,
+                                          @RequestParam(value = "fieldForSubmit", required = false) ActionsOnPage action,
                                           @RequestParam(value = "id", required = false) Integer id,
                                           @RequestParam(value = "selectCategory", required = false) String selectCategory,
-                                          HttpServletResponse response)
+                                          Principal principal)
             throws IOException, DocumentException {
-
-
-        if ("evalRem".equals(action))
+        ModelAndView mav = new ModelAndView("mySeminars");
+        if (ActionsOnPage.EVAL_REM.equals(action))
             courseService.remidEv(id, grade);
 
-        return new ModelAndView("mySeminars").
-                addObject("courseList",userService.getCoursesSubscribeOfUser(id));
+        if (ActionsOnPage.ADD_IN_ATT.equals(action)) {
+            courseService.addInAttSet(principal.getName(), id);
+        }
+        mav.addObject("courseList", userService.getCoursesSubscribeOfUser(id));
+        return mav;
+
     }
 
 }

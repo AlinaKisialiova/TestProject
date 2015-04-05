@@ -6,58 +6,56 @@
 <tiles-definitions>
 
     <definition name="defaultTemplate" template="/WEB-INF/pages/layout/template.jsp">
-        <put-attribute name="header" value="/WEB-INF/pages/layout/defaultHeader.jsp" />
+        <put-attribute name="header" value="/WEB-INF/pages/layout/defaultHeader.jsp"/>
         <put-attribute name="content" value=""/>
-        <put-attribute name="footer" value="/WEB-INF/pages/layout/defaultFooter.jsp" />
+        <put-attribute name="footer" value="/WEB-INF/pages/layout/defaultFooter.jsp"/>
     </definition>
 
 
     <definition name="signin" extends="defaultTemplate">
-        <put-attribute name="content" value="/WEB-INF/pages/user/signin.jsp" />
+        <put-attribute name="content" value="/WEB-INF/pages/user/signin.jsp"/>
         <put-attribute name="title" value="Training Center - Sign In"/>
     </definition>
 
     <definition name="signin_failure" extends="defaultTemplate">
-        <put-attribute name="content" value="/WEB-INF/pages/user/signin_failure.jsp" />
+        <put-attribute name="content" value="/WEB-INF/pages/user/signin_failure.jsp"/>
         <put-attribute name="title" value="Training Center - Sign Failure"/>
     </definition>
 
     <definition name="informationBoard" extends="defaultTemplate">
-        <put-attribute name="content" value="/WEB-INF/pages/informationBoard.jsp" />
+        <put-attribute name="content" value="/WEB-INF/pages/informationBoard.jsp"/>
         <put-attribute name="title" value="Training Center - Information Board"/>
     </definition>
 
     <definition name="registrationCourse" extends="defaultTemplate">
-    <put-attribute name="content" value="/WEB-INF/pages/registrationCourse.jsp" />
+        <put-attribute name="content" value="/WEB-INF/pages/registrationCourse.jsp"/>
         <put-attribute name="title" value="Training Center - Registration Course"/>
 
-</definition>
+    </definition>
     <definition name="courseDetails" extends="defaultTemplate">
-        <put-attribute name="content" value="/WEB-INF/pages/courseDetails.jsp" />
+        <put-attribute name="content" value="/WEB-INF/pages/courseDetails.jsp"/>
         <put-attribute name="title" value="Training Center - Course Details"/>
     </definition>
 
     <definition name="editCourse" extends="defaultTemplate">
-        <put-attribute name="content" value="/WEB-INF/pages/editCourse.jsp" />
+        <put-attribute name="content" value="/WEB-INF/pages/editCourse.jsp"/>
         <put-attribute name="title" value="Training Center - Edit Course "/>
     </definition>
 
     <definition name="deniedPage" extends="defaultTemplate">
-        <put-attribute name="content" value="/WEB-INF/pages/deniedPage.jsp" />
+        <put-attribute name="content" value="/WEB-INF/pages/deniedPage.jsp"/>
         <put-attribute name="title" value="Training Center - Access is denied "/>
     </definition>
 
     <definition name="participantsList" extends="defaultTemplate">
-        <put-attribute name="content" value="/WEB-INF/pages/participantsList.jsp" />
+        <put-attribute name="content" value="/WEB-INF/pages/participantsList.jsp"/>
         <put-attribute name="title" value="Training Center - Participants List "/>
     </definition>
 
     <definition name="mySeminars" extends="defaultTemplate">
-        <put-attribute name="content" value="/WEB-INF/pages/mySeminars.jsp" />
+        <put-attribute name="content" value="/WEB-INF/pages/mySeminars.jsp"/>
         <put-attribute name="title" value="Training Center - My Seminars"/>
     </definition>
-
-
 
 
 </tiles-definitions>

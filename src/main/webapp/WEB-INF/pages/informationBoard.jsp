@@ -116,6 +116,7 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
 
 
 
+
         </th>
 
     <tr bgcolor="#b0c4de">
@@ -153,9 +154,9 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
 
                     <c:if test="${ user eq course.lector.username}">
                 <c:if test="${course.delivered}">
-                    <input type="submit" value="Delete" onclick="del(${course.id})" class="btn"/>
+                    <input type="submit" name="delete" value="Delete" onclick="del(${course.id})" class="btn"/>
                 </c:if>
-
+                        <%--<input type="submit" name="delete" value="Delete" onclick="del(${course.id})" class="btn"/>--%>
 
                 <input type="button" id="Eval" value="Evaluation Reminder" onclick="show(${course.id})" class="btn"/>
                 </c:if>
@@ -185,27 +186,24 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
         $(".cours").text(nCourse);
         $(".grade").val(gCourse);
         $(".idC").val(id);
-        $(".fieldForSubmit").val("evalRem");
+        $(".fieldForSubmit").val("EVAL_REM");
     }
     function hide(){
         $("#EvalRemindBlock").hide();
     }
 
-    function del (id) {
-        $(".idC").val(id);
-        $(".fieldForSubmit").val("del");
-    }
-
-    function outPdf () {
-        $(".fieldForSubmit").val("outPdf");
-
+    function outPdf() {
+        $(".fieldForSubmit").val("OUT_PDF");
     }
 
     function outExcel() {
-        $(".fieldForSubmit").val("outExcel");
+        $(".fieldForSubmit").val("OUT_EXCEL");
 
     }
-
+    function del(id) {
+        $(".idC").val(id);
+        $(".fieldForSubmit").val("DEL");
+    }
 
 
 </script>

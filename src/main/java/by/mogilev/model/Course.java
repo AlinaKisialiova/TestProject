@@ -10,7 +10,7 @@ import java.util.Set;
  */
 
 @Entity
-@Table(name ="COURSE")
+@Table(name = "COURSE")
 public class Course implements Serializable {
     private int id;
     private String category;
@@ -25,30 +25,35 @@ public class Course implements Serializable {
     private Set<User> subscribers = new HashSet<User>();
 
 
-                public Course(String category, String nameCourse, String description, String links, String duration, User lector) {
-                this.category=category;
-                this.nameCourse=nameCourse;
-                this.description=description;
-                this.links=links;
-                this.duration=duration;
-                this.lector=lector;
+    public Course(String category, String nameCourse, String description, String links, String duration, User lector) {
+        this.category = category;
+        this.nameCourse = nameCourse;
+        this.description = description;
+        this.links = links;
+        this.duration = duration;
+        this.lector = lector;
 
     }
-    public Course() {}
+
+    public Course() {
+    }
+
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_course")
     public int getId() {
         return id;
     }
+
     public void setId(int id) {
         this.id = id;
     }
 
     @Column(name = "category")
-        public String getCategory() {
+    public String getCategory() {
         return category;
     }
+
     public void setCategory(String category) {
         this.category = category;
     }
@@ -57,6 +62,7 @@ public class Course implements Serializable {
     public String getNameCourse() {
         return nameCourse;
     }
+
     public void setNameCourse(String nameCourse) {
         this.nameCourse = nameCourse;
     }
@@ -66,6 +72,7 @@ public class Course implements Serializable {
         return duration;
 
     }
+
     public void setDuration(String duration) {
         this.duration = duration;
     }
@@ -74,6 +81,7 @@ public class Course implements Serializable {
     public String getDescription() {
         return description;
     }
+
     public void setDescription(String description) {
         this.description = description;
     }
@@ -82,6 +90,7 @@ public class Course implements Serializable {
     public String getLinks() {
         return links;
     }
+
     public void setLinks(String links) {
         this.links = links;
     }
@@ -90,6 +99,7 @@ public class Course implements Serializable {
     public int getEvaluation() {
         return evaluation;
     }
+
     public void setEvaluation(int evaluation) {
         this.evaluation = evaluation;
     }
@@ -97,29 +107,33 @@ public class Course implements Serializable {
     public boolean isDelivered() {
         return delivered;
     }
+
     public void setDelivered(boolean delivered) {
         this.delivered = delivered;
     }
 
     @ManyToOne
-    @JoinColumn(name="id_user",nullable=false)
+    @JoinColumn(name = "id_user", nullable = false)
     public User getLector() {
         return lector;
     }
+
     public void setLector(User lector) {
         this.lector = lector;
     }
 
-    @ManyToMany(fetch=FetchType.EAGER,mappedBy="coursesAttendee",
-            cascade=CascadeType.ALL)
+    @ManyToMany( mappedBy = "coursesAttendee",
+            cascade = CascadeType.ALL)
     public Set<User> getAttenders() {
         return attenders;
     }
+
     public void setAttenders(Set<User> attendees) {
         this.attenders = attendees;
     }
-    @ManyToMany(fetch=FetchType.EAGER,mappedBy="coursesSubscribe",
-            cascade=CascadeType.ALL)
+
+    @ManyToMany( mappedBy = "coursesSubscribe",
+            cascade = CascadeType.ALL)
     public Set<User> getSubscribers() {
         return subscribers;
     }

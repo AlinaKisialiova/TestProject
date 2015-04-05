@@ -3,6 +3,7 @@ package by.mogilev.dao;
 import by.mogilev.model.Course;
 import by.mogilev.model.User;
 import org.hibernate.Criteria;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -23,14 +24,12 @@ public class CourseDAOImp implements CourseDAO {
     @Autowired
     private SessionFactory sessionFactory;
 
-
-    public CourseDAOImp() {
-    }
-
+    @SuppressWarnings("unchecked")
     @Transactional
     public void registerCourse(Course newCourse, String loginLector) {
         Session session = this.sessionFactory.getCurrentSession();
-        if (newCourse == null) return;
+        if (newCourse == null)
+           throw  new NullPointerException("Course is null");
         User lector;
         Criteria criteria = session.createCriteria(User.class);
         criteria.add(Restrictions.eq("username", loginLector));
@@ -42,9 +41,14 @@ public class CourseDAOImp implements CourseDAO {
     @SuppressWarnings("unchecked")
     @Transactional
     public List<Course> getAllCourse() {
-        List<Course> coursesList = new ArrayList<Course>();
-        coursesList = this.sessionFactory.getCurrentSession().createQuery("from Course").list();
-
+//        List<Course> coursesList = new ArrayList<Course>();
+//        coursesList = this.sessionFactory.getCurrentSession().createQuery("from Course").list();
+        Session session = this.sessionFactory.getCurrentSession();
+        List<Course> coursesList = session.createCriteria(Course.class).list();
+        for (Course course : coursesList) {
+            Hibernate.initialize(course.getAttenders());
+            Hibernate.initialize(course.getSubscribers());
+        }
         return coursesList;
     }
 
@@ -53,13 +57,40 @@ public class CourseDAOImp implements CourseDAO {
         Session session = this.sessionFactory.getCurrentSession();
         Criteria criteria = session.createCriteria(Course.class);
         criteria.add(Restrictions.eq("id", id));
-        return (Course) criteria.uniqueResult();
+       Course course=(Course) criteria.uniqueResult();
+        Hibernate.initialize(course.getAttenders());
+        Hibernate.initialize(course.getSubscribers());
+
+        return course;
     }
 
  @Override
     public void updateCourse(Course course) {
-        Session session = this.sessionFactory.getCurrentSession();
+     Session session = this.sessionFactory.getCurrentSession();
+
+         Hibernate.initialize(course.getAttenders());
+         Hibernate.initialize(course.getSubscribers());
+
      session.update(course);
+    }
+
+    @Override
+    public List getSelectedDao(String category) {
+//        Session session = this.sessionFactory.getCurrentSession();
+//       return sessionFactory.getCurrentSession().createQuery("from Course u where u.category=:category")
+//                .setParameter("category",category).list();
+        Session session = this.sessionFactory.getCurrentSession();
+
+        Criteria criteria=session.createCriteria(Course.class);
+        criteria.add(Restrictions.eq("category", category));
+        List<Course> coursesList;
+        coursesList=criteria.list();
+        for (Course course : coursesList) {
+            Hibernate.initialize(course.getAttenders());
+            Hibernate.initialize(course.getSubscribers());
+        }
+
+        return coursesList;
     }
 
 
@@ -71,21 +102,9 @@ public class CourseDAOImp implements CourseDAO {
         return null;
     }
 
-
-    @SuppressWarnings("unchecked")
-    @Override
-    public List<Course> getSelected(String category) {
-        if(category.equals("All"))
-            return getAllCourse();
-        else
-            return sessionFactory.getCurrentSession().createQuery("from Course u where u.category=:category")
-                    .setParameter("category",category).list();
-    }
-
-
     @Transactional
     public void deleteCourse(Course course) {
-        if (course==null) return;
+
         Session session = this.sessionFactory.openSession();
         session.delete(course);
         session.flush();

@@ -4,6 +4,7 @@ import by.mogilev.dao.UserDAO;
 import by.mogilev.model.Course;
 import by.mogilev.model.User;
 import org.hibernate.Criteria;
+import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
@@ -11,6 +12,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -34,13 +36,19 @@ public class UserServiceImpl implements UserService {
     @Override
     public Set<Course> getCoursesSubscribeOfUser(int id) {
         Session session = this.sessionFactory.getCurrentSession();
-        if(id==0) return null;
+        if(id==0) throw new NullPointerException("Id user for get list of subscribers not find.");
 
         Criteria criteria = session.createCriteria(User.class);
         criteria.add(Restrictions.eq("id", id));
         User user=(User)criteria.uniqueResult();
+        Set<Course> coursesList;
+        coursesList=user.getCoursesSubscribe();
 
-        return user.getCoursesSubscribe();
+        for (Course course : coursesList) {
+            Hibernate.initialize(course.getAttenders());
+            Hibernate.initialize(course.getSubscribers());
+        }
+        return coursesList;
     }
 
     @SuppressWarnings("unchecked")
@@ -52,8 +60,15 @@ public class UserServiceImpl implements UserService {
         Criteria criteria = session.createCriteria(User.class);
         criteria.add(Restrictions.eq("id", id));
         User user=(User)criteria.uniqueResult();
+        Set<Course> coursesList;
+        coursesList=user.getCoursesAttendee();
 
-        return user.getCoursesAttendee();
+        for (Course course : coursesList) {
+            Hibernate.initialize(course.getAttenders());
+            Hibernate.initialize(course.getSubscribers());
+        }
+        return coursesList;
+
     }
 
     @Override

@@ -13,10 +13,10 @@ public interface CourseDAO {
     public void deleteCourse(Course course);
     public List<Course> getAllCourse();
     public Course getCourse(int id);
-    public void registerCourse(Course course, String nameLector ) ;
+    public void registerCourse(Course course, String nameLector);
     public void updateCourse( Course course);
-    List<Course> getSelected(String category);
-    List<Course> getCoursesForUser(int id);
+    public List getSelectedDao(String category);
+    public List<Course> getCoursesForUser(int id);
 
 
 }

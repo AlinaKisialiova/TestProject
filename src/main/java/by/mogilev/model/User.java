@@ -105,7 +105,7 @@ public class User implements Serializable {
         this.course = course;
     }
 
-    @ManyToMany(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
+    @ManyToMany(cascade=CascadeType.ALL)
     @JoinTable(name="COURSE_SUBSCRIBERS",
             joinColumns=@JoinColumn(name="id_user"),
             inverseJoinColumns=@JoinColumn(name="id_course"))
@@ -116,7 +116,7 @@ public class User implements Serializable {
     public void setCoursesSubscribe(Set<Course> coursesSubscribe) {
         this.coursesSubscribe = coursesSubscribe;
     }
-    @ManyToMany(fetch=FetchType.EAGER,cascade=CascadeType.ALL)
+    @ManyToMany(cascade=CascadeType.ALL)
     @JoinTable(name="COURSE_ATTENDERS",
             joinColumns=@JoinColumn(name="id_user"),
             inverseJoinColumns=@JoinColumn(name="id_course"))

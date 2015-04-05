@@ -14,13 +14,14 @@ import org.springframework.web.servlet.ModelAndView;
  * Created by Администратор on 29.03.2015.
  */
 @Controller
-public class Participant {
+public class ParticipantController {
     @Autowired
-    private CourseDAO courseDAO;
+    private CourseService courseService;
 
     @RequestMapping(value = "/participantsList/{course.id}", method = RequestMethod.GET)
     public ModelAndView participantsList(@PathVariable("course.id") Integer id) {
-        return new ModelAndView("participantsList")
-        .addObject("checkCourse", courseDAO.getCourse(id));
+        ModelAndView mav= new ModelAndView("participantsList");
+        mav.addObject("checkCourse", courseService.getCourse(id));
+        return mav;
     }
 }

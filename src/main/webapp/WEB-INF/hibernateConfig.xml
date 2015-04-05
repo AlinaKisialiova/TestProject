@@ -22,17 +22,18 @@
 
     <bean id="sessionFactory"
           class="org.springframework.orm.hibernate4.LocalSessionFactoryBean">
-        <property name="dataSource" ref="dataSource" />
+        <property name="dataSource" ref="dataSource"/>
         <property name="packagesToScan" value="by.mogilev.model"/>
 
 
- <property name="hibernateProperties">
+        <property name="hibernateProperties">
             <props>
                 <prop key="hibernate.dialect">
                     org.hibernate.dialect.H2Dialect
                 </prop>
-                <prop key="hibernate.show_sql">true</prop>
-                <prop key="hibernate.format_sql">true</prop>
+                <!--<prop key="hibernate.show_sql">true</prop>-->
+                <!--<prop key="hibernate.format_sql">true</prop>-->
+                <!--<prop key="hibernate.enable_lazy_load_no_trans">true</prop>-->
             </props>
         </property>
     </bean>
@@ -40,17 +41,16 @@
     <context:component-scan base-package="by.mogilev.service"/>
 
     <bean id="userDAO" class="by.mogilev.dao.UserDAOImp">
-        <property name="sessionFactory" ref="sessionFactory" />
+        <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
 
-
-    <tx:annotation-driven transaction-manager="transactionManager" />
+    <tx:annotation-driven transaction-manager="transactionManager"/>
 
     <bean id="transactionManager"
           class="org.springframework.orm.hibernate4.HibernateTransactionManager">
 
-        <property name="sessionFactory" ref="sessionFactory" />
+        <property name="sessionFactory" ref="sessionFactory"/>
     </bean>
 
 </beans>

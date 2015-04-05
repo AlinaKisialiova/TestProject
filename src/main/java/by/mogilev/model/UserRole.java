@@ -11,10 +11,9 @@ import javax.persistence.Table;
  */
 
 
-public enum UserRole  {
+public enum UserRole {
     ROLE_LECTOR,
     ROLE_USER;
-
     UserRole() {
     }
 
