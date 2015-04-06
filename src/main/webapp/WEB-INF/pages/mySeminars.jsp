@@ -9,54 +9,102 @@
 --%>
 
 <div class="row">
-    <div class="span12"> <h1>My Seminars</h1></div>
+    <div class="span12"><h1>My Seminars</h1></div>
 
-    <table align="justify" >
+    <table align="justify">
 
         <tr>
-            <td colspan="3"><a href="informationBoard"> Seminars Information Board </a></td>
-            <td colspan="3"><a href="" onclick="subscCours()">Subscribe for the Course</a></td>
+            <td colspan="3"><a href="mySeminars"> Seminars Information Board </a></td>
+            <td colspan="3"><a href="#" onclick="show(null,'#SubscOnCourse')">Subscribe for the Course</a></td>
 
         </tr>
 
-<tr><td>
-        <div id='EvalRemindBlock' style="display: none;">
-            <form method="post" action="informationBoard">
-                <input type="hidden" class="idC" name="id"/>
-                <table id="evalRemindTable">
-                    <tr>
-                        <td>Course Lector</td>
-                        <td class="lect">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Course name</td>
-                        <td class="cours">
-                        </td>
-                    </tr>
-                    <tr>
-                        <td>Course Grade</td>
-                        <td><input type="text" name="grade" class="grade"/>
-                            <input type="hidden" name="fieldForSubmit" class="fieldForSubmit"/>
+        <tr>
+            <td>
+                <div id='EvalRemindBlock' style="display: none;">
+                    <form method="post" action="informationBoard">
+                        <input type="hidden" class="idC" name="id"/>
+                        <table id="evalRemindTable">
+                            <tr>
+                                <td>Course Lector</td>
+                                <td class="lect">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Course name</td>
+                                <td class="cours">
+                                </td>
+                            </tr>
+                            <tr>
+                                <td>Course Grade</td>
+                                <td><input type="text" name="grade" class="grade"/>
+                                    <input type="hidden" name="fieldForSubmit" class="fieldForSubmit"/>
 
-                        </td>
+                                </td>
 
-                    </tr>
-                    <tr>
-                        <td>
-                            <input type="submit" value="Save"/>
-                        </td>
-                        <td>
-                            <input type="button" value="Cancel" onclick="hide();"/>
+                            </tr>
+                            <tr>
+                                <td>
+                                    <input type="submit" value="Save"/>
+                                </td>
+                                <td>
+                                    <input type="button" value="Cancel" onclick="hide('#EvalRemindBlock');"/>
 
-                        </td>
-                    </tr>
+                                </td>
+                            </tr>
 
-                </table>
-            </form>
-        </div>
-</td>
-</tr>
+                        </table>
+                    </form>
+                </div>
+            </td>
+        </tr>
+
+
+        <tr>
+            <td>
+                <div id='SubscOnCourse' style="display: none;">
+                    <form action="mySeminars" method="post">
+                        <input type="hidden" class="idC" name="id"/>
+                        <table id="subscCourse">
+                            <tr>
+                                <td><b> Select Course Category </b></td>
+                                <td>
+                                    <select name="selectCategory">
+                                        <option value="All">All</option>
+                                        <option value="Project Management">Project Management</option>
+                                        <option value="Development">Development</option>
+                                    </select>
+                                </td>
+                                <td><input type="submit" value="Ok"/></td>
+                            </tr>
+                            <tr>
+                                <td><b>Select Course Name</b></td>
+                                <td>
+                                    <select name="selectCourse" id="selectCourse">
+                                        <c:forEach var="courses" items="${nameCourses}">
+                                            <option value="${courses.id}"> ${courses.nameCourse}</option>
+                                        </c:forEach>
+                                    </select>
+
+                            <tr>
+                                <td>
+                                    <input type="hidden" name="fieldForSubmit" class="fieldForSubmit"/>
+                                    <input type="submit" value="Subscribe" onclick="setAction('SUBSCRIBE')"
+                                           class="btn-primary"/>
+
+                                </td>
+                                <td>
+                                    <input type="button" value="Cancel" onclick="hide('#SubscOnCourse');" class="btn"/>
+
+                                </td>
+                            </tr>
+                        </table>
+                    </form>
+                </div>
+            </td>
+        </tr>
+
+        <tr><td><h2> ${subscribeMessage} </h2></td></tr>
         <form action="mySeminars" method="post">
             <tr>
                 <td><br></td>
@@ -69,7 +117,7 @@
                 <td>
                     <select name="selectCategory" class="btn dropdown-toggle">
                         <option value="All">All</option>
-                        <option  value="Project Management">Project Management</option>
+                        <option value="Project Management">Project Management</option>
                         <option value="Development">Development</option>
                     </select>
                     <input type="submit" value="ok" class="btn"/>
@@ -90,47 +138,46 @@
             </tr>
 
             <c:forEach items="${courseList}" var="course">
-                <tr>
+            <tr>
 
-                    <td class="lector_${course.id}"><c:out value="${course.lector.name}" escapeXml="true"/></td>
-                    <td >
-                        <a href="<c:out value="courseDetails/${course.id}" escapeXml="true"/>">
+                <td class="lector_${course.id}"><c:out value="${course.lector.name}" escapeXml="true"/></td>
+                <td>
+                    <a href="<c:out value="courseDetails/${course.id}" escapeXml="true"/>">
            <span class="course_${course.id}">
-               <c:out  value="${course.nameCourse}" escapeXml="true"/></span>
-                        </a>
-                    </td>
-                    <td><c:out value="${course.category}" escapeXml="true"/></td>
-                    <td><c:out value="${course.subscribers.size()}" escapeXml="true"/></td>
-                    <td>
-                        <a href="<c:out value="participantsList/${course.id}" escapeXml="true"/>">
+               <c:out value="${course.nameCourse}" escapeXml="true"/></span>
+                    </a>
+                </td>
+                <td><c:out value="${course.category}" escapeXml="true"/></td>
+                <td><c:out value="${course.subscribers.size()}" escapeXml="true"/></td>
+                <td>
+                    <a href="<c:out value="participantsList/${course.id}" escapeXml="true"/>">
                         <c:out value="${course.attenders.size()}" escapeXml="true"/>
-                        </a>
-                    </td>
-                    <td><c:out value="${course.delivered}" escapeXml="true"/></td>
-                    <td class="grade_${course.id}">
-                        <c:if test="${course.delivered}">
-                            <c:out value="${course.evaluation}" escapeXml="true"/></td>
-                        </c:if>
+                    </a>
+                </td>
+                <td><c:out value="${course.delivered}" escapeXml="true"/></td>
+                <td class="grade_${course.id}">
+                    <c:if test="${course.delivered}">
+                    <c:out value="${course.evaluation}" escapeXml="true"/></td>
+                </c:if>
 
-                    <td>
-                        <c:choose>
-                            <c:when test="${attCourseOfUser.contains(course)}">
-                                <input type="submit" name="yes" onclick="att('yes')" value="+">
-                            </c:when>
-                            <c:otherwise>
-                                <input type="submit" name="no" onclick="att('no')" value="-">
-                            </c:otherwise>
-                        </c:choose>
+                <td>
+                    <c:choose>
+                        <c:when test="${attCourseOfUser.contains(course)}">
+                            <input type="submit" name="yes" onclick="att('yes')" value="+">
+                        </c:when>
+                        <c:otherwise>
+                            <input type="submit" name="no" onclick="att('no')" value="-">
+                        </c:otherwise>
+                    </c:choose>
 
 
+                </td>
+                <input type="hidden" name="fieldForSubmit" class="fieldForSubmit"/>
+                <input type="hidden" class="idC" name="id"/>
+            </tr>
 
-                        </td>
-                            <input type="hidden" name="fieldForSubmit" class="fieldForSubmit"/>
-                            <input type="hidden" class="idC" name="id"/>
-</tr>
-
-</c:forEach>
-</table>
+            </c:forEach>
+    </table>
 
 </div>
 
@@ -138,35 +185,50 @@
 <script language="JavaScript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
 <script>
 
-    function show(id) {
-        $("#EvalRemindBlock").show();
-        var lCourse = $(".lector_" + id).html();
-        var nCourse = $(".course_" + id).html();
-        var gCourse = $(".grade_"+id).html();
 
+    function show(id, element) {
+        if (element == "#EvalRemindBlock") {
+            $(element).show();
+            var lCourse = $(".lector_" + id).html();
+            var nCourse = $(".course_" + id).html();
+            var gCourse = $(".grade_" + id).html();
 
-        $(".lect").text(lCourse);
-        $(".cours").text(nCourse);
-        $(".grade").val(gCourse);
-        $(".idC").val(id);
-        $(".fieldForSubmit").val("EVAL_REM");
-    }
-    function hide(){
-        $("#EvalRemindBlock").hide();
-
-        function att(yesOrNo) {
-
-            if(yesOrNo=="yes") {
-                $(".yes").val("Not to participate");
-                $(".no").val("Not to participate");
-                $(".fieldForSubmit").val("ADD_IN_ATT");
-            }
-            else if(yesOrNo=="no")
-            { $(".yes").val("Participate");
-                $(".no").val("Participate");
-                $(".fieldForSubmit").val("REMOTE_FROM_ATT");
-            }
-
+            $(".lect").text(lCourse);
+            $(".cours").text(nCourse);
+            $(".grade").val(gCourse);
+            $(".idC").val(id);
+            $(".fieldForSubmit").val("EVAL_REM");
         }
+        if (element == "#SubscOnCourse")
+            $(element).show();
     }
-    </script>
+    function hide(element) {
+        if (element == "#EvalRemindBlock")
+            $(element).hide();
+
+        if (element == "#SubscOnCourse")
+            $(element).hide();
+    }
+
+    function setAction(action) {
+        $(".fieldForSubmit").val(action);
+        $(".idC").val(id);
+
+    }
+    function att(yesOrNo) {
+
+        if (yesOrNo == "yes") {
+            $(".yes").val("Not to participate");
+            $(".no").val("Not to participate");
+            $(".fieldForSubmit").val("ADD_IN_ATT");
+        }
+        else if (yesOrNo == "no") {
+            $(".yes").val("Participate");
+            $(".no").val("Participate");
+            $(".fieldForSubmit").val("REMOTE_FROM_ATT");
+        }
+
+    }
+
+
+</script>

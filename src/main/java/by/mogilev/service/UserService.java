@@ -24,5 +24,10 @@ public interface UserService {
 
     public  int getIdByUsername(String username);
 
-//    public void addInAttendee();
+    /**
+     * Method add cheked course in list courses on which he is subscriber
+     * @param username
+     * @param id
+     */
+    public String addInSubscribers(String username, int id);
 }

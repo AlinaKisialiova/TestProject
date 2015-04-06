@@ -1,6 +1,5 @@
 package by.mogilev.controller;
 
-import by.mogilev.dao.CourseDAO;
 import by.mogilev.model.Course;
 import by.mogilev.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -78,10 +77,10 @@ public class ActionCourseController {
     public String editCourse(@PathVariable("course.id") Integer id,
                              @ModelAttribute("Course") Course updCourse,
                              HttpServletRequest request, HttpSession session, Model model) {
+        model.addAttribute("categoryMap", courseService.getCategotyMap());
 
         if (! (courseService.isOwner(id, session)) || courseService.getCourse(id) == null)
               return "redirect:/informationBoard";
-
 
         String p = request.getParameter("deleteCourse");
 
@@ -103,15 +102,7 @@ public class ActionCourseController {
           return "redirect:/informationBoard";
     }
 
-    @ModelAttribute
-    public String popCurrentUser() {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String userName = "";
-        if (principal instanceof UserDetails) {
-            userName = ((org.springframework.security.core.userdetails.User) principal).getUsername();
-        }
-        return userName;
-    }
+
 
 
 }

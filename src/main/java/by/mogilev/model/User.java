@@ -28,7 +28,6 @@ public class User implements Serializable {
     private Set<Course> coursesSubscribe = new HashSet<Course>();
     private Set<Course> coursesAttendee = new HashSet<Course>();
 
-
     public User(){}
 
 //    public User(String username, String password, UserRole role) {

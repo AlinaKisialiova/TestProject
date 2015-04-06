@@ -20,6 +20,7 @@ public class Course implements Serializable {
     private String description;
     private String links;
     private int evaluation;
+    private Set<Course> course;
     private boolean delivered;
     private Set<User> attenders = new HashSet<User>();
     private Set<User> subscribers = new HashSet<User>();

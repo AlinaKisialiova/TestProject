@@ -10,5 +10,6 @@ public enum ActionsOnPage {
     OUT_EXCEL,
     ADD_IN_ATT,
     REMOTE_FROM_ATT,
+    SUBSCRIBE,
     ActionsOnPage() {}
 }

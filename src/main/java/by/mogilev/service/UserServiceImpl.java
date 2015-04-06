@@ -1,5 +1,6 @@
 package by.mogilev.service;
 
+import by.mogilev.dao.CourseDAO;
 import by.mogilev.dao.UserDAO;
 import by.mogilev.model.Course;
 import by.mogilev.model.User;
@@ -12,7 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
-import java.util.List;
 import java.util.Set;
 
 /**
@@ -27,6 +27,9 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private UserDAO userDAO;
+
+    @Autowired
+    private CourseDAO courseDAO;
 
     public  UserServiceImpl(){}
 
@@ -78,5 +81,19 @@ public class UserServiceImpl implements UserService {
         criteria.add(Restrictions.eq("username", username));
         User user=(User)criteria.uniqueResult();
         return user.getId();
+    }
+
+    @Override
+    public String addInSubscribers(String username, int id) {
+        Session session=this.sessionFactory.getCurrentSession();
+
+      User userSubscr=  userDAO.getUser(username);
+        Course course=courseDAO.getCourse(id);
+        Set<Course> courses= userSubscr.getCoursesSubscribe();
+
+        if (!courses.contains(course) && courses.add(course))
+            return "You are subscribed!";
+
+        return "You are already subscribed to this course!";
     }
 }
