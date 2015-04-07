@@ -40,7 +40,7 @@ public interface CourseService {
      * Method add user in set of attenders
      *
      */
-    public void addInAttSet(String username, int id_course);
+
 
     public List<Course> getAllCourse();
 
@@ -52,4 +52,5 @@ public interface CourseService {
 
     public void updateCourse( Course course);
 
+    public boolean startCourse(int id);
 }

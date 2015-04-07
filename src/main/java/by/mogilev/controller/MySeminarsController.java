@@ -53,6 +53,8 @@ public class MySeminarsController {
         mav.addObject("courseList", userService.getCoursesSubscribeOfUser(id));
         mav.addObject("attCourseOfUser", userService.getCoursesAttendeeOfUser(id));
 
+
+
         return mav;
     }
 
@@ -61,6 +63,7 @@ public class MySeminarsController {
                                           @RequestParam(value = "fieldForSubmit", required = false) ActionsOnPage action,
                                           @RequestParam(value = "selectCourse", required = false) Integer id_course,
                                           @RequestParam(value = "selectCategory", required = false) String selectCategory,
+                                          @RequestParam(value = "id", required = false) Integer id,
                                           Principal principal)
             throws IOException, DocumentException {
         ModelAndView mav = new ModelAndView("mySeminars");
@@ -68,11 +71,16 @@ public class MySeminarsController {
         List<Course> coursesForSelect =courseService.getSelected(selectCategory);
         mav.addObject("nameCourses", coursesForSelect );
 
+
+
         if (ActionsOnPage.EVAL_REM.equals(action))
             courseService.remidEv(id_course, grade);
 
-        if (ActionsOnPage.ADD_IN_ATT.equals(action))
-            courseService.addInAttSet(principal.getName(), id_course);
+        if (ActionsOnPage.ADD_IN_ATT.equals(action)|| ActionsOnPage.REMOTE_FROM_ATT.equals(action)) {
+           String message= userService.addInAttSet(principal.getName(), id);
+            mav.addObject("attendersMessage", message);
+        }
+
 
         if (ActionsOnPage.SUBSCRIBE.equals(action)) {
             String message=userService.addInSubscribers(principal.getName(), id_course);
@@ -83,6 +91,7 @@ public class MySeminarsController {
         int id_user=userService.getIdByUsername(principal.getName());
         Set<Course> coursesForList=userService.getCoursesSubscribeOfUser(id_user);
         mav.addObject("courseList", coursesForList);
+        mav.addObject("attCourseOfUser", userService.getCoursesAttendeeOfUser(id_user));
         return mav;
 
     }

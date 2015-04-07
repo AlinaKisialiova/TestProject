@@ -1,3 +1,4 @@
+<%@ page import="by.mogilev.model.Course" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
@@ -147,8 +148,17 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
                 <c:out value="${course.attenders.size()}" escapeXml="true"/>
                 </a>
             </td>
-            <td><c:out value="${course.delivered}" escapeXml="true"/></td>
-            <td class="grade_${course.id}"><c:out value="${course.evaluation}" escapeXml="true"/></td>
+            <td><c:out value="${course.delivered}" escapeXml="true"/>
+            </td>
+            <td>
+                <c:if test="${course.delivered}">
+                <a href="#" onclick="show(${course.id})">
+                <c:out value="${course.evaluation}" escapeXml="true"/>
+                </a>
+                    <input class="grade_${course.id}" type="hidden" value="${course.evaluation}"/>
+                </c:if>
+            </td>
+
             <td>
                 <div class="btn-group">
 
@@ -156,10 +166,17 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
                 <c:if test="${course.delivered}">
                     <input type="submit" name="delete" value="Delete" onclick="del(${course.id})" class="btn"/>
                 </c:if>
-                        <%--<input type="submit" name="delete" value="Delete" onclick="del(${course.id})" class="btn"/>--%>
-
-                <input type="button" id="Eval" value="Evaluation Reminder" onclick="show(${course.id})" class="btn"/>
+                        <c:set value="<%=Course.MIN_COUNT_SUBSCR%>" var="countMin"/>
+                        <c:if test="${course.attenders.size() gt countMin}">
+             <a href="/evaluationReminder/${course.id}">
+                 <input type="button" id="Eval" value="Evaluation Reminder" class="btn" />
+             </a>
+                        </c:if>
                 </c:if>
+
+                        <a href="<c:url value="/evaluationReminder/${course.id}"/>">
+                            <input type="button" id="Evajl" value="Evaluation Reminder" class="btn" />
+                        </a>
                     <input type="hidden" name="fieldForSubmit" class="fieldForSubmit"/>
                     <input type="hidden" class="idC" name="id"/>
 
@@ -181,7 +198,7 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
         $("#EvalRemindBlock").show();
         var lCourse = $(".lector_" + id).html();
         var nCourse = $(".course_" + id).html();
-        var gCourse = $(".grade_"+id).html();
+        var gCourse = $(".grade_"+id).val();
         $(".lect").text(lCourse);
         $(".cours").text(nCourse);
         $(".grade").val(gCourse);
@@ -205,6 +222,13 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
         $(".idC").val(id);
         $(".fieldForSubmit").val("DEL");
     }
+
+    function start(id) {
+        $(".idC").val(id);
+        $(".fieldForSubmit").val("START");
+
+    }
+
 
 
 </script>

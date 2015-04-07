@@ -30,4 +30,10 @@ public interface UserService {
      * @param id
      */
     public String addInSubscribers(String username, int id);
+    /**
+     * Method add cheked course in list courses on which he is attenders
+     * @param username
+     * @param id_course
+     */
+    public String addInAttSet(String username, int id_course);
 }

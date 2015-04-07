@@ -57,5 +57,10 @@
         <put-attribute name="title" value="Training Center - My Seminars"/>
     </definition>
 
+    <definition name="evaluationReminder" extends="defaultTemplate">
+        <put-attribute name="content" value="/WEB-INF/pages/evaluationReminder.jsp"/>
+        <put-attribute name="title" value="Training Center - Evaluation Reminder"/>
+    </definition>
+
 
 </tiles-definitions>

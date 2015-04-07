@@ -17,6 +17,7 @@
         <intercept-url pattern="/courseDetails/**" access="hasAnyRole('ROLE_LECTOR', 'ROLE_USER')"/>
         <intercept-url pattern="/participantsList/**" access="hasAnyRole('ROLE_LECTOR', 'ROLE_USER')"/>
         <intercept-url pattern="/mySeminars/**" access="hasAnyRole('ROLE_LECTOR', 'ROLE_USER')"/>
+        <intercept-url pattern="/evaluationReminder/**" access="hasAnyRole('ROLE_LECTOR', 'ROLE_USER')"/>
 
         <form-login login-page="/signin"
                     authentication-failure-url="/signin-failure" default-target-url="/informationBoard"/>

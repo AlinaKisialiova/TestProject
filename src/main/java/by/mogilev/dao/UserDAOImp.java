@@ -1,15 +1,12 @@
 package by.mogilev.dao;
 
-import by.mogilev.dao.UserDAO;
 import by.mogilev.model.User;
 import org.hibernate.Criteria;
-import org.hibernate.Hibernate;
 import org.hibernate.Session;
 import org.hibernate.SessionFactory;
 import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
-import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
 import java.util.ArrayList;
@@ -55,6 +52,12 @@ public class UserDAOImp  implements UserDAO {
 
 //          users=session.createQuery("from USER").list();
 //        return users;
+    }
+
+    @Override
+    public void updateUser(User user) {
+        Session session = this.sessionFactory.getCurrentSession();
+        session.update(user);
     }
 }
 

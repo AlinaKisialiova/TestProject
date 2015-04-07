@@ -31,21 +31,21 @@ public class UserServiceImpl implements UserService {
     @Autowired
     private CourseDAO courseDAO;
 
-    public  UserServiceImpl(){}
-
+    public UserServiceImpl() {
+    }
 
 
     @SuppressWarnings("unchecked")
     @Override
     public Set<Course> getCoursesSubscribeOfUser(int id) {
         Session session = this.sessionFactory.getCurrentSession();
-        if(id==0) throw new NullPointerException("Id user for get list of subscribers not find.");
+        if (id == 0) throw new NullPointerException("Id user for get list of subscribers not find.");
 
         Criteria criteria = session.createCriteria(User.class);
         criteria.add(Restrictions.eq("id", id));
-        User user=(User)criteria.uniqueResult();
+        User user = (User) criteria.uniqueResult();
         Set<Course> coursesList;
-        coursesList=user.getCoursesSubscribe();
+        coursesList = user.getCoursesSubscribe();
 
         for (Course course : coursesList) {
             Hibernate.initialize(course.getAttenders());
@@ -58,13 +58,13 @@ public class UserServiceImpl implements UserService {
     @Override
     public Set<Course> getCoursesAttendeeOfUser(int id) {
         Session session = this.sessionFactory.getCurrentSession();
-        if(id==0) return null;
+        if (id == 0) return null;
 
         Criteria criteria = session.createCriteria(User.class);
         criteria.add(Restrictions.eq("id", id));
-        User user=(User)criteria.uniqueResult();
+        User user = (User) criteria.uniqueResult();
         Set<Course> coursesList;
-        coursesList=user.getCoursesAttendee();
+        coursesList = user.getCoursesAttendee();
 
         for (Course course : coursesList) {
             Hibernate.initialize(course.getAttenders());
@@ -79,21 +79,35 @@ public class UserServiceImpl implements UserService {
         Session session = this.sessionFactory.getCurrentSession();
         Criteria criteria = session.createCriteria(User.class);
         criteria.add(Restrictions.eq("username", username));
-        User user=(User)criteria.uniqueResult();
+        User user = (User) criteria.uniqueResult();
         return user.getId();
     }
 
     @Override
     public String addInSubscribers(String username, int id) {
-        Session session=this.sessionFactory.getCurrentSession();
-
-      User userSubscr=  userDAO.getUser(username);
-        Course course=courseDAO.getCourse(id);
-        Set<Course> courses= userSubscr.getCoursesSubscribe();
-
+        User userSubscr = userDAO.getUser(username);
+        Course course = courseDAO.getCourse(id);
+        Set<Course> courses = userSubscr.getCoursesSubscribe();
         if (!courses.contains(course) && courses.add(course))
             return "You are subscribed!";
-
+        userDAO.updateUser(userSubscr);
         return "You are already subscribed to this course!";
+    }
+
+    @Override
+    public String addInAttSet(String username, int id_course) {
+        User userAtt = userDAO.getUser(username);
+        Course course = courseDAO.getCourse(id_course);
+        Set<Course> courses = userAtt.getCoursesAttendee();
+
+        if (courses.contains(course)) {
+            courses.remove(course);
+            return "You are deleted from attenders list!!";
+        }
+
+        courses.add(course);
+        userDAO.updateUser(userAtt);
+        return "You are included in attenders list!";
+
     }
 }

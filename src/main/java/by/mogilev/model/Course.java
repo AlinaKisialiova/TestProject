@@ -12,6 +12,11 @@ import java.util.Set;
 @Entity
 @Table(name = "COURSE")
 public class Course implements Serializable {
+
+    public final static int MIN_COUNT_SUBSCR=2;
+    public final static int MAX_COUNT_ATT=15;
+
+
     private int id;
     private String category;
     private String nameCourse;

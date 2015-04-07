@@ -14,7 +14,7 @@
     <table align="justify">
 
         <tr>
-            <td colspan="3"><a href="mySeminars"> Seminars Information Board </a></td>
+            <td colspan="3"> <a href="<c:url value="/informationBoard" context="/project"/>"> Seminars Information Board </a></td>
             <td colspan="3"><a href="#" onclick="show(null,'#SubscOnCourse')">Subscribe for the Course</a></td>
 
         </tr>
@@ -104,7 +104,8 @@
             </td>
         </tr>
 
-        <tr><td><h2> ${subscribeMessage} </h2></td></tr>
+        <tr><td colspan="0"><h2> ${subscribeMessage} </h2></td></tr>
+        <tr><td colspan="0"><h2> ${attendersMessage} </h2></td></tr>
         <form action="mySeminars" method="post">
             <tr>
                 <td><br></td>
@@ -161,19 +162,24 @@
                 </c:if>
 
                 <td>
+
                     <c:choose>
                         <c:when test="${attCourseOfUser.contains(course)}">
-                            <input type="submit" name="yes" onclick="att('yes')" value="+">
+                            <input type="submit" name="no" onclick="att('no', ${course.id})" value="Include/delete from Attenders List">
                         </c:when>
                         <c:otherwise>
-                            <input type="submit" name="no" onclick="att('no')" value="-">
+                            <input type="submit" name="yes" onclick="att('yes', ${course.id})" value="Include/delete from Attenders List">
                         </c:otherwise>
                     </c:choose>
 
+                    <input type="submit" name="startCourse" value="Start"/>
 
                 </td>
                 <input type="hidden" name="fieldForSubmit" class="fieldForSubmit"/>
+
+
                 <input type="hidden" class="idC" name="id"/>
+
             </tr>
 
             </c:forEach>
@@ -215,8 +221,8 @@
         $(".idC").val(id);
 
     }
-    function att(yesOrNo) {
-
+    function att(yesOrNo, id) {
+        $(".idC").val(id);
         if (yesOrNo == "yes") {
             $(".yes").val("Not to participate");
             $(".no").val("Not to participate");

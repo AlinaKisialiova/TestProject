@@ -1,8 +1,6 @@
 package by.mogilev.controller;
 
-import by.mogilev.dao.CourseDAO;
 import by.mogilev.model.ActionsOnPage;
-import by.mogilev.model.Course;
 import by.mogilev.service.CourseService;
 import com.itextpdf.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -42,7 +40,10 @@ public class InformationBoardController {
 
     @RequestMapping(value = "/informationBoard", method = RequestMethod.GET)
     public ModelAndView listCourse() {
-        return new ModelAndView("informationBoard", "courseList", courseService.getAllCourse());
+       ModelAndView mav= new ModelAndView("informationBoard");
+        mav.addObject("courseList", courseService.getAllCourse());
+
+        return mav;
     }
 
     @RequestMapping(value = "/informationBoard", method = RequestMethod.POST)
@@ -64,6 +65,9 @@ public class InformationBoardController {
 
         if (ActionsOnPage.OUT_EXCEL.equals(action))
             courseService.outInExcelAllCourse(response);
+
+        if (ActionsOnPage.START.equals(action))
+            courseService.startCourse(id);
 
         mav.addObject("courseList", courseService.getSelected(selectCategory));
 

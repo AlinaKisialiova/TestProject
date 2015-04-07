@@ -3,7 +3,6 @@ package by.mogilev.service;
 import by.mogilev.dao.CourseDAO;
 import by.mogilev.dao.UserDAO;
 import by.mogilev.model.Course;
-import by.mogilev.model.User;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.CMYKColor;
 import com.itextpdf.text.pdf.PdfPCell;
@@ -24,8 +23,9 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.*;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Администратор on 21.03.2015.
@@ -191,8 +191,6 @@ public class CourseServiceImpl implements CourseService {
         Course changeEvalCourse = courseDAO.getCourse(id);
         changeEvalCourse.setEvaluation(grade);
         courseDAO.updateCourse(changeEvalCourse);
-
-
     }
 
     @SuppressWarnings("unchecked")
@@ -203,15 +201,6 @@ public class CourseServiceImpl implements CourseService {
             return courseDAO.getAllCourse();
         else
             return courseDAO.getSelectedDao(category);
-    }
-
-    @Override
-    public void addInAttSet(String username, int id_course) {
-        if (username == null || id_course == 0) return;
-
-        User checkUser = userDAO.getUser(username);
-        Course checkCourse = courseDAO.getCourse(id_course);
-        checkCourse.getAttenders().add(checkUser);
     }
 
     @Override
@@ -239,6 +228,18 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public void updateCourse(Course course) {
         courseDAO.updateCourse(course);
+    }
+
+    @Override
+    public boolean startCourse(int id) {
+
+        Course course=courseDAO.getCourse(id);
+        if (!course.isDelivered() && course.getAttenders().size() >= Course.MIN_COUNT_SUBSCR) {
+            course.setDelivered(true);
+            courseDAO.updateCourse(course);
+            return true;
+        }
+        return false;
     }
 
 
