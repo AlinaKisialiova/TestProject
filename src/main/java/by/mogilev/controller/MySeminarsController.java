@@ -68,7 +68,7 @@ public class MySeminarsController {
             throws IOException, DocumentException {
         ModelAndView mav = new ModelAndView("mySeminars");
 
-        List<Course> coursesForSelect =courseService.getSelected(selectCategory);
+        List<Course> coursesForSelect = courseService.getSelected(selectCategory);
         mav.addObject("nameCourses", coursesForSelect );
 
 
@@ -77,20 +77,35 @@ public class MySeminarsController {
             courseService.remidEv(id_course, grade);
 
         if (ActionsOnPage.ADD_IN_ATT.equals(action)|| ActionsOnPage.REMOTE_FROM_ATT.equals(action)) {
-           String message= userService.addInAttSet(principal.getName(), id);
+
+           String message= "";
+        if (courseService.getCourse(id_course).getAttenders().size()<Course.MAX_COUNT_ATT) {
+
+            if (userService.addInAttSet(principal.getName(), id))
+                message = "You are included in attenders list!";
+            else
+                message = "You are deleted from attenders list!";
+        }
+            message="You can not inclused because a group recruited!";
             mav.addObject("attendersMessage", message);
         }
 
 
         if (ActionsOnPage.SUBSCRIBE.equals(action)) {
-            String message=userService.addInSubscribers(principal.getName(), id_course);
+            String message="";
+            if(userService.addInSubscribers(principal.getName(), id_course))
+             message = "You are subscribed!";
+            else
+            message = "You are already subscribed to this course!";
+
             mav.addObject("subscribeMessage", message);
         }
 
 
         int id_user=userService.getIdByUsername(principal.getName());
-        Set<Course> coursesForList=userService.getCoursesSubscribeOfUser(id_user);
+        Set<Course> coursesForList = userService.getCoursesSubscribeOfUser(id_user);
         mav.addObject("courseList", coursesForList);
+
         mav.addObject("attCourseOfUser", userService.getCoursesAttendeeOfUser(id_user));
         return mav;
 

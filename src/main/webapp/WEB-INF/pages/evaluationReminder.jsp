@@ -6,14 +6,16 @@
   Time: 7:52
   To change this template use File | Settings | File Templates.
 --%>
-<div class="row">
 
-    <div class="span12 header">
-        <h1>Evaluation Reminder</h1></div>
+<div class="row">
+    <div class="span12">  <h1>Evaluation Reminder</h1></div>
 
     <div class="span12">
+       <h4>
         <a href="<c:url value="/informationBoard" context="/project"/>"> Seminars Information Board </a>
+       </h4>
         </div>
+    <div class="span12"><br/></div>
     <div class="span12">
         <div class="control-group">
             <div class="control-label"> <b>Course Category: </b>

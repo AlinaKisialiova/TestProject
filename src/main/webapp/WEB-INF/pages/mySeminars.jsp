@@ -11,101 +11,91 @@
 <div class="row">
     <div class="span12"><h1>My Seminars</h1></div>
 
-    <table align="justify">
-
-        <tr>
-            <td colspan="3"> <a href="<c:url value="/informationBoard" context="/project"/>"> Seminars Information Board </a></td>
-            <td colspan="3"><a href="#" onclick="show(null,'#SubscOnCourse')">Subscribe for the Course</a></td>
-
-        </tr>
-
-        <tr>
-            <td>
-                <div id='EvalRemindBlock' style="display: none;">
-                    <form method="post" action="informationBoard">
-                        <input type="hidden" class="idC" name="id"/>
-                        <table id="evalRemindTable">
-                            <tr>
-                                <td>Course Lector</td>
-                                <td class="lect">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Course name</td>
-                                <td class="cours">
-                                </td>
-                            </tr>
-                            <tr>
-                                <td>Course Grade</td>
-                                <td><input type="text" name="grade" class="grade"/>
-                                    <input type="hidden" name="fieldForSubmit" class="fieldForSubmit"/>
-
-                                </td>
-
-                            </tr>
-                            <tr>
-                                <td>
-                                    <input type="submit" value="Save"/>
-                                </td>
-                                <td>
-                                    <input type="button" value="Cancel" onclick="hide('#EvalRemindBlock');"/>
-
-                                </td>
-                            </tr>
-
-                        </table>
-                    </form>
-                </div>
-            </td>
-        </tr>
+    <div class="span5"><a href="<c:url value="/informationBoard" context="/project"/>"> Seminars Information Board </a>
+    </div>
+    <div class="span5"><a href="#" onclick="show(null,'#SubscOnCourse')">Subscribe for the Course</a></div>
 
 
-        <tr>
-            <td>
-                <div id='SubscOnCourse' style="display: none;">
-                    <form action="mySeminars" method="post">
-                        <input type="hidden" class="idC" name="id"/>
-                        <table id="subscCourse">
-                            <tr>
-                                <td><b> Select Course Category </b></td>
-                                <td>
-                                    <select name="selectCategory">
-                                        <option value="All">All</option>
-                                        <option value="Project Management">Project Management</option>
-                                        <option value="Development">Development</option>
-                                    </select>
-                                </td>
-                                <td><input type="submit" value="Ok"/></td>
-                            </tr>
-                            <tr>
-                                <td><b>Select Course Name</b></td>
-                                <td>
-                                    <select name="selectCourse" id="selectCourse">
-                                        <c:forEach var="courses" items="${nameCourses}">
-                                            <option value="${courses.id}"> ${courses.nameCourse}</option>
-                                        </c:forEach>
-                                    </select>
+    <div id='EvalRemindBlock' style="display: none;" class="table">
+        <form method="post" action="informationBoard">
+            <input type="hidden" class="idC" name="id"/>
+            <table id="evalRemindTable">
+                <tr>
+                    <td>Course Lector</td>
+                    <td class="lect">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Course name</td>
+                    <td class="cours">
+                    </td>
+                </tr>
+                <tr>
+                    <td>Course Grade</td>
+                    <td><input type="text" name="grade" class="grade"/>
+                        <input type="hidden" name="fieldForSubmit" class="fieldForSubmit"/>
 
-                            <tr>
-                                <td>
-                                    <input type="hidden" name="fieldForSubmit" class="fieldForSubmit"/>
-                                    <input type="submit" value="Subscribe" onclick="setAction('SUBSCRIBE')"
-                                           class="btn-primary"/>
+                    </td>
 
-                                </td>
-                                <td>
-                                    <input type="button" value="Cancel" onclick="hide('#SubscOnCourse');" class="btn"/>
+                </tr>
+                <tr>
+                    <td>
+                        <input type="submit" value="Save"/>
+                    </td>
+                    <td>
+                        <input type="button" value="Cancel" onclick="hide('#EvalRemindBlock');"/>
 
-                                </td>
-                            </tr>
-                        </table>
-                    </form>
-                </div>
-            </td>
-        </tr>
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
 
-        <tr><td colspan="0"><h2> ${subscribeMessage} </h2></td></tr>
-        <tr><td colspan="0"><h2> ${attendersMessage} </h2></td></tr>
+
+    <div id='SubscOnCourse' style="display: none;" class="table">
+        <form action="mySeminars" method="post">
+            <input type="hidden" class="idC" name="id"/>
+            <table id="subscCourse">
+                <tr>
+                    <td><b> Select Course Category </b></td>
+                    <td>
+                        <select name="selectCategory">
+                            <option value="All">All</option>
+                            <option value="Project Management">Project Management</option>
+                            <option value="Development">Development</option>
+                        </select>
+                    </td>
+                    <td><input type="submit" value="Ok"/></td>
+                </tr>
+                <tr>
+                    <td><b>Select Course Name</b></td>
+                    <td>
+                        <select name="selectCourse" id="selectCourse">
+                            <c:forEach var="courses" items="${nameCourses}">
+                                <option value="${courses.id}"> ${courses.nameCourse}</option>
+                            </c:forEach>
+                        </select>
+
+                <tr>
+                    <td>
+                        <input type="hidden" name="fieldForSubmit" class="fieldForSubmit"/>
+                        <input type="submit" value="Subscribe" onclick="setAction('SUBSCRIBE')"
+                               class="btn-primary"/>
+
+                    </td>
+                    <td>
+                        <input type="button" value="Cancel" onclick="hide('#SubscOnCourse');" class="btn"/>
+
+                    </td>
+                </tr>
+            </table>
+        </form>
+    </div>
+    <div class="span12"><h2> ${subscribeMessage} </h2></div>
+    <div class="span12"><h2> ${attendersMessage} </h2></div>
+
+
+    <table align="justify" id="tableCourse">
         <form action="mySeminars" method="post">
             <tr>
                 <td><br></td>
@@ -116,12 +106,12 @@
                 <td>
                 <td>Course Category</td>
                 <td>
-                    <select name="selectCategory" class="btn dropdown-toggle">
+                    <select name="selectCategory" onchange="filter(this)">
+
                         <option value="All">All</option>
                         <option value="Project Management">Project Management</option>
                         <option value="Development">Development</option>
                     </select>
-                    <input type="submit" value="ok" class="btn"/>
 
                 </td>
             </tr>
@@ -165,14 +155,14 @@
 
                     <c:choose>
                         <c:when test="${attCourseOfUser.contains(course)}">
-                            <input type="submit" name="no" onclick="att('no', ${course.id})" value="Include/delete from Attenders List">
+                            <input type="submit" name="no" onclick="att('no', ${course.id})"
+                                   value="Include/delete from Attenders List">
                         </c:when>
                         <c:otherwise>
-                            <input type="submit" name="yes" onclick="att('yes', ${course.id})" value="Include/delete from Attenders List">
+                            <input type="submit" name="yes" onclick="att('yes', ${course.id})"
+                                   value="Include/delete from Attenders List">
                         </c:otherwise>
                     </c:choose>
-
-                    <input type="submit" name="startCourse" value="Start"/>
 
                 </td>
                 <input type="hidden" name="fieldForSubmit" class="fieldForSubmit"/>
@@ -236,5 +226,33 @@
 
     }
 
+    function filter(phrase) {
+        var words = phrase.value.toLowerCase().split(" ");
+        var table = document.getElementById('tableCourse');
+
+        if (words.indexOf("all") < 0) {
+            for (var r = 2; r < table.rows.length; r++) {
+
+                var cellsV = table.rows[r].cells[2].innerHTML.replace(/<[^>]+>/g, "");
+
+                var displayStyle = 'none';
+                for (var i = 0; i < words.length; i++) {
+                    if (cellsV.toLowerCase().indexOf(words[i]) >= 0)
+                        displayStyle = '';
+                    else {
+                        displayStyle = 'none';
+                        break;
+                    }
+                }
+                table.rows[r].style.display = displayStyle;
+            }
+        }
+        else {
+            for (var r = 2; r < table.rows.length; r++)
+                table.rows[r].style.display = '';
+
+        }
+
+    }
 
 </script>

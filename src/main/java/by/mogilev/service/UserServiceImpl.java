@@ -84,30 +84,30 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public String addInSubscribers(String username, int id) {
+    public boolean addInSubscribers(String username, int id) {
         User userSubscr = userDAO.getUser(username);
         Course course = courseDAO.getCourse(id);
         Set<Course> courses = userSubscr.getCoursesSubscribe();
         if (!courses.contains(course) && courses.add(course))
-            return "You are subscribed!";
+            return true;
         userDAO.updateUser(userSubscr);
-        return "You are already subscribed to this course!";
+        return false;
     }
 
     @Override
-    public String addInAttSet(String username, int id_course) {
+    public boolean addInAttSet(String username, int id_course) {
         User userAtt = userDAO.getUser(username);
         Course course = courseDAO.getCourse(id_course);
         Set<Course> courses = userAtt.getCoursesAttendee();
 
         if (courses.contains(course)) {
             courses.remove(course);
-            return "You are deleted from attenders list!!";
+            return false;
         }
 
         courses.add(course);
         userDAO.updateUser(userAtt);
-        return "You are included in attenders list!";
+        return true;
 
     }
 }

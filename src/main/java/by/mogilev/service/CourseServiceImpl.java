@@ -232,7 +232,6 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public boolean startCourse(int id) {
-
         Course course=courseDAO.getCourse(id);
         if (!course.isDelivered() && course.getAttenders().size() >= Course.MIN_COUNT_SUBSCR) {
             course.setDelivered(true);
