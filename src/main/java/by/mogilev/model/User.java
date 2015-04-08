@@ -39,7 +39,7 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_user")
-    public int getId() {
+        public int getId() {
         return id;
     }
     public void setId(int id) {
@@ -127,4 +127,8 @@ public class User implements Serializable {
         this.coursesAttendee = coursesAttendee;
     }
 
+    @Override
+    public int hashCode() {
+        return Integer.hashCode(getId());
+    }
 }

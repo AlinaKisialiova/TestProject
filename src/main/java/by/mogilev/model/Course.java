@@ -2,7 +2,9 @@ package by.mogilev.model;
 
 import javax.persistence.*;
 import java.io.Serializable;
+import java.util.HashMap;
 import java.util.HashSet;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -13,8 +15,8 @@ import java.util.Set;
 @Table(name = "COURSE")
 public class Course implements Serializable {
 
-    public final static int MIN_COUNT_SUBSCR=2;
-    public final static int MAX_COUNT_ATT=15;
+    public final static int MIN_COUNT_SUBSCR = 2;
+    public final static int MAX_COUNT_ATT = 15;
 
 
     private int id;
@@ -29,6 +31,7 @@ public class Course implements Serializable {
     private boolean delivered;
     private Set<User> attenders = new HashSet<User>();
     private Set<User> subscribers = new HashSet<User>();
+    private Map<User, Integer> evalMap = new HashMap<>();
 
 
     public Course(String category, String nameCourse, String description, String links, String duration, User lector) {
@@ -107,7 +110,10 @@ public class Course implements Serializable {
     }
 
     public void setEvaluation(int evaluation) {
-        this.evaluation = evaluation;
+        int evaluat=evaluation;
+        for(Map.Entry<User, Integer> entry : getEvalMap().entrySet())
+            evaluat += entry.getValue();
+       this.evaluation=evaluat/getEvalMap().size();
     }
 
     public boolean isDelivered() {
@@ -128,7 +134,7 @@ public class Course implements Serializable {
         this.lector = lector;
     }
 
-    @ManyToMany( mappedBy = "coursesAttendee",
+    @ManyToMany(mappedBy = "coursesAttendee",
             cascade = CascadeType.ALL)
     public Set<User> getAttenders() {
         return attenders;
@@ -146,5 +152,18 @@ public class Course implements Serializable {
 
     public void setSubscribers(Set<User> subscribers) {
         this.subscribers = subscribers;
+    }
+
+    @ElementCollection(fetch = FetchType.LAZY)
+    @CollectionTable(name="COURSE_ATTENDERS",
+            joinColumns=@JoinColumn(name="id_course"))
+    @Column(name="eval")
+    @MapKeyJoinColumn(name="id_user", referencedColumnName="id_user")
+    public Map<User,Integer> getEvalMap() {
+        return evalMap;
+    }
+
+    public void setEvalMap(Map<User, Integer> evalMap) {
+        this.evalMap = evalMap;
     }
 }

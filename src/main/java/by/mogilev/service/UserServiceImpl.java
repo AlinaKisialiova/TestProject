@@ -88,10 +88,11 @@ public class UserServiceImpl implements UserService {
         User userSubscr = userDAO.getUser(username);
         Course course = courseDAO.getCourse(id);
         Set<Course> courses = userSubscr.getCoursesSubscribe();
-        if (!courses.contains(course) && courses.add(course))
-            return true;
+        if (courses.contains(course) && !(courses.add(course)))
+            return false;
+
         userDAO.updateUser(userSubscr);
-        return false;
+        return true;
     }
 
     @Override
