@@ -4,20 +4,7 @@
     <bookmark url="file://$PROJECT_DIR$/src/main/java/by/mogilev/service/UserService.java" description="public boolean addInSubscribers(String username, i..." line="31" />
   </component>
   <component name="ChangeListManager">
-    <list default="true" id="98b99f8d-5f36-446d-86f7-56c1bdd37929" name="Default" comment="set Evaluations by users">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/by/mogilev/controller/ActionCourseController.java" afterPath="$PROJECT_DIR$/src/main/java/by/mogilev/controller/ActionCourseController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/by/mogilev/model/ActionsOnPage.java" afterPath="$PROJECT_DIR$/src/main/java/by/mogilev/model/ActionsOnPage.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/by/mogilev/model/Course.java" afterPath="$PROJECT_DIR$/src/main/java/by/mogilev/model/Course.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/by/mogilev/dao/CourseDAOImp.java" afterPath="$PROJECT_DIR$/src/main/java/by/mogilev/dao/CourseDAOImp.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/by/mogilev/service/CourseService.java" afterPath="$PROJECT_DIR$/src/main/java/by/mogilev/service/CourseService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/by/mogilev/service/CourseServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/by/mogilev/service/CourseServiceImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/by/mogilev/controller/InformationBoardController.java" afterPath="$PROJECT_DIR$/src/main/java/by/mogilev/controller/InformationBoardController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/by/mogilev/controller/MySeminarsController.java" afterPath="$PROJECT_DIR$/src/main/java/by/mogilev/controller/MySeminarsController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/by/mogilev/model/User.java" afterPath="$PROJECT_DIR$/src/main/java/by/mogilev/model/User.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/by/mogilev/service/UserService.java" afterPath="$PROJECT_DIR$/src/main/java/by/mogilev/service/UserService.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/by/mogilev/service/UserServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/by/mogilev/service/UserServiceImpl.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/courseDetails.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/courseDetails.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/editCourse.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/editCourse.jsp" />
+    <list default="true" id="98b99f8d-5f36-446d-86f7-56c1bdd37929" name="Default" comment="">
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <list id="31e2c0cc-8e2e-47aa-b863-f824285fb0c9" name="Failed commit: Default" comment="with services" />
@@ -1220,7 +1207,7 @@
       <workItem from="1428434512907" duration="4516000" />
       <workItem from="1428488237240" duration="2396000" />
       <workItem from="1428492450519" duration="11976000" />
-      <workItem from="1428571534307" duration="10933000" />
+      <workItem from="1428571534307" duration="10960000" />
     </task>
     <task id="LOCAL-00001" summary="Ura!">
       <created>1425045838136</created>
@@ -1378,11 +1365,17 @@
       <option name="project" value="LOCAL" />
       <updated>1428505098951</updated>
     </task>
-    <option name="localTasksCounter" value="27" />
+    <task id="LOCAL-00027" summary="changes">
+      <created>1428585923212</created>
+      <option name="number" value="00027" />
+      <option name="project" value="LOCAL" />
+      <updated>1428585923212</updated>
+    </task>
+    <option name="localTasksCounter" value="28" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="403677000" />
+    <option name="totallyTimeSpent" value="403704000" />
   </component>
   <component name="TodoView" selected-index="4">
     <todo-panel id="selected-file">
@@ -1491,7 +1484,6 @@
     <option name="myTodoPanelSettings">
       <TodoPanelSettings />
     </option>
-    <MESSAGE value="Change with services" />
     <MESSAGE value="with services" />
     <MESSAGE value="with tiles (work)" />
     <MESSAGE value="Register Course, validation" />
@@ -1516,7 +1508,8 @@
     <MESSAGE value="Refactoring:&#10;change courseDAO in controllers on courseService&#10;Enum ActionsOnPage&#10;criterian instead hql&#10;lazy initialization&#10;exceptions&#10;" />
     <MESSAGE value="Subscribe on course" />
     <MESSAGE value="set Evaluations by users" />
-    <option name="LAST_COMMIT_MESSAGE" value="set Evaluations by users" />
+    <MESSAGE value="changes" />
+    <option name="LAST_COMMIT_MESSAGE" value="changes" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
