@@ -196,7 +196,6 @@ public class CourseServiceImpl implements CourseService {
 
         Map<User, Integer> mapEval = changeEvalCourse.getEvalMap();
         User user = userDAO.getUser(userName);
-
         mapEval.put(user, grade);
         changeEvalCourse.setEvalMap(mapEval);
         courseDAO.updateCourse(changeEvalCourse);
