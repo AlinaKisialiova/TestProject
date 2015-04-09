@@ -32,8 +32,16 @@
     <tr><td><strong>Course Evaluation</strong></td>
         <td><c:out value="${course.evaluation}"/></td>
     </tr>
-    <form action="editCourse.jsp" >
-    <th><a href="<c:url value="/editCourse/${course.id}"/>"> Edit</a></th>
+
+    <form action="<c:url value="/courseDetails/${course.id}"/>" method="post" >
+    <tr>
+        <td>
+        <a href="<c:url value="/editCourse/${course.id}"/>" class="btn-info"> <b>Edit Course </b></a>
+    </td>
+            <td>
+                <input type="submit" name="deleteCourse" value="Delete" class="btn-danger"/>
+            </td>
+        </tr>
     </form>
 </table>
 </div>

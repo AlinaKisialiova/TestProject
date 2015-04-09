@@ -15,7 +15,7 @@ import java.util.Map;
 public interface CourseService {
    public boolean isOwner(int idCourse, HttpSession session);
 
-    public void remidEv(int id, int grade);
+    public void remidEv(int id, String userName, int grade);
     Map<String, String> getCategotyMap();
     /**
      *
@@ -50,7 +50,9 @@ public interface CourseService {
 
     public void registerCourse(Course course, String nameLector);
 
-    public void updateCourse( Course course);
+    public void updateCourse( int id, Course updCourse);
 
     public boolean startCourse(int id);
+
+
 }

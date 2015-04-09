@@ -13,6 +13,8 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 /**
@@ -37,12 +39,13 @@ public class UserServiceImpl implements UserService {
 
     @SuppressWarnings("unchecked")
     @Override
-    public Set<Course> getCoursesSubscribeOfUser(int id) {
+    public Set<Course> getCoursesSubscribeOfUser(String username) {
         Session session = this.sessionFactory.getCurrentSession();
-        if (id == 0) throw new NullPointerException("Id user for get list of subscribers not find.");
+        if (username == null) throw new NullPointerException("Username for get list of subscribers is empty.");
 
+        int id_user=getIdByUsername(username);
         Criteria criteria = session.createCriteria(User.class);
-        criteria.add(Restrictions.eq("id", id));
+        criteria.add(Restrictions.eq("id", id_user));
         User user = (User) criteria.uniqueResult();
         Set<Course> coursesList;
         coursesList = user.getCoursesSubscribe();
@@ -56,12 +59,14 @@ public class UserServiceImpl implements UserService {
 
     @SuppressWarnings("unchecked")
     @Override
-    public Set<Course> getCoursesAttendeeOfUser(int id) {
+    public Set<Course> getCoursesAttendeeOfUser(String username) {
         Session session = this.sessionFactory.getCurrentSession();
-        if (id == 0) return null;
+        if (username == null) throw new NullPointerException("Username for get list of attenders is empty.");
+
+        int id_user=getIdByUsername(username);
 
         Criteria criteria = session.createCriteria(User.class);
-        criteria.add(Restrictions.eq("id", id));
+        criteria.add(Restrictions.eq("id", id_user));
         User user = (User) criteria.uniqueResult();
         Set<Course> coursesList;
         coursesList = user.getCoursesAttendee();
@@ -84,9 +89,11 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean addInSubscribers(String username, int id) {
+    public boolean addInSubscribers(String username, int id_course) {
+        if (username == null || id_course < 1) throw new NullPointerException("Username or id_course is null in addInSet()");
+
         User userSubscr = userDAO.getUser(username);
-        Course course = courseDAO.getCourse(id);
+        Course course = courseDAO.getCourse(id_course);
         Set<Course> courses = userSubscr.getCoursesSubscribe();
         if (courses.contains(course) && !(courses.add(course)))
             return false;
@@ -97,9 +104,15 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public boolean addInAttSet(String username, int id_course) {
+        if (username == null || id_course < 1) throw new NullPointerException("Username or id_course is null in addInSet()");
+
         User userAtt = userDAO.getUser(username);
         Course course = courseDAO.getCourse(id_course);
         Set<Course> courses = userAtt.getCoursesAttendee();
+
+        Map<User, Integer> map = new HashMap<User, Integer>();
+        map.put(userAtt, 0);
+        course.setEvalMap(map);
 
         if (courses.contains(course)) {
             courses.remove(course);

@@ -60,6 +60,7 @@ public class CourseDAOImp implements CourseDAO {
        Course course=(Course) criteria.uniqueResult();
         Hibernate.initialize(course.getAttenders());
         Hibernate.initialize(course.getSubscribers());
+        Hibernate.initialize(course.getEvalMap());
 
         return course;
     }
@@ -70,6 +71,7 @@ public class CourseDAOImp implements CourseDAO {
 
          Hibernate.initialize(course.getAttenders());
          Hibernate.initialize(course.getSubscribers());
+     Hibernate.initialize(course.getEvalMap());
 
      session.update(course);
     }
@@ -88,6 +90,7 @@ public class CourseDAOImp implements CourseDAO {
         for (Course course : coursesList) {
             Hibernate.initialize(course.getAttenders());
             Hibernate.initialize(course.getSubscribers());
+            Hibernate.initialize(course.getEvalMap());
         }
 
         return coursesList;
@@ -104,8 +107,9 @@ public class CourseDAOImp implements CourseDAO {
 
     @Transactional
     public void deleteCourse(Course course) {
+        Session session = this.sessionFactory.getCurrentSession();
+        if (course == null)  throw  new NullPointerException("Course for delete is null");
 
-        Session session = this.sessionFactory.openSession();
         session.delete(course);
         session.flush();
     }

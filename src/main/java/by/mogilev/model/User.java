@@ -10,17 +10,17 @@ import java.io.Serializable;
 import java.util.*;
 
 /**
-* Created by akiseleva on 27.02.2015.
-*/
+ * Created by akiseleva on 27.02.2015.
+ */
 
 @Entity
-@Table(name ="USER")
+@Table(name = "USER")
 public class User implements Serializable {
 
     private int id;
     private String username;
     private String password;
-    UserRole authority;
+    private UserRole authority;
     private String name;
     private String email;
     private Set<Course> course;
@@ -28,7 +28,8 @@ public class User implements Serializable {
     private Set<Course> coursesSubscribe = new HashSet<Course>();
     private Set<Course> coursesAttendee = new HashSet<Course>();
 
-    public User(){}
+    public User() {
+    }
 
 //    public User(String username, String password, UserRole role) {
 //        this.username = username;
@@ -39,9 +40,10 @@ public class User implements Serializable {
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_user")
-        public int getId() {
+    public int getId() {
         return id;
     }
+
     public void setId(int id) {
         this.id = id;
     }
@@ -50,15 +52,17 @@ public class User implements Serializable {
     public String getPassword() {
         return password;
     }
-    @Column(name ="username")
+
+    @Column(name = "username")
     public String getUsername() {
         return username;
     }
 
-    @Column(name ="authority")
+    @Column(name = "authority")
     @Enumerated(EnumType.STRING)
     public UserRole getAuthority() {
-        return authority;    }
+        return authority;
+    }
 
     public void setAuthority(UserRole authority) {
         this.authority = authority;
@@ -72,6 +76,7 @@ public class User implements Serializable {
     public void setName(String name) {
         this.name = name;
     }
+
     @Column(name = "email")
     public String getEmail() {
         return email;
@@ -92,22 +97,24 @@ public class User implements Serializable {
     public boolean isEnabled() {
         return this.enabled;
     }
+
     public void setEnabled(boolean enabled) {
         this.enabled = enabled;
     }
 
-    @OneToMany(fetch = FetchType.EAGER,mappedBy="lector" )
+    @OneToMany(fetch = FetchType.EAGER, mappedBy = "lector")
     public Set<Course> getCourse() {
         return course;
     }
+
     public void setCourse(Set<Course> course) {
         this.course = course;
     }
 
-    @ManyToMany(cascade=CascadeType.ALL)
-    @JoinTable(name="COURSE_SUBSCRIBERS",
-            joinColumns=@JoinColumn(name="id_user"),
-            inverseJoinColumns=@JoinColumn(name="id_course"))
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "COURSE_SUBSCRIBERS",
+            joinColumns = @JoinColumn(name = "id_user"),
+            inverseJoinColumns = @JoinColumn(name = "id_course"))
     public Set<Course> getCoursesSubscribe() {
         return coursesSubscribe;
     }
@@ -115,10 +122,11 @@ public class User implements Serializable {
     public void setCoursesSubscribe(Set<Course> coursesSubscribe) {
         this.coursesSubscribe = coursesSubscribe;
     }
-    @ManyToMany(cascade=CascadeType.ALL)
-    @JoinTable(name="COURSE_ATTENDERS",
-            joinColumns=@JoinColumn(name="id_user"),
-            inverseJoinColumns=@JoinColumn(name="id_course"))
+
+    @ManyToMany(cascade = CascadeType.ALL)
+    @JoinTable(name = "COURSE_ATTENDERS",
+            joinColumns = @JoinColumn(name = "id_user"),
+            inverseJoinColumns = @JoinColumn(name = "id_course"))
     public Set<Course> getCoursesAttendee() {
         return coursesAttendee;
     }
@@ -127,8 +135,4 @@ public class User implements Serializable {
         this.coursesAttendee = coursesAttendee;
     }
 
-    @Override
-    public int hashCode() {
-        return Integer.hashCode(getId());
-    }
 }

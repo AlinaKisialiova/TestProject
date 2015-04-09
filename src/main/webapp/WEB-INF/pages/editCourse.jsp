@@ -53,12 +53,6 @@
         </td>
     </tr>
 
-    <tr><th>Delete Course</th>
-        <td>
-            <input type="checkbox" name="deleteCourse" />
-        </td>
-
-    </tr>
     <tr>
         <td><a href="informationBoard"> Cancel</a> </td>
         <td><input type="submit" value="OK" onclick="return validate();"/></td>

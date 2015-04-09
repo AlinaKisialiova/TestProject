@@ -18,7 +18,6 @@ public class Course implements Serializable {
     public final static int MIN_COUNT_SUBSCR = 2;
     public final static int MAX_COUNT_ATT = 15;
 
-
     private int id;
     private String category;
     private String nameCourse;
@@ -110,10 +109,8 @@ public class Course implements Serializable {
     }
 
     public void setEvaluation(int evaluation) {
-        int evaluat=evaluation;
-        for(Map.Entry<User, Integer> entry : getEvalMap().entrySet())
-            evaluat += entry.getValue();
-       this.evaluation=evaluat/getEvalMap().size();
+
+            this.evaluation = evaluation;
     }
 
     public boolean isDelivered() {
@@ -144,7 +141,7 @@ public class Course implements Serializable {
         this.attenders = attendees;
     }
 
-    @ManyToMany( mappedBy = "coursesSubscribe",
+    @ManyToMany(mappedBy = "coursesSubscribe",
             cascade = CascadeType.ALL)
     public Set<User> getSubscribers() {
         return subscribers;
@@ -155,11 +152,11 @@ public class Course implements Serializable {
     }
 
     @ElementCollection(fetch = FetchType.LAZY)
-    @CollectionTable(name="COURSE_ATTENDERS",
-            joinColumns=@JoinColumn(name="id_course"))
-    @Column(name="eval")
-    @MapKeyJoinColumn(name="id_user", referencedColumnName="id_user")
-    public Map<User,Integer> getEvalMap() {
+    @CollectionTable(name = "COURSE_ATTENDERS",
+            joinColumns = @JoinColumn(name = "id_course"))
+    @Column(name = "eval")
+    @MapKeyJoinColumn(name = "id_user", referencedColumnName = "id_user")
+    public Map<User, Integer> getEvalMap() {
         return evalMap;
     }
 

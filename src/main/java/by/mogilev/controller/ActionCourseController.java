@@ -3,8 +3,6 @@ package by.mogilev.controller;
 import by.mogilev.model.Course;
 import by.mogilev.service.CourseService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.security.core.context.SecurityContextHolder;
-import org.springframework.security.core.userdetails.UserDetails;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
 import org.springframework.validation.BindingResult;
@@ -16,6 +14,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
+import java.security.Principal;
 
 /**
  * Created by akiseleva on 09.03.2015.
@@ -25,16 +24,6 @@ public class ActionCourseController {
 
     @Autowired
     private CourseService courseService;
-
-    @ModelAttribute
-    public String populateCurrentUser() {
-        Object principal = SecurityContextHolder.getContext().getAuthentication().getPrincipal();
-        String userName = "";
-        if (principal instanceof UserDetails) {
-            userName = ((org.springframework.security.core.userdetails.User) principal).getUsername();
-        }
-        return userName;
-    }
 
     @ModelAttribute("Course")
     public Course newCourse() {
@@ -47,13 +36,18 @@ public class ActionCourseController {
     }
 
     @RequestMapping(value = "/registrationCourse", method = RequestMethod.POST)
-    public ModelAndView regCourse(@ModelAttribute("Course")  Course newCourse,  BindingResult result, Model model, HttpSession session) {
+    public ModelAndView regCourse(@ModelAttribute("Course")  Course newCourse,  BindingResult result, Model model, HttpSession session, HttpServletRequest request) {
            if (result.hasErrors())
                new ModelAndView("redirect:/informationBoard");
 
-            String userName = populateCurrentUser();
+        String userName = "";
+        Principal principal = request.getUserPrincipal();
+        if (principal != null && principal.getName() != null) {
+            userName = principal.getName();
+        }
 
-            courseService.registerCourse(newCourse, userName);
+
+        courseService.registerCourse(newCourse, userName);
             return new ModelAndView("redirect:/informationBoard");
 
     }
@@ -63,6 +57,13 @@ public class ActionCourseController {
         ModelAndView mav= new ModelAndView("courseDetails");
         mav.addObject("checkCourse", courseService.getCourse(id));
         return mav;
+
+    }
+
+    @RequestMapping(value = "/courseDetails/{course.id}", method = RequestMethod.POST)
+    public ModelAndView deleteCourse(@PathVariable("course.id") Integer id) {
+    courseService.deleteCourse(id);
+        return new ModelAndView("redirect:/informationBoard");
 
     }
 
@@ -82,27 +83,16 @@ public class ActionCourseController {
         if (! (courseService.isOwner(id, session)) || courseService.getCourse(id) == null)
               return "redirect:/informationBoard";
 
-        String p = request.getParameter("deleteCourse");
+        String actionDelete = request.getParameter("deleteCourse");
 
-        if ("on".equals(p))
+        if ("on".equals(actionDelete))
             courseService.deleteCourse(id);
 
-        else {
-            Course editCourse = courseService.getCourse(id);
-
-            editCourse.setCategory(updCourse.getCategory());
-            editCourse.setNameCourse(updCourse.getNameCourse());
-            editCourse.setDescription(updCourse.getDescription());
-            editCourse.setLinks(updCourse.getLinks());
-            editCourse.setDuration(updCourse.getDuration());
-
-            courseService.updateCourse(editCourse);
-        }
+        else
+            courseService.updateCourse(id, updCourse);
 
           return "redirect:/informationBoard";
     }
-
-
 
 
 }

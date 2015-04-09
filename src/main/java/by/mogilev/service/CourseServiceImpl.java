@@ -3,6 +3,7 @@ package by.mogilev.service;
 import by.mogilev.dao.CourseDAO;
 import by.mogilev.dao.UserDAO;
 import by.mogilev.model.Course;
+import by.mogilev.model.User;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.CMYKColor;
 import com.itextpdf.text.pdf.PdfPCell;
@@ -44,6 +45,9 @@ public class CourseServiceImpl implements CourseService {
 
     @Autowired
     private UserDAO userDAO;
+
+    @Autowired
+    private UserService userService;
 
     @Override
     public boolean isOwner(int idCourse, HttpSession session) {
@@ -187,9 +191,21 @@ public class CourseServiceImpl implements CourseService {
 
 
     @Override
-    public void remidEv(int id, int grade) {
+    public void remidEv(int id, String userName, int grade) {
         Course changeEvalCourse = courseDAO.getCourse(id);
-        changeEvalCourse.setEvaluation(grade);
+
+        Map<User, Integer> mapEval = changeEvalCourse.getEvalMap();
+        User user = userDAO.getUser(userName);
+
+        mapEval.put(user, grade);
+        changeEvalCourse.setEvalMap(mapEval);
+        courseDAO.updateCourse(changeEvalCourse);
+
+        int evaluat=0;
+        for (Map.Entry<User, Integer> entry : changeEvalCourse.getEvalMap().entrySet())
+            evaluat += entry.getValue();
+
+        changeEvalCourse.setEvaluation(evaluat / changeEvalCourse.getEvalMap().size());
         courseDAO.updateCourse(changeEvalCourse);
     }
 
@@ -210,14 +226,16 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public void deleteCourse(int id) {
+        if (id < 1) throw new NullPointerException("Id course for delete is null");
+
         Course course = courseDAO.getCourse(id);
-        if (course==null) throw  new NullPointerException("Course is null");
         courseDAO.deleteCourse(course);
     }
 
     @Override
     public Course getCourse(int id) {
-      return courseDAO.getCourse(id);
+        if (id < 1) throw new NullPointerException("Id course is null in getCourse()");
+        return courseDAO.getCourse(id);
     }
 
     @Override
@@ -226,13 +244,24 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public void updateCourse(Course course) {
-        courseDAO.updateCourse(course);
+    public void updateCourse(int id, Course updCourse) {
+        Course editCourse = getCourse(id);
+
+        editCourse.setCategory(updCourse.getCategory());
+        editCourse.setNameCourse(updCourse.getNameCourse());
+        editCourse.setDescription(updCourse.getDescription());
+        editCourse.setLinks(updCourse.getLinks());
+        editCourse.setDuration(updCourse.getDuration());
+        editCourse.setEvaluation(0);
+
+        courseDAO.updateCourse(editCourse);
     }
 
     @Override
     public boolean startCourse(int id) {
-        Course course=courseDAO.getCourse(id);
+        if (id < 1) throw new NullPointerException("Id course is null in startCourse()");
+
+        Course course = courseDAO.getCourse(id);
         if (!course.isDelivered() && course.getAttenders().size() >= Course.MIN_COUNT_SUBSCR) {
             course.setDelivered(true);
             courseDAO.updateCourse(course);

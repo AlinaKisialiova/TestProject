@@ -46,12 +46,11 @@ public class MySeminarsController {
         if (principal != null && principal.getName() != null) {
             userName = principal.getName();
         }
-        int id = userService.getIdByUsername(userName);
 
         mav.addObject("nameCourses", courseService.getAllCourse());
 
-        mav.addObject("courseList", userService.getCoursesSubscribeOfUser(id));
-        mav.addObject("attCourseOfUser", userService.getCoursesAttendeeOfUser(id));
+        mav.addObject("courseList", userService.getCoursesSubscribeOfUser(userName));
+        mav.addObject("attCourseOfUser", userService.getCoursesAttendeeOfUser(userName));
 
 
 
@@ -72,21 +71,22 @@ public class MySeminarsController {
         mav.addObject("nameCourses", coursesForSelect );
 
 
-
         if (ActionsOnPage.EVAL_REM.equals(action))
-            courseService.remidEv(id_course, grade);
+            courseService.remidEv(id_course, principal.getName(), grade);
 
         if (ActionsOnPage.ADD_IN_ATT.equals(action)|| ActionsOnPage.REMOTE_FROM_ATT.equals(action)) {
 
            String message= "";
-        if (courseService.getCourse(id_course).getAttenders().size()<Course.MAX_COUNT_ATT) {
+        if (courseService.getCourse(id).getAttenders().size() < Course.MAX_COUNT_ATT) {
 
             if (userService.addInAttSet(principal.getName(), id))
                 message = "You are included in attenders list!";
             else
                 message = "You are deleted from attenders list!";
         }
+            else
             message="You can not inclused because a group recruited!";
+
             mav.addObject("attendersMessage", message);
         }
 
@@ -102,11 +102,10 @@ public class MySeminarsController {
         }
 
 
-        int id_user=userService.getIdByUsername(principal.getName());
-        Set<Course> coursesForList = userService.getCoursesSubscribeOfUser(id_user);
+        Set<Course> coursesForList = userService.getCoursesSubscribeOfUser(principal.getName());
         mav.addObject("courseList", coursesForList);
 
-        mav.addObject("attCourseOfUser", userService.getCoursesAttendeeOfUser(id_user));
+        mav.addObject("attCourseOfUser", userService.getCoursesAttendeeOfUser(principal.getName()));
         return mav;
 
     }

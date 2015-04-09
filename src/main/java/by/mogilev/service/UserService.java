@@ -10,17 +10,17 @@ import java.util.Set;
 public interface UserService {
     /**
      * Method is return list of course on which user was subscribed
-     * @param id
+     * @param username
      * @return
      */
-    public Set<Course> getCoursesSubscribeOfUser(int id);
+    public Set<Course> getCoursesSubscribeOfUser(String username);
 
     /**
      * Method is return list of course on which user was attendeed
-     * @param id
+     * @param username
      * @return
      */
-    public Set<Course> getCoursesAttendeeOfUser(int id);
+    public Set<Course> getCoursesAttendeeOfUser(String username);
 
     public  int getIdByUsername(String username);
 
