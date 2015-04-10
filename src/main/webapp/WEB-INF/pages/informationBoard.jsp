@@ -12,6 +12,10 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
     I am know that you are a lector!
 </sec:authorize>
 
+<sec:authorize access="hasRole('ROLE_USER')">
+    I am know that you are a user!
+</sec:authorize>
+
 
 <br/>
 <div id='EvalRemindBlock' style="display: none;">

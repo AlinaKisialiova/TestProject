@@ -109,9 +109,8 @@ public class CourseDAOImp implements CourseDAO {
     public void deleteCourse(Course course) {
         Session session = this.sessionFactory.getCurrentSession();
         if (course == null)  throw  new NullPointerException("Course for delete is null");
-
         session.delete(course);
-        session.flush();
+//        session.flush();
     }
 
 }

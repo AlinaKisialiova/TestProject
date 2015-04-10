@@ -203,8 +203,10 @@ public class CourseServiceImpl implements CourseService {
         courseDAO.updateCourse(changeEvalCourse);
 
         int evaluat = 0;
-        for (Map.Entry<User, Integer> entry : changeEvalCourse.getEvalMap().entrySet())
+        for (Map.Entry<User, Integer> entry : changeEvalCourse.getEvalMap().entrySet()) {
+            if (entry.getValue() != null)
             evaluat += entry.getValue();
+        }
 
         changeEvalCourse.setEvaluation(evaluat / changeEvalCourse.getEvalMap().size());
         courseDAO.updateCourse(changeEvalCourse);
@@ -226,10 +228,13 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public void deleteCourse(int id) {
+    public void deleteCourse(int id, String userName) {
         if (id < 1) throw new NullPointerException("Id course for delete is null");
 
         Course course = courseDAO.getCourse(id);
+       if (userDAO.getUser(userName).getId() != course.getLector().getId())
+           return;
+
         courseDAO.deleteCourse(course);
     }
 
@@ -259,11 +264,11 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public boolean startCourse(int id) {
+    public boolean startCourse(int id, String userName) {
         if (id < 1) throw new NullPointerException("Id course is null in startCourse()");
 
         Course course = courseDAO.getCourse(id);
-        if (!course.isDelivered() && course.getAttenders().size() >= Course.MIN_COUNT_SUBSCR) {
+        if (!course.isDelivered() && course.getAttenders().size() >= Course.MIN_COUNT_SUBSCR && userDAO.getUser(userName) == course.getLector()) {
             course.setDelivered(true);
             courseDAO.updateCourse(course);
             return true;

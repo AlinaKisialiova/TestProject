@@ -61,8 +61,13 @@ public class ActionCourseController {
     }
 
     @RequestMapping(value = "/courseDetails/{course.id}", method = RequestMethod.POST)
-    public ModelAndView deleteCourse(@PathVariable("course.id") Integer id) {
-    courseService.deleteCourse(id);
+    public ModelAndView deleteCourse(@PathVariable("course.id") Integer id, HttpServletRequest request) {
+        String userName = "";
+        Principal principal = request.getUserPrincipal();
+        if (principal != null && principal.getName() != null) {
+            userName = principal.getName();
+        }
+    courseService.deleteCourse(id, userName);
         return new ModelAndView("redirect:/informationBoard");
 
     }
@@ -82,13 +87,6 @@ public class ActionCourseController {
 
         if (! (courseService.isOwner(id, session)) || courseService.getCourse(id) == null)
               return "redirect:/informationBoard";
-
-        String actionDelete = request.getParameter("deleteCourse");
-
-        if ("on".equals(actionDelete))
-            courseService.deleteCourse(id);
-
-        else
             courseService.updateCourse(id, updCourse);
 
           return "redirect:/informationBoard";

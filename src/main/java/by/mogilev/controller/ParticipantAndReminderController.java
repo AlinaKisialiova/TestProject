@@ -8,6 +8,9 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
+
 /**
  * Created by Администратор on 29.03.2015.
  */
@@ -32,11 +35,16 @@ public class ParticipantAndReminderController {
 
 
     @RequestMapping(value = "/evaluationReminder/{course.id}", method = RequestMethod.POST)
-    public ModelAndView reminderStartorReset(@PathVariable("course.id") Integer id) {
+    public ModelAndView reminderStartorReset(@PathVariable("course.id") Integer id, HttpServletRequest request) {
         ModelAndView mav= new ModelAndView("evaluationReminder");
         mav.addObject("checkCourse", courseService.getCourse(id));
+        String userName = "";
+        Principal principal = request.getUserPrincipal();
+        if (principal != null && principal.getName() != null) {
+            userName = principal.getName();
+        }
         String message="";
-        if (courseService.startCourse(id))
+        if (courseService.startCourse(id, userName))
             message="Course "+ courseService.getCourse(id).getNameCourse()+" is started!";
         else
         message="Course dont started!";

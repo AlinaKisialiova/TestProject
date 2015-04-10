@@ -12,6 +12,8 @@
 <div class="span8 offset4">
 <img src="<c:url value="/resources/denied.jpg"/>"/>
 </div>
-</div>
-
+ </div>
+    <div class="span12">
+        <a href="<c:url value="/informationBoard" context="/project"/>">Back</a>
+    </div>
 </div>

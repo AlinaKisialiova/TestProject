@@ -13,8 +13,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 
 /**
@@ -95,9 +93,13 @@ public class UserServiceImpl implements UserService {
         User userSubscr = userDAO.getUser(username);
         Course course = courseDAO.getCourse(id_course);
         Set<Course> courses = userSubscr.getCoursesSubscribe();
-        if (courses.contains(course) && !(courses.add(course)))
+        if (courses.contains(course)) {
+            userSubscr.getCoursesSubscribe().remove(course);
+            userDAO.updateUser(userSubscr);
             return false;
+        }
 
+        courses.add(course);
         userDAO.updateUser(userSubscr);
         return true;
     }
@@ -110,12 +112,9 @@ public class UserServiceImpl implements UserService {
         Course course = courseDAO.getCourse(id_course);
         Set<Course> courses = userAtt.getCoursesAttendee();
 
-        Map<User, Integer> map = new HashMap<User, Integer>();
-        map.put(userAtt, 0);
-        course.setEvalMap(map);
-
         if (courses.contains(course)) {
             courses.remove(course);
+            userDAO.updateUser(userAtt);
             return false;
         }
 

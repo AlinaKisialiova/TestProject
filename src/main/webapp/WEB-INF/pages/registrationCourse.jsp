@@ -1,7 +1,22 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <br/>
 <h1>Register Course</h1>
+<div class="span12">
+    Hello, <security:authentication property="principal.username" var="user"/> ${user}!
+    <a href=j_spring_security_logout> Logout</a>
+</div>
+<div class="span12">
+    <sec:authorize access="hasRole('ROLE_LECTOR')">
+        I am know that you are a lector!
+    </sec:authorize>
+
+    <sec:authorize access="hasRole('ROLE_USER')">
+        I am know that you are a user!
+    </sec:authorize>
+</div>
 <a href="informationBoard"> Seminar Information Board</a>
 <br/><br/><br/>
 
@@ -55,6 +70,8 @@
         <div class="form-actions">
 
             <input type="submit" value="Save" onclick="return validate();" class="btn btn-primary"/>
+
+                <a href="<c:url value="/informationBoard" context="/project"/>">Back</a>
 
 
             </div>

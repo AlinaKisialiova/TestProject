@@ -59,7 +59,7 @@ public class InformationBoardController {
 
         if(action == null) action = ActionsOnPage.NO_ACTION;
         switch (action) {
-            case DEL: courseService.deleteCourse(id_course);
+            case DEL: courseService.deleteCourse(id_course, userName);
                 break;
             case EVAL_REM:
                 User user = userService.getUser(userName);
@@ -69,7 +69,7 @@ public class InformationBoardController {
                 break;
             case OUT_EXCEL:courseService.outInExcelAllCourse(response);
                 break;
-            case START: courseService.startCourse(id_course);
+            case START: courseService.startCourse(id_course, userName);
                 break;
         }
         mav.addObject("courseList", courseService.getSelected(selectCategory));

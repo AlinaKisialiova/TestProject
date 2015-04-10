@@ -45,7 +45,7 @@ public interface CourseService {
 
     public List<Course> getAllCourse();
 
-    public void deleteCourse(int id);
+    public void deleteCourse(int id, String userName);
 
     public Course getCourse(int id);
 
@@ -53,7 +53,7 @@ public interface CourseService {
 
     public void updateCourse( int id, Course updCourse);
 
-    public boolean startCourse(int id);
+    public boolean startCourse(int id, String userName);
 
 
 }

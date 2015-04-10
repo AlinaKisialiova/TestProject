@@ -122,7 +122,7 @@ public class Course implements Serializable {
     }
 
     @ManyToOne
-    @JoinColumn(name = "id_user", nullable = false)
+    @JoinColumn(name = "id_user")
     public User getLector() {
         return lector;
     }
@@ -163,4 +163,18 @@ public class Course implements Serializable {
     public void setEvalMap(Map<User, Integer> evalMap) {
              this.evalMap = evalMap;
     }
+
+    @Override
+    public int hashCode() {
+        return getId()*11+11;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || !(obj instanceof Course))
+            return false;
+        Course objCourse = (Course) obj;
+        return this.getId() == objCourse.getId();
+    }
+
 }

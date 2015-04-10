@@ -1,5 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
+<%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: akiseleva
@@ -9,7 +11,21 @@
 --%>
 
 <div class="row">
+
     <div class="span12"><h1>My Seminars</h1></div>
+    <div class="span12">
+    Hello, <security:authentication property="principal.username" var="user"/> ${user}!
+    <a href=j_spring_security_logout> Logout</a>
+    </div>
+<div class="span12">
+    <sec:authorize access="hasRole('ROLE_LECTOR')">
+        I am know that you are a lector!
+    </sec:authorize>
+
+    <sec:authorize access="hasRole('ROLE_USER')">
+        I am know that you are a user!
+    </sec:authorize>
+</div>
 
     <div class="span5"><a href="<c:url value="/informationBoard" context="/project"/>"> Seminars Information Board </a>
     </div>
@@ -79,7 +95,7 @@
                 <tr>
                     <td>
                         <input type="hidden" name="fieldForSubmit" class="fieldForSubmit"/>
-                        <input type="submit" value="Subscribe" onclick="setAction('SUBSCRIBE')"
+                        <input type="submit" value="Subscribe/Delete" onclick="setAction('SUBSCRIBE')"
                                class="btn-primary"/>
 
                     </td>
@@ -223,7 +239,6 @@
             $(".no").val("Participate");
             $(".fieldForSubmit").val("REMOTE_FROM_ATT");
         }
-
     }
 
     function filter(phrase) {

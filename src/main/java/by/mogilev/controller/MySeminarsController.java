@@ -84,7 +84,7 @@ public class MySeminarsController {
                 else
                     message = "You are deleted from attenders list!";
             } else
-                message = "You can not inclused because a group recruited!";
+                message = "You can not included because a group recruited!";
 
             mav.addObject("attendersMessage", message);
         }
@@ -95,7 +95,7 @@ public class MySeminarsController {
             if (userService.addInSubscribers(principal.getName(), id_course))
                 message = "You are subscribed!";
             else
-                message = "You are already subscribed to this course!";
+                message = "You are deleted from subscribe list!!";
 
             mav.addObject("subscribeMessage", message);
         }
