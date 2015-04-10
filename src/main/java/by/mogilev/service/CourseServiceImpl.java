@@ -191,16 +191,18 @@ public class CourseServiceImpl implements CourseService {
 
 
     @Override
-    public void remidEv(int id, String userName, int grade) {
+    public void remidEv(int id, User user, int grade) {
         Course changeEvalCourse = courseDAO.getCourse(id);
 
         Map<User, Integer> mapEval = changeEvalCourse.getEvalMap();
-        User user = userDAO.getUser(userName);
+        if(mapEval.containsKey(user))
+            mapEval.replace(user, grade);
+        else
         mapEval.put(user, grade);
         changeEvalCourse.setEvalMap(mapEval);
         courseDAO.updateCourse(changeEvalCourse);
 
-        int evaluat=0;
+        int evaluat = 0;
         for (Map.Entry<User, Integer> entry : changeEvalCourse.getEvalMap().entrySet())
             evaluat += entry.getValue();
 

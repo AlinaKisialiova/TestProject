@@ -1,7 +1,9 @@
 package by.mogilev.controller;
 
 import by.mogilev.model.ActionsOnPage;
+import by.mogilev.model.User;
 import by.mogilev.service.CourseService;
+import by.mogilev.service.UserService;
 import com.itextpdf.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -27,6 +29,9 @@ public class InformationBoardController {
     @Autowired
     private CourseService courseService;
 
+    @Autowired
+    private UserService userService;
+
     @RequestMapping(value = "/informationBoard", method = RequestMethod.GET)
     public ModelAndView listCourse() {
        ModelAndView mav= new ModelAndView("informationBoard");
@@ -51,12 +56,14 @@ public class InformationBoardController {
             userName = principal.getName();
         }
 
-        if(action == null) action = ActionsOnPage.NO_ACTION;
 
+        if(action == null) action = ActionsOnPage.NO_ACTION;
         switch (action) {
             case DEL: courseService.deleteCourse(id_course);
                 break;
-            case EVAL_REM: courseService.remidEv(id_course, userName, grade);
+            case EVAL_REM:
+                User user = userService.getUser(userName);
+                courseService.remidEv(id_course, user, grade);
                 break;
             case OUT_PDF: courseService.outInPdfAllCourse(response);
                 break;

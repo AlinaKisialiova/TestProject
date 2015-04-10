@@ -2,6 +2,7 @@ package by.mogilev.controller;
 
 import by.mogilev.model.ActionsOnPage;
 import by.mogilev.model.Course;
+import by.mogilev.model.User;
 import by.mogilev.service.CourseService;
 import by.mogilev.service.UserService;
 import com.itextpdf.text.DocumentException;
@@ -38,7 +39,7 @@ public class MySeminarsController {
     }
 
     @RequestMapping(value = "/mySeminars", method = RequestMethod.GET)
-    public ModelAndView listCourseUser(HttpServletRequest request ) {
+    public ModelAndView listCourseUser(HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("mySeminars");
 
         String userName = "";
@@ -53,50 +54,48 @@ public class MySeminarsController {
         mav.addObject("attCourseOfUser", userService.getCoursesAttendeeOfUser(userName));
 
 
-
         return mav;
     }
 
     @RequestMapping(value = "/mySeminars", method = RequestMethod.POST)
     public ModelAndView mySem(@RequestParam(value = "grade", required = false) Integer grade,
-                                          @RequestParam(value = "fieldForSubmit", required = false) ActionsOnPage action,
-                                          @RequestParam(value = "selectCourse", required = false) Integer id_course,
-                                          @RequestParam(value = "selectCategory", required = false) String selectCategory,
-                                          @RequestParam(value = "id", required = false) Integer id,
-                                          Principal principal)
+                              @RequestParam(value = "fieldForSubmit", required = false) ActionsOnPage action,
+                              @RequestParam(value = "selectCourse", required = false) Integer id_course,
+                              @RequestParam(value = "selectCategory", required = false) String selectCategory,
+                              @RequestParam(value = "id", required = false) Integer id,
+                              Principal principal)
             throws IOException, DocumentException {
         ModelAndView mav = new ModelAndView("mySeminars");
 
         List<Course> coursesForSelect = courseService.getSelected(selectCategory);
-        mav.addObject("nameCourses", coursesForSelect );
+        mav.addObject("nameCourses", coursesForSelect);
 
-
+        User user = userService.getUser(principal.getName());
         if (ActionsOnPage.EVAL_REM.equals(action))
-            courseService.remidEv(id_course, principal.getName(), grade);
+            courseService.remidEv(id_course, user, grade);
 
-        if (ActionsOnPage.ADD_IN_ATT.equals(action)|| ActionsOnPage.REMOTE_FROM_ATT.equals(action)) {
+        if (ActionsOnPage.ADD_IN_ATT.equals(action) || ActionsOnPage.REMOTE_FROM_ATT.equals(action)) {
 
-           String message= "";
-        if (courseService.getCourse(id).getAttenders().size() < Course.MAX_COUNT_ATT) {
+            String message = "";
+            if (courseService.getCourse(id).getAttenders().size() < Course.MAX_COUNT_ATT) {
 
-            if (userService.addInAttSet(principal.getName(), id))
-                message = "You are included in attenders list!";
-            else
-                message = "You are deleted from attenders list!";
-        }
-            else
-            message="You can not inclused because a group recruited!";
+                if (userService.addInAttSet(principal.getName(), id))
+                    message = "You are included in attenders list!";
+                else
+                    message = "You are deleted from attenders list!";
+            } else
+                message = "You can not inclused because a group recruited!";
 
             mav.addObject("attendersMessage", message);
         }
 
 
         if (ActionsOnPage.SUBSCRIBE.equals(action)) {
-            String message="";
-            if(userService.addInSubscribers(principal.getName(), id_course))
-             message = "You are subscribed!";
+            String message = "";
+            if (userService.addInSubscribers(principal.getName(), id_course))
+                message = "You are subscribed!";
             else
-            message = "You are already subscribed to this course!";
+                message = "You are already subscribed to this course!";
 
             mav.addObject("subscribeMessage", message);
         }

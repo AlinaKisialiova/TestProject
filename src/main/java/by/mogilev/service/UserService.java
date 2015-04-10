@@ -1,6 +1,7 @@
 package by.mogilev.service;
 
 import by.mogilev.model.Course;
+import by.mogilev.model.User;
 
 import java.util.Set;
 
@@ -36,4 +37,6 @@ public interface UserService {
      * @param id_course
      */
     public boolean addInAttSet(String username, int id_course);
+
+    public User getUser(String userName) ;
 }

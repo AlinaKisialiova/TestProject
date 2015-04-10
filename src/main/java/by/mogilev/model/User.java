@@ -31,12 +31,6 @@ public class User implements Serializable {
     public User() {
     }
 
-//    public User(String username, String password, UserRole role) {
-//        this.username = username;
-//        this.password = password;
-//        this.authority=role;
-//    }
-
     @Id
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     @Column(name = "id_user")
@@ -133,6 +127,19 @@ public class User implements Serializable {
 
     public void setCoursesAttendee(Set<Course> coursesAttendee) {
         this.coursesAttendee = coursesAttendee;
+    }
+
+    @Override
+    public int hashCode() {
+        return getId()*100;
+    }
+
+    @Override
+    public boolean equals(Object obj) {
+        if (obj == null || !(obj instanceof User))
+            return false;
+      User objUser = (User) obj;
+        return this.getId() == objUser.getId();
     }
 
 }

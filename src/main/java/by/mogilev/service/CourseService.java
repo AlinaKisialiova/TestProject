@@ -1,6 +1,7 @@
 package by.mogilev.service;
 
 import by.mogilev.model.Course;
+import by.mogilev.model.User;
 import com.itextpdf.text.DocumentException;
 
 import javax.servlet.http.HttpServletResponse;
@@ -15,7 +16,7 @@ import java.util.Map;
 public interface CourseService {
    public boolean isOwner(int idCourse, HttpSession session);
 
-    public void remidEv(int id, String userName, int grade);
+    public void remidEv(int id, User user, int grade);
     Map<String, String> getCategotyMap();
     /**
      *

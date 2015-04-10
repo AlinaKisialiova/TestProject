@@ -124,4 +124,11 @@ public class UserServiceImpl implements UserService {
         return true;
 
     }
+
+    @Override
+    public User getUser(String userName) {
+        if (userName == null) throw new NullPointerException("Username is null in getUser()");
+
+     return userDAO.getUser(userName);
+    }
 }

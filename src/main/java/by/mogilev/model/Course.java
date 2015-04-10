@@ -30,7 +30,7 @@ public class Course implements Serializable {
     private boolean delivered;
     private Set<User> attenders = new HashSet<User>();
     private Set<User> subscribers = new HashSet<User>();
-    private Map<User, Integer> evalMap = new HashMap<>();
+    private Map<User, Integer> evalMap = new HashMap<User, Integer>();
 
 
     public Course(String category, String nameCourse, String description, String links, String duration, User lector) {
@@ -161,6 +161,6 @@ public class Course implements Serializable {
     }
 
     public void setEvalMap(Map<User, Integer> evalMap) {
-        this.evalMap = evalMap;
+             this.evalMap = evalMap;
     }
 }
