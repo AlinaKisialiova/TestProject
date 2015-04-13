@@ -48,7 +48,8 @@
                 </tr>
                 <tr>
                     <td>Course Grade</td>
-                    <td><input type="text" name="grade" class="grade"/>
+                    <td>
+                        <input type="text" name="grade" class="grade"/>
                         <input type="hidden" name="fieldForSubmit" class="fieldForSubmit"/>
 
                     </td>
@@ -162,9 +163,15 @@
                     </a>
                 </td>
                 <td><c:out value="${course.delivered}" escapeXml="true"/></td>
+
                 <td class="grade_${course.id}">
                     <c:if test="${course.delivered}">
-                    <c:out value="${course.evaluation}" escapeXml="true"/></td>
+                        <a href="#" onclick="show(${course.id}, '#EvalRemindBlock')">
+                    <c:out value="${course.evaluation}" escapeXml="true"/>
+                        </a>
+                    <input type="hidden" value="${course.evaluation}" class="hiddenEval_${course.id}">
+                </td>
+
                 </c:if>
 
                 <td>
@@ -203,7 +210,7 @@
             $(element).show();
             var lCourse = $(".lector_" + id).html();
             var nCourse = $(".course_" + id).html();
-            var gCourse = $(".grade_" + id).html();
+            var gCourse = $(".hiddenEval_" + id).val();
 
             $(".lect").text(lCourse);
             $(".cours").text(nCourse);

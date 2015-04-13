@@ -171,16 +171,18 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
                     <input type="submit" name="delete" value="Delete" onclick="del(${course.id})" class="btn"/>
                 </c:if>
                         <c:set value="<%=Course.MIN_COUNT_SUBSCR%>" var="countMin"/>
-                        <c:if test="${course.attenders.size() gt countMin}">
+                        <c:if test="${course.attenders.size() >= countMin}">
              <a href="/evaluationReminder/${course.id}">
                  <input type="button" id="Eval" value="Evaluation Reminder" class="btn" />
              </a>
                         </c:if>
                 </c:if>
 
-                        <a href="<c:url value="/evaluationReminder/${course.id}"/>">
-                            <input type="button" id="Evajl" value="Evaluation Reminder" class="btn" />
+                        <sec:authorize access="hasAnyRole('DEPARTMENT_MANAGER','KNOWLEDGE_MANAGER')">
+                        <a href="<c:url value="/approveCourse/${course.id}"/>">
+                            <input type="button" id="approve" value="Approve Course" class="btn" />
                         </a>
+                    </sec:authorize>
                     <input type="hidden" name="fieldForSubmit" class="fieldForSubmit"/>
                     <input type="hidden" class="idC" name="id"/>
 

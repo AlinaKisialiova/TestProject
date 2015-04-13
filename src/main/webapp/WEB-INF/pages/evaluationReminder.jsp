@@ -27,9 +27,9 @@
     <div class="span12">  <h1>Evaluation Reminder</h1></div>
 
     <div class="span12">
-       <h4>
-        <a href="<c:url value="/informationBoard" context="/project"/>"> Seminars Information Board </a>
-       </h4>
+        <h3>
+            <a href="<c:url value="/informationBoard" context="/project"/>"> Seminars Information Board </a>
+        </h3>
         </div>
     <div class="span12"><br/></div>
     <div class="span12">

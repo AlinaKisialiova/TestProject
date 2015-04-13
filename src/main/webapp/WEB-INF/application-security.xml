@@ -11,13 +11,14 @@
 
     <http auto-config="true" use-expressions="true">
 
-        <intercept-url pattern="/informationBoard/**" access="hasAnyRole('ROLE_LECTOR', 'ROLE_USER')"/>
+        <intercept-url pattern="/informationBoard/**" access="hasAnyRole('ROLE_LECTOR', 'ROLE_USER', 'DEPARTMENT_MANAGER','KNOWLEDGE_MANAGER' )"/>
         <intercept-url pattern="/registrationCourse/**" access="hasAnyRole('ROLE_LECTOR')"/>
         <intercept-url pattern="/editCourse/**" access="hasRole('ROLE_LECTOR')"/>
-        <intercept-url pattern="/courseDetails/**" access="hasAnyRole('ROLE_LECTOR', 'ROLE_USER')"/>
-        <intercept-url pattern="/participantsList/**" access="hasAnyRole('ROLE_LECTOR', 'ROLE_USER')"/>
-        <intercept-url pattern="/mySeminars/**" access="hasAnyRole('ROLE_LECTOR', 'ROLE_USER')"/>
-        <intercept-url pattern="/evaluationReminder/**" access="hasAnyRole('ROLE_LECTOR', 'ROLE_USER')"/>
+        <intercept-url pattern="/courseDetails/**" access="hasAnyRole('ROLE_LECTOR','ROLE_USER')"/>
+        <intercept-url pattern="/participantsList/**" access="hasAnyRole('ROLE_LECTOR','ROLE_USER')"/>
+        <intercept-url pattern="/mySeminars/**" access="hasAnyRole('ROLE_LECTOR','ROLE_USER')"/>
+        <intercept-url pattern="/evaluationReminder/**" access="hasAnyRole('ROLE_LECTOR')"/>
+        <intercept-url pattern="/approveCourse/**" access="hasAnyRole('DEPARTMENT_MANAGER', 'KNOWLEDGE_MANAGER')"/>
 
         <form-login login-page="/signin"
                     authentication-failure-url="/signin-failure" default-target-url="/informationBoard"/>
