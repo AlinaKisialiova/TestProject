@@ -33,6 +33,7 @@
 <div class="span12">
     <div class="span3"><strong> Course Category</strong></div> <div class="span6"><c:out value="${course.category}" escapeXml="true"/></div>
     <div class="span3"><strong> Course Name</strong></div> <div class="span6"> <c:out  value="${course.nameCourse}" escapeXml="true"/></div>
+
     <div class="span3"><strong> Course Description</strong></div><div class="span6"> <c:out value="${course.description}" escapeXml="true"/></div>
     <div class="span3"><strong> Course Links</strong></div><div class="span6"> <c:out value="${course.links}" escapeXml="true"/></div>
     <div class="span3"><strong> Course Duration</strong></div><div class="span6"> <c:out value="${course.duration}" escapeXml="true"/></div>

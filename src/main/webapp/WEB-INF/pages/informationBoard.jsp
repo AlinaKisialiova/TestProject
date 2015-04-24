@@ -221,7 +221,6 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
 
     function outExcel() {
         $(".fieldForSubmit").val("OUT_EXCEL");
-        $(".fieldForSubmit").val("OUT_EXCEL");
 
     }
     function del(id) {

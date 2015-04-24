@@ -28,6 +28,44 @@ public class Course implements Serializable {
     private int evaluation;
     private Set<Course> course;
     private boolean delivered;
+    private boolean departmentManagerDecision;
+    private String departmentManagerReason;
+    private boolean knowledgeManagerDecision;
+    private String  knowledgeManagerReason;
+
+    @Column(name = "departmentManagerDecision")
+    public boolean isDepartmentManagerDecision() {
+        return departmentManagerDecision;
+    }
+
+    public void setDepartmentManagerDecision(boolean departmentManagerDecision) {
+        this.departmentManagerDecision = departmentManagerDecision;
+    }
+    @Column(name = "departmentManagerReason")
+    public String getDepartmentManagerReason() {
+        return departmentManagerReason;
+    }
+
+    public void setDepartmentManagerReason(String departmentManagerReason) {
+        this.departmentManagerReason = departmentManagerReason;
+    }
+    @Column(name = "knowledgeManagerDecision")
+    public boolean isKnowledgeManagerDecision() {
+        return knowledgeManagerDecision;
+    }
+
+    public void setKnowledgeManagerDecision(boolean knowledgeManagerDecision) {
+        this.knowledgeManagerDecision = knowledgeManagerDecision;
+    }
+    @Column(name = "knowledgeManagerReason")
+    public String getKnowledgeManagerReason() {
+        return knowledgeManagerReason;
+    }
+
+    public void setKnowledgeManagerReason(String knowledgeManagerReason) {
+        this.knowledgeManagerReason = knowledgeManagerReason;
+    }
+
     private Set<User> attenders = new HashSet<User>();
     private Set<User> subscribers = new HashSet<User>();
     private Map<User, Integer> evalMap = new HashMap<User, Integer>();
