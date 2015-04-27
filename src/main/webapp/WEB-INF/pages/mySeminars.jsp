@@ -162,10 +162,10 @@
                         <c:out value="${course.attenders.size()}" escapeXml="true"/>
                     </a>
                 </td>
-                <td><c:out value="${course.delivered}" escapeXml="true"/></td>
+                <td><c:out value="${course.courseStatus}" escapeXml="true"/></td>
 
                 <td class="grade_${course.id}">
-                    <c:if test="${course.delivered}">
+                    <c:if test="${course.courseStatus}">
                         <a href="#" onclick="show(${course.id}, '#EvalRemindBlock')">
                     <c:out value="${course.evaluation}" escapeXml="true"/>
                         </a>

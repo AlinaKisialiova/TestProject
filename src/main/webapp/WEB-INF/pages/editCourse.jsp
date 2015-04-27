@@ -57,7 +57,7 @@
         <td><c:out value="${course.attenders.size()}"/></td>
     </tr>
     <tr><td><strong>Devilered</strong></td>
-        <td><c:out value="${course.delivered}"/></td>
+        <td><c:out value="${course.courseStatus}"/></td>
     </tr>
     <tr><td><strong>Course Evaluation</strong></td>
         <td>

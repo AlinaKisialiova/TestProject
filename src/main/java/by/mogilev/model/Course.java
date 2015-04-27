@@ -27,7 +27,7 @@ public class Course implements Serializable {
     private String links;
     private int evaluation;
     private Set<Course> course;
-    private boolean delivered;
+    private String courseStatus;
     private boolean departmentManagerDecision;
     private String departmentManagerReason;
     private boolean knowledgeManagerDecision;
@@ -119,6 +119,14 @@ public class Course implements Serializable {
 
     }
 
+    public String getCourseStatus() {
+        return courseStatus;
+    }
+
+    public void setCourseStatus(String courseStatus) {
+        this.courseStatus = courseStatus;
+    }
+
     public void setDuration(String duration) {
         this.duration = duration;
     }
@@ -151,13 +159,6 @@ public class Course implements Serializable {
             this.evaluation = evaluation;
     }
 
-    public boolean isDelivered() {
-        return delivered;
-    }
-
-    public void setDelivered(boolean delivered) {
-        this.delivered = delivered;
-    }
 
     @ManyToOne
     @JoinColumn(name = "id_user")

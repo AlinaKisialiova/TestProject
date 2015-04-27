@@ -152,10 +152,10 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
                 <c:out value="${course.attenders.size()}" escapeXml="true"/>
                 </a>
             </td>
-            <td><c:out value="${course.delivered}" escapeXml="true"/>
+            <td><c:out value="${course.courseStatus}" escapeXml="true"/>
             </td>
             <td>
-                <c:if test="${course.delivered}">
+                <c:if test="${course.courseStatus}">
                 <a href="#" onclick="show(${course.id})">
                 <c:out value="${course.evaluation}" escapeXml="true"/>
                 </a>
@@ -167,7 +167,7 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
                 <div class="btn-group">
 
                     <c:if test="${ user eq course.lector.username}">
-                <c:if test="${course.delivered}">
+                <c:if test="${course.courseStatus}">
                     <input type="submit" name="delete" value="Delete" onclick="del(${course.id})" class="btn"/>
                 </c:if>
                         <c:set value="<%=Course.MIN_COUNT_SUBSCR%>" var="countMin"/>

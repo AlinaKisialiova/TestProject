@@ -108,7 +108,7 @@ public class CourseServiceImpl implements CourseService {
             t.addCell(c.getCategory());
             t.addCell(String.valueOf(c.getSubscribers().size()));
             t.addCell(String.valueOf(c.getAttenders().size()));
-            t.addCell(String.valueOf(c.isDelivered()));
+            t.addCell(String.valueOf(c.getCourseStatus()));
             t.addCell(String.valueOf(c.getEvaluation()));
 
         }
@@ -162,7 +162,7 @@ public class CourseServiceImpl implements CourseService {
 
             String[] data =
                     {c.getLector().getName(), c.getNameCourse(), c.getCategory(), String.valueOf(c.getSubscribers().size()),
-                            String.valueOf(c.getAttenders().size()), String.valueOf(c.isDelivered()), String.valueOf(c.getEvaluation())};
+                            String.valueOf(c.getAttenders().size()), String.valueOf(c.getCourseStatus()), String.valueOf(c.getEvaluation())};
 
             Row row = sheet.createRow(numbRow);
             for (int j = 0; j < titles.length; j++) {
@@ -266,10 +266,10 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public boolean startCourse(int id, String userName) {
         if (id < 1) throw new NullPointerException("Id course is null in startCourse()");
-
+//cheharda
         Course course = courseDAO.getCourse(id);
-        if (!course.isDelivered() && course.getAttenders().size() >= Course.MIN_COUNT_SUBSCR && userDAO.getUser(userName) == course.getLector()) {
-            course.setDelivered(true);
+        if (course.getAttenders().size() >= Course.MIN_COUNT_SUBSCR && userDAO.getUser(userName) == course.getLector()) {
+
             courseDAO.updateCourse(course);
             return true;
         }
