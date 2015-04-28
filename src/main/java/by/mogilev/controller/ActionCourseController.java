@@ -87,7 +87,8 @@ public class ActionCourseController {
 
         if (! (courseService.isOwner(id, session)) || courseService.getCourse(id) == null)
               return "redirect:/informationBoard";
-            courseService.updateCourse(id, updCourse);
+        updCourse.setId(id);
+            courseService.updateCourse(updCourse);
 
           return "redirect:/informationBoard";
     }

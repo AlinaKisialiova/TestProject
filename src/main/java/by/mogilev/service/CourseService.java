@@ -51,7 +51,7 @@ public interface CourseService {
 
     public void registerCourse(Course course, String nameLector);
 
-    public void updateCourse( int id, Course updCourse);
+    public void updateCourse(Course updCourse);
 
     public boolean startCourse(int id, String userName);
 

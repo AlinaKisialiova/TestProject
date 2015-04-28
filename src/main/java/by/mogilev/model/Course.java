@@ -1,5 +1,7 @@
 package by.mogilev.model;
 
+import com.sun.javafx.scene.layout.region.Margins;
+
 import javax.persistence.*;
 import java.io.Serializable;
 import java.util.HashMap;
@@ -27,20 +29,10 @@ public class Course implements Serializable {
     private String links;
     private int evaluation;
     private Set<Course> course;
-    private String courseStatus;
-    private boolean departmentManagerDecision;
+    private CourseStatus courseStatus;
     private String departmentManagerReason;
-    private boolean knowledgeManagerDecision;
     private String  knowledgeManagerReason;
 
-    @Column(name = "departmentManagerDecision")
-    public boolean isDepartmentManagerDecision() {
-        return departmentManagerDecision;
-    }
-
-    public void setDepartmentManagerDecision(boolean departmentManagerDecision) {
-        this.departmentManagerDecision = departmentManagerDecision;
-    }
     @Column(name = "departmentManagerReason")
     public String getDepartmentManagerReason() {
         return departmentManagerReason;
@@ -49,14 +41,7 @@ public class Course implements Serializable {
     public void setDepartmentManagerReason(String departmentManagerReason) {
         this.departmentManagerReason = departmentManagerReason;
     }
-    @Column(name = "knowledgeManagerDecision")
-    public boolean isKnowledgeManagerDecision() {
-        return knowledgeManagerDecision;
-    }
 
-    public void setKnowledgeManagerDecision(boolean knowledgeManagerDecision) {
-        this.knowledgeManagerDecision = knowledgeManagerDecision;
-    }
     @Column(name = "knowledgeManagerReason")
     public String getKnowledgeManagerReason() {
         return knowledgeManagerReason;
@@ -118,12 +103,13 @@ public class Course implements Serializable {
         return duration;
 
     }
-
-    public String getCourseStatus() {
+    @Column(name = "status", columnDefinition = "NOT_APPROVE")
+    @Enumerated(EnumType.STRING)
+    public CourseStatus getCourseStatus() {
         return courseStatus;
     }
 
-    public void setCourseStatus(String courseStatus) {
+    public void setCourseStatus(CourseStatus courseStatus) {
         this.courseStatus = courseStatus;
     }
 

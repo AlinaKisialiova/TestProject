@@ -250,17 +250,18 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public void updateCourse(int id, Course updCourse) {
-        Course editCourse = getCourse(id);
+    public void updateCourse(Course updCourse) {
 
-        editCourse.setCategory(updCourse.getCategory());
-        editCourse.setNameCourse(updCourse.getNameCourse());
-        editCourse.setDescription(updCourse.getDescription());
-        editCourse.setLinks(updCourse.getLinks());
-        editCourse.setDuration(updCourse.getDuration());
-        editCourse.setEvaluation(0);
+//
+//        editCourse.setCategory(updCourse.getCategory());
+//        editCourse.setNameCourse(updCourse.getNameCourse());
+//        editCourse.setDescription(updCourse.getDescription());
+//        editCourse.setLinks(updCourse.getLinks());
+//        editCourse.setDuration(updCourse.getDuration());
+//        editCourse.setEvaluation(0);
+//        editCourse.setCourseStatus(updCourse.getCourseStatus());
 
-        courseDAO.updateCourse(editCourse);
+        courseDAO.updateCourse(updCourse);
     }
 
     @Override
