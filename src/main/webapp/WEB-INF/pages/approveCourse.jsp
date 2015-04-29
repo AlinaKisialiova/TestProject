@@ -13,7 +13,7 @@
 <div class="row">
     <div class="span12">
         Hello, <security:authentication property="principal.username" var="user"/> ${user}!
-        <a href="<c:url value="${pageContext.request.contextPath}/j_spring_security_logout"/>"> Logout</a>
+        <a href="<c:url context="/project" value="/j_spring_security_logout"/>"> Logout</a>
     </div>
     <div class="span12">
           <sec:authorize access="hasRole('KNOWLEDGE_MANAGER')">
@@ -54,24 +54,24 @@
 
     <div class="span12">
     <div class="span2">Manager name</div>   <div class="span2"> Departament manager</div>
-    <div class="span4"><select  id="approveDM"
+    <div class="span4"><select  id="approveDM" name="approveDM"
             <c:if test="${role != '[DEPARTMENT_MANAGER]'}"> disabled="disabled" </c:if> onchange=>
         <option>approve</option>
         <option> not approve</option>
     </select></div>
-    <div class="span2"><textarea  id="reasonDM"  <c:if test="${role != '[DEPARTMENT_MANAGER]'}"> disabled="disabled" </c:if> ></textarea></div>
+    <div class="span2"><textarea  id="reasonDM" name="reasonDM"  <c:if test="${role != '[DEPARTMENT_MANAGER]'}"> disabled="disabled" </c:if> ></textarea></div>
     </div>
 
 
 <div class="span12"> <br/></div>
     <div class="span12">
         <div class="span2">Manager name</div>   <div class="span2"> Knowledge manager</div>
-        <div class="span4"><select id="approveKM"
+        <div class="span4"><select id="approveKM" name="approveKM"
                 <c:if test="${role != '[KNOWLEDGE_MANAGER]' && course.courseStatus != '[APPROVE_DEPARTMENT_MANAGER]'}"> disabled="disabled" </c:if> >
             <option>approve</option>
             <option> not approve</option>
         </select></div>
-        <div class="span2"><textarea  id="reasonKM" <c:if test="${role != '[KNOWLEDGE_MANAGER]' && course.courseStatus != '[APPROVE_DEPARTMENT_MANAGER]'}"> disabled="disabled" </c:if>></textarea></div>
+        <div class="span2"><textarea  id="reasonKM" name="reasonKM" <c:if test="${role != '[KNOWLEDGE_MANAGER]' && course.courseStatus != '[APPROVE_DEPARTMENT_MANAGER]'}"> disabled="disabled" </c:if>></textarea></div>
     </div>
 
 
@@ -98,16 +98,15 @@
         var reasonToServ;
 var manager = $("#manager").val();
 
-
-        if( manager == '[DEPARTMENT_MANAGER]') {
+        if( manager == 'DEPARTMENT_MANAGER') {
             approveToServ =  $("#approveDM").find("option:selected").val();
             reasonToServ = $("#reasonDM").val();
-
         }
 
-        if (manager == '[KNOWLEDGE_MANAGER]') {
-            approveToServ =  $("#approveKM option:selected").val();
+        if (manager == 'KNOWLEDGE_MANAGER') {
+            approveToServ =  $("#approveKM").find("option:selected").val();
             reasonToServ = $("#reasonKM").val();
+
         }
 
 

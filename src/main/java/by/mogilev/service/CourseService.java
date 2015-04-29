@@ -55,5 +55,7 @@ public interface CourseService {
 
     public boolean startCourse(int id, String userName);
 
+    public Course getCourseByName(String courseName);
+
 
 }

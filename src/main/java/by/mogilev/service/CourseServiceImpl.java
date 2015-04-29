@@ -277,5 +277,12 @@ public class CourseServiceImpl implements CourseService {
         return false;
     }
 
+    @Override
+    public Course getCourseByName(String courseName) {
+        if (courseName == null) throw new NullPointerException("Username is null in getUser()");
+
+        return courseDAO.getCourseByNameDAO(courseName);
+    }
+
 
 }

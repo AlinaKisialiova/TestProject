@@ -1,0 +1,9 @@
+Course Approval Status ${lector} : ${nameCourse}
+--------------------------------------------------------------------
+Category:              ${category}
+Name:                  ${nameCourse}
+Department Manager:    ${dmanager}
+Decision:              ${approve}
+
+---------------------------------------------------------------------
+Need to be approved by Knowledge Manager ${linkToApprove}

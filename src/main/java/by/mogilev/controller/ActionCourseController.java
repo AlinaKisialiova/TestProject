@@ -2,6 +2,8 @@ package by.mogilev.controller;
 
 import by.mogilev.model.Course;
 import by.mogilev.service.CourseService;
+import by.mogilev.service.Mailer;
+import by.mogilev.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
 import org.springframework.ui.Model;
@@ -25,6 +27,12 @@ public class ActionCourseController {
     @Autowired
     private CourseService courseService;
 
+    @Autowired
+    private UserService userService;
+
+    @Autowired
+    private Mailer mailService;
+
     @ModelAttribute("Course")
     public Course newCourse() {
         return new Course();
@@ -46,8 +54,11 @@ public class ActionCourseController {
             userName = principal.getName();
         }
 
-
         courseService.registerCourse(newCourse, userName);
+
+        mailService.courseAnnouncementMail(newCourse.getNameCourse());
+
+
             return new ModelAndView("redirect:/informationBoard");
 
     }

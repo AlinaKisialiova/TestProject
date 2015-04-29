@@ -52,7 +52,7 @@ public class ApproveCourseController {
                 if ("approve".equals(approve))
                 appCourse.setCourseStatus(CourseStatus.APPROVE_KNOWLEDGE_MANAGER);
                 else
-                appCourse.setCourseStatus(CourseStatus.NOT_APPROVE);
+                appCourse.setCourseStatus(CourseStatus.APPROVE_DEPARTMENT_MANAGER);
 
                 appCourse.setKnowledgeManagerReason(reason);
                 break;

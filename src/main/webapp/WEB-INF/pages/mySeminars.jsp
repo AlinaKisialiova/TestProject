@@ -165,7 +165,7 @@
                 <td><c:out value="${course.courseStatus}" escapeXml="true"/></td>
 
                 <td class="grade_${course.id}">
-                    <c:if test="${course.courseStatus}">
+                    <c:if test="${course.courseStatus eq 'DELIVERED'}">
                         <a href="#" onclick="show(${course.id}, '#EvalRemindBlock')">
                     <c:out value="${course.evaluation}" escapeXml="true"/>
                         </a>

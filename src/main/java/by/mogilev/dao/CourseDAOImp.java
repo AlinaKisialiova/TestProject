@@ -105,6 +105,14 @@ public class CourseDAOImp implements CourseDAO {
         return null;
     }
 
+    @Override
+    public Course getCourseByNameDAO(String courseName) {
+        Session session = this.sessionFactory.getCurrentSession();
+        Criteria criteria=session.createCriteria(Course.class);
+        criteria.add(Restrictions.eq("nameCourse",courseName));
+        return (Course) criteria.uniqueResult();
+    }
+
     @Transactional
     public void deleteCourse(Course course) {
         Session session = this.sessionFactory.getCurrentSession();
