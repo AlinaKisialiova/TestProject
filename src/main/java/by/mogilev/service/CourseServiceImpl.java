@@ -3,6 +3,7 @@ package by.mogilev.service;
 import by.mogilev.dao.CourseDAO;
 import by.mogilev.dao.UserDAO;
 import by.mogilev.model.Course;
+import by.mogilev.model.Notification;
 import by.mogilev.model.User;
 import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.CMYKColor;
@@ -17,6 +18,8 @@ import org.apache.poi.ss.usermodel.Workbook;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
@@ -47,7 +50,7 @@ public class CourseServiceImpl implements CourseService {
     private UserDAO userDAO;
 
     @Autowired
-    private UserService userService;
+    private MailService mailService;
 
     @Override
     public boolean isOwner(int idCourse, HttpSession session) {
@@ -228,7 +231,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public void deleteCourse(int id, String userName) {
+    public void deleteCourse(int id, String userName) throws AddressException {
         if (id < 1) throw new NullPointerException("Id course for delete is null");
 
         Course course = courseDAO.getCourse(id);
@@ -236,6 +239,8 @@ public class CourseServiceImpl implements CourseService {
            return;
 
         courseDAO.deleteCourse(course);
+        InternetAddress[] emails = mailService.getRecipient(course);
+        mailService.sendEmail(id, Notification.COURSE_DELETE, emails);
     }
 
     @Override
@@ -245,12 +250,17 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public void registerCourse(Course course, String nameLector) {
+    public void registerCourse(Course course, String nameLector) throws AddressException {
         courseDAO.registerCourse(course, nameLector);
+        int id = courseDAO.getCourseByNameDAO(course.getNameCourse()).getId();
+        InternetAddress[] emails= new InternetAddress[]{
+                new InternetAddress("aflamma@yandex.ru")};
+        mailService.sendEmail(id, Notification.COURSE_ANNOUNCEMENT, emails);
+
     }
 
     @Override
-    public void updateCourse(Course updCourse) {
+    public void updateCourse(Course updCourse) throws AddressException {
 
 //
 //        editCourse.setCategory(updCourse.getCategory());
@@ -262,6 +272,9 @@ public class CourseServiceImpl implements CourseService {
 //        editCourse.setCourseStatus(updCourse.getCourseStatus());
 
         courseDAO.updateCourse(updCourse);
+        InternetAddress[] emails = mailService.getRecipient(updCourse);
+        mailService.sendEmail(updCourse.getId(), Notification.COURSE_UPDATE, emails);
+
     }
 
     @Override

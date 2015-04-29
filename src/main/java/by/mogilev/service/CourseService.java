@@ -4,6 +4,7 @@ import by.mogilev.model.Course;
 import by.mogilev.model.User;
 import com.itextpdf.text.DocumentException;
 
+import javax.mail.internet.AddressException;
 import javax.servlet.http.HttpServletResponse;
 import javax.servlet.http.HttpSession;
 import java.io.IOException;
@@ -45,13 +46,13 @@ public interface CourseService {
 
     public List<Course> getAllCourse();
 
-    public void deleteCourse(int id, String userName);
+    public void deleteCourse(int id, String userName) throws AddressException;
 
     public Course getCourse(int id);
 
-    public void registerCourse(Course course, String nameLector);
+    public void registerCourse(Course course, String nameLector) throws AddressException;
 
-    public void updateCourse(Course updCourse);
+    public void updateCourse(Course updCourse) throws AddressException;
 
     public boolean startCourse(int id, String userName);
 

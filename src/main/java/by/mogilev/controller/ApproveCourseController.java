@@ -1,9 +1,8 @@
 package by.mogilev.controller;
 
-import by.mogilev.model.Course;
-import by.mogilev.model.CourseStatus;
-import by.mogilev.model.UserRole;
+import by.mogilev.model.*;
 import by.mogilev.service.CourseService;
+import by.mogilev.service.MailService;
 import by.mogilev.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -12,6 +11,11 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
+import java.util.List;
+import java.util.Set;
 
 /**
  * Created by akiseleva on 13.04.2015.
@@ -27,6 +31,9 @@ public class ApproveCourseController {
     @Autowired
     private UserService userService;
 
+    @Autowired
+    private MailService mailService;
+
     @RequestMapping(value = APPROVE_COURSE_GET, method = RequestMethod.GET)
     public ModelAndView approveCourseGet(@PathVariable("course.id") Integer id) {
         ModelAndView mav= new ModelAndView("approveCourse");
@@ -36,28 +43,37 @@ public class ApproveCourseController {
 
     @RequestMapping(value = APPROVE_COURSE_POST, method = RequestMethod.POST)
     public ModelAndView approveCoursePost(@PathVariable("course.id") Integer id, @RequestParam("approveToServ") String approve,
-                                          @RequestParam("reasonToServ") String reason, @RequestParam("manager") UserRole manager) {
+                                          @RequestParam("reasonToServ") String reason, @RequestParam("manager") UserRole manager) throws AddressException {
 
         Course appCourse = courseService.getCourse(id);
+
         switch (manager) {
             case DEPARTMENT_MANAGER :
-                if ("approve".equals(approve))
-                appCourse.setCourseStatus(CourseStatus.APPROVE_DEPARTMENT_MANAGER);
+                if ("approve".equals(approve)) {
+                    appCourse.setCourseStatus(CourseStatus.APPROVE_DEPARTMENT_MANAGER);
+                    InternetAddress[] emails= new InternetAddress[]{
+                            new InternetAddress("aflamma@yandex.ru")};
+                    mailService.sendEmail(id, Notification.COURSE_APPOVAL_STATUS, emails);
+                }
                 else
                     appCourse.setCourseStatus(CourseStatus.NOT_APPROVE);
-                appCourse.setDepartmentManagerReason(reason);
                 break;
 
-            case KNOWLEDGE_MANAGER:
-                if ("approve".equals(approve))
-                appCourse.setCourseStatus(CourseStatus.APPROVE_KNOWLEDGE_MANAGER);
+
+            case KNOWLEDGE_MANAGER :
+                if ("approve".equals(approve)) {
+                    appCourse.setCourseStatus(CourseStatus.APPROVE_KNOWLEDGE_MANAGER);
+
+                    InternetAddress[] emails = mailService.getRecipient(appCourse);
+
+                    mailService.sendEmail(id, Notification.NEW_COURSE_ADDED, emails);
+                }
                 else
                 appCourse.setCourseStatus(CourseStatus.APPROVE_DEPARTMENT_MANAGER);
-
-                appCourse.setKnowledgeManagerReason(reason);
                 break;
         }
 
+        appCourse.setKnowledgeManagerReason(reason);
         courseService.updateCourse(appCourse);
 
         ModelAndView mav= new ModelAndView("informationBoard");

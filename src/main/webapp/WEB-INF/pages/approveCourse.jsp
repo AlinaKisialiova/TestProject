@@ -67,11 +67,11 @@
     <div class="span12">
         <div class="span2">Manager name</div>   <div class="span2"> Knowledge manager</div>
         <div class="span4"><select id="approveKM" name="approveKM"
-                <c:if test="${role != '[KNOWLEDGE_MANAGER]' && course.courseStatus != '[APPROVE_DEPARTMENT_MANAGER]'}"> disabled="disabled" </c:if> >
+                <c:if test="${role != '[KNOWLEDGE_MANAGER]' && course.courseStatus != 'APPROVE_DEPARTMENT_MANAGER'}"> disabled="disabled" </c:if> >
             <option>approve</option>
             <option> not approve</option>
         </select></div>
-        <div class="span2"><textarea  id="reasonKM" name="reasonKM" <c:if test="${role != '[KNOWLEDGE_MANAGER]' && course.courseStatus != '[APPROVE_DEPARTMENT_MANAGER]'}"> disabled="disabled" </c:if>></textarea></div>
+        <div class="span2"><textarea  id="reasonKM" name="reasonKM" <c:if test="${role != '[KNOWLEDGE_MANAGER]' && course.courseStatus != 'APPROVE_DEPARTMENT_MANAGER'}"> disabled="disabled" </c:if>></textarea></div>
     </div>
 
 
@@ -84,8 +84,8 @@
 
 </div>
 
-<input type="text" id="approveToServ" name="approveToServ" />
-<input type="text" id="reasonToServ" name="reasonToServ" />
+<input type="hidden" id="approveToServ" name="approveToServ" />
+<input type="hidden" id="reasonToServ" name="reasonToServ" />
 
 </form>
 <%--<script language="JavaScript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>--%>

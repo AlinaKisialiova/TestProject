@@ -1,8 +1,9 @@
 package by.mogilev.controller;
 
 import by.mogilev.model.Course;
+import by.mogilev.model.Notification;
 import by.mogilev.service.CourseService;
-import by.mogilev.service.Mailer;
+import by.mogilev.service.MailService;
 import by.mogilev.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.mail.internet.AddressException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
 import java.security.Principal;
@@ -23,6 +25,7 @@ import java.security.Principal;
  */
 @Controller
 public class ActionCourseController {
+    final String REGISTRATON_COURSE = "/registrationCourse";
 
     @Autowired
     private CourseService courseService;
@@ -31,7 +34,7 @@ public class ActionCourseController {
     private UserService userService;
 
     @Autowired
-    private Mailer mailService;
+    private MailService mailService;
 
     @ModelAttribute("Course")
     public Course newCourse() {
@@ -43,8 +46,8 @@ public class ActionCourseController {
         return "registrationCourse";
     }
 
-    @RequestMapping(value = "/registrationCourse", method = RequestMethod.POST)
-    public ModelAndView regCourse(@ModelAttribute("Course")  Course newCourse,  BindingResult result, Model model, HttpSession session, HttpServletRequest request) {
+    @RequestMapping(value = REGISTRATON_COURSE, method = RequestMethod.POST)
+    public ModelAndView regCourse(@ModelAttribute("Course")  Course newCourse,  BindingResult result, Model model, HttpSession session, HttpServletRequest request) throws AddressException {
            if (result.hasErrors())
                new ModelAndView("redirect:/informationBoard");
 
@@ -53,10 +56,10 @@ public class ActionCourseController {
         if (principal != null && principal.getName() != null) {
             userName = principal.getName();
         }
-
         courseService.registerCourse(newCourse, userName);
 
-        mailService.courseAnnouncementMail(newCourse.getNameCourse());
+
+
 
 
             return new ModelAndView("redirect:/informationBoard");
@@ -72,7 +75,7 @@ public class ActionCourseController {
     }
 
     @RequestMapping(value = "/courseDetails/{course.id}", method = RequestMethod.POST)
-    public ModelAndView deleteCourse(@PathVariable("course.id") Integer id, HttpServletRequest request) {
+    public ModelAndView deleteCourse(@PathVariable("course.id") Integer id, HttpServletRequest request) throws AddressException {
         String userName = "";
         Principal principal = request.getUserPrincipal();
         if (principal != null && principal.getName() != null) {
@@ -93,7 +96,7 @@ public class ActionCourseController {
     @RequestMapping(value = "/editCourse/{course.id}", method = RequestMethod.POST)
     public String editCourse(@PathVariable("course.id") Integer id,
                              @ModelAttribute("Course") Course updCourse,
-                             HttpServletRequest request, HttpSession session, Model model) {
+                             HttpServletRequest request, HttpSession session, Model model) throws AddressException {
         model.addAttribute("categoryMap", courseService.getCategotyMap());
 
         if (! (courseService.isOwner(id, session)) || courseService.getCourse(id) == null)

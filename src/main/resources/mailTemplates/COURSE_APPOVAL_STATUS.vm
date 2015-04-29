@@ -1,0 +1,17 @@
+<html>
+<body>
+<h3>Course Approval Status ${message.lector.name} : ${message.nameCourse} </h3>
+--------------------------------------------------------------------
+<br>
+<table>
+    <tr><th align="left">Category:</th>   <td>${message.category}</td></tr>
+    <tr><th align="left">Name:    </th>   <td>  ${message.nameCourse}</td></tr>
+    <tr><th align="left">Approval Status:</th>   <td>${message.courseStatus}</td></tr>
+    <tr><th align="left">Decision:   </th>   <td>  ${message.departmentManagerReason}</td></tr>
+</table>
+<br>
+---------------------------------------------------------------------
+<h4> Need to be approved by Knowledge Manager <a href="http://project/approveCourse/+${message.id}"></a></h4>
+</body>
+</html>
+

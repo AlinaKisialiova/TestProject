@@ -12,6 +12,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.mail.internet.AddressException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -47,7 +48,7 @@ public class InformationBoardController {
                                           @RequestParam(value = "id", required = false) Integer id_course,
                                           @RequestParam(value = "selectCategory", required = false) String selectCategory,
                                           HttpServletResponse response)
-            throws IOException, DocumentException {
+            throws IOException, DocumentException, AddressException {
         ModelAndView mav = new ModelAndView("informationBoard");
 
         String userName = "";

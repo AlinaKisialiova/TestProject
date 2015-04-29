@@ -42,21 +42,14 @@
         </property>
     </bean>
 
-    <bean id="mailer" class="by.mogilev.service.Mailer">
-        <property name="mailSender" ref="mailSender" />
-        <property name="velocityEngine" ref="velocityEngine"/>
-    </bean>
-
-    <bean id="velocityEngine"
-          class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
+    <bean id="velocityEngine" class="org.springframework.ui.velocity.VelocityEngineFactoryBean">
         <property name="velocityProperties">
-            <props>
-                <prop key="resource.loader">class</prop>
-                <prop key="class.resource.loader.class">
-                    org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
-                </prop>
-            </props>
+            <value>
+                resource.loader=class
+                class.resource.loader.class=org.apache.velocity.runtime.resource.loader.ClasspathResourceLoader
+            </value>
         </property>
     </bean>
+
 
 </beans>
