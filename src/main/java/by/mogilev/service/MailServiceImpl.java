@@ -18,6 +18,7 @@ import org.springframework.ui.velocity.VelocityEngineUtils;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -28,13 +29,17 @@ public class MailServiceImpl implements MailService {
     @Autowired
     private CourseService courseService;
     @Autowired
+    private UserService userService;
+    @Autowired
     private JavaMailSender mailSender;
     @Autowired
     private VelocityEngine velocityEngine;
 
 
-    public void sendEmail(int id_course, final Notification NOTIFICATION, final InternetAddress[] emails) {
+    public void sendEmail(int id_course, final Notification NOTIFICATION, final InternetAddress[] emails, final String userName) {
         final Course course = courseService.getCourse(id_course);
+        final User curr_user = userService.getUser(userName);
+
         MimeMessagePreparator preparator = new MimeMessagePreparator() {
             @SuppressWarnings({"rawtypes", "unchecked"}) //rawtypes - игнорировать предупреждения, относящиеся к использованию нестандартных типов в шаблонах;
             public void prepare(MimeMessage mimeMessage) throws Exception {
@@ -44,6 +49,7 @@ public class MailServiceImpl implements MailService {
                 message.setSubject("Courses Notification");
                 Map model = new HashMap();
                 model.put("message", course);
+                model.put("user", curr_user);
                 String text = VelocityEngineUtils.mergeTemplateIntoString(
                         velocityEngine, "mailTemplates/" + NOTIFICATION + ".vm", "UTF-8", model);
 

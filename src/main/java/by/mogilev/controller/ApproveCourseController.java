@@ -5,6 +5,7 @@ import by.mogilev.service.CourseService;
 import by.mogilev.service.MailService;
 import by.mogilev.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -14,6 +15,8 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
+import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 import java.util.List;
 import java.util.Set;
 
@@ -42,10 +45,15 @@ public class ApproveCourseController {
     }
 
     @RequestMapping(value = APPROVE_COURSE_POST, method = RequestMethod.POST)
-    public ModelAndView approveCoursePost(@PathVariable("course.id") Integer id, @RequestParam("approveToServ") String approve,
+    public ModelAndView approveCoursePost(HttpServletRequest request, @PathVariable("course.id") Integer id, @RequestParam("approveToServ") String approve,
                                           @RequestParam("reasonToServ") String reason, @RequestParam("manager") UserRole manager) throws AddressException {
 
         Course appCourse = courseService.getCourse(id);
+        String userName = "";
+        Principal principal = request.getUserPrincipal();
+        if (principal != null && principal.getName() != null) {
+            userName = principal.getName();
+        }
 
         switch (manager) {
             case DEPARTMENT_MANAGER :
@@ -53,10 +61,13 @@ public class ApproveCourseController {
                     appCourse.setCourseStatus(CourseStatus.APPROVE_DEPARTMENT_MANAGER);
                     InternetAddress[] emails= new InternetAddress[]{
                             new InternetAddress("aflamma@yandex.ru")};
-                    mailService.sendEmail(id, Notification.COURSE_APPOVAL_STATUS, emails);
+                    mailService.sendEmail(id, Notification.COURSE_APPOVAL_STATUS, emails, userName);
                 }
-                else
+                else {
                     appCourse.setCourseStatus(CourseStatus.NOT_APPROVE);
+                    InternetAddress[] emails = new InternetAddress[]{new InternetAddress(appCourse.getLector().getEmail())};
+                    mailService.sendEmail(id, Notification.COURSE_REJECTED,emails , userName);
+                }
                 break;
 
 
@@ -66,10 +77,13 @@ public class ApproveCourseController {
 
                     InternetAddress[] emails = mailService.getRecipient(appCourse);
 
-                    mailService.sendEmail(id, Notification.NEW_COURSE_ADDED, emails);
+                    mailService.sendEmail(id, Notification.NEW_COURSE_ADDED, emails, userName);
                 }
-                else
-                appCourse.setCourseStatus(CourseStatus.APPROVE_DEPARTMENT_MANAGER);
+                else {
+                    appCourse.setCourseStatus(CourseStatus.APPROVE_DEPARTMENT_MANAGER);
+                    InternetAddress[] emails = new InternetAddress[]{new InternetAddress(appCourse.getLector().getEmail())};
+                    mailService.sendEmail(id, Notification.COURSE_REJECTED,emails , userName);
+                }
                 break;
         }
 

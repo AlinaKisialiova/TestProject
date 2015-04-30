@@ -3,6 +3,7 @@ package by.mogilev.service;
 import by.mogilev.dao.CourseDAO;
 import by.mogilev.dao.UserDAO;
 import by.mogilev.model.Course;
+import by.mogilev.model.Notification;
 import by.mogilev.model.User;
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
@@ -12,6 +13,8 @@ import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
+import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 import javax.transaction.Transactional;
 import java.util.Set;
 
@@ -30,6 +33,10 @@ public class UserServiceImpl implements UserService {
 
     @Autowired
     private CourseDAO courseDAO;
+
+
+    @Autowired
+    private MailService mailService;
 
     public UserServiceImpl() {
     }
@@ -105,7 +112,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean addInAttSet(String username, int id_course) {
+    public boolean addInAttSet(String username, int id_course) throws AddressException {
         if (username == null || id_course < 1) throw new NullPointerException("Username or id_course is null in addInSet()");
 
         User userAtt = userDAO.getUser(username);
@@ -120,6 +127,11 @@ public class UserServiceImpl implements UserService {
 
         courses.add(course);
         userDAO.updateUser(userAtt);
+        if(course.getSubscribers().size() >= Course.MIN_COUNT_SUBSCR) {
+          InternetAddress[] emails = mailService.getRecipient(course);
+            mailService.sendEmail(id_course, Notification.COURSE_APPOINTED, emails, username);
+        }
+
         return true;
 
     }

@@ -17,7 +17,7 @@ import java.util.Map;
 public interface CourseService {
    public boolean isOwner(int idCourse, HttpSession session);
 
-    public void remidEv(int id, User user, int grade);
+    public void remidEv(int id, User user, int grade) throws AddressException;
     Map<String, String> getCategotyMap();
     /**
      *

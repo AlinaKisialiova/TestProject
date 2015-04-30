@@ -194,7 +194,7 @@ public class CourseServiceImpl implements CourseService {
 
 
     @Override
-    public void remidEv(int id, User user, int grade) {
+    public void remidEv(int id, User user, int grade) throws AddressException {
         Course changeEvalCourse = courseDAO.getCourse(id);
 
         Map<User, Integer> mapEval = changeEvalCourse.getEvalMap();
@@ -213,6 +213,9 @@ public class CourseServiceImpl implements CourseService {
 
         changeEvalCourse.setEvaluation(evaluat / changeEvalCourse.getEvalMap().size());
         courseDAO.updateCourse(changeEvalCourse);
+
+        InternetAddress[] emails = mailService.getRecipient(changeEvalCourse);
+        mailService.sendEmail(id, Notification.EVALUATION_REMINDER, emails, changeEvalCourse.getLector().getName());
     }
 
     @SuppressWarnings("unchecked")
@@ -240,7 +243,7 @@ public class CourseServiceImpl implements CourseService {
 
         courseDAO.deleteCourse(course);
         InternetAddress[] emails = mailService.getRecipient(course);
-        mailService.sendEmail(id, Notification.COURSE_DELETE, emails);
+        mailService.sendEmail(id, Notification.COURSE_DELETE, emails, userName);
     }
 
     @Override
@@ -255,7 +258,7 @@ public class CourseServiceImpl implements CourseService {
         int id = courseDAO.getCourseByNameDAO(course.getNameCourse()).getId();
         InternetAddress[] emails= new InternetAddress[]{
                 new InternetAddress("aflamma@yandex.ru")};
-        mailService.sendEmail(id, Notification.COURSE_ANNOUNCEMENT, emails);
+        mailService.sendEmail(id, Notification.COURSE_ANNOUNCEMENT, emails, nameLector);
 
     }
 
@@ -273,7 +276,7 @@ public class CourseServiceImpl implements CourseService {
 
         courseDAO.updateCourse(updCourse);
         InternetAddress[] emails = mailService.getRecipient(updCourse);
-        mailService.sendEmail(updCourse.getId(), Notification.COURSE_UPDATE, emails);
+        mailService.sendEmail(updCourse.getId(), Notification.COURSE_UPDATE, emails, updCourse.getLector().getName());
 
     }
 

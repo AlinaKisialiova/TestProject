@@ -3,6 +3,7 @@ package by.mogilev.service;
 import by.mogilev.model.Course;
 import by.mogilev.model.User;
 
+import javax.mail.internet.AddressException;
 import java.util.Set;
 
 /**
@@ -36,7 +37,7 @@ public interface UserService {
      * @param username
      * @param id_course
      */
-    public boolean addInAttSet(String username, int id_course);
+    public boolean addInAttSet(String username, int id_course) throws AddressException;
 
     public User getUser(String userName) ;
 }

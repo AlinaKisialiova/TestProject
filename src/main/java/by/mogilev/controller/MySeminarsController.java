@@ -4,6 +4,7 @@ import by.mogilev.model.ActionsOnPage;
 import by.mogilev.model.Course;
 import by.mogilev.model.User;
 import by.mogilev.service.CourseService;
+import by.mogilev.service.MailService;
 import by.mogilev.service.UserService;
 import com.itextpdf.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -14,6 +15,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
+import javax.mail.internet.AddressException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
 import java.security.Principal;
@@ -31,6 +33,7 @@ public class MySeminarsController {
 
     @Autowired
     private UserService userService;
+
 
 
     @ModelAttribute("Courses")
@@ -64,7 +67,7 @@ public class MySeminarsController {
                               @RequestParam(value = "selectCategory", required = false) String selectCategory,
                               @RequestParam(value = "id", required = false) Integer id,
                               Principal principal)
-            throws IOException, DocumentException {
+            throws IOException, DocumentException, AddressException {
         ModelAndView mav = new ModelAndView("mySeminars");
 
         List<Course> coursesForSelect = courseService.getSelected(selectCategory);

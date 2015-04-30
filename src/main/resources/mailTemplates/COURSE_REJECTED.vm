@@ -1,6 +1,6 @@
 <html>
 <body>
-<h3> Course Announcement ${message.lector.name} : ${message.nameCourse} </h3>
+<h3> Course ${message.nameCourse} Rejected </h3>
 --------------------------------------------------------------------
 <br>
 <table>
@@ -9,9 +9,12 @@
     <tr><th align="left">Description: </th>    <td>  ${message.description}</td></tr>
     <tr><th align="left">Links:      </th>     <td>  ${message.links}</td></tr>
     <tr> <th align="left">Duration:   </th>     <td>  ${message.duration}</td></tr>
+    <tr><th align="left">Rejected By:      </th>     <td>  ${user.authority} - ${user.name}</td></tr>
+    <tr> <th align="left">Reject Reason:   </th>     <td>  ${course.departmentManagerReason}</td></tr>
+    <tr> <th align="left">  </th>     <td>  ${course.knowledgeManagerReason}</td></tr>
 </table>
 <br>
 ---------------------------------------------------------------------
-<h4>  <a href="http://project/courseDetails/${message.id}">Please approve this course</a></h4>
- </body>
- </html>
+
+</body>
+</html>

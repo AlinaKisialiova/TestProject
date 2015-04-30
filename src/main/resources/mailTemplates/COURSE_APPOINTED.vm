@@ -1,6 +1,6 @@
 <html>
 <body>
-<h3> Course Announcement ${message.lector.name} : ${message.nameCourse} </h3>
+<h3>Course was appointed   ${message.lector.name} : ${message.nameCourse} </h3>
 --------------------------------------------------------------------
 <br>
 <table>
@@ -12,6 +12,6 @@
 </table>
 <br>
 ---------------------------------------------------------------------
-<h4>  <a href="http://project/courseDetails/${message.id}">Please approve this course</a></h4>
- </body>
- </html>
+<h4> <a href="http://project/mySeminars">Include yourself into Attendee List </a> .</h4>
+</body>
+</html>

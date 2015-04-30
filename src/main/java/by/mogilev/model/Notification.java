@@ -9,4 +9,7 @@ public enum Notification {
     NEW_COURSE_ADDED,
     COURSE_UPDATE,
     COURSE_DELETE,
-}
+    COURSE_APPOINTED,
+    COURSE_REJECTED,
+    EVALUATION_REMINDER,
+    }
