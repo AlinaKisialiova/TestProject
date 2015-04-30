@@ -55,7 +55,7 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
 </div>
 
 
-<table align="justify" >
+<table align="justify"  id="tableCourse">
 
     <tr >
         <td><a href="mySeminars"> My seminars </a></td>
@@ -96,12 +96,12 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
             <td>
             <td>Course Category</td>
             <td>
-                <select name="selectCategory" class="btn dropdown-toggle">
+                <select name="selectCategory" onchange="filter(this)">
+
                     <option value="All">All</option>
-                    <option  value="Project Management">Project Management</option>
+                    <option value="Project Management">Project Management</option>
                     <option value="Development">Development</option>
                 </select>
-                <input type="submit" value="ok" class="btn"/>
 
             </td>
         </tr>

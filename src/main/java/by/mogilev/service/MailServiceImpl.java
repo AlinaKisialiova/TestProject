@@ -9,16 +9,15 @@ import by.mogilev.model.Notification;
 import by.mogilev.model.User;
 import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.mail.javamail.JavaMailSender;
 import org.springframework.mail.javamail.MimeMessageHelper;
+import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
 import org.springframework.ui.velocity.VelocityEngineUtils;
 
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import java.security.Principal;
 import java.util.HashMap;
 import java.util.Map;
 import java.util.Set;
@@ -41,11 +40,12 @@ public class MailServiceImpl implements MailService {
         final User curr_user = userService.getUser(userName);
 
         MimeMessagePreparator preparator = new MimeMessagePreparator() {
-            @SuppressWarnings({"rawtypes", "unchecked"}) //rawtypes - игнорировать предупреждения, относящиеся к использованию нестандартных типов в шаблонах;
+            @SuppressWarnings({"rawtypes", "unchecked"}) //rawtypes - пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ, пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ пїЅпїЅпїЅпїЅпїЅ пїЅ пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ;
             public void prepare(MimeMessage mimeMessage) throws Exception {
                 MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
                 message.setTo(emails);
-                message.setFrom(course.getLector().getEmail());
+//                message.setFrom(course.getLector().getEmail());
+                message.setFrom("alina@gorad.by");
                 message.setSubject("Courses Notification");
                 Map model = new HashMap();
                 model.put("message", course);

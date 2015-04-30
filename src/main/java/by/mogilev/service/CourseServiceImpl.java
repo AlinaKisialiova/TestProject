@@ -275,8 +275,11 @@ public class CourseServiceImpl implements CourseService {
 //        editCourse.setCourseStatus(updCourse.getCourseStatus());
 
         courseDAO.updateCourse(updCourse);
-        InternetAddress[] emails = mailService.getRecipient(updCourse);
-        mailService.sendEmail(updCourse.getId(), Notification.COURSE_UPDATE, emails, updCourse.getLector().getName());
+//        InternetAddress[] emails = mailService.getRecipient(updCourse);
+    InternetAddress [] emails = new InternetAddress[2];
+        emails[0] =new InternetAddress("aflamma@yandex.ru");
+        emails[1] =new InternetAddress("alina@gorad.by");
+        mailService.sendEmail(updCourse.getId(), Notification.COURSE_UPDATE, emails, "alex Ivanov");
 
     }
 

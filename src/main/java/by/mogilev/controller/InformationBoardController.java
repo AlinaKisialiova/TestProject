@@ -73,7 +73,7 @@ public class InformationBoardController {
             case START: courseService.startCourse(id_course, userName);
                 break;
         }
-        mav.addObject("courseList", courseService.getSelected(selectCategory));
+        mav.addObject("courseList", courseService.getAllCourse());
         return mav;
 
     }
