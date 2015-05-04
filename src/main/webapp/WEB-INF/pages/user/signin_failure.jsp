@@ -2,6 +2,6 @@
 <div class="container" >
 
 <h1>Sign In Failure</h1>
-    <img src="resources/404.jpg"/>
+    <img src="resources/img/404.jpg"/>
 
     </div>

@@ -3,6 +3,7 @@ package by.mogilev.service;
 import by.mogilev.dao.CourseDAO;
 import by.mogilev.dao.UserDAO;
 import by.mogilev.model.Course;
+import by.mogilev.model.CourseStatus;
 import by.mogilev.model.Notification;
 import by.mogilev.model.User;
 import org.hibernate.Criteria;
@@ -128,8 +129,10 @@ public class UserServiceImpl implements UserService {
         courses.add(course);
         userDAO.updateUser(userAtt);
         if(course.getSubscribers().size() >= Course.MIN_COUNT_SUBSCR) {
+            course.setCourseStatus(CourseStatus.DELIVERED);
           InternetAddress[] emails = mailService.getRecipient(course);
             mailService.sendEmail(id_course, Notification.COURSE_APPOINTED, emails, username);
+
         }
 
         return true;

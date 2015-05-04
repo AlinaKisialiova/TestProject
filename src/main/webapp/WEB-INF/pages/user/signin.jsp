@@ -4,7 +4,7 @@
 <form class="login-form" action="j_spring_security_check" method="post">
 
     <span>
-        <img src="resources/singin.jpg"/></span>  <label for="j_username">Username: </label>
+        <img src="resources/img/singin.jpg"/></span>  <label for="j_username">Username: </label>
 
     <input id="j_username" name="j_username" size="20" maxlength="50" type="text" required autofocus value="elvis"/>
 <br/>

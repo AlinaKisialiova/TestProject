@@ -3,13 +3,13 @@
  */
 
 function filter(phrase) {
-    alert(phrase);
+
     var words = phrase.value.toLowerCase().split(" ");
     var table = document.getElementById('tableCourse');
     if (words.indexOf("all") < 0) {
-        for (var r = 2; r < table.rows.length; r++) {
 
-            var cellsV = table.rows[r].cells[2].innerHTML.replace(/<[^>]+>/g, "");
+        for (var r = 2; r < table.rows.length; r++) {
+                     var cellsV = table.rows[r].cells[2].innerHTML.replace(/<[^>]+>/g, "");
 
             var displayStyle = 'none';
             for (var i = 0; i < words.length; i++) {

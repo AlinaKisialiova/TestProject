@@ -10,7 +10,7 @@
 <div class="span12 offset1">
    <h1>Access to the specified resource has been forbidden.</h1>
 <div class="span8 offset4">
-<img src="<c:url value="/resources/denied.jpg"/>"/>
+<img src="<c:url value="/resources/img/denied.jpg"/>"/>
 </div>
  </div>
     <div class="span12">

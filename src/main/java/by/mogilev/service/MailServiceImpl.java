@@ -36,28 +36,28 @@ public class MailServiceImpl implements MailService {
 
 
     public void sendEmail(int id_course, final Notification NOTIFICATION, final InternetAddress[] emails, final String userName) {
-        final Course course = courseService.getCourse(id_course);
-        final User curr_user = userService.getUser(userName);
-
-        MimeMessagePreparator preparator = new MimeMessagePreparator() {
-            @SuppressWarnings({"rawtypes", "unchecked"}) //rawtypes - ������������ ��������������, ����������� � ������������� ������������� ����� � ��������;
-            public void prepare(MimeMessage mimeMessage) throws Exception {
-                MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
-                message.setTo(emails);
-//                message.setFrom(course.getLector().getEmail());
-                message.setFrom("alina@gorad.by");
-                message.setSubject("Courses Notification");
-                Map model = new HashMap();
-                model.put("message", course);
-                model.put("user", curr_user);
-                String text = VelocityEngineUtils.mergeTemplateIntoString(
-                        velocityEngine, "mailTemplates/" + NOTIFICATION + ".vm", "UTF-8", model);
-
-                message.setText(text, true);
-            }
-
-        };
-        mailSender.send(preparator);
+//        final Course course = courseService.getCourse(id_course);
+//        final User curr_user = userService.getUser(userName);
+//
+//        MimeMessagePreparator preparator = new MimeMessagePreparator() {
+//            @SuppressWarnings({"rawtypes", "unchecked"}) //rawtypes - ������������ ��������������, ����������� � ������������� ������������� ����� � ��������;
+//            public void prepare(MimeMessage mimeMessage) throws Exception {
+//                MimeMessageHelper message = new MimeMessageHelper(mimeMessage);
+//                message.setTo(emails);
+////                message.setFrom(course.getLector().getEmail());
+//                message.setFrom("alina@gorad.by");
+//                message.setSubject("Courses Notification");
+//                Map model = new HashMap();
+//                model.put("message", course);
+//                model.put("user", curr_user);
+//                String text = VelocityEngineUtils.mergeTemplateIntoString(
+//                        velocityEngine, "mailTemplates/" + NOTIFICATION + ".vm", "UTF-8", model);
+//
+//                message.setText(text, true);
+//            }
+//
+//        };
+//        mailSender.send(preparator);
     }
 
     @Override

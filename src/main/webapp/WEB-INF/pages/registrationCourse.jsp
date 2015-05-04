@@ -52,7 +52,7 @@
             <div class="controls">
 
            <form:textarea name="newCourseLinks" path="links"/>
-             <img src="resources/reg.jpg"/>
+             <img src="resources/img/reg.jpg"/>
 
 
        </div>

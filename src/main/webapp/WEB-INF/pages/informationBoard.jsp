@@ -16,6 +16,15 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
     I am know that you are a user!
 </sec:authorize>
 
+<sec:authorize access="hasRole('KNOWLEDGE_MANAGER')">
+    I am know that you are a KNOWLEDGE MANAGER!
+    <input type="hidden"  id="manager" name="manager" value="KNOWLEDGE_MANAGER"/>
+</sec:authorize>
+
+<sec:authorize access="hasRole('DEPARTMENT_MANAGER')">
+    I am know that you are a DEPARTMENT_MANAGER!
+    <input type="hidden" name="manager" id="manager" value="DEPARTMENT_MANAGER"/>
+</sec:authorize>
 
 <br/>
 <div id='EvalRemindBlock' style="display: none;">
@@ -53,17 +62,17 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
         </table>
     </form>
 </div>
+<br>
 
+<table>
 
-<table align="justify"  id="tableCourse">
-
-    <tr >
+    <tr>
         <td><a href="mySeminars"> My seminars </a></td>
+        <td><br></td>
         <td><a href=registrationCourse>Register Course</a></td>
         <td><br></td>
-        <td><br></td>
 </tr>
-
+</table>
     <%--<tr>--%>
         <%--<form>--%>
             <%--<td><br></td>--%>
@@ -85,11 +94,25 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
    <%--</form>--%>
         <%--</tr>--%>
 
-
+<table align="justify" id="tableCourse">
     <form action="informationBoard" method="post">
         <tr>
-            <td><br></td>
-            <td><br></td>
+            <th>
+                <input type="submit" onclick="outPdf()" name="pdfOut"
+                       value="Click for Output in PDF" class="btn-primary">
+            </th>
+
+
+            <th>
+
+                <input type="submit" onclick="outExcel()" name="excelOut"
+                       value="Click for Output in Excel" class="btn-primary">
+
+
+
+
+            </th>
+
             <td><br></td>
             <td><br></td>
             <td><br>
@@ -106,23 +129,6 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
             </td>
         </tr>
 
-        <th>
-
-            <input type="submit" onclick="outPdf()" name="pdfOut"
-                   value="Click for Output in PDF" class="btn-primary">
-
-        </th>
-
-
-        <th>
-
-            <input type="submit" onclick="outExcel()" name="excelOut"
-                   value="Click for Output in Excel" class="btn-primary">
-
-
-
-
-        </th>
 
     <tr bgcolor="#b0c4de">
         <th>Lector Name</th>
@@ -140,7 +146,7 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
 
             <td class="lector_${course.id}"><c:out value="${course.lector.name}" escapeXml="true"/></td>
             <td >
-                <a href="<c:out value="courseDetails/${course.id}" escapeXml="true"/>">
+                <a href="<c:out value="courseDetails/${course.id}" escapeXml="true"/>" title="click to show course detail ">
            <span class="course_${course.id}">
                <c:out  value="${course.nameCourse}" escapeXml="true"/></span>
                 </a>
@@ -148,15 +154,15 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
             <td><c:out value="${course.category}" escapeXml="true"/></td>
             <td><c:out value="${course.subscribers.size()}" escapeXml="true"/></td>
             <td>
-                <a href="<c:out value="participantsList/${course.id}" escapeXml="true"/>">
+                <a href="<c:out value="participantsList/${course.id}" escapeXml="true"/>" title="click to show list">
                 <c:out value="${course.attenders.size()}" escapeXml="true"/>
                 </a>
             </td>
             <td><c:out value="${course.courseStatus}" escapeXml="true"/>
             </td>
             <td>
-                <c:if test="${course.courseStatus eq 'APPROVE_KNOWLEDGE_MANAGER'}">
-                <a href="#" onclick="show(${course.id})">
+                <c:if test="${course.courseStatus eq 'DELIVERED'}">
+                <a href="#" onclick="show(${course.id})" title="click to put mark">
                 <c:out value="${course.evaluation}" escapeXml="true"/>
                 </a>
                     <input class="grade_${course.id}" type="hidden" value="${course.evaluation}"/>
@@ -170,8 +176,7 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
                 <c:if test="${course.courseStatus != 'DELIVERED'}">
                     <input type="submit" name="delete" value="Delete" onclick="del(${course.id})" class="btn"/>
                 </c:if>
-                        <c:set value="<%=Course.MIN_COUNT_SUBSCR%>" var="countMin"/>
-                        <c:if test="${course.attenders.size() >= countMin}">
+                        <c:if test="${course.courseStatus eq 'DELIVERED'}">
              <a href="/evaluationReminder/${course.id}">
                  <input type="button" id="Eval" value="Evaluation Reminder" class="btn" />
              </a>
@@ -227,13 +232,5 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
         $(".idC").val(id);
         $(".fieldForSubmit").val("DEL");
     }
-
-    function start(id) {
-        $(".idC").val(id);
-        $(".fieldForSubmit").val("START");
-
-    }
-
-
 
 </script>

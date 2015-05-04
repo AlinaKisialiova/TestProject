@@ -1,5 +1,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
+<%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%--
   Created by IntelliJ IDEA.
   User: Администратор
@@ -40,7 +41,7 @@
 
 <div class="span8">
 <div class="control-group">
-    <form action="Participant" method="post">
+    <form action="<c:url value="/participantsList/${checkCourse.id}"/>" method="post">
         <select name="selectParticipants">
             <option>All Participants</option>
             <option>Current Attendees</option>
@@ -52,10 +53,10 @@
     <div class="span8">
     <div class="control-group">
         <div class="control-label html-editor-bold"><b>Participants</b></div>
-    <c:forEach items="${checkCourse.attenders}" var="attend">
+    <c:forEach items="${participants}" var="partic">
     <div class="controls text">
-        <c:out value="${attend.name}" escapeXml="true"/>
-        <span class="controls text"><c:out value="${attend.email}" escapeXml="true"/></span>
+        <c:out value="${partic.name}" escapeXml="true"/>
+        <span class="controls text"><c:out value="${partic.email}" escapeXml="true"/></span>
     </div>
     </c:forEach>
     </div>
