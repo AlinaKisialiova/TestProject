@@ -109,7 +109,7 @@
         </form>
     </div>
     <div class="span12"><h2> ${subscribeMessage} </h2></div>
-    <div class="span12"><h2> ${attendersMessage} </h2></div>
+
 
 
     <table align="justify" id="tableCourse">
@@ -177,13 +177,14 @@
                 <td>
 
                     <c:choose>
-                        <c:when test="${attCourseOfUser.contains(course)}">
-                            <input type="submit" name="no" onclick="att('no', ${course.id})"
-                                   value="Include/delete from Attenders List">
+                        <c:when test="${(attCourseOfUser.contains(course))}">
+                            <a href="<c:url value="/attendeeList/${course.id}" context="/project"/>" class="btn-danger">
+                                Exclude from Attenders List </a>
                         </c:when>
+
                         <c:otherwise>
-                            <input type="submit" name="yes" onclick="att('yes', ${course.id})"
-                                   value="Include/delete from Attenders List">
+                            <a href="<c:url value="/attendeeList/${course.id}" context="/project"/>" class="btn-primary">
+                                Include Into Attenders List </a>
                         </c:otherwise>
                     </c:choose>
 

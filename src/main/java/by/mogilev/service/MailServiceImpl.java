@@ -10,16 +10,10 @@ import by.mogilev.model.User;
 import org.apache.velocity.app.VelocityEngine;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.mail.javamail.JavaMailSender;
-import org.springframework.mail.javamail.MimeMessageHelper;
-import org.springframework.mail.javamail.MimeMessagePreparator;
 import org.springframework.stereotype.Service;
-import org.springframework.ui.velocity.VelocityEngineUtils;
 
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
-import javax.mail.internet.MimeMessage;
-import java.util.HashMap;
-import java.util.Map;
 import java.util.Set;
 
 @Service
@@ -64,6 +58,7 @@ public class MailServiceImpl implements MailService {
     public InternetAddress[] getRecipient(Course course) throws AddressException {
         Set<User> subscr = course.getSubscribers();
         InternetAddress[] emails= new InternetAddress[subscr.size()];
+
         int i = 0;
         for (User u : subscr) {
             emails[i] = new InternetAddress(u.getEmail());

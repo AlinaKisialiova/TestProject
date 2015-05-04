@@ -40,8 +40,6 @@ public class CourseDAOImp implements CourseDAO {
     @SuppressWarnings("unchecked")
     @Transactional
     public List<Course> getAllCourse() {
-//        List<Course> coursesList = new ArrayList<Course>();
-//        coursesList = this.sessionFactory.getCurrentSession().createQuery("from Course").list();
         Session session = this.sessionFactory.getCurrentSession();
         List<Course> coursesList = session.createCriteria(Course.class).list();
         for (Course course : coursesList) {

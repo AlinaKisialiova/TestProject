@@ -24,6 +24,8 @@
     <script type="text/javascript" src="<c:url value="/resources/js/trainigCenterScripts.js"/>"></script>
 
 
+
+
 </head>
 <body>
 

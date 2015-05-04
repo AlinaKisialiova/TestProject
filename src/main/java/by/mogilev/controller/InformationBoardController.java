@@ -1,5 +1,7 @@
 package by.mogilev.controller;
 
+import by.mogilev.exception.NullIdCourseException;
+import by.mogilev.exception.NullUserException;
 import by.mogilev.model.ActionsOnPage;
 import by.mogilev.model.User;
 import by.mogilev.service.CourseService;
@@ -25,7 +27,7 @@ import java.security.Principal;
 
 @Controller
 public class InformationBoardController {
-
+    public final String INFORM_BOARD = "/informationBoard";
 
     @Autowired
     private CourseService courseService;
@@ -33,50 +35,61 @@ public class InformationBoardController {
     @Autowired
     private UserService userService;
 
-    @RequestMapping(value = "/informationBoard", method = RequestMethod.GET)
+    @RequestMapping(value = INFORM_BOARD, method = RequestMethod.GET)
     public ModelAndView listCourse() {
-       ModelAndView mav= new ModelAndView("informationBoard");
+        ModelAndView mav = new ModelAndView("informationBoard");
         mav.addObject("courseList", courseService.getAllCourse());
-
         return mav;
     }
 
-    @RequestMapping(value = "/informationBoard", method = RequestMethod.POST)
+    @RequestMapping(value = INFORM_BOARD, method = RequestMethod.POST)
     public ModelAndView evRemindAndDelete(HttpServletRequest request,
                                           @RequestParam(value = "grade", required = false) Integer grade,
                                           @RequestParam(value = "fieldForSubmit", required = false) ActionsOnPage action,
                                           @RequestParam(value = "id", required = false) Integer id_course,
                                           @RequestParam(value = "selectCategory", required = false) String selectCategory,
                                           HttpServletResponse response)
-            throws IOException, DocumentException, AddressException {
+            throws IOException, DocumentException, AddressException, NullUserException {
         ModelAndView mav = new ModelAndView("informationBoard");
+        try {
+            String userName = "";
+            Principal principal = request.getUserPrincipal();
+            if (principal != null && principal.getName() != null) {
+                userName = principal.getName();
+            } else throw new NullUserException();
 
-        String userName = "";
-        Principal principal = request.getUserPrincipal();
-        if (principal != null && principal.getName() != null) {
-            userName = principal.getName();
-        }
+            if (action == null) action = ActionsOnPage.NO_ACTION;
+            switch (action) {
+                case DEL:
+                    courseService.deleteCourse(id_course, userName);
+                    break;
+                case EVAL_REM:
+                    User user = userService.getUser(userName);
+                    courseService.remidEv(id_course, user, grade);
+                    break;
+                case OUT_PDF:
+                    courseService.outInPdfAllCourse(response);
+                    break;
+                case OUT_EXCEL:
+                    courseService.outInExcelAllCourse(response);
+                    break;
+                case START:
+                    courseService.startCourse(id_course, userName);
+                    break;
+            }
 
-
-        if(action == null) action = ActionsOnPage.NO_ACTION;
-        switch (action) {
-            case DEL: courseService.deleteCourse(id_course, userName);
-                break;
-            case EVAL_REM:
-                User user = userService.getUser(userName);
-                courseService.remidEv(id_course, user, grade);
-                break;
-            case OUT_PDF: courseService.outInPdfAllCourse(response);
-                break;
-            case OUT_EXCEL:courseService.outInExcelAllCourse(response);
-                break;
-            case START: courseService.startCourse(id_course, userName);
-                break;
+        } catch (NullUserException ex) {
+            return new ModelAndView("signin");
+        } catch (NullIdCourseException e) {
+            mav.addObject("excMessage", e.toString());
+            return new ModelAndView("informationBoard");
         }
         mav.addObject("courseList", courseService.getAllCourse());
         return mav;
 
     }
+
 }
+
 
 

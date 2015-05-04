@@ -2,6 +2,8 @@ package by.mogilev.service;
 
 import by.mogilev.dao.CourseDAO;
 import by.mogilev.dao.UserDAO;
+import by.mogilev.exception.NullIdCourseException;
+import by.mogilev.exception.NullUserException;
 import by.mogilev.model.Course;
 import by.mogilev.model.CourseStatus;
 import by.mogilev.model.Notification;
@@ -95,7 +97,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public boolean addInSubscribers(String username, int id_course) {
+    public boolean addInSubscribers(String username, int id_course) throws AddressException {
         if (username == null || id_course < 1) throw new NullPointerException("Username or id_course is null in addInSet()");
 
         User userSubscr = userDAO.getUser(username);
@@ -109,13 +111,37 @@ public class UserServiceImpl implements UserService {
 
         courses.add(course);
         userDAO.updateUser(userSubscr);
+
+
+        if (course.getSubscribers().size() >= Course.MIN_COUNT_SUBSCR) {
+            course.setCourseStatus(CourseStatus.DELIVERED);
+            InternetAddress[] emails = mailService.getRecipient(course);
+            mailService.sendEmail(id_course, Notification.COURSE_APPOINTED, emails, username);
+        }
         return true;
     }
 
     @Override
-    public boolean addInAttSet(String username, int id_course) throws AddressException {
-        if (username == null || id_course < 1) throw new NullPointerException("Username or id_course is null in addInSet()");
+    public void addInAttSet(String username, int id_course) throws Exception {
+        if (username == null) throw new NullUserException();
+        if (id_course < 1) throw  new NullIdCourseException();
 
+        User userAtt = userDAO.getUser(username);
+        Course course = courseDAO.getCourse(id_course);
+            Set<Course> courses = userAtt.getCoursesAttendee();
+        if(! courses.contains(course) && course.getAttenders().size() < Course.MAX_COUNT_ATT) {
+            courses.add(course);
+            userDAO.updateUser(userAtt);
+        }
+        else throw new Exception();
+
+
+
+    }
+
+    @Override
+    public void removeFromAttSet(String username, int id_course) throws Exception {
+        if (username == null || id_course < 1) throw new NullPointerException("Username or id_course is null in addInSet()");
         User userAtt = userDAO.getUser(username);
         Course course = courseDAO.getCourse(id_course);
         Set<Course> courses = userAtt.getCoursesAttendee();
@@ -123,20 +149,9 @@ public class UserServiceImpl implements UserService {
         if (courses.contains(course)) {
             courses.remove(course);
             userDAO.updateUser(userAtt);
-            return false;
         }
 
-        courses.add(course);
-        userDAO.updateUser(userAtt);
-        if(course.getSubscribers().size() >= Course.MIN_COUNT_SUBSCR) {
-            course.setCourseStatus(CourseStatus.DELIVERED);
-          InternetAddress[] emails = mailService.getRecipient(course);
-            mailService.sendEmail(id_course, Notification.COURSE_APPOINTED, emails, username);
-
-        }
-
-        return true;
-
+        else throw new Exception();
     }
 
     @Override

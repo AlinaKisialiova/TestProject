@@ -31,13 +31,15 @@ public interface UserService {
      * @param username
      * @param id
      */
-    public boolean addInSubscribers(String username, int id);
+    public boolean addInSubscribers(String username, int id) throws AddressException;
     /**
      * Method add cheked course in list courses on which he is attenders
      * @param username
      * @param id_course
      */
-    public boolean addInAttSet(String username, int id_course) throws AddressException;
+    public void addInAttSet(String username, int id_course) throws Exception;
+
+    public void removeFromAttSet(String username, int id_course) throws Exception;
 
     public User getUser(String userName) ;
 }

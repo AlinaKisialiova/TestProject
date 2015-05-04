@@ -2,6 +2,8 @@ package by.mogilev.service;
 
 import by.mogilev.dao.CourseDAO;
 import by.mogilev.dao.UserDAO;
+import by.mogilev.exception.NullIdCourseException;
+import by.mogilev.exception.NullUserException;
 import by.mogilev.model.Course;
 import by.mogilev.model.Notification;
 import by.mogilev.model.User;
@@ -234,8 +236,9 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public void deleteCourse(int id, String userName) throws AddressException {
-        if (id < 1) throw new NullPointerException("Id course for delete is null");
+    public void deleteCourse(int id, String userName) throws AddressException, NullIdCourseException, NullUserException {
+        if (id < 1) throw new NullIdCourseException();
+        if(userName == null) throw new NullUserException();
 
         Course course = courseDAO.getCourse(id);
        if (userDAO.getUser(userName).getId() != course.getLector().getId())

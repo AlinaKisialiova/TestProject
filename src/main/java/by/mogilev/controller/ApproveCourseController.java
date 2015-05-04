@@ -1,11 +1,13 @@
 package by.mogilev.controller;
 
-import by.mogilev.model.*;
+import by.mogilev.model.Course;
+import by.mogilev.model.CourseStatus;
+import by.mogilev.model.Notification;
+import by.mogilev.model.UserRole;
 import by.mogilev.service.CourseService;
 import by.mogilev.service.MailService;
 import by.mogilev.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpRequest;
 import org.springframework.stereotype.Controller;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
@@ -17,16 +19,14 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
-import java.util.List;
-import java.util.Set;
 
 /**
  * Created by akiseleva on 13.04.2015.
  */
 @Controller
 public class ApproveCourseController {
-    private final String APPROVE_COURSE_GET = "/approveCourse/{course.id}";
-    private final String APPROVE_COURSE_POST = "/approveCourse/{course.id}";
+    public final String APPROVE_COURSE_GET = "/approveCourse/{course.id}";
+    public final String APPROVE_COURSE_POST = "/approveCourse/{course.id}";
 
     @Autowired
     private CourseService courseService;

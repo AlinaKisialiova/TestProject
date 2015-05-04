@@ -1,7 +1,8 @@
 package by.mogilev.controller;
 
+import by.mogilev.exception.NullIdCourseException;
+import by.mogilev.exception.NullUserException;
 import by.mogilev.model.Course;
-import by.mogilev.model.Notification;
 import by.mogilev.service.CourseService;
 import by.mogilev.service.MailService;
 import by.mogilev.service.UserService;
@@ -25,7 +26,9 @@ import java.security.Principal;
  */
 @Controller
 public class ActionCourseController {
-    final String REGISTRATON_COURSE = "/registrationCourse";
+   public final String REGISTRATION_COURSE = "/registrationCourse";
+    public  final String DETAIL_COURSE = "/courseDetails/{course.id}";
+    public final String EDIT_COURSE = "/editCourse/{course.id}";
 
     @Autowired
     private CourseService courseService;
@@ -41,13 +44,14 @@ public class ActionCourseController {
         return new Course();
     }
 
-    @RequestMapping(value = "/registrationCourse", method = RequestMethod.GET)
+    @RequestMapping(value = REGISTRATION_COURSE, method = RequestMethod.GET)
     public String displayRegCourse() {
         return "registrationCourse";
     }
 
-    @RequestMapping(value = REGISTRATON_COURSE, method = RequestMethod.POST)
-    public ModelAndView regCourse(@ModelAttribute("Course")  Course newCourse,  BindingResult result, Model model, HttpSession session, HttpServletRequest request) throws AddressException {
+    @RequestMapping(value = REGISTRATION_COURSE, method = RequestMethod.POST)
+    public ModelAndView regCourse(@ModelAttribute("Course")  Course newCourse,  BindingResult result, Model model,
+                                  HttpSession session, HttpServletRequest request) throws AddressException {
            if (result.hasErrors())
                new ModelAndView("redirect:/informationBoard");
 
@@ -57,16 +61,11 @@ public class ActionCourseController {
             userName = principal.getName();
         }
         courseService.registerCourse(newCourse, userName);
-
-
-
-
-
-            return new ModelAndView("redirect:/informationBoard");
+                    return new ModelAndView("redirect:/informationBoard");
 
     }
 
-    @RequestMapping(value = "/courseDetails/{course.id}", method = RequestMethod.GET)
+    @RequestMapping(value = DETAIL_COURSE, method = RequestMethod.GET)
     public ModelAndView detailsCourse(@PathVariable("course.id") Integer id) {
         ModelAndView mav= new ModelAndView("courseDetails");
         mav.addObject("checkCourse", courseService.getCourse(id));
@@ -74,8 +73,8 @@ public class ActionCourseController {
 
     }
 
-    @RequestMapping(value = "/courseDetails/{course.id}", method = RequestMethod.POST)
-    public ModelAndView deleteCourse(@PathVariable("course.id") Integer id, HttpServletRequest request) throws AddressException {
+    @RequestMapping(value = DETAIL_COURSE, method = RequestMethod.POST)
+    public ModelAndView deleteCourse(@PathVariable("course.id") Integer id, HttpServletRequest request) throws AddressException, NullUserException, NullIdCourseException {
         String userName = "";
         Principal principal = request.getUserPrincipal();
         if (principal != null && principal.getName() != null) {
@@ -86,14 +85,14 @@ public class ActionCourseController {
 
     }
 
-    @RequestMapping(value = "/editCourse/{course.id}", method = RequestMethod.GET)
+    @RequestMapping(value = EDIT_COURSE, method = RequestMethod.GET)
     public String editRegCourse(@PathVariable("course.id") Integer id, Model model) {
         model.addAttribute("categoryMap", courseService.getCategotyMap());
         model.addAttribute("course", courseService.getCourse(id));
         return "editCourse";
     }
 
-    @RequestMapping(value = "/editCourse/{course.id}", method = RequestMethod.POST)
+    @RequestMapping(value = EDIT_COURSE, method = RequestMethod.POST)
     public String editCourse(@PathVariable("course.id") Integer id,
                              @ModelAttribute("Course") Course updCourse,
                              HttpServletRequest request, HttpSession session, Model model) throws AddressException {

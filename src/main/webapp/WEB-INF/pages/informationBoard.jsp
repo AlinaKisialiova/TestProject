@@ -18,7 +18,7 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
 
 <sec:authorize access="hasRole('KNOWLEDGE_MANAGER')">
     I am know that you are a KNOWLEDGE MANAGER!
-    <input type="hidden"  id="manager" name="manager" value="KNOWLEDGE_MANAGER"/>
+    <input type="hidden" id="manager" name="manager" value="KNOWLEDGE_MANAGER"/>
 </sec:authorize>
 
 <sec:authorize access="hasRole('DEPARTMENT_MANAGER')">
@@ -27,6 +27,7 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
 </sec:authorize>
 
 <br/>
+
 <div id='EvalRemindBlock' style="display: none;">
     <form method="post" action="informationBoard">
         <input type="hidden" class="idC" name="id"/>
@@ -71,28 +72,28 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
         <td><br></td>
         <td><a href=registrationCourse>Register Course</a></td>
         <td><br></td>
-</tr>
+    </tr>
 </table>
-    <%--<tr>--%>
-        <%--<form>--%>
-            <%--<td><br></td>--%>
-            <%--<td><br></td>--%>
-            <%--<td><br></td>--%>
-            <%--<br>--%>
-            <%--<td><br></td>--%>
-            <%--<br>--%>
-            <%--<td><br>--%>
-            <%--<td><br></td>--%>
-            <%--<td>Filter</td>--%>
-            <%--<td>--%>
-                <%--<select class="btn dropdown-toggle">--%>
-                <%--<option selected value="All Course">All Course</option>--%>
-                <%--<option value="Given Courses">Given Courses</option>--%>
-                <%--<option value="Popular Courses "> Popular Courses</option>--%>
-                <%--<option value="Evaluation"> Evaluation</option>--%>
-            <%--</select></td>--%>
-   <%--</form>--%>
-        <%--</tr>--%>
+<%--<tr>--%>
+<%--<form>--%>
+<%--<td><br></td>--%>
+<%--<td><br></td>--%>
+<%--<td><br></td>--%>
+<%--<br>--%>
+<%--<td><br></td>--%>
+<%--<br>--%>
+<%--<td><br>--%>
+<%--<td><br></td>--%>
+<%--<td>Filter</td>--%>
+<%--<td>--%>
+<%--<select class="btn dropdown-toggle">--%>
+<%--<option selected value="All Course">All Course</option>--%>
+<%--<option value="Given Courses">Given Courses</option>--%>
+<%--<option value="Popular Courses "> Popular Courses</option>--%>
+<%--<option value="Evaluation"> Evaluation</option>--%>
+<%--</select></td>--%>
+<%--</form>--%>
+<%--</tr>--%>
 
 <table align="justify" id="tableCourse">
     <form action="informationBoard" method="post">
@@ -107,9 +108,6 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
 
                 <input type="submit" onclick="outExcel()" name="excelOut"
                        value="Click for Output in Excel" class="btn-primary">
-
-
-
 
             </th>
 
@@ -130,41 +128,42 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
         </tr>
 
 
-    <tr bgcolor="#b0c4de">
-        <th>Lector Name</th>
-        <th>Course Name</th>
-        <th>Course Category</th>
-        <th>Subscribed</th>
-        <th>Participated</th>
-        <th>Delivered Course</th>
-        <th>Evaluation</th>
-        <th>Actions</th>
-    </tr>
+        <tr bgcolor="#b0c4de">
+            <th>Lector Name</th>
+            <th>Course Name</th>
+            <th>Course Category</th>
+            <th>Subscribed</th>
+            <th>Participated</th>
+            <th>Delivered Course</th>
+            <th>Evaluation</th>
+            <th>Actions</th>
+        </tr>
 
-    <c:forEach items="${courseList}" var="course">
+        <c:forEach items="${courseList}" var="course">
         <tr>
 
             <td class="lector_${course.id}"><c:out value="${course.lector.name}" escapeXml="true"/></td>
-            <td >
-                <a href="<c:out value="courseDetails/${course.id}" escapeXml="true"/>" title="click to show course detail ">
+            <td>
+                <a href="<c:out value="courseDetails/${course.id}" escapeXml="true"/>"
+                   title="click to show course detail ">
            <span class="course_${course.id}">
-               <c:out  value="${course.nameCourse}" escapeXml="true"/></span>
+               <c:out value="${course.nameCourse}" escapeXml="true"/></span>
                 </a>
             </td>
             <td><c:out value="${course.category}" escapeXml="true"/></td>
             <td><c:out value="${course.subscribers.size()}" escapeXml="true"/></td>
             <td>
                 <a href="<c:out value="participantsList/${course.id}" escapeXml="true"/>" title="click to show list">
-                <c:out value="${course.attenders.size()}" escapeXml="true"/>
+                    <c:out value="${course.attenders.size()}" escapeXml="true"/>
                 </a>
             </td>
             <td><c:out value="${course.courseStatus}" escapeXml="true"/>
             </td>
             <td>
                 <c:if test="${course.courseStatus eq 'DELIVERED'}">
-                <a href="#" onclick="show(${course.id})" title="click to put mark">
-                <c:out value="${course.evaluation}" escapeXml="true"/>
-                </a>
+                    <a href="#" onclick="show(${course.id})" title="click to put mark">
+                        <c:out value="${course.evaluation}" escapeXml="true"/>
+                    </a>
                     <input class="grade_${course.id}" type="hidden" value="${course.evaluation}"/>
                 </c:if>
             </td>
@@ -173,64 +172,93 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
                 <div class="btn-group">
 
                     <c:if test="${ user eq course.lector.username}">
-                <c:if test="${course.courseStatus != 'DELIVERED'}">
+                    <c:if test="${course.courseStatus != 'DELIVERED'}">
                     <input type="submit" name="delete" value="Delete" onclick="del(${course.id})" class="btn"/>
-                </c:if>
-                        <c:if test="${course.courseStatus eq 'DELIVERED'}">
-             <a href="/evaluationReminder/${course.id}">
-                 <input type="button" id="Eval" value="Evaluation Reminder" class="btn" />
-             </a>
-                        </c:if>
-                </c:if>
+                    </c:if>
+                    <c:if test="${course.courseStatus eq 'DELIVERED'}">
+                    <a href="/evaluationReminder/${course.id}">
+                        <input type="button" id="Eval" value="Evaluation Reminder" class="btn"/>
+                    </a>
+                    </c:if>
+                    </c:if>
 
-                        <sec:authorize access="hasAnyRole('DEPARTMENT_MANAGER','KNOWLEDGE_MANAGER')">
-                        <a href="<c:url value="/approveCourse/${course.id}"/>">
-                            <input type="button" id="approve" value="Approve Course" class="btn" />
-                        </a>
+                    <sec:authorize access="hasAnyRole('DEPARTMENT_MANAGER','KNOWLEDGE_MANAGER')">
+                    <a href="<c:url value="/approveCourse/${course.id}"/>">
+                        <input type="button" id="approve" value="Approve Course" class="btn"/>
+                    </a>
                     </sec:authorize>
                     <input type="hidden" name="fieldForSubmit" class="fieldForSubmit"/>
-                    <input type="hidden" class="idC" name="id"/>
+                    <input type="hidden" class="idC" name="id" />
 
-                </form>
-                </div>
-        </tr>
+    </form>
+    </div>
+    </tr>
 
 
     </c:forEach>
 </table>
 
-<script src="<c:url value="/resources/css/bootstrap-2.2.2.min.js"/>"></script>
-<script  src="<c:url value="/resources/css/jquery-1.8.1.min.js"/>"></script>
+<input type="hidden" value="" id="excMess"> ${excMessage}</<input>
 
-<script language="JavaScript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
-<script>
+<div id="modal" class="modal hide fade">
+    <div class="modal-header">
+        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
+        <h2>Warning!</h2>
+    </div>
+    <div class="modal-body">
+        <p>${excMessage}</p>
+    </div>
+</div>
+<center><a href="#modal" role="button" class="btn" data-toggle="modal">Click</a></center>
 
-    function show(id) {
-        $("#EvalRemindBlock").show();
-        var lCourse = $(".lector_" + id).html();
-        var nCourse = $(".course_" + id).html();
-        var gCourse = $(".grade_"+id).val();
-        $(".lect").text(lCourse);
-        $(".cours").text(nCourse);
-        $(".grade").val(gCourse);
-        $(".idC").val(id);
-        $(".fieldForSubmit").val("EVAL_REM");
-    }
-    function hide(){
-        $("#EvalRemindBlock").hide();
-    }
+<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
+<%--<script language="JavaScript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>--%>
 
-    function outPdf() {
-        $(".fieldForSubmit").val("OUT_PDF");
-    }
-
-    function outExcel() {
-        $(".fieldForSubmit").val("OUT_EXCEL");
-
-    }
-    function del(id) {
-        $(".idC").val(id);
-        $(".fieldForSubmit").val("DEL");
-    }
+    <%--var exc = $("#excMess");--%>
+    <%--if (exc == "") {--%>
+         <%--except('none')--%>
+    <%--}--%>
+    <%--else--%>
+    <%--except('block')--%>
+    <script type="text/javascript">
+    $("document").ready(function(){
+        $('#modal').modal();
+    });
+//
+//
+//
+//
+//function except(state) {
+//    document.getElementById('window').style.display = state;
+//    document.getElementById('wrap').style.display = state;
+//
+//}
+//    function show(id) {
+//        $("#EvalRemindBlock").show();
+//        var lCourse = $(".lector_" + id).html();
+//        var nCourse = $(".course_" + id).html();
+//        var gCourse = $(".grade_" + id).val();
+//        $(".lect").text(lCourse);
+//        $(".cours").text(nCourse);
+//        $(".grade").val(gCourse);
+//        $(".idC").val(id);
+//        $(".fieldForSubmit").val("EVAL_REM");
+//    }
+//    function hide() {
+//        $("#EvalRemindBlock").hide();
+//    }
+//
+//    function outPdf() {
+//        $(".fieldForSubmit").val("OUT_PDF");
+//    }
+//
+//    function outExcel() {
+//        $(".fieldForSubmit").val("OUT_EXCEL");
+//
+//    }
+//    function del(id) {
+//        $(".idC").val(id);
+//        $(".fieldForSubmit").val("DEL");
+//    }
 
 </script>

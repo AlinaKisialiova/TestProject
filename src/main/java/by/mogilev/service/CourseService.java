@@ -1,5 +1,7 @@
 package by.mogilev.service;
 
+import by.mogilev.exception.NullIdCourseException;
+import by.mogilev.exception.NullUserException;
 import by.mogilev.model.Course;
 import by.mogilev.model.User;
 import com.itextpdf.text.DocumentException;
@@ -46,7 +48,7 @@ public interface CourseService {
 
     public List<Course> getAllCourse();
 
-    public void deleteCourse(int id, String userName) throws AddressException;
+    public void deleteCourse(int id, String userName) throws AddressException, NullIdCourseException, NullUserException;
 
     public Course getCourse(int id);
 

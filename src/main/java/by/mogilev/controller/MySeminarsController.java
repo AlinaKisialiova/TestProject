@@ -4,15 +4,11 @@ import by.mogilev.model.ActionsOnPage;
 import by.mogilev.model.Course;
 import by.mogilev.model.User;
 import by.mogilev.service.CourseService;
-import by.mogilev.service.MailService;
 import by.mogilev.service.UserService;
 import com.itextpdf.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.ModelAttribute;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RequestMethod;
-import org.springframework.web.bind.annotation.RequestParam;
+import org.springframework.web.bind.annotation.*;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.mail.internet.AddressException;
@@ -27,6 +23,8 @@ import java.util.Set;
  */
 @Controller
 public class MySeminarsController {
+    public final String MY_SEMINARS = "/mySeminars";
+    public final String ATTENDEE_LIST = "/attendeeList/{course.id}";
 
     @Autowired
     private CourseService courseService;
@@ -35,13 +33,12 @@ public class MySeminarsController {
     private UserService userService;
 
 
-
     @ModelAttribute("Courses")
     public Course subscrCourse() {
         return new Course();
     }
 
-    @RequestMapping(value = "/mySeminars", method = RequestMethod.GET)
+    @RequestMapping(value = MY_SEMINARS, method = RequestMethod.GET)
     public ModelAndView listCourseUser(HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("mySeminars");
 
@@ -55,12 +52,10 @@ public class MySeminarsController {
 
         mav.addObject("courseList", userService.getCoursesSubscribeOfUser(userName));
         mav.addObject("attCourseOfUser", userService.getCoursesAttendeeOfUser(userName));
-
-
         return mav;
     }
 
-    @RequestMapping(value = "/mySeminars", method = RequestMethod.POST)
+    @RequestMapping(value = MY_SEMINARS, method = RequestMethod.POST)
     public ModelAndView mySem(@RequestParam(value = "grade", required = false) Integer grade,
                               @RequestParam(value = "fieldForSubmit", required = false) ActionsOnPage action,
                               @RequestParam(value = "selectCourse", required = false) Integer id_course,
@@ -76,21 +71,6 @@ public class MySeminarsController {
         User user = userService.getUser(principal.getName());
         if (ActionsOnPage.EVAL_REM.equals(action))
             courseService.remidEv(id_course, user, grade);
-
-        if (ActionsOnPage.ADD_IN_ATT.equals(action) || ActionsOnPage.REMOTE_FROM_ATT.equals(action)) {
-
-            String message = "";
-            if (courseService.getCourse(id).getAttenders().size() < Course.MAX_COUNT_ATT) {
-
-                if (userService.addInAttSet(principal.getName(), id))
-                    message = "You are included in attenders list!";
-                else
-                    message = "You are deleted from attenders list!";
-            } else
-                message = "You can not included because a group recruited!";
-
-            mav.addObject("attendersMessage", message);
-        }
 
 
         if (ActionsOnPage.SUBSCRIBE.equals(action)) {
@@ -110,6 +90,37 @@ public class MySeminarsController {
         mav.addObject("attCourseOfUser", userService.getCoursesAttendeeOfUser(principal.getName()));
         return mav;
 
+    }
+    @RequestMapping(value = ATTENDEE_LIST, method = RequestMethod.GET)
+    public ModelAndView AttendeeListGET(@PathVariable("course.id") Integer id) {
+        ModelAndView mav= new ModelAndView("attendeeList");
+        mav.addObject("checkCourse", courseService.getCourse(id));
+        mav.addObject("attendee", courseService.getCourse(id).getAttenders() );
+        return mav;
+    }
+
+    @RequestMapping(value = ATTENDEE_LIST, method = RequestMethod.POST)
+    public ModelAndView AttendeeListPOST(@PathVariable("course.id") Integer id,
+                                         Principal principal, @RequestParam(value = "fieldForSubmit", required = false) ActionsOnPage action)
+            throws Exception {
+        ModelAndView mav= new ModelAndView("attendeeList");
+        mav.addObject("checkCourse", courseService.getCourse(id));
+            String message = "";
+        switch (action) {
+            case ADD_IN_ATT:
+                userService.addInAttSet(principal.getName(), id);
+                message = "You are included in attenders list!";
+                break;
+
+            case REMOTE_FROM_ATT:
+                userService.removeFromAttSet(principal.getName(), id);
+                message = "You are deleted from attenders list!";
+                break;
+        }
+            mav.addObject("attendersMessage", message);
+        mav.addObject("attendee", courseService.getCourse(id).getAttenders());
+
+        return mav;
     }
 
 }
