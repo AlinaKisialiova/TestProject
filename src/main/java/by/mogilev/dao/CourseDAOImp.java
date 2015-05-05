@@ -1,5 +1,6 @@
 package by.mogilev.dao;
 
+import by.mogilev.exception.NullIdCourseException;
 import by.mogilev.model.Course;
 import by.mogilev.model.User;
 import org.hibernate.Criteria;
@@ -25,10 +26,9 @@ public class CourseDAOImp implements CourseDAO {
 
     @SuppressWarnings("unchecked")
     @Transactional
-    public void registerCourse(Course newCourse, String loginLector) {
+    public void registerCourse(Course newCourse, String loginLector)  {
         Session session = this.sessionFactory.getCurrentSession();
-        if (newCourse == null)
-           throw  new NullPointerException("Course is null");
+
         User lector;
         Criteria criteria = session.createCriteria(User.class);
         criteria.add(Restrictions.eq("username", loginLector));

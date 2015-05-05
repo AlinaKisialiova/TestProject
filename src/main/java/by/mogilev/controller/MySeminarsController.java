@@ -1,6 +1,7 @@
 package by.mogilev.controller;
 
 import by.mogilev.exception.NullIdCourseException;
+import by.mogilev.exception.NullUserException;
 import by.mogilev.model.ActionsOnPage;
 import by.mogilev.model.Course;
 import by.mogilev.model.User;
@@ -40,20 +41,19 @@ public class MySeminarsController {
     }
 
     @RequestMapping(value = MY_SEMINARS, method = RequestMethod.GET)
-    public ModelAndView listCourseUser(HttpServletRequest request) {
+    public ModelAndView listCourseUser(HttpServletRequest request) throws NullUserException {
         ModelAndView mav = new ModelAndView("mySeminars");
+        try {
+            String userName = userService.getUserFromSession(request);
 
-        String userName = "";
-        Principal principal = request.getUserPrincipal();
-        if (principal != null && principal.getName() != null) {
-            userName = principal.getName();
+            mav.addObject("nameCourses", courseService.getAllCourse());
+
+            mav.addObject("courseList", userService.getCoursesSubscribeOfUser(userName));
+            mav.addObject("attCourseOfUser", userService.getCoursesAttendeeOfUser(userName));
+            return mav;
+        } catch (NullUserException ex) {
+            return new ModelAndView("signin");
         }
-
-        mav.addObject("nameCourses", courseService.getAllCourse());
-
-        mav.addObject("courseList", userService.getCoursesSubscribeOfUser(userName));
-        mav.addObject("attCourseOfUser", userService.getCoursesAttendeeOfUser(userName));
-        return mav;
     }
 
     @RequestMapping(value = MY_SEMINARS, method = RequestMethod.POST)
@@ -62,21 +62,20 @@ public class MySeminarsController {
                               @RequestParam(value = "selectCourse", required = false) Integer id_course,
                               @RequestParam(value = "selectCategory", required = false) String selectCategory,
                               @RequestParam(value = "id", required = false) Integer id,
-                              Principal principal)
-            throws IOException, DocumentException, AddressException {
+                              HttpServletRequest request)
+            throws IOException, DocumentException, AddressException, NullUserException {
         ModelAndView mav = new ModelAndView("mySeminars");
-
+try {
         List<Course> coursesForSelect = courseService.getSelected(selectCategory);
         mav.addObject("nameCourses", coursesForSelect);
 
-        User user = userService.getUser(principal.getName());
+        User user = userService.getUser(userService.getUserFromSession(request));
         if (ActionsOnPage.EVAL_REM.equals(action))
             courseService.remidEv(id_course, user, grade);
 
-
         if (ActionsOnPage.SUBSCRIBE.equals(action)) {
             String message = "";
-            if (userService.addInSubscribers(principal.getName(), id_course))
+            if (userService.addInSubscribers(userService.getUserFromSession(request), id_course))
                 message = "You are subscribed!";
             else
                 message = "You are deleted from subscribe list!!";
@@ -85,43 +84,66 @@ public class MySeminarsController {
         }
 
 
-        Set<Course> coursesForList = userService.getCoursesSubscribeOfUser(principal.getName());
+        Set<Course> coursesForList = userService.getCoursesSubscribeOfUser(userService.getUserFromSession(request));
         mav.addObject("courseList", coursesForList);
 
-        mav.addObject("attCourseOfUser", userService.getCoursesAttendeeOfUser(principal.getName()));
+        mav.addObject("attCourseOfUser", userService.getCoursesAttendeeOfUser(userService.getUserFromSession(request)));
         return mav;
+    } catch (NullUserException ex) {
+        return new ModelAndView("signin");
+    } catch (NullIdCourseException e) {
+    mav.addObject("excTitle", "Ooops...");
+    mav.addObject("excMessage", e.toString());
+    return mav;
+}
 
     }
     @RequestMapping(value = ATTENDEE_LIST, method = RequestMethod.GET)
     public ModelAndView AttendeeListGET(@PathVariable("course.id") Integer id) throws NullIdCourseException {
-        ModelAndView mav= new ModelAndView("attendeeList");
-        mav.addObject("checkCourse", courseService.getCourse(id));
-        mav.addObject("attendee", courseService.getCourse(id).getAttenders() );
-        return mav;
+        ModelAndView mav = new ModelAndView("attendeeList");
+        try {
+            mav.addObject("checkCourse", courseService.getCourse(id));
+            mav.addObject("attendee", courseService.getCourse(id).getAttenders());
+            return mav;
+
+        } catch (NullIdCourseException e) {
+            ModelAndView mavExc = new ModelAndView("informationBoard");
+            mavExc.addObject("excTitle", "Ooops...");
+            mavExc.addObject("excMessage", e.toString());
+            return mavExc;
+        }
     }
 
     @RequestMapping(value = ATTENDEE_LIST, method = RequestMethod.POST)
     public ModelAndView AttendeeListPOST(@PathVariable("course.id") Integer id,
                                          Principal principal, @RequestParam(value = "fieldForSubmit", required = false) ActionsOnPage action)
             throws Exception {
-        ModelAndView mav= new ModelAndView("attendeeList");
-        mav.addObject("checkCourse", courseService.getCourse(id));
+        ModelAndView mav = new ModelAndView("attendeeList");
+        try {
+            mav.addObject("checkCourse", courseService.getCourse(id));
             String message = "";
-        switch (action) {
-            case ADD_IN_ATT:
-                userService.addInAttSet(principal.getName(), id);
-                message = "You are included in attenders list!";
-                break;
+            switch (action) {
+                case ADD_IN_ATT:
+                    userService.addInAttSet(principal.getName(), id);
+                    message = "You are included in attenders list!";
+                    break;
 
-            case REMOTE_FROM_ATT:
-                userService.removeFromAttSet(principal.getName(), id);
-                message = "You are deleted from attenders list!";
-                break;
-        }
+                case REMOTE_FROM_ATT:
+                    userService.removeFromAttSet(principal.getName(), id);
+                    message = "You are deleted from attenders list!";
+                    break;
+            }
             mav.addObject("attendersMessage", message);
-        mav.addObject("attendee", courseService.getCourse(id).getAttenders());
+            mav.addObject("attendee", courseService.getCourse(id).getAttenders());
 
+            return mav;
+
+    }catch (NullIdCourseException e) {
+
+        mav.addObject("excTitle", "Ooops...");
+        mav.addObject("excMessage", e.toString());
         return mav;
     }
 
 }
+    }

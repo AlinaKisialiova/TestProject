@@ -24,7 +24,7 @@ public interface CourseService {
      */
    public boolean isOwner(int idCourse, String UserName) throws NullUserException, NullIdCourseException;
 
-    public void remidEv(int id, User user, int grade) throws AddressException;
+    public void remidEv(int id, User user, int grade) throws AddressException, NullIdCourseException, NullUserException;
     Map<String, String> getCategotyMap();
     /**
      *
@@ -57,9 +57,9 @@ public interface CourseService {
 
     public Course getCourse(int id) throws NullIdCourseException;
 
-    public void registerCourse(Course course, String nameLector) throws AddressException;
+    public void registerCourse(Course course, String nameLector) throws AddressException, NullUserException;
 
-    public void updateCourse(Course updCourse) throws AddressException;
+    public void updateCourse(Course updCourse) throws AddressException, NullIdCourseException;
 
     public boolean startCourse(int id, String userName);
 

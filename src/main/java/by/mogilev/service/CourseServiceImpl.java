@@ -195,7 +195,9 @@ public class CourseServiceImpl implements CourseService {
 
 
     @Override
-    public void remidEv(int id, User user, int grade) throws AddressException {
+    public void remidEv(int id, User user, int grade) throws AddressException, NullIdCourseException, NullUserException {
+        if (id < 1) throw new NullIdCourseException();
+        if (user == null) throw new NullUserException();
         Course changeEvalCourse = courseDAO.getCourse(id);
 
         Map<User, Integer> mapEval = changeEvalCourse.getEvalMap();
@@ -255,7 +257,8 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public void registerCourse(Course course, String nameLector) throws AddressException {
+    public void registerCourse(Course course, String nameLector) throws AddressException, NullUserException {
+        if (nameLector == null) throw new NullUserException();
         courseDAO.registerCourse(course, nameLector);
         int id = courseDAO.getCourseByNameDAO(course.getNameCourse()).getId();
         InternetAddress[] emails= new InternetAddress[]{
@@ -265,8 +268,9 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public void updateCourse(Course updCourse) throws AddressException {
+    public void updateCourse(Course updCourse) throws AddressException, NullIdCourseException {
 
+        if (updCourse == null) throw  new NullIdCourseException();
 //
 //        editCourse.setCategory(updCourse.getCategory());
 //        editCourse.setNameCourse(updCourse.getNameCourse());

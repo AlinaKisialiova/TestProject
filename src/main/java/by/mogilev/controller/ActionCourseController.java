@@ -60,8 +60,8 @@ public class ActionCourseController {
             return new ModelAndView("redirect:/informationBoard");
         } catch (NullUserException ex) {
             return new ModelAndView("signin");
-        }
 
+        }
     }
 
     @RequestMapping(value = DETAIL_COURSE, method = RequestMethod.GET)

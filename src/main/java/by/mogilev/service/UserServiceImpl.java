@@ -49,9 +49,9 @@ public class UserServiceImpl implements UserService {
 
     @SuppressWarnings("unchecked")
     @Override
-    public Set<Course> getCoursesSubscribeOfUser(String username) {
+    public Set<Course> getCoursesSubscribeOfUser(String username) throws NullUserException {
         Session session = this.sessionFactory.getCurrentSession();
-        if (username == null) throw new NullPointerException("Username for get list of subscribers is empty.");
+        if (username == null) throw new NullUserException();
 
         int id_user=getIdByUsername(username);
         Criteria criteria = session.createCriteria(User.class);
@@ -69,9 +69,9 @@ public class UserServiceImpl implements UserService {
 
     @SuppressWarnings("unchecked")
     @Override
-    public Set<Course> getCoursesAttendeeOfUser(String username) {
+    public Set<Course> getCoursesAttendeeOfUser(String username) throws NullUserException {
         Session session = this.sessionFactory.getCurrentSession();
-        if (username == null) throw new NullPointerException("Username for get list of attenders is empty.");
+        if (username == null) throw new NullUserException();
 
         int id_user=getIdByUsername(username);
 
@@ -90,17 +90,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int getIdByUsername(String username) {
-        Session session = this.sessionFactory.getCurrentSession();
-        Criteria criteria = session.createCriteria(User.class);
-        criteria.add(Restrictions.eq("username", username));
-        User user = (User) criteria.uniqueResult();
-        return user.getId();
+    public int getIdByUsername(String username) throws NullUserException {
+        if (username == null) throw new NullUserException();
+        return userDAO.getIdByUsername(username);
     }
 
     @Override
-    public boolean addInSubscribers(String username, int id_course) throws AddressException {
-        if (username == null || id_course < 1) throw new NullPointerException("Username or id_course is null in addInSet()");
+    public boolean addInSubscribers(String username, int id_course) throws AddressException, NullUserException, NullIdCourseException {
+        if (username == null) throw new NullUserException();
+        if (id_course < 1) throw  new NullIdCourseException();
 
         User userSubscr = userDAO.getUser(username);
         Course course = courseDAO.getCourse(id_course);
@@ -143,7 +141,9 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void removeFromAttSet(String username, int id_course) throws Exception {
-        if (username == null || id_course < 1) throw new NullPointerException("Username or id_course is null in addInSet()");
+        if (username == null) throw new NullUserException();
+        if (id_course < 1) throw  new NullIdCourseException();
+
         User userAtt = userDAO.getUser(username);
         Course course = courseDAO.getCourse(id_course);
         Set<Course> courses = userAtt.getCoursesAttendee();
@@ -157,8 +157,8 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUser(String userName) {
-        if (userName == null) throw new NullPointerException("Username is null in getUser()");
+    public User getUser(String userName) throws NullUserException {
+        if (userName == null) throw new NullUserException();
 
      return userDAO.getUser(userName);
     }
