@@ -1,5 +1,6 @@
 package by.mogilev.controller;
 
+import by.mogilev.exception.NullIdCourseException;
 import by.mogilev.model.ActionsOnPage;
 import by.mogilev.model.Course;
 import by.mogilev.model.User;
@@ -92,7 +93,7 @@ public class MySeminarsController {
 
     }
     @RequestMapping(value = ATTENDEE_LIST, method = RequestMethod.GET)
-    public ModelAndView AttendeeListGET(@PathVariable("course.id") Integer id) {
+    public ModelAndView AttendeeListGET(@PathVariable("course.id") Integer id) throws NullIdCourseException {
         ModelAndView mav= new ModelAndView("attendeeList");
         mav.addObject("checkCourse", courseService.getCourse(id));
         mav.addObject("attendee", courseService.getCourse(id).getAttenders() );

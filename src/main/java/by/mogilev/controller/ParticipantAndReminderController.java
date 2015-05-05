@@ -1,5 +1,6 @@
 package by.mogilev.controller;
 
+import by.mogilev.exception.NullIdCourseException;
 import by.mogilev.model.Course;
 import by.mogilev.model.CourseStatus;
 import by.mogilev.model.Notification;
@@ -35,7 +36,7 @@ public class ParticipantAndReminderController {
     private MailService mailService;
 
     @RequestMapping(value = PARTICIPANT_LIST, method = RequestMethod.GET)
-    public ModelAndView participantsListGET(@PathVariable("course.id") Integer id) {
+    public ModelAndView participantsListGET(@PathVariable("course.id") Integer id) throws NullIdCourseException {
         ModelAndView mav= new ModelAndView("participantsList");
         mav.addObject("checkCourse", courseService.getCourse(id));
         mav.addObject("participants", courseService.getCourse(id).getSubscribers());
@@ -44,7 +45,7 @@ public class ParticipantAndReminderController {
 
     @RequestMapping(value = PARTICIPANT_LIST, method = RequestMethod.POST)
     public ModelAndView participantsListPOST(@PathVariable("course.id") Integer id,
-                                             @RequestParam(value = "selectParticipants", required = false) String select) {
+                                             @RequestParam(value = "selectParticipants", required = false) String select) throws NullIdCourseException {
         ModelAndView mav= new ModelAndView("participantsList");
         Set<User> participants = new HashSet<User>();
         if ("All Participants".equals(select))
@@ -59,7 +60,7 @@ public class ParticipantAndReminderController {
     }
 
     @RequestMapping(value = EVAL_REMINDER , method = RequestMethod.GET)
-    public ModelAndView reminder(@PathVariable("course.id") Integer id) {
+    public ModelAndView reminder(@PathVariable("course.id") Integer id) throws NullIdCourseException {
         ModelAndView mav= new ModelAndView("evaluationReminder");
         mav.addObject("checkCourse", courseService.getCourse(id));
         return mav;
@@ -67,7 +68,7 @@ public class ParticipantAndReminderController {
 
 
     @RequestMapping(value = EVAL_REMINDER, method = RequestMethod.POST)
-    public ModelAndView reminderStartorReset(@PathVariable("course.id") Integer id, HttpServletRequest request) throws AddressException {
+    public ModelAndView reminderStartorReset(@PathVariable("course.id") Integer id, HttpServletRequest request) throws AddressException, NullIdCourseException {
         ModelAndView mav= new ModelAndView("evaluationReminder");
         Course course = courseService.getCourse(id);
         mav.addObject("checkCourse",course );

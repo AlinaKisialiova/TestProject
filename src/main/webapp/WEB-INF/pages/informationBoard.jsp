@@ -198,67 +198,45 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
     </c:forEach>
 </table>
 
-<input type="hidden" value="" id="excMess"> ${excMessage}</<input>
 
-<div id="modal" class="modal hide fade">
-    <div class="modal-header">
-        <button type="button" class="close" data-dismiss="modal" aria-hidden="true">&times;</button>
-        <h2>Warning!</h2>
-    </div>
-    <div class="modal-body">
-        <p>${excMessage}</p>
-    </div>
-</div>
-<center><a href="#modal" role="button" class="btn" data-toggle="modal">Click</a></center>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+<script type="text/javascript" src="<c:url value="/resources/js/bootstrap.min3.0.2.js"/>"></script>
+<script>
 
-<script src="http://ajax.googleapis.com/ajax/libs/jquery/1.9.1/jquery.min.js"></script>
-<%--<script language="JavaScript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>--%>
+    var exc = $("#excMess").val();
+    if (exc == '') {
+        $('#myModal').modal('hide');
+    }
+    else
+        $('#myModal').modal('show');
 
-    <%--var exc = $("#excMess");--%>
-    <%--if (exc == "") {--%>
-         <%--except('none')--%>
-    <%--}--%>
-    <%--else--%>
-    <%--except('block')--%>
-    <script type="text/javascript">
-    $("document").ready(function(){
-        $('#modal').modal();
-    });
-//
-//
-//
-//
-//function except(state) {
-//    document.getElementById('window').style.display = state;
-//    document.getElementById('wrap').style.display = state;
-//
-//}
-//    function show(id) {
-//        $("#EvalRemindBlock").show();
-//        var lCourse = $(".lector_" + id).html();
-//        var nCourse = $(".course_" + id).html();
-//        var gCourse = $(".grade_" + id).val();
-//        $(".lect").text(lCourse);
-//        $(".cours").text(nCourse);
-//        $(".grade").val(gCourse);
-//        $(".idC").val(id);
-//        $(".fieldForSubmit").val("EVAL_REM");
-//    }
-//    function hide() {
-//        $("#EvalRemindBlock").hide();
-//    }
-//
-//    function outPdf() {
-//        $(".fieldForSubmit").val("OUT_PDF");
-//    }
-//
-//    function outExcel() {
-//        $(".fieldForSubmit").val("OUT_EXCEL");
-//
-//    }
-//    function del(id) {
-//        $(".idC").val(id);
-//        $(".fieldForSubmit").val("DEL");
-//    }
+
+    function show(id) {
+        $("#EvalRemindBlock").show();
+        var lCourse = $(".lector_" + id).html();
+        var nCourse = $(".course_" + id).html();
+        var gCourse = $(".grade_" + id).val();
+        $(".lect").text(lCourse);
+        $(".cours").text(nCourse);
+        $(".grade").val(gCourse);
+        $(".idC").val(id);
+        $(".fieldForSubmit").val("EVAL_REM");
+    }
+    function hide() {
+        $("#EvalRemindBlock").hide();
+    }
+
+    function outPdf() {
+        $(".fieldForSubmit").val("OUT_PDF");
+    }
+
+    function outExcel() {
+        $(".fieldForSubmit").val("OUT_EXCEL");
+
+    }
+    function del(id) {
+        $(".idC").val(id);
+        $(".fieldForSubmit").val("DEL");
+    }
 
 </script>

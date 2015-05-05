@@ -38,6 +38,8 @@ public class InformationBoardController {
     @RequestMapping(value = INFORM_BOARD, method = RequestMethod.GET)
     public ModelAndView listCourse() {
         ModelAndView mav = new ModelAndView("informationBoard");
+//        mav.addObject("modalTitle", "Ooops...");
+//        mav.addObject("modalMessage","Все сломал наглый поросенок");
         mav.addObject("courseList", courseService.getAllCourse());
         return mav;
     }
@@ -77,14 +79,16 @@ public class InformationBoardController {
                     courseService.startCourse(id_course, userName);
                     break;
             }
+            mav.addObject("courseList", courseService.getAllCourse());
 
         } catch (NullUserException ex) {
             return new ModelAndView("signin");
         } catch (NullIdCourseException e) {
+            mav.addObject("excTitle", "Ooops...");
             mav.addObject("excMessage", e.toString());
             return new ModelAndView("informationBoard");
         }
-        mav.addObject("courseList", courseService.getAllCourse());
+
         return mav;
 
     }

@@ -8,7 +8,6 @@ import com.itextpdf.text.DocumentException;
 
 import javax.mail.internet.AddressException;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
@@ -17,7 +16,13 @@ import java.util.Map;
  * Created by Администратор on 21.03.2015.
  */
 public interface CourseService {
-   public boolean isOwner(int idCourse, HttpSession session);
+    /**
+     * Method validate who create this course
+     * @param idCourse
+     * @param UserName
+     * @return
+     */
+   public boolean isOwner(int idCourse, String UserName) throws NullUserException, NullIdCourseException;
 
     public void remidEv(int id, User user, int grade) throws AddressException;
     Map<String, String> getCategotyMap();
@@ -50,7 +55,7 @@ public interface CourseService {
 
     public void deleteCourse(int id, String userName) throws AddressException, NullIdCourseException, NullUserException;
 
-    public Course getCourse(int id);
+    public Course getCourse(int id) throws NullIdCourseException;
 
     public void registerCourse(Course course, String nameLector) throws AddressException;
 

@@ -1,5 +1,7 @@
 package by.mogilev.controller;
 
+import by.mogilev.exception.NullIdCourseException;
+import by.mogilev.exception.NullUserException;
 import by.mogilev.model.Course;
 import by.mogilev.model.CourseStatus;
 import by.mogilev.model.Notification;
@@ -18,7 +20,6 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.servlet.http.HttpServletRequest;
-import java.security.Principal;
 
 /**
  * Created by akiseleva on 13.04.2015.
@@ -38,60 +39,70 @@ public class ApproveCourseController {
     private MailService mailService;
 
     @RequestMapping(value = APPROVE_COURSE_GET, method = RequestMethod.GET)
-    public ModelAndView approveCourseGet(@PathVariable("course.id") Integer id) {
+    public ModelAndView approveCourseGet(@PathVariable("course.id") Integer id) throws NullIdCourseException {
         ModelAndView mav= new ModelAndView("approveCourse");
-        mav.addObject("courseList", courseService.getCourse(id));
-        return mav;
+        try {
+            mav.addObject("courseList", courseService.getCourse(id));
+            return mav;
+        }
+        catch (NullIdCourseException ex) {
+            mav.addObject("excTitle", "Ooops...");
+            mav.addObject("excMessage", ex.toString());
+            return mav;
+        }
     }
 
     @RequestMapping(value = APPROVE_COURSE_POST, method = RequestMethod.POST)
     public ModelAndView approveCoursePost(HttpServletRequest request, @PathVariable("course.id") Integer id, @RequestParam("approveToServ") String approve,
-                                          @RequestParam("reasonToServ") String reason, @RequestParam("manager") UserRole manager) throws AddressException {
-
-        Course appCourse = courseService.getCourse(id);
-        String userName = "";
-        Principal principal = request.getUserPrincipal();
-        if (principal != null && principal.getName() != null) {
-            userName = principal.getName();
-        }
-
-        switch (manager) {
-            case DEPARTMENT_MANAGER :
-                if ("approve".equals(approve)) {
-                    appCourse.setCourseStatus(CourseStatus.APPROVE_DEPARTMENT_MANAGER);
-                    InternetAddress[] emails= new InternetAddress[]{
-                            new InternetAddress("aflamma@yandex.ru")};
-                    mailService.sendEmail(id, Notification.COURSE_APPOVAL_STATUS, emails, userName);
-                }
-                else {
-                    appCourse.setCourseStatus(CourseStatus.NOT_APPROVE);
-                    InternetAddress[] emails = new InternetAddress[]{new InternetAddress(appCourse.getLector().getEmail())};
-                    mailService.sendEmail(id, Notification.COURSE_REJECTED,emails , userName);
-                }
-                break;
+                                          @RequestParam("reasonToServ") String reason, @RequestParam("manager") UserRole manager) throws AddressException, NullIdCourseException, NullUserException {
+try {
+    Course appCourse = courseService.getCourse(id);
+    String userName = userService.getUserFromSession(request);
+    switch (manager) {
+        case DEPARTMENT_MANAGER:
+            if ("approve".equals(approve)) {
+                appCourse.setCourseStatus(CourseStatus.APPROVE_DEPARTMENT_MANAGER);
+                InternetAddress[] emails = new InternetAddress[]{
+                        new InternetAddress("aflamma@yandex.ru")};
+                mailService.sendEmail(id, Notification.COURSE_APPOVAL_STATUS, emails, userName);
+            } else {
+                appCourse.setCourseStatus(CourseStatus.NOT_APPROVE);
+                InternetAddress[] emails = new InternetAddress[]{new InternetAddress(appCourse.getLector().getEmail())};
+                mailService.sendEmail(id, Notification.COURSE_REJECTED, emails, userName);
+            }
+            break;
 
 
-            case KNOWLEDGE_MANAGER :
-                if ("approve".equals(approve)) {
-                    appCourse.setCourseStatus(CourseStatus.APPROVE_KNOWLEDGE_MANAGER);
+        case KNOWLEDGE_MANAGER:
+            if ("approve".equals(approve)) {
+                appCourse.setCourseStatus(CourseStatus.APPROVE_KNOWLEDGE_MANAGER);
 
-                    InternetAddress[] emails = mailService.getRecipient(appCourse);
+                InternetAddress[] emails = mailService.getRecipient(appCourse);
 
-                    mailService.sendEmail(id, Notification.NEW_COURSE_ADDED, emails, userName);
-                }
-                else {
-                    appCourse.setCourseStatus(CourseStatus.APPROVE_DEPARTMENT_MANAGER);
-                    InternetAddress[] emails = new InternetAddress[]{new InternetAddress(appCourse.getLector().getEmail())};
-                    mailService.sendEmail(id, Notification.COURSE_REJECTED,emails , userName);
-                }
-                break;
-        }
+                mailService.sendEmail(id, Notification.NEW_COURSE_ADDED, emails, userName);
+            } else {
+                appCourse.setCourseStatus(CourseStatus.APPROVE_DEPARTMENT_MANAGER);
+                InternetAddress[] emails = new InternetAddress[]{new InternetAddress(appCourse.getLector().getEmail())};
+                mailService.sendEmail(id, Notification.COURSE_REJECTED, emails, userName);
+            }
+            break;
+    }
 
-        appCourse.setKnowledgeManagerReason(reason);
-        courseService.updateCourse(appCourse);
+    appCourse.setKnowledgeManagerReason(reason);
+    courseService.updateCourse(appCourse);
 
-        ModelAndView mav= new ModelAndView("informationBoard");
-        mav.addObject("courseList", courseService.getAllCourse());
-        return mav;
+    ModelAndView mav = new ModelAndView("informationBoard");
+    mav.addObject("courseList", courseService.getAllCourse());
+    return mav;
+}
+catch (NullUserException ex) {
+    return new ModelAndView("signin");
+}
+catch (NullIdCourseException ex) {
+    ModelAndView mav = new ModelAndView("informationBoard");
+    mav.addObject("excTitle", "Ooops...");
+    mav.addObject("excMessage", ex.toString());
+    return mav;
+}
     }
 }

@@ -24,7 +24,6 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
-import javax.servlet.http.HttpSession;
 import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
@@ -55,12 +54,12 @@ public class CourseServiceImpl implements CourseService {
     private MailService mailService;
 
     @Override
-    public boolean isOwner(int idCourse, HttpSession session) {
-//        Course checkCourse = courseDAO.getCourse(idCourse);
-//        User user = (User)session.getAttribute("user");
-//        if(checkCourse.getLector().getName().equals(user.getName()))
-        return true;
-//        return false;
+    public boolean isOwner(int id_course, String userName) throws NullIdCourseException, NullUserException {
+        if (id_course < 1) throw new NullIdCourseException();
+        if (userName == null) throw  new NullUserException();
+
+        Course checkCourse = courseDAO.getCourse(id_course);
+        return checkCourse.getLector().getUsername().equals(userName);
     }
 
 
@@ -250,8 +249,8 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Course getCourse(int id) {
-        if (id < 1) throw new NullPointerException("Id course is null in getCourse()");
+    public Course getCourse(int id) throws NullIdCourseException {
+        if (id < 1) throw new NullIdCourseException();
         return courseDAO.getCourse(id);
     }
 

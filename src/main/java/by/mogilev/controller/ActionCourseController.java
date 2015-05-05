@@ -1,5 +1,6 @@
 package by.mogilev.controller;
 
+import by.mogilev.exception.IsNotOwnerException;
 import by.mogilev.exception.NullIdCourseException;
 import by.mogilev.exception.NullUserException;
 import by.mogilev.model.Course;
@@ -19,15 +20,14 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.mail.internet.AddressException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpSession;
-import java.security.Principal;
 
 /**
  * Created by akiseleva on 09.03.2015.
  */
 @Controller
 public class ActionCourseController {
-   public final String REGISTRATION_COURSE = "/registrationCourse";
-    public  final String DETAIL_COURSE = "/courseDetails/{course.id}";
+    public final String REGISTRATION_COURSE = "/registrationCourse";
+    public final String DETAIL_COURSE = "/courseDetails/{course.id}";
     public final String EDIT_COURSE = "/editCourse/{course.id}";
 
     @Autowired
@@ -50,61 +50,100 @@ public class ActionCourseController {
     }
 
     @RequestMapping(value = REGISTRATION_COURSE, method = RequestMethod.POST)
-    public ModelAndView regCourse(@ModelAttribute("Course")  Course newCourse,  BindingResult result, Model model,
-                                  HttpSession session, HttpServletRequest request) throws AddressException {
-           if (result.hasErrors())
-               new ModelAndView("redirect:/informationBoard");
-
-        String userName = "";
-        Principal principal = request.getUserPrincipal();
-        if (principal != null && principal.getName() != null) {
-            userName = principal.getName();
+    public ModelAndView regCourse(@ModelAttribute("Course") Course newCourse, BindingResult result, Model model,
+                                  HttpSession session, HttpServletRequest request) throws AddressException, NullUserException {
+        try {
+            if (result.hasErrors())
+                new ModelAndView("redirect:/informationBoard");
+            String userName = userService.getUserFromSession(request);
+            courseService.registerCourse(newCourse, userName);
+            return new ModelAndView("redirect:/informationBoard");
+        } catch (NullUserException ex) {
+            return new ModelAndView("signin");
         }
-        courseService.registerCourse(newCourse, userName);
-                    return new ModelAndView("redirect:/informationBoard");
 
     }
 
     @RequestMapping(value = DETAIL_COURSE, method = RequestMethod.GET)
-    public ModelAndView detailsCourse(@PathVariable("course.id") Integer id) {
-        ModelAndView mav= new ModelAndView("courseDetails");
-        mav.addObject("checkCourse", courseService.getCourse(id));
-        return mav;
+    public ModelAndView detailsCourse(@PathVariable("course.id") Integer id) throws NullIdCourseException {
+        ModelAndView mav = new ModelAndView("courseDetails");
+        try {
+            mav.addObject("checkCourse", courseService.getCourse(id));
+            return mav;
+        } catch (NullIdCourseException e) {
+            mav.addObject("excTitle", "Ooops...");
+            mav.addObject("excMessage", e.toString());
+            return new ModelAndView("courseDetails/{course.id}");
+        }
 
     }
 
     @RequestMapping(value = DETAIL_COURSE, method = RequestMethod.POST)
     public ModelAndView deleteCourse(@PathVariable("course.id") Integer id, HttpServletRequest request) throws AddressException, NullUserException, NullIdCourseException {
-        String userName = "";
-        Principal principal = request.getUserPrincipal();
-        if (principal != null && principal.getName() != null) {
-            userName = principal.getName();
+        try {
+            String userName = userService.getUserFromSession(request);
+            courseService.deleteCourse(id, userName);
+            return new ModelAndView("redirect:/informationBoard");
+
+        } catch (NullUserException ex) {
+            return new ModelAndView("signin");
+        } catch (NullIdCourseException e) {
+            ModelAndView mav = new ModelAndView("courseDetails");
+            mav.addObject("excTitle", "Ooops...");
+            mav.addObject("excMessage", e.toString());
+            return new ModelAndView("courseDetails/{course.id}");
         }
-    courseService.deleteCourse(id, userName);
-        return new ModelAndView("redirect:/informationBoard");
 
     }
 
     @RequestMapping(value = EDIT_COURSE, method = RequestMethod.GET)
-    public String editRegCourse(@PathVariable("course.id") Integer id, Model model) {
-        model.addAttribute("categoryMap", courseService.getCategotyMap());
-        model.addAttribute("course", courseService.getCourse(id));
-        return "editCourse";
+    public String editRegCourse(@PathVariable("course.id") Integer id, Model model) throws NullIdCourseException {
+        try {
+            model.addAttribute("categoryMap", courseService.getCategotyMap());
+            model.addAttribute("course", courseService.getCourse(id));
+            return "editCourse";
+        } catch (NullIdCourseException e) {
+            ModelAndView mav = new ModelAndView("informationBoard");
+            mav.addObject("excTitle", "Ooops...");
+            mav.addObject("excMessage", e.toString());
+            return "informationBoard";
+        }
     }
 
     @RequestMapping(value = EDIT_COURSE, method = RequestMethod.POST)
-    public String editCourse(@PathVariable("course.id") Integer id,
+    public ModelAndView editCourse(@PathVariable("course.id") Integer id,
                              @ModelAttribute("Course") Course updCourse,
-                             HttpServletRequest request, HttpSession session, Model model) throws AddressException {
-        model.addAttribute("categoryMap", courseService.getCategotyMap());
+                             HttpServletRequest request, Model model) throws AddressException, NullIdCourseException, NullUserException, IsNotOwnerException {
+       try {
+           model.addAttribute("categoryMap", courseService.getCategotyMap());
 
-        if (! (courseService.isOwner(id, session)) || courseService.getCourse(id) == null)
-              return "redirect:/informationBoard";
-        updCourse.setId(id);
-            courseService.updateCourse(updCourse);
+           String userName = userService.getUserFromSession(request);
+           if (!(courseService.isOwner(id, userName))) throw new IsNotOwnerException();
 
-          return "redirect:/informationBoard";
-    }
+           updCourse.setId(id);
+           updCourse.setLector(userService.getUser(userName));
+           courseService.updateCourse(updCourse);
+           return new ModelAndView("redirect:/courseDetails/{course.id}");       }
+       catch (NullUserException ex) {
+           return new ModelAndView("signin");
+       }
+       catch (NullIdCourseException ex) {
+           ModelAndView mav = new ModelAndView("courseDetails/{course.id}");
+           mav.addObject("excTitle", "Ooops...");
+           mav.addObject("excMessage", ex.toString());
+           return mav;
+       }
+        catch (IsNotOwnerException ex) {
+            ModelAndView mav = new ModelAndView("courseDetails/{course.id}");
+            mav.addObject("excTitle", "Ooops...No right, no action.");
+            mav.addObject("excMessage", ex.toString());
+            return mav;
+        }
+
+
+
+
+}
 
 
 }

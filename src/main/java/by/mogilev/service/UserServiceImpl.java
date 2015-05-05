@@ -18,7 +18,9 @@ import org.springframework.stereotype.Repository;
 
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
+import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
+import java.security.Principal;
 import java.util.Set;
 
 /**
@@ -159,5 +161,17 @@ public class UserServiceImpl implements UserService {
         if (userName == null) throw new NullPointerException("Username is null in getUser()");
 
      return userDAO.getUser(userName);
+    }
+
+    @Override
+    public String getUserFromSession(HttpServletRequest request) throws NullUserException {
+        String userName = "";
+        Principal principal = request.getUserPrincipal();
+        if (principal != null && principal.getName() != null) {
+            userName = principal.getName();
+        }
+        else throw new NullUserException();
+
+        return userName;
     }
 }

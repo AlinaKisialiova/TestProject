@@ -1,9 +1,11 @@
 package by.mogilev.service;
 
+import by.mogilev.exception.NullUserException;
 import by.mogilev.model.Course;
 import by.mogilev.model.User;
 
 import javax.mail.internet.AddressException;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Set;
 
 /**
@@ -42,4 +44,11 @@ public interface UserService {
     public void removeFromAttSet(String username, int id_course) throws Exception;
 
     public User getUser(String userName) ;
+
+    /***
+     * Method get username from Principal
+     * @param request
+     * @return
+     */
+    public String getUserFromSession(HttpServletRequest request) throws NullUserException;
 }
