@@ -8,6 +8,9 @@ package by.mogilev.exception;
     public NotFoundUserException() {
         exceptionMessage = "User denied. Repeat sing in.";
     }
+    public String toString() {
+        return exceptionMessage;
+    }
 
 
 }

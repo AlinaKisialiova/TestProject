@@ -73,17 +73,6 @@ try {
         if (ActionsOnPage.EVAL_REM.equals(action))
             courseService.remidEv(id_course, user, grade);
 
-        if (ActionsOnPage.SUBSCRIBE.equals(action)) {
-            String message = "";
-            if (userService.addInSubscribers(userService.getUserFromSession(request), id_course))
-                message = "You are subscribed!";
-            else
-                message = "You are deleted from subscribe list!!";
-
-            mav.addObject("subscribeMessage", message);
-        }
-
-
         Set<Course> coursesForList = userService.getCoursesSubscribeOfUser(userService.getUserFromSession(request));
         mav.addObject("courseList", coursesForList);
 
@@ -92,8 +81,8 @@ try {
     } catch (NotFoundUserException ex) {
         return new ModelAndView("signin");
     } catch (NotFoundCourseException e) {
-    mav.addObject("excTitle", "Ooops...");
-    mav.addObject("excMessage", e.toString());
+    mav.addObject("modalTitle", "Ooops...");
+    mav.addObject("modalMessage", e.toString());
     return mav;
 }
 
@@ -108,8 +97,8 @@ try {
 
         } catch (NotFoundCourseException e) {
             ModelAndView mavExc = new ModelAndView("informationBoard");
-            mavExc.addObject("excTitle", "Ooops...");
-            mavExc.addObject("excMessage", e.toString());
+            mavExc.addObject("modalTitle", "Ooops...");
+            mavExc.addObject("modalMessage", e.toString());
             return mavExc;
         }
     }
@@ -140,8 +129,8 @@ try {
 
     }catch (NotFoundCourseException e) {
 
-        mav.addObject("excTitle", "Ooops...");
-        mav.addObject("excMessage", e.toString());
+        mav.addObject("modalTitle", "Ooops...");
+        mav.addObject("modalMessage", e.toString());
         return mav;
     }
 

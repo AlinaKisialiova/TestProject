@@ -46,8 +46,8 @@ public class ApproveCourseController {
             return mav;
         }
         catch (NotFoundCourseException ex) {
-            mav.addObject("excTitle", "Ooops...");
-            mav.addObject("excMessage", ex.toString());
+            mav.addObject("modalTitle", "Ooops...");
+            mav.addObject("modalMessage", ex.toString());
             return mav;
         }
     }
@@ -100,8 +100,8 @@ catch (NotFoundUserException ex) {
 }
 catch (NotFoundCourseException ex) {
     ModelAndView mav = new ModelAndView("informationBoard");
-    mav.addObject("excTitle", "Ooops...");
-    mav.addObject("excMessage", ex.toString());
+    mav.addObject("modalTitle", "Ooops...");
+    mav.addObject("modalMessage", ex.toString());
     return mav;
 }
     }

@@ -92,6 +92,17 @@
         <put-attribute name="namePage" value="Attendee List"/>
     </definition>
 
+    <definition name="subscribePage" extends="defaultTemplate">
+        <put-attribute name="content" value="/WEB-INF/pages/subscribePage.jsp"/>
+        <put-attribute name="title" value="Training Center - Subscribe for the Course"/>
+        <put-attribute name="namePage" value="Subscribe for the Course"/>
+    </definition>
+
+    <definition name="attendeePage" extends="defaultTemplate">
+        <put-attribute name="content" value="/WEB-INF/pages/attendeePage.jsp"/>
+        <put-attribute name="title" value="Training Center - Attendee for the Course"/>
+        <put-attribute name="namePage" value="Attendee for the Course"/>
+    </definition>
 
 
 

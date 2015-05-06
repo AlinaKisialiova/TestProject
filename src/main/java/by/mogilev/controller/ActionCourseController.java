@@ -71,8 +71,8 @@ public class ActionCourseController {
             mav.addObject("checkCourse", courseService.getCourse(id));
             return mav;
         } catch (NotFoundCourseException e) {
-            mav.addObject("excTitle", "Ooops...");
-            mav.addObject("excMessage", e.toString());
+            mav.addObject("modalTitle", "Ooops...");
+            mav.addObject("modalMessage", e.toString());
             return new ModelAndView("courseDetails/{course.id}");
         }
 
@@ -89,8 +89,8 @@ public class ActionCourseController {
             return new ModelAndView("signin");
         } catch (NotFoundCourseException e) {
             ModelAndView mav = new ModelAndView("courseDetails");
-            mav.addObject("excTitle", "Ooops...");
-            mav.addObject("excMessage", e.toString());
+            mav.addObject("modalTitle", "Ooops...");
+            mav.addObject("modalMessage", e.toString());
             return new ModelAndView("courseDetails/{course.id}");
         }
 
@@ -104,8 +104,8 @@ public class ActionCourseController {
             return "editCourse";
         } catch (NotFoundCourseException e) {
             ModelAndView mav = new ModelAndView("informationBoard");
-            mav.addObject("excTitle", "Ooops...");
-            mav.addObject("excMessage", e.toString());
+            mav.addObject("modalTitle", "Ooops...");
+            mav.addObject("modalMessage", e.toString());
             return "informationBoard";
         }
     }
@@ -129,14 +129,14 @@ public class ActionCourseController {
        }
        catch (NotFoundCourseException ex) {
            ModelAndView mav = new ModelAndView("courseDetails/{course.id}");
-           mav.addObject("excTitle", "Ooops...");
-           mav.addObject("excMessage", ex.toString());
+           mav.addObject("modalTitle", "Ooops...");
+           mav.addObject("modalMessage", ex.toString());
            return mav;
        }
         catch (IsNotOwnerException ex) {
             ModelAndView mav = new ModelAndView("courseDetails/{course.id}");
-            mav.addObject("excTitle", "Ooops...No right, no action.");
-            mav.addObject("excMessage", ex.toString());
+            mav.addObject("modalTitle", "Ooops...No right, no action.");
+            mav.addObject("modalMessage", ex.toString());
             return mav;
         }
 

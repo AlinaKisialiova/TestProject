@@ -28,7 +28,11 @@
     <script type="text/javascript" src="<c:url value="/resources/js/bootstrap3.0.2.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/resources/js/jquery-1.8.1.min.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/resources/js/trainigCenterScripts.js"/>"></script>
-
+    <style>
+        select {
+            width: 300px;
+        }
+    </style>
 
 </head>
 <body>

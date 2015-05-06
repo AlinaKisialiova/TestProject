@@ -2,10 +2,7 @@ package by.mogilev.controller;
 
 import by.mogilev.exception.NotFoundCourseException;
 import by.mogilev.exception.NotFoundUserException;
-import by.mogilev.model.Course;
-import by.mogilev.model.CourseStatus;
-import by.mogilev.model.Notification;
-import by.mogilev.model.User;
+import by.mogilev.model.*;
 import by.mogilev.service.CourseService;
 import by.mogilev.service.MailService;
 import by.mogilev.service.UserService;
@@ -21,6 +18,7 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.servlet.http.HttpServletRequest;
 import java.util.HashSet;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -30,6 +28,8 @@ import java.util.Set;
 public class ParticipantAndReminderController {
     public final String PARTICIPANT_LIST = "/participantsList/{course.id}";
     public final String EVAL_REMINDER = "/evaluationReminder/{course.id}";
+    public final String SUBSCRIBE = "/subscribePage";
+
 
     @Autowired
     private CourseService courseService;
@@ -47,8 +47,8 @@ public class ParticipantAndReminderController {
             return mav;
         } catch (NotFoundCourseException e) {
             ModelAndView mavExc = new ModelAndView("informationBoard");
-            mavExc.addObject("excTitle", "Ooops...");
-            mavExc.addObject("excMessage", e.toString());
+            mavExc.addObject("modalTitle", "Ooops...");
+            mavExc.addObject("modalMessage", e.toString());
             return mavExc;
         }
     }
@@ -69,8 +69,8 @@ public class ParticipantAndReminderController {
             return mav;
         } catch (NotFoundCourseException e) {
             ModelAndView mavExc = new ModelAndView("informationBoard");
-            mavExc.addObject("excTitle", "Ooops...");
-            mavExc.addObject("excMessage", e.toString());
+            mavExc.addObject("modalTitle", "Ooops...");
+            mavExc.addObject("modalMessage", e.toString());
             return mavExc;
         }
     }
@@ -83,8 +83,8 @@ public class ParticipantAndReminderController {
             return mav;
         } catch (NotFoundCourseException e) {
             ModelAndView mavExc = new ModelAndView("informationBoard");
-            mavExc.addObject("excTitle", "Ooops...");
-            mavExc.addObject("excMessage", e.toString());
+            mavExc.addObject("modalTitle", "Ooops...");
+            mavExc.addObject("modalMessage", e.toString());
             return mavExc;
         }
     }
@@ -113,9 +113,56 @@ public class ParticipantAndReminderController {
             return new ModelAndView("signin");
         } catch (NotFoundCourseException e) {
             ModelAndView mavExc = new ModelAndView("informationBoard");
-            mavExc.addObject("excTitle", "Ooops...");
-            mavExc.addObject("excMessage", e.toString());
+            mavExc.addObject("modalTitle", "Ooops...");
+            mavExc.addObject("modalMessage", e.toString());
             return mavExc;
+        }
+    }
+
+    @RequestMapping(value = SUBSCRIBE, method = RequestMethod.GET)
+    public ModelAndView SubscrGET() {
+        ModelAndView mav = new ModelAndView("subscribePage");
+        List<Course> coursesForList = courseService.getAllCourse();
+        mav.addObject("nameCourses", coursesForList);
+        return mav;
+    }
+
+    @RequestMapping(value = SUBSCRIBE, method = RequestMethod.POST)
+    public ModelAndView SubscPOST(
+            @RequestParam(value = "selectCourse", required = false) Integer id_course,
+            @RequestParam(value = "selectCategory", required = false) String selectCategory,
+            @RequestParam(value = "fieldForSubmit", required = false) ActionsOnPage action,
+            HttpServletRequest request)
+            throws NotFoundCourseException, NotFoundUserException, AddressException {
+        try {
+            ModelAndView mav = new ModelAndView("subscribePage");
+            if (ActionsOnPage.SUBSCRIBE.equals(action)) {
+                if (id_course == null) throw new NotFoundCourseException();
+                String message = "";
+                if (userService.addInSubscribers(userService.getUserFromSession(request), id_course))
+                    message = "You are subscribed!";
+                else
+                    message = "You are deleted from subscribe list!!";
+
+                mav.addObject("modalTitle", "Subscribe");
+                mav.addObject("modalMessage", message);
+            }
+
+            List<Course> coursesForList = courseService.getSelected(selectCategory);
+            mav.addObject("nameCourses", coursesForList);
+            return mav;
+
+        } catch (NotFoundUserException ex) {
+            return new ModelAndView("signin");
+
+        } catch (NotFoundCourseException e) {
+            ModelAndView mavExc = new ModelAndView("subscribePage");
+            List<Course> coursesForList = courseService.getSelected(selectCategory);
+            mavExc.addObject("nameCourses", coursesForList);
+            mavExc.addObject("modalTitle", "Ooops...");
+            mavExc.addObject("modalMessage", "You dont select course");
+            return mavExc;
+
         }
     }
 }

@@ -6,5 +6,7 @@ package by.mogilev.exception;
 public class NotFoundCourseException extends Exception {
     private String exceptionMessage = "This course does not exist.";
 
-
+    public String toString() {
+        return exceptionMessage;
+    }
 }

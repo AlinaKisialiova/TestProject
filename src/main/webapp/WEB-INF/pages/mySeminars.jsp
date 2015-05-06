@@ -12,9 +12,6 @@
 
 <div class="row">
 
-    <div class="span5"><a href="#" onclick="show(null,'#SubscOnCourse')">Subscribe for the Course</a></div>
-
-
     <div id='EvalRemindBlock' style="display: none;" class="table">
         <form method="post" action="informationBoard">
             <input type="hidden" class="idC" name="id"/>
@@ -50,48 +47,6 @@
             </table>
         </form>
     </div>
-
-
-    <div id='SubscOnCourse' style="display: none;" class="table">
-        <form action="mySeminars" method="post">
-            <input type="hidden" class="idC" name="id"/>
-            <table id="subscCourse">
-                <tr>
-                    <td><b> Select Course Category </b></td>
-                    <td>
-                        <select name="selectCategory">
-                            <option value="All">All</option>
-                            <option value="Project Management">Project Management</option>
-                            <option value="Development">Development</option>
-                        </select>
-                    </td>
-                    <td><input type="submit" value="Ok"/></td>
-                </tr>
-                <tr>
-                    <td><b>Select Course Name</b></td>
-                    <td>
-                        <select name="selectCourse" id="selectCourse">
-                            <c:forEach var="courses" items="${nameCourses}">
-                                <option value="${courses.id}"> ${courses.nameCourse}</option>
-                            </c:forEach>
-                        </select>
-
-                <tr>
-                    <td>
-                        <input type="hidden" name="fieldForSubmit" class="fieldForSubmit"/>
-                        <input type="submit" value="Subscribe/Delete" onclick="setAction('SUBSCRIBE')"
-                               class="btn-primary"/>
-
-                    </td>
-                    <td>
-                        <input type="button" value="Cancel" onclick="hide('#SubscOnCourse');" class="btn"/>
-
-                    </td>
-                </tr>
-            </table>
-        </form>
-    </div>
-    <div class="span12"><h2> ${subscribeMessage} </h2></div>
 
 
 
@@ -213,11 +168,7 @@
             $(element).hide();
     }
 
-    function setAction(action) {
-        $(".fieldForSubmit").val(action);
-        $(".idC").val(id);
 
-    }
     function att(yesOrNo, id) {
         $(".idC").val(id);
         if (yesOrNo == "yes") {

@@ -2,6 +2,12 @@
  * Created by akiseleva on 30.04.2015.
  */
 
+function setAction(action) {
+    $(".fieldForSubmit").val(action);
+    $(".idC").val(id);
+
+}
+
 function filter(phrase) {
 
     var words = phrase.value.toLowerCase().split(" ");
@@ -30,3 +36,4 @@ function filter(phrase) {
     }
 
 }
+
