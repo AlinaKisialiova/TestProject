@@ -1,7 +1,7 @@
 package by.mogilev.service;
 
-import by.mogilev.exception.NullIdCourseException;
-import by.mogilev.exception.NullUserException;
+import by.mogilev.exception.NotFoundCourseException;
+import by.mogilev.exception.NotFoundUserException;
 import by.mogilev.model.Course;
 import by.mogilev.model.User;
 import com.itextpdf.text.DocumentException;
@@ -22,9 +22,9 @@ public interface CourseService {
      * @param UserName
      * @return
      */
-   public boolean isOwner(int idCourse, String UserName) throws NullUserException, NullIdCourseException;
+   public boolean isOwner(int idCourse, String UserName) throws NotFoundUserException, NotFoundCourseException;
 
-    public void remidEv(int id, User user, int grade) throws AddressException, NullIdCourseException, NullUserException;
+    public void remidEv(int id, User user, int grade) throws AddressException, NotFoundCourseException, NotFoundUserException;
     Map<String, String> getCategotyMap();
     /**
      *
@@ -53,13 +53,13 @@ public interface CourseService {
 
     public List<Course> getAllCourse();
 
-    public void deleteCourse(int id, String userName) throws AddressException, NullIdCourseException, NullUserException;
+    public void deleteCourse(int id, String userName) throws AddressException, NotFoundCourseException, NotFoundUserException;
 
-    public Course getCourse(int id) throws NullIdCourseException;
+    public Course getCourse(int id) throws NotFoundCourseException;
 
-    public void registerCourse(Course course, String nameLector) throws AddressException, NullUserException;
+    public void registerCourse(Course course, String nameLector) throws AddressException, NotFoundUserException;
 
-    public void updateCourse(Course updCourse) throws AddressException, NullIdCourseException;
+    public void updateCourse(Course updCourse) throws AddressException, NotFoundCourseException;
 
     public boolean startCourse(int id, String userName);
 

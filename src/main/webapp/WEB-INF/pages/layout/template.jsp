@@ -34,30 +34,36 @@
 <body>
 
 <div class="container">
-
     <div class="row">
         <div class="span9 offset5">
-            <div role="banner" class="navbar navbar-inverse navbar-fixed-top">
+            <div role="banner" class="navbar navbar">
                 <tiles:insertAttribute name="header"/>
             </div>
+
+<div align="right"><tiles:insertAttribute name="logout"/> </div>
         </div>
+</div>
 
-        <br>
-        <br>
-        <br>
 
+    <hr>
+<div class="row">
+    <div class="span9 offset4">
         <div class="content">
+            <tiles:insertAttribute name="menu"/>
+
+              <div align="center"><h1><tiles:insertAttribute name="namePage"/>         </div>
             <tiles:insertAttribute name="content"/>
             <tiles:insertAttribute name="modalWindow"/>
-
         </div>
-
-        <div class="span9 offset5">
+        </div>
+</div>
+    <div class="row">
+        <div class="span9" align="center">
             <tiles:insertAttribute name="footer"/>
         </div>
-
+</div>
     </div>
 
-</div>
+
 </body>
 </html>

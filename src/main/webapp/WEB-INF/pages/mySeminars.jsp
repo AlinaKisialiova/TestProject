@@ -12,23 +12,6 @@
 
 <div class="row">
 
-    <div class="span12"><h1>My Seminars</h1></div>
-    <div class="span12">
-    Hello, <security:authentication property="principal.username" var="user"/> ${user}!
-    <a href=j_spring_security_logout> Logout</a>
-    </div>
-<div class="span12">
-    <sec:authorize access="hasRole('ROLE_LECTOR')">
-        I am know that you are a lector!
-    </sec:authorize>
-
-    <sec:authorize access="hasRole('ROLE_USER')">
-        I am know that you are a user!
-    </sec:authorize>
-</div>
-
-    <div class="span5"><a href="<c:url value="/informationBoard" context="/project"/>"> Seminars Information Board </a>
-    </div>
     <div class="span5"><a href="#" onclick="show(null,'#SubscOnCourse')">Subscribe for the Course</a></div>
 
 
@@ -183,7 +166,7 @@
                         </c:when>
 
                         <c:otherwise>
-                            <a href="<c:url value="/attendeeList/${course.id}" context="/project"/>" class="btn-primary">
+                            <a href="<c:url value="/attendeeList/${course.id}" context="/project"/>" class="btn-primary btn-group-lg">
                                 Include Into Attenders List </a>
                         </c:otherwise>
                     </c:choose>

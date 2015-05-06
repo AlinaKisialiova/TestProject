@@ -1,7 +1,7 @@
 package by.mogilev.controller;
 
-import by.mogilev.exception.NullIdCourseException;
-import by.mogilev.exception.NullUserException;
+import by.mogilev.exception.NotFoundCourseException;
+import by.mogilev.exception.NotFoundUserException;
 import by.mogilev.model.ActionsOnPage;
 import by.mogilev.model.User;
 import by.mogilev.service.CourseService;
@@ -51,14 +51,14 @@ public class InformationBoardController {
                                           @RequestParam(value = "id", required = false) Integer id_course,
                                           @RequestParam(value = "selectCategory", required = false) String selectCategory,
                                           HttpServletResponse response)
-            throws IOException, DocumentException, AddressException, NullUserException {
+            throws IOException, DocumentException, AddressException, NotFoundUserException {
         ModelAndView mav = new ModelAndView("informationBoard");
         try {
             String userName = "";
             Principal principal = request.getUserPrincipal();
             if (principal != null && principal.getName() != null) {
                 userName = principal.getName();
-            } else throw new NullUserException();
+            } else throw new NotFoundUserException();
 
             if (action == null) action = ActionsOnPage.NO_ACTION;
             switch (action) {
@@ -81,9 +81,9 @@ public class InformationBoardController {
             }
             mav.addObject("courseList", courseService.getAllCourse());
 
-        } catch (NullUserException ex) {
+        } catch (NotFoundUserException ex) {
             return new ModelAndView("signin");
-        } catch (NullIdCourseException e) {
+        } catch (NotFoundCourseException e) {
             mav.addObject("excTitle", "Ooops...");
             mav.addObject("excMessage", e.toString());
             return new ModelAndView("informationBoard");

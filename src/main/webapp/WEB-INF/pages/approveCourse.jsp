@@ -11,28 +11,6 @@
 <c:set  var="course" value="${courseList}"/>
 <form method="post" action="${pageContext.request.contextPath}/approveCourse/${course.id}">
 <div class="row">
-    <div class="span12">
-        Hello, <security:authentication property="principal.username" var="user"/> ${user}!
-        <a href="<c:url context="/project" value="/j_spring_security_logout"/>"> Logout</a>
-    </div>
-    <div class="span12">
-          <sec:authorize access="hasRole('KNOWLEDGE_MANAGER')">
-            I am know that you are a KNOWLEDGE MANAGER!
-              <input type="hidden"  id="manager" name="manager" value="KNOWLEDGE_MANAGER"/>
-        </sec:authorize>
-
-        <sec:authorize access="hasRole('DEPARTMENT_MANAGER')">
-            I am know that you are a DEPARTMENT_MANAGER!
-            <input type="hidden" name="manager" id="manager" value="DEPARTMENT_MANAGER"/>
-        </sec:authorize>
-    </div>
-<div class="span12"> <h2>Approve Course</h2>    </div>
-
-    <div class="span12">
-        <h4>
-            <a href="<c:url value="/informationBoard" context="/project"/>"> Seminars Information Board </a>
-        </h4>
-    </div>
 
 <div class="span12">
     <div class="span3"><strong> Course Category</strong></div> <div class="span6"><c:out value="${course.category}" escapeXml="true"/></div>

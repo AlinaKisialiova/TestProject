@@ -1,6 +1,6 @@
 package by.mogilev.dao;
 
-import by.mogilev.exception.NullUserException;
+import by.mogilev.exception.NotFoundUserException;
 import by.mogilev.model.User;
 
 import java.util.List;
@@ -13,5 +13,5 @@ public interface UserDAO {
     public void addUser(User user) ;
     public List<User> getAllUser() ;
     public void updateUser(User user);
-    public int getIdByUsername(String username) throws NullUserException;
+    public int getIdByUsername(String username) throws NotFoundUserException;
 }

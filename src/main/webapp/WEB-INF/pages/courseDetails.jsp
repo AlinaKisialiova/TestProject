@@ -3,22 +3,6 @@
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 
 <div style="text-align: center;">
-<h1>Course Details</h1>
-    <div class="span12">
-        Hello, <security:authentication property="principal.username" var="user"/> ${user}!
-        <a href=j_spring_security_logout> Logout</a>
-    </div>
-    <div class="span12">
-        <sec:authorize access="hasRole('ROLE_LECTOR')">
-            I am know that you are a lector!
-        </sec:authorize>
-
-        <sec:authorize access="hasRole('ROLE_USER')">
-            I am know that you are a user!
-        </sec:authorize>
-    </div>
-
-    <a href="<c:url value="/informationBoard"/>"> Seminar Information Board</a>
 <c:set var="course" value="${checkCourse}"/>
 <table align="center">
     <tr><td><strong>Course Category</strong></td>

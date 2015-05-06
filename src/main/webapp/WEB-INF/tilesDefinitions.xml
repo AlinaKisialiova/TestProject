@@ -7,6 +7,9 @@
 
     <definition name="defaultTemplate" template="/WEB-INF/pages/layout/template.jsp">
         <put-attribute name="header" value="/WEB-INF/pages/layout/defaultHeader.jsp"/>
+        <put-attribute name="namePage" value=""/>
+        <put-attribute name="logout" value="/WEB-INF/pages/layout/logout.jsp"/>
+        <put-attribute name="menu" value="/WEB-INF/pages/layout/menu.jsp"/>
         <put-attribute name="content" value=""/>
         <put-attribute name="modalWindow" value="/WEB-INF/pages/layout/modalWindow.jsp"/>
         <put-attribute name="footer" value="/WEB-INF/pages/layout/defaultFooter.jsp"/>
@@ -16,61 +19,77 @@
     <definition name="signin" extends="defaultTemplate">
         <put-attribute name="content" value="/WEB-INF/pages/user/signin.jsp"/>
         <put-attribute name="title" value="Training Center - Sign In"/>
+        <put-attribute name="namePage" value="Sign In"/>
+        <put-attribute name="menu" value=""/>
+        <put-attribute name="logout" value=""/>
+
     </definition>
 
     <definition name="signin_failure" extends="defaultTemplate">
         <put-attribute name="content" value="/WEB-INF/pages/user/signin_failure.jsp"/>
         <put-attribute name="title" value="Training Center - Sign Failure"/>
+        <put-attribute name="namePage" value="Signin Failure"/>
+        <put-attribute name="menu" value=""/>
     </definition>
 
     <definition name="informationBoard" extends="defaultTemplate">
         <put-attribute name="content" value="/WEB-INF/pages/informationBoard.jsp"/>
         <put-attribute name="title" value="Training Center - Information Board"/>
+        <put-attribute name="namePage" value="Seminar Information Board"/>
     </definition>
 
     <definition name="registrationCourse" extends="defaultTemplate">
         <put-attribute name="content" value="/WEB-INF/pages/registrationCourse.jsp"/>
         <put-attribute name="title" value="Training Center - Registration Course"/>
+        <put-attribute name="namePage" value="Registration Course"/>
 
     </definition>
     <definition name="courseDetails" extends="defaultTemplate">
         <put-attribute name="content" value="/WEB-INF/pages/courseDetails.jsp"/>
         <put-attribute name="title" value="Training Center - Course Details"/>
+        <put-attribute name="namePage" value="Course Details"/>
     </definition>
 
     <definition name="editCourse" extends="defaultTemplate">
         <put-attribute name="content" value="/WEB-INF/pages/editCourse.jsp"/>
         <put-attribute name="title" value="Training Center - Edit Course "/>
+        <put-attribute name="namePage" value="Edit Course "/>
     </definition>
 
     <definition name="deniedPage" extends="defaultTemplate">
         <put-attribute name="content" value="/WEB-INF/pages/deniedPage.jsp"/>
         <put-attribute name="title" value="Training Center - Access is denied "/>
+        <put-attribute name="namePage" value="Access is denied "/>
     </definition>
 
     <definition name="participantsList" extends="defaultTemplate">
         <put-attribute name="content" value="/WEB-INF/pages/participantsList.jsp"/>
         <put-attribute name="title" value="Training Center - Participants List "/>
+        <put-attribute name="namePage" value="Participants List "/>
     </definition>
 
     <definition name="mySeminars" extends="defaultTemplate">
         <put-attribute name="content" value="/WEB-INF/pages/mySeminars.jsp"/>
         <put-attribute name="title" value="Training Center - My Seminars"/>
+        <put-attribute name="namePage" value="My Seminars"/>
     </definition>
 
     <definition name="evaluationReminder" extends="defaultTemplate">
         <put-attribute name="content" value="/WEB-INF/pages/evaluationReminder.jsp"/>
         <put-attribute name="title" value="Training Center - Evaluation Reminder"/>
+        <put-attribute name="namePage" value="Evaluation Reminder"/>
     </definition>
 
     <definition name="approveCourse" extends="defaultTemplate">
         <put-attribute name="content" value="/WEB-INF/pages/approveCourse.jsp"/>
         <put-attribute name="title" value="Training Center - Approve Course"/>
+        <put-attribute name="namePage" value="Approve Course"/>
     </definition>
 
     <definition name="attendeeList" extends="defaultTemplate">
         <put-attribute name="content" value="/WEB-INF/pages/attendeeList.jsp"/>
         <put-attribute name="title" value="Training Center - Attendee List"/>
+        <put-attribute name="namePage" value="Attendee List"/>
     </definition>
 
 

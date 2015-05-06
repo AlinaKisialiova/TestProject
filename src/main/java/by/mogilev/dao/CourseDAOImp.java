@@ -1,6 +1,5 @@
 package by.mogilev.dao;
 
-import by.mogilev.exception.NullIdCourseException;
 import by.mogilev.model.Course;
 import by.mogilev.model.User;
 import org.hibernate.Criteria;

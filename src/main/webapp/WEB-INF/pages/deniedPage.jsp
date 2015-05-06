@@ -13,7 +13,5 @@
 <img src="<c:url value="/resources/img/denied.jpg"/>"/>
 </div>
  </div>
-    <div class="span12">
-        <a href="<c:url value="/informationBoard" context="/project"/>">Back</a>
-    </div>
+
 </div>

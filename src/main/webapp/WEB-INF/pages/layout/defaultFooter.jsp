@@ -5,5 +5,6 @@
   Time: 8:45
   To change this template use File | Settings | File Templates.
 --%>
-
-<div class="modal-footer"> Mogilev, 2015</div>
+<nav class="navbar navbar-default navbar-fixed-bottom" role="navigation">
+<div class="container"> Artezio. Mogilev, 2015</div>
+    </nav>

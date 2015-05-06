@@ -1,6 +1,6 @@
 package by.mogilev.dao;
 
-import by.mogilev.exception.NullUserException;
+import by.mogilev.exception.NotFoundUserException;
 import by.mogilev.model.User;
 import org.hibernate.Criteria;
 import org.hibernate.Session;
@@ -62,7 +62,7 @@ public class UserDAOImp  implements UserDAO {
     }
 
     @Override
-    public int getIdByUsername(String username) throws NullUserException {
+    public int getIdByUsername(String username) throws NotFoundUserException {
         Session session = this.sessionFactory.getCurrentSession();
         Criteria criteria = session.createCriteria(User.class);
         criteria.add(Restrictions.eq("username", username));

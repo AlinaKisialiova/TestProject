@@ -8,25 +8,11 @@
   Time: 9:36
   To change this template use File | Settings | File Templates.
 --%>
-<h1>Course Details Update</h1>
-<div class="span12">
-    Hello, <security:authentication property="principal.username" var="user"/> ${user}!
-    <a href=j_spring_security_logout> Logout</a>
-</div>
-<div class="span12">
-    <sec:authorize access="hasRole('ROLE_LECTOR')">
-        I am know that you are a lector!
-    </sec:authorize>
 
-    <sec:authorize access="hasRole('ROLE_USER')">
-        I am know that you are a user!
-    </sec:authorize>
-</div>
 <h2> ${message}</h2>
 
 <form:form method="post" name="editForm"  modelAttribute="Course">
 <table align="center">
-    <a href="<c:url value="/informationBoard"/>"> Seminar Information Board</a>
     <tr><td><strong>Course Category</strong></td>
         <td>
             <form:select path="category" items="${categoryMap}"/>

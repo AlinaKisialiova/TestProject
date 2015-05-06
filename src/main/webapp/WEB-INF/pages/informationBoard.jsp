@@ -3,30 +3,6 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<h1>Seminars Information Board</h1>
-Hello, <security:authentication property="principal.username" var="user"/> ${user}!
-<a href=j_spring_security_logout> Logout</a>
-</br>
-
-<sec:authorize access="hasRole('ROLE_LECTOR')">
-    I am know that you are a lector!
-</sec:authorize>
-
-<sec:authorize access="hasRole('ROLE_USER')">
-    I am know that you are a user!
-</sec:authorize>
-
-<sec:authorize access="hasRole('KNOWLEDGE_MANAGER')">
-    I am know that you are a KNOWLEDGE MANAGER!
-    <input type="hidden" id="manager" name="manager" value="KNOWLEDGE_MANAGER"/>
-</sec:authorize>
-
-<sec:authorize access="hasRole('DEPARTMENT_MANAGER')">
-    I am know that you are a DEPARTMENT_MANAGER!
-    <input type="hidden" name="manager" id="manager" value="DEPARTMENT_MANAGER"/>
-</sec:authorize>
-
-<br/>
 
 <div id='EvalRemindBlock' style="display: none;">
     <form method="post" action="informationBoard">
@@ -65,15 +41,6 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
 </div>
 <br>
 
-<table>
-
-    <tr>
-        <td><a href="mySeminars"> My seminars </a></td>
-        <td><br></td>
-        <td><a href=registrationCourse>Register Course</a></td>
-        <td><br></td>
-    </tr>
-</table>
 <%--<tr>--%>
 <%--<form>--%>
 <%--<td><br></td>--%>
@@ -176,14 +143,14 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
                     <input type="submit" name="delete" value="Delete" onclick="del(${course.id})" class="btn"/>
                     </c:if>
                     <c:if test="${course.courseStatus eq 'DELIVERED'}">
-                    <a href="/evaluationReminder/${course.id}">
+                    <a href="<c:url value="/evaluationReminder/${course.id}" context="/project"/>">
                         <input type="button" id="Eval" value="Evaluation Reminder" class="btn"/>
                     </a>
                     </c:if>
                     </c:if>
 
                     <sec:authorize access="hasAnyRole('DEPARTMENT_MANAGER','KNOWLEDGE_MANAGER')">
-                    <a href="<c:url value="/approveCourse/${course.id}"/>">
+                    <a href="<c:url value="/approveCourse/${course.id}" context="/project"/>">
                         <input type="button" id="approve" value="Approve Course" class="btn"/>
                     </a>
                     </sec:authorize>

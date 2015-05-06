@@ -2,8 +2,8 @@ package by.mogilev.service;
 
 import by.mogilev.dao.CourseDAO;
 import by.mogilev.dao.UserDAO;
-import by.mogilev.exception.NullIdCourseException;
-import by.mogilev.exception.NullUserException;
+import by.mogilev.exception.NotFoundCourseException;
+import by.mogilev.exception.NotFoundUserException;
 import by.mogilev.model.Course;
 import by.mogilev.model.CourseStatus;
 import by.mogilev.model.Notification;
@@ -49,9 +49,9 @@ public class UserServiceImpl implements UserService {
 
     @SuppressWarnings("unchecked")
     @Override
-    public Set<Course> getCoursesSubscribeOfUser(String username) throws NullUserException {
+    public Set<Course> getCoursesSubscribeOfUser(String username) throws NotFoundUserException {
         Session session = this.sessionFactory.getCurrentSession();
-        if (username == null) throw new NullUserException();
+        if (username == null) throw new NotFoundUserException();
 
         int id_user=getIdByUsername(username);
         Criteria criteria = session.createCriteria(User.class);
@@ -69,9 +69,9 @@ public class UserServiceImpl implements UserService {
 
     @SuppressWarnings("unchecked")
     @Override
-    public Set<Course> getCoursesAttendeeOfUser(String username) throws NullUserException {
+    public Set<Course> getCoursesAttendeeOfUser(String username) throws NotFoundUserException {
         Session session = this.sessionFactory.getCurrentSession();
-        if (username == null) throw new NullUserException();
+        if (username == null) throw new NotFoundUserException();
 
         int id_user=getIdByUsername(username);
 
@@ -90,15 +90,15 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public int getIdByUsername(String username) throws NullUserException {
-        if (username == null) throw new NullUserException();
+    public int getIdByUsername(String username) throws NotFoundUserException {
+        if (username == null) throw new NotFoundUserException();
         return userDAO.getIdByUsername(username);
     }
 
     @Override
-    public boolean addInSubscribers(String username, int id_course) throws AddressException, NullUserException, NullIdCourseException {
-        if (username == null) throw new NullUserException();
-        if (id_course < 1) throw  new NullIdCourseException();
+    public boolean addInSubscribers(String username, int id_course) throws AddressException, NotFoundUserException, NotFoundCourseException {
+        if (username == null) throw new NotFoundUserException();
+        if (id_course < 1) throw  new NotFoundCourseException();
 
         User userSubscr = userDAO.getUser(username);
         Course course = courseDAO.getCourse(id_course);
@@ -123,8 +123,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void addInAttSet(String username, int id_course) throws Exception {
-        if (username == null) throw new NullUserException();
-        if (id_course < 1) throw  new NullIdCourseException();
+        if (username == null) throw new NotFoundUserException();
+        if (id_course < 1) throw  new NotFoundCourseException();
 
         User userAtt = userDAO.getUser(username);
         Course course = courseDAO.getCourse(id_course);
@@ -141,8 +141,8 @@ public class UserServiceImpl implements UserService {
 
     @Override
     public void removeFromAttSet(String username, int id_course) throws Exception {
-        if (username == null) throw new NullUserException();
-        if (id_course < 1) throw  new NullIdCourseException();
+        if (username == null) throw new NotFoundUserException();
+        if (id_course < 1) throw  new NotFoundCourseException();
 
         User userAtt = userDAO.getUser(username);
         Course course = courseDAO.getCourse(id_course);
@@ -157,20 +157,20 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public User getUser(String userName) throws NullUserException {
-        if (userName == null) throw new NullUserException();
+    public User getUser(String userName) throws NotFoundUserException {
+        if (userName == null) throw new NotFoundUserException();
 
      return userDAO.getUser(userName);
     }
 
     @Override
-    public String getUserFromSession(HttpServletRequest request) throws NullUserException {
+    public String getUserFromSession(HttpServletRequest request) throws NotFoundUserException {
         String userName = "";
         Principal principal = request.getUserPrincipal();
         if (principal != null && principal.getName() != null) {
             userName = principal.getName();
         }
-        else throw new NullUserException();
+        else throw new NotFoundUserException();
 
         return userName;
     }

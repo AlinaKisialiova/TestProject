@@ -1,7 +1,7 @@
 package by.mogilev.controller;
 
-import by.mogilev.exception.NullIdCourseException;
-import by.mogilev.exception.NullUserException;
+import by.mogilev.exception.NotFoundCourseException;
+import by.mogilev.exception.NotFoundUserException;
 import by.mogilev.model.ActionsOnPage;
 import by.mogilev.model.Course;
 import by.mogilev.model.User;
@@ -41,7 +41,7 @@ public class MySeminarsController {
     }
 
     @RequestMapping(value = MY_SEMINARS, method = RequestMethod.GET)
-    public ModelAndView listCourseUser(HttpServletRequest request) throws NullUserException {
+    public ModelAndView listCourseUser(HttpServletRequest request) throws NotFoundUserException {
         ModelAndView mav = new ModelAndView("mySeminars");
         try {
             String userName = userService.getUserFromSession(request);
@@ -51,7 +51,7 @@ public class MySeminarsController {
             mav.addObject("courseList", userService.getCoursesSubscribeOfUser(userName));
             mav.addObject("attCourseOfUser", userService.getCoursesAttendeeOfUser(userName));
             return mav;
-        } catch (NullUserException ex) {
+        } catch (NotFoundUserException ex) {
             return new ModelAndView("signin");
         }
     }
@@ -63,7 +63,7 @@ public class MySeminarsController {
                               @RequestParam(value = "selectCategory", required = false) String selectCategory,
                               @RequestParam(value = "id", required = false) Integer id,
                               HttpServletRequest request)
-            throws IOException, DocumentException, AddressException, NullUserException {
+            throws IOException, DocumentException, AddressException, NotFoundUserException {
         ModelAndView mav = new ModelAndView("mySeminars");
 try {
         List<Course> coursesForSelect = courseService.getSelected(selectCategory);
@@ -89,9 +89,9 @@ try {
 
         mav.addObject("attCourseOfUser", userService.getCoursesAttendeeOfUser(userService.getUserFromSession(request)));
         return mav;
-    } catch (NullUserException ex) {
+    } catch (NotFoundUserException ex) {
         return new ModelAndView("signin");
-    } catch (NullIdCourseException e) {
+    } catch (NotFoundCourseException e) {
     mav.addObject("excTitle", "Ooops...");
     mav.addObject("excMessage", e.toString());
     return mav;
@@ -99,14 +99,14 @@ try {
 
     }
     @RequestMapping(value = ATTENDEE_LIST, method = RequestMethod.GET)
-    public ModelAndView AttendeeListGET(@PathVariable("course.id") Integer id) throws NullIdCourseException {
+    public ModelAndView AttendeeListGET(@PathVariable("course.id") Integer id) throws NotFoundCourseException {
         ModelAndView mav = new ModelAndView("attendeeList");
         try {
             mav.addObject("checkCourse", courseService.getCourse(id));
             mav.addObject("attendee", courseService.getCourse(id).getAttenders());
             return mav;
 
-        } catch (NullIdCourseException e) {
+        } catch (NotFoundCourseException e) {
             ModelAndView mavExc = new ModelAndView("informationBoard");
             mavExc.addObject("excTitle", "Ooops...");
             mavExc.addObject("excMessage", e.toString());
@@ -138,7 +138,7 @@ try {
 
             return mav;
 
-    }catch (NullIdCourseException e) {
+    }catch (NotFoundCourseException e) {
 
         mav.addObject("excTitle", "Ooops...");
         mav.addObject("excMessage", e.toString());

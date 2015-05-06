@@ -2,8 +2,8 @@ package by.mogilev.service;
 
 import by.mogilev.dao.CourseDAO;
 import by.mogilev.dao.UserDAO;
-import by.mogilev.exception.NullIdCourseException;
-import by.mogilev.exception.NullUserException;
+import by.mogilev.exception.NotFoundCourseException;
+import by.mogilev.exception.NotFoundUserException;
 import by.mogilev.model.Course;
 import by.mogilev.model.Notification;
 import by.mogilev.model.User;
@@ -54,9 +54,9 @@ public class CourseServiceImpl implements CourseService {
     private MailService mailService;
 
     @Override
-    public boolean isOwner(int id_course, String userName) throws NullIdCourseException, NullUserException {
-        if (id_course < 1) throw new NullIdCourseException();
-        if (userName == null) throw  new NullUserException();
+    public boolean isOwner(int id_course, String userName) throws NotFoundCourseException, NotFoundUserException {
+        if (id_course < 1) throw new NotFoundCourseException();
+        if (userName == null) throw  new NotFoundUserException();
 
         Course checkCourse = courseDAO.getCourse(id_course);
         return checkCourse.getLector().getUsername().equals(userName);
@@ -195,9 +195,9 @@ public class CourseServiceImpl implements CourseService {
 
 
     @Override
-    public void remidEv(int id, User user, int grade) throws AddressException, NullIdCourseException, NullUserException {
-        if (id < 1) throw new NullIdCourseException();
-        if (user == null) throw new NullUserException();
+    public void remidEv(int id, User user, int grade) throws AddressException, NotFoundCourseException, NotFoundUserException {
+        if (id < 1) throw new NotFoundCourseException();
+        if (user == null) throw new NotFoundUserException();
         Course changeEvalCourse = courseDAO.getCourse(id);
 
         Map<User, Integer> mapEval = changeEvalCourse.getEvalMap();
@@ -237,9 +237,9 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public void deleteCourse(int id, String userName) throws AddressException, NullIdCourseException, NullUserException {
-        if (id < 1) throw new NullIdCourseException();
-        if(userName == null) throw new NullUserException();
+    public void deleteCourse(int id, String userName) throws AddressException, NotFoundCourseException, NotFoundUserException {
+        if (id < 1) throw new NotFoundCourseException();
+        if(userName == null) throw new NotFoundUserException();
 
         Course course = courseDAO.getCourse(id);
        if (userDAO.getUser(userName).getId() != course.getLector().getId())
@@ -251,14 +251,14 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Course getCourse(int id) throws NullIdCourseException {
-        if (id < 1) throw new NullIdCourseException();
+    public Course getCourse(int id) throws NotFoundCourseException {
+        if (id < 1) throw new NotFoundCourseException();
         return courseDAO.getCourse(id);
     }
 
     @Override
-    public void registerCourse(Course course, String nameLector) throws AddressException, NullUserException {
-        if (nameLector == null) throw new NullUserException();
+    public void registerCourse(Course course, String nameLector) throws AddressException, NotFoundUserException {
+        if (nameLector == null) throw new NotFoundUserException();
         courseDAO.registerCourse(course, nameLector);
         int id = courseDAO.getCourseByNameDAO(course.getNameCourse()).getId();
         InternetAddress[] emails= new InternetAddress[]{
@@ -268,9 +268,9 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public void updateCourse(Course updCourse) throws AddressException, NullIdCourseException {
+    public void updateCourse(Course updCourse) throws AddressException, NotFoundCourseException {
 
-        if (updCourse == null) throw  new NullIdCourseException();
+        if (updCourse == null) throw  new NotFoundCourseException();
 //
 //        editCourse.setCategory(updCourse.getCategory());
 //        editCourse.setNameCourse(updCourse.getNameCourse());

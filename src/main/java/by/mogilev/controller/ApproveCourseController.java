@@ -1,7 +1,7 @@
 package by.mogilev.controller;
 
-import by.mogilev.exception.NullIdCourseException;
-import by.mogilev.exception.NullUserException;
+import by.mogilev.exception.NotFoundCourseException;
+import by.mogilev.exception.NotFoundUserException;
 import by.mogilev.model.Course;
 import by.mogilev.model.CourseStatus;
 import by.mogilev.model.Notification;
@@ -39,13 +39,13 @@ public class ApproveCourseController {
     private MailService mailService;
 
     @RequestMapping(value = APPROVE_COURSE_GET, method = RequestMethod.GET)
-    public ModelAndView approveCourseGet(@PathVariable("course.id") Integer id) throws NullIdCourseException {
+    public ModelAndView approveCourseGet(@PathVariable("course.id") Integer id) throws NotFoundCourseException {
         ModelAndView mav= new ModelAndView("approveCourse");
         try {
             mav.addObject("courseList", courseService.getCourse(id));
             return mav;
         }
-        catch (NullIdCourseException ex) {
+        catch (NotFoundCourseException ex) {
             mav.addObject("excTitle", "Ooops...");
             mav.addObject("excMessage", ex.toString());
             return mav;
@@ -54,7 +54,7 @@ public class ApproveCourseController {
 
     @RequestMapping(value = APPROVE_COURSE_POST, method = RequestMethod.POST)
     public ModelAndView approveCoursePost(HttpServletRequest request, @PathVariable("course.id") Integer id, @RequestParam("approveToServ") String approve,
-                                          @RequestParam("reasonToServ") String reason, @RequestParam("manager") UserRole manager) throws AddressException, NullIdCourseException, NullUserException {
+                                          @RequestParam("reasonToServ") String reason, @RequestParam("manager") UserRole manager) throws AddressException, NotFoundCourseException, NotFoundUserException {
 try {
     Course appCourse = courseService.getCourse(id);
     String userName = userService.getUserFromSession(request);
@@ -95,10 +95,10 @@ try {
     mav.addObject("courseList", courseService.getAllCourse());
     return mav;
 }
-catch (NullUserException ex) {
+catch (NotFoundUserException ex) {
     return new ModelAndView("signin");
 }
-catch (NullIdCourseException ex) {
+catch (NotFoundCourseException ex) {
     ModelAndView mav = new ModelAndView("informationBoard");
     mav.addObject("excTitle", "Ooops...");
     mav.addObject("excMessage", ex.toString());

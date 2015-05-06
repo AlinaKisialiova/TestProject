@@ -1,8 +1,8 @@
 package by.mogilev.controller;
 
 import by.mogilev.exception.IsNotOwnerException;
-import by.mogilev.exception.NullIdCourseException;
-import by.mogilev.exception.NullUserException;
+import by.mogilev.exception.NotFoundCourseException;
+import by.mogilev.exception.NotFoundUserException;
 import by.mogilev.model.Course;
 import by.mogilev.service.CourseService;
 import by.mogilev.service.MailService;
@@ -51,26 +51,26 @@ public class ActionCourseController {
 
     @RequestMapping(value = REGISTRATION_COURSE, method = RequestMethod.POST)
     public ModelAndView regCourse(@ModelAttribute("Course") Course newCourse, BindingResult result, Model model,
-                                  HttpSession session, HttpServletRequest request) throws AddressException, NullUserException {
+                                  HttpSession session, HttpServletRequest request) throws AddressException, NotFoundUserException {
         try {
             if (result.hasErrors())
                 new ModelAndView("redirect:/informationBoard");
             String userName = userService.getUserFromSession(request);
             courseService.registerCourse(newCourse, userName);
             return new ModelAndView("redirect:/informationBoard");
-        } catch (NullUserException ex) {
+        } catch (NotFoundUserException ex) {
             return new ModelAndView("signin");
 
         }
     }
 
     @RequestMapping(value = DETAIL_COURSE, method = RequestMethod.GET)
-    public ModelAndView detailsCourse(@PathVariable("course.id") Integer id) throws NullIdCourseException {
+    public ModelAndView detailsCourse(@PathVariable("course.id") Integer id) throws NotFoundCourseException {
         ModelAndView mav = new ModelAndView("courseDetails");
         try {
             mav.addObject("checkCourse", courseService.getCourse(id));
             return mav;
-        } catch (NullIdCourseException e) {
+        } catch (NotFoundCourseException e) {
             mav.addObject("excTitle", "Ooops...");
             mav.addObject("excMessage", e.toString());
             return new ModelAndView("courseDetails/{course.id}");
@@ -79,15 +79,15 @@ public class ActionCourseController {
     }
 
     @RequestMapping(value = DETAIL_COURSE, method = RequestMethod.POST)
-    public ModelAndView deleteCourse(@PathVariable("course.id") Integer id, HttpServletRequest request) throws AddressException, NullUserException, NullIdCourseException {
+    public ModelAndView deleteCourse(@PathVariable("course.id") Integer id, HttpServletRequest request) throws AddressException, NotFoundUserException, NotFoundCourseException {
         try {
             String userName = userService.getUserFromSession(request);
             courseService.deleteCourse(id, userName);
             return new ModelAndView("redirect:/informationBoard");
 
-        } catch (NullUserException ex) {
+        } catch (NotFoundUserException ex) {
             return new ModelAndView("signin");
-        } catch (NullIdCourseException e) {
+        } catch (NotFoundCourseException e) {
             ModelAndView mav = new ModelAndView("courseDetails");
             mav.addObject("excTitle", "Ooops...");
             mav.addObject("excMessage", e.toString());
@@ -97,12 +97,12 @@ public class ActionCourseController {
     }
 
     @RequestMapping(value = EDIT_COURSE, method = RequestMethod.GET)
-    public String editRegCourse(@PathVariable("course.id") Integer id, Model model) throws NullIdCourseException {
+    public String editRegCourse(@PathVariable("course.id") Integer id, Model model) throws NotFoundCourseException {
         try {
             model.addAttribute("categoryMap", courseService.getCategotyMap());
             model.addAttribute("course", courseService.getCourse(id));
             return "editCourse";
-        } catch (NullIdCourseException e) {
+        } catch (NotFoundCourseException e) {
             ModelAndView mav = new ModelAndView("informationBoard");
             mav.addObject("excTitle", "Ooops...");
             mav.addObject("excMessage", e.toString());
@@ -113,7 +113,7 @@ public class ActionCourseController {
     @RequestMapping(value = EDIT_COURSE, method = RequestMethod.POST)
     public ModelAndView editCourse(@PathVariable("course.id") Integer id,
                              @ModelAttribute("Course") Course updCourse,
-                             HttpServletRequest request, Model model) throws AddressException, NullIdCourseException, NullUserException, IsNotOwnerException {
+                             HttpServletRequest request, Model model) throws AddressException, NotFoundCourseException, NotFoundUserException, IsNotOwnerException {
        try {
            model.addAttribute("categoryMap", courseService.getCategotyMap());
 
@@ -124,10 +124,10 @@ public class ActionCourseController {
            updCourse.setLector(userService.getUser(userName));
            courseService.updateCourse(updCourse);
            return new ModelAndView("redirect:/courseDetails/{course.id}");       }
-       catch (NullUserException ex) {
+       catch (NotFoundUserException ex) {
            return new ModelAndView("signin");
        }
-       catch (NullIdCourseException ex) {
+       catch (NotFoundCourseException ex) {
            ModelAndView mav = new ModelAndView("courseDetails/{course.id}");
            mav.addObject("excTitle", "Ooops...");
            mav.addObject("excMessage", ex.toString());
