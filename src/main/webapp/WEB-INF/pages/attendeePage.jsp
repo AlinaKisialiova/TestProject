@@ -1,4 +1,5 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
+<%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%--
   Created by IntelliJ IDEA.
   User: akiseleva
@@ -10,9 +11,9 @@
 <div class="row">
     <div class="col-md-8 col-md-offset-4">
         <div id='SubscOnCourse' class="table">
-            <form action="subscribePage" method="post">
+            <form action="attendeePage" method="post">
                 <input type="hidden" class="idC" name="id"/>
-                <table id="subscCourse">
+                <table id="attendeeTable">
                     <tr>
                         <td><b> Select Category </b></td>
                         <td>
@@ -39,9 +40,9 @@
                     <tr><td> <br> </td></tr>
                     <tr>
                         <td colspan="2">
-                           <%--<a href="<c:url value="/attendeeList/${}"context="/project"/>"  class="btn btn-primary btn-lg btn-block" >--%>
-                               Include in Attendee List </a>
+                                <input type="submit" onclick="setAction('ADD_IN_ATT')" value="Include in Attendee List" />
                                <input type="hidden" name="id_c" class="id_c"/>
+                            <input type="hidden" name="fieldForSubmit" class="fieldForSubmit"/>
                         </td>
 
                     </tr>
@@ -60,5 +61,8 @@
 function setId(id) {
 $(".id_c").val(id);
 return id;
+}
+function setAction(action) {
+    $(".fieldForSubmit").val(action);
 }
 </script>

@@ -14,7 +14,7 @@
     <li><a href="<c:url value="/informationBoard" context="/project"/>">Information Board</a></li>
     <li><a href="<c:url value="/mySeminars" context="/project"/>">My Seminars</a></li>
     <li><a href="<c:url value="/subscribePage" context="/project"/>">Subscribe </a></li>
-    <li><a href="#">Participate</a></li>
+    <li><a href="<c:url value="/attendeePage" context="/project"/>">Participate</a></li>
     <sec:authorize access="hasRole('ROLE_LECTOR')">
         <li><a href="<c:url value="/registrationCourse" context="/project"/>">Register course</a></li>
     </sec:authorize>

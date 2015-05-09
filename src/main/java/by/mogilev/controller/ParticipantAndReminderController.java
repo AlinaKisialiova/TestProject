@@ -29,6 +29,7 @@ public class ParticipantAndReminderController {
     public final String PARTICIPANT_LIST = "/participantsList/{course.id}";
     public final String EVAL_REMINDER = "/evaluationReminder/{course.id}";
     public final String SUBSCRIBE = "/subscribePage";
+    public final String ATTENDEE = "/attendeePage";
 
 
     @Autowired
@@ -162,6 +163,52 @@ public class ParticipantAndReminderController {
             mavExc.addObject("modalTitle", "Ooops...");
             mavExc.addObject("modalMessage", "You dont select course");
             return mavExc;
+
+        }
+    }
+
+    @RequestMapping(value = ATTENDEE, method = RequestMethod.GET)
+    public ModelAndView AttendeePageGET(HttpServletRequest request) throws NotFoundUserException {
+        try {
+            ModelAndView mav = new ModelAndView("attendeePage");
+            Set<Course> coursesForList = userService.getCoursesSubscribeOfUser(userService.getUserFromSession(request));
+            mav.addObject("nameCourses", coursesForList);
+            return mav;
+
+        } catch (NotFoundUserException ex) {
+            return new ModelAndView("signin");
+
+        }
+    }
+
+    @RequestMapping(value = ATTENDEE, method = RequestMethod.POST)
+    public ModelAndView AttendeePagePOST(
+            @RequestParam(value = "selectCourse", required = false) Integer id_course,
+            @RequestParam(value = "selectCategory", required = false) String selectCategory,
+            @RequestParam(value = "fieldForSubmit", required = false) ActionsOnPage action,
+            HttpServletRequest request)
+            throws NotFoundCourseException, NotFoundUserException, AddressException {
+        try {
+            if (ActionsOnPage.ADD_IN_ATT.equals(action)) {
+                return new ModelAndView("attendeeList/{id_course}");
+            }
+            ModelAndView mav = new ModelAndView("attendeePage");
+            Set<Course> subcrCourse = userService.getCoursesSubscribeOfUser(userService.getUserFromSession(request));
+            Set<Course> coursesForList = new HashSet<Course>();
+            if ("All".equals(selectCategory))
+                coursesForList = subcrCourse;
+            else {
+
+                for (Course c : subcrCourse) {
+                    if (c.getCategory().equals(selectCategory))
+                        coursesForList.add(c);
+                }
+            }
+            mav.addObject("nameCourses", coursesForList);
+            return mav;
+
+        } catch (NotFoundUserException ex) {
+            return new ModelAndView("signin");
 
         }
     }
