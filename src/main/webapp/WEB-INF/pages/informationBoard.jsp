@@ -124,7 +124,7 @@
                     <c:out value="${course.attenders.size()}" escapeXml="true"/>
                 </a>
             </td>
-            <td><c:out value="${course.courseStatus}" escapeXml="true"/>
+            <td class="status"> <c:out value="${course.courseStatus}" escapeXml="true"/>
             </td>
             <td>
                 <c:if test="${course.courseStatus eq 'DELIVERED'}">
@@ -156,6 +156,7 @@
                     </sec:authorize>
                     <input type="hidden" name="fieldForSubmit" class="fieldForSubmit"/>
                     <input type="hidden" class="idC" name="id" />
+                        <input type="text" class="v" id="v"  value=""/>
 
     </form>
     </div>
@@ -169,13 +170,22 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/bootstrap.min3.0.2.js"/>"></script>
 <script>
+   var stat=$("td.status");
+   $(".v").val(stat);
 
-    var exc = $("#excMess").val();
-    if (exc == '') {
-        $('#myModal').modal('hide');
-    }
-    else
-        $('#myModal').modal('show');
+   alert(stat);
+   if(stat.indexOf("NOT_APPROVE") > 0)
+       $("#status").html('Not Approve');
+
+   if (stat.indexOf("APPROVE_DEPARTMENT_MANAGER") > 0)
+       $("#status").html('Approve department manager');
+
+   if (stat.indexOf("APPROVE_KNOWLEDGE_MANAGER") > 0)
+       $("#status").html('Approve knowledge manager');
+
+   if (stat.indexOf("DELIVERED") > 0)
+       $("#status").html('Delivered');
+
 
 
     function show(id) {

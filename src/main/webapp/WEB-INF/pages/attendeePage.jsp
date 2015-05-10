@@ -40,7 +40,7 @@
                     <tr><td> <br> </td></tr>
                     <tr>
                         <td colspan="2">
-                                <input type="submit" onclick="setAction('ADD_IN_ATT')" value="Include in Attendee List" />
+                                <input type="submit" onclick="setAction('ADD_IN_ATT')" value="Include in Attendee List" class="btn btn-primary btn-lg btn-block"/>
                                <input type="hidden" name="id_c" class="id_c"/>
                             <input type="hidden" name="fieldForSubmit" class="fieldForSubmit"/>
                         </td>

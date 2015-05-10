@@ -29,7 +29,7 @@
         </td>
     </tr>
     <tr><th>Course Links</th>
-        <td><form:textarea path="links" name="updCourseLinks" value="${course.links}"/>
+        <td><form:input path="links" name="updCourseLinks" rows="3" value="${course.links}"/>
         </td>
     </tr>
     <tr><th>Course Duration</th>
@@ -53,8 +53,8 @@
     </tr>
 
     <tr>
-        <td><a href="informationBoard"> Cancel</a> </td>
-        <td><input type="submit" value="OK" onclick="return validate();"/></td>
+        <td><a href="<c:url value="/courseDetails/${course.id}" context="/project"/> "> Cancel</a> </td>
+        <td><input type="submit" value="OK" onclick="return validate();" class="btn-primary"/></td>
     </tr>
 </table>
 </form:form>

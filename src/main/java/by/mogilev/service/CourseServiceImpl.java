@@ -271,15 +271,6 @@ public class CourseServiceImpl implements CourseService {
     public void updateCourse(Course updCourse) throws AddressException, NotFoundCourseException {
 
         if (updCourse == null) throw  new NotFoundCourseException();
-//
-//        editCourse.setCategory(updCourse.getCategory());
-//        editCourse.setNameCourse(updCourse.getNameCourse());
-//        editCourse.setDescription(updCourse.getDescription());
-//        editCourse.setLinks(updCourse.getLinks());
-//        editCourse.setDuration(updCourse.getDuration());
-//        editCourse.setEvaluation(0);
-//        editCourse.setCourseStatus(updCourse.getCourseStatus());
-
         courseDAO.updateCourse(updCourse);
 //        InternetAddress[] emails = mailService.getRecipient(updCourse);
     InternetAddress [] emails = new InternetAddress[2];

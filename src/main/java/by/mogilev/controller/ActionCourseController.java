@@ -84,7 +84,6 @@ public class ActionCourseController {
             String userName = userService.getUserFromSession(request);
             courseService.deleteCourse(id, userName);
             return new ModelAndView("redirect:/informationBoard");
-
         } catch (NotFoundUserException ex) {
             return new ModelAndView("signin");
         } catch (NotFoundCourseException e) {
@@ -119,10 +118,14 @@ public class ActionCourseController {
 
            String userName = userService.getUserFromSession(request);
            if (!(courseService.isOwner(id, userName))) throw new IsNotOwnerException();
+           Course editCourse = courseService.getCourse(id);
+           editCourse.setCategory(updCourse.getCategory());
+           editCourse.setNameCourse(updCourse.getNameCourse());
+           editCourse.setDescription(updCourse.getDescription());
+           editCourse.setLinks(updCourse.getLinks());
+           editCourse.setDuration(updCourse.getDuration());
 
-           updCourse.setId(id);
-           updCourse.setLector(userService.getUser(userName));
-           courseService.updateCourse(updCourse);
+           courseService.updateCourse(editCourse);
            return new ModelAndView("redirect:/courseDetails/{course.id}");       }
        catch (NotFoundUserException ex) {
            return new ModelAndView("signin");
