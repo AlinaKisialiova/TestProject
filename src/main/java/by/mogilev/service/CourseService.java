@@ -1,5 +1,6 @@
 package by.mogilev.service;
 
+import by.mogilev.exception.IsNotOwnerException;
 import by.mogilev.exception.NotFoundCourseException;
 import by.mogilev.exception.NotFoundUserException;
 import by.mogilev.model.Course;
@@ -53,7 +54,7 @@ public interface CourseService {
 
     public List<Course> getAllCourse();
 
-    public void deleteCourse(int id, String userName) throws AddressException, NotFoundCourseException, NotFoundUserException;
+    public void deleteCourse(int id, String userName) throws AddressException, NotFoundCourseException, NotFoundUserException, IsNotOwnerException;
 
     public Course getCourse(int id) throws NotFoundCourseException;
 

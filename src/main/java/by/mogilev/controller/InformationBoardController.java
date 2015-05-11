@@ -1,5 +1,6 @@
 package by.mogilev.controller;
 
+import by.mogilev.exception.IsNotOwnerException;
 import by.mogilev.exception.NotFoundCourseException;
 import by.mogilev.exception.NotFoundUserException;
 import by.mogilev.model.ActionsOnPage;
@@ -80,7 +81,10 @@ public class InformationBoardController {
                     break;
             }
             mav.addObject("courseList", courseService.getAllCourse());
-
+        } catch (IsNotOwnerException e) {
+            mav.addObject("modalTitle", "Ooops...");
+            mav.addObject("modalMessage", e.toString());
+            return new ModelAndView("courseDetails/{course.id}");
         } catch (NotFoundUserException ex) {
             return new ModelAndView("signin");
         } catch (NotFoundCourseException e) {

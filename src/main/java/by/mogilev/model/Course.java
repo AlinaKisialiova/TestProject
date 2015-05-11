@@ -157,7 +157,7 @@ public class Course implements Serializable {
     }
 
     @ManyToMany(mappedBy = "coursesAttendee",
-            cascade = CascadeType.ALL)
+            cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     public Set<User> getAttenders() {
         return attenders;
     }
@@ -167,7 +167,7 @@ public class Course implements Serializable {
     }
 
     @ManyToMany(mappedBy = "coursesSubscribe",
-            cascade = CascadeType.ALL)
+            cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     public Set<User> getSubscribers() {
         return subscribers;
     }

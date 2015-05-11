@@ -82,8 +82,14 @@ public class ActionCourseController {
     public ModelAndView deleteCourse(@PathVariable("course.id") Integer id, HttpServletRequest request) throws AddressException, NotFoundUserException, NotFoundCourseException {
         try {
             String userName = userService.getUserFromSession(request);
-            courseService.deleteCourse(id, userName);
-            return new ModelAndView("redirect:/informationBoard");
+                courseService.deleteCourse(id, userName);
+            return new ModelAndView("informationBoard");
+        } catch (IsNotOwnerException e) {
+            ModelAndView mav = new ModelAndView("courseDetails");
+            mav.addObject("modalTitle", "Ooops...");
+            mav.addObject("modalMessage", e.toString());
+            return new ModelAndView("courseDetails/{course.id}");
+
         } catch (NotFoundUserException ex) {
             return new ModelAndView("signin");
         } catch (NotFoundCourseException e) {

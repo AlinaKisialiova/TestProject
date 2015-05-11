@@ -2,6 +2,7 @@ package by.mogilev.service;
 
 import by.mogilev.dao.CourseDAO;
 import by.mogilev.dao.UserDAO;
+import by.mogilev.exception.IsNotOwnerException;
 import by.mogilev.exception.NotFoundCourseException;
 import by.mogilev.exception.NotFoundUserException;
 import by.mogilev.model.Course;
@@ -17,6 +18,7 @@ import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
+import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -237,14 +239,24 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public void deleteCourse(int id, String userName) throws AddressException, NotFoundCourseException, NotFoundUserException {
+    public void deleteCourse(int id, String userName) throws AddressException, NotFoundCourseException, NotFoundUserException, IsNotOwnerException {
         if (id < 1) throw new NotFoundCourseException();
         if(userName == null) throw new NotFoundUserException();
+        if (!isOwner(id, userName)) throw new IsNotOwnerException();
 
         Course course = courseDAO.getCourse(id);
-       if (userDAO.getUser(userName).getId() != course.getLector().getId())
-           return;
-
+        Hibernate.initialize(course.getAttenders());
+        Hibernate.initialize(course.getSubscribers());
+        if(course.getSubscribers().size()>0){
+            for(User user : course.getSubscribers()){
+                user.getCoursesSubscribe().remove(course);
+            }
+        }
+        if(course.getAttenders().size()>0){
+            for(User user : course.getAttenders()){
+                user.getCoursesAttendee().remove(course);
+            }
+        }
         courseDAO.deleteCourse(course);
         InternetAddress[] emails = mailService.getRecipient(course);
         mailService.sendEmail(id, Notification.COURSE_DELETE, emails, userName);
