@@ -1,3 +1,4 @@
+<%@ page import="by.mogilev.model.CourseStatus" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
@@ -47,7 +48,6 @@
             </table>
         </form>
     </div>
-
 
 
     <table align="justify" id="tableCourse">
@@ -100,13 +100,35 @@
                         <c:out value="${course.attenders.size()}" escapeXml="true"/>
                     </a>
                 </td>
-                <td><c:out value="${course.courseStatus}" escapeXml="true"/></td>
+                <td>
+                    <c:set var="NOT_APPROVE" value="<%=CourseStatus.NOT_APPROVE%>"/>
+                    <c:set var="APPROVE_DEPARTMENT_MANAGER" value="<%=CourseStatus.APPROVE_DEPARTMENT_MANAGER%>"/>
+                    <c:set var="APPROVE_DEPARTMENT_MANAGER" value="<%=CourseStatus.APPROVE_DEPARTMENT_MANAGER%>"/>
+                    <c:set var="APPROVE_KNOWLEDGE_MANAGER" value="<%=CourseStatus.APPROVE_KNOWLEDGE_MANAGER%>"/>
+                    <c:set var="DELIVERED" value="<%=CourseStatus.DELIVERED%>"/>
+                    <c:choose>
+                        <c:when test="${course.courseStatus eq NOT_APPROVE}">
+                            <c:out value="Not Approve" escapeXml="true"/>
+                        </c:when>
+
+                        <c:when test="${course.courseStatus == APPROVE_DEPARTMENT_MANAGER}">
+                            <c:out
+                                value="Approve department manager" escapeXml="true"/>
+                        </c:when>
+                        <c:when test="${course.courseStatus == APPROVE_KNOWLEDGE_MANAGER}">
+                            <c:out
+                                value="Approve knowledge manager" escapeXml="true"/></c:when>
+                        <c:when test="${course.courseStatus == DELIVERED}">
+                            <c:out value="Delivered"   escapeXml="true"/>
+                        </c:when>
+                    </c:choose>
+                </td>
 
                 <td class="grade_${course.id}">
                     <c:if test="${course.courseStatus eq 'DELIVERED'}">
-                        <a href="#" onclick="show(${course.id}, '#EvalRemindBlock')">
-                    <c:out value="${course.evaluation}" escapeXml="true"/>
-                        </a>
+                    <a href="#" onclick="show(${course.id}, '#EvalRemindBlock')">
+                        <c:out value="${course.evaluation}" escapeXml="true"/>
+                    </a>
                     <input type="hidden" value="${course.evaluation}" class="hiddenEval_${course.id}">
                 </td>
 
@@ -121,7 +143,8 @@
                         </c:when>
 
                         <c:otherwise>
-                            <a href="<c:url value="/attendeeList/${course.id}" context="/project"/>" class="btn-primary btn-group-lg">
+                            <a href="<c:url value="/attendeeList/${course.id}" context="/project"/>"
+                               class="btn-primary btn-group-lg">
                                 Include Into Attenders List </a>
                         </c:otherwise>
                     </c:choose>

@@ -1,4 +1,4 @@
-<%@ page import="by.mogilev.model.Course" %>
+<%@ page import="by.mogilev.model.CourseStatus" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
@@ -101,7 +101,7 @@
             <th>Course Category</th>
             <th>Subscribed</th>
             <th>Participated</th>
-            <th>Delivered Course</th>
+            <th>Course Status</th>
             <th>Evaluation</th>
             <th>Actions</th>
         </tr>
@@ -124,8 +124,29 @@
                     <c:out value="${course.attenders.size()}" escapeXml="true"/>
                 </a>
             </td>
-            <td class="status"> <c:out value="${course.courseStatus}" escapeXml="true"/>
-            </td>
+
+            <td> <c:set var="NOT_APPROVE" value="<%=CourseStatus.NOT_APPROVE%>"/>
+                <c:set var="APPROVE_DEPARTMENT_MANAGER" value="<%=CourseStatus.APPROVE_DEPARTMENT_MANAGER%>"/>
+                <c:set var="APPROVE_DEPARTMENT_MANAGER" value="<%=CourseStatus.APPROVE_DEPARTMENT_MANAGER%>"/>
+                <c:set var="APPROVE_KNOWLEDGE_MANAGER" value="<%=CourseStatus.APPROVE_KNOWLEDGE_MANAGER%>"/>
+                <c:set var="DELIVERED" value="<%=CourseStatus.DELIVERED%>"/>
+                <c:choose>
+                    <c:when test="${course.courseStatus eq NOT_APPROVE}">
+                        <c:out value="Not Approve" escapeXml="true"/>
+                    </c:when>
+
+                    <c:when test="${course.courseStatus == APPROVE_DEPARTMENT_MANAGER}">
+                        <c:out
+                                value="Approve department manager" escapeXml="true"/>
+                    </c:when>
+                    <c:when test="${course.courseStatus == APPROVE_KNOWLEDGE_MANAGER}">
+                        <c:out
+                                value="Approve knowledge manager" escapeXml="true"/></c:when>
+                    <c:when test="${course.courseStatus == DELIVERED}">
+                        <c:out value="Delivered"   escapeXml="true"/>
+                    </c:when>
+                </c:choose>
+        </td>
             <td>
                 <c:if test="${course.courseStatus eq 'DELIVERED'}">
                     <a href="#" onclick="show(${course.id})" title="click to put mark">
@@ -170,23 +191,6 @@
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/bootstrap.min3.0.2.js"/>"></script>
 <script>
-//   var stat=$("td.status");
-//   $(".v").val(stat);
-//
-//   alert(stat);
-//   if(stat.indexOf("NOT_APPROVE") > 0)
-//       $("#status").html('Not Approve');
-//
-//   if (stat.indexOf("APPROVE_DEPARTMENT_MANAGER") > 0)
-//       $("#status").html('Approve department manager');
-//
-//   if (stat.indexOf("APPROVE_KNOWLEDGE_MANAGER") > 0)
-//       $("#status").html('Approve knowledge manager');
-//
-//   if (stat.indexOf("DELIVERED") > 0)
-//       $("#status").html('Delivered');
-
-
 
     function show(id) {
         $("#EvalRemindBlock").show();

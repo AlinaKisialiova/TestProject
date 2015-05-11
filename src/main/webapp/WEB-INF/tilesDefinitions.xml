@@ -87,7 +87,7 @@
     </definition>
 
     <definition name="attendeeList" extends="defaultTemplate">
-        <put-attribute name="content" value="/WEB-INF/pages/attendee_List.jsp"/>
+        <put-attribute name="content" value="/WEB-INF/pages/attendeeList.jsp"/>
         <put-attribute name="title" value="Training Center - Attendee List"/>
         <put-attribute name="namePage" value="Attendee List"/>
     </definition>
