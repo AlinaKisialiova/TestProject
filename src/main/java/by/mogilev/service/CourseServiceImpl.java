@@ -30,9 +30,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.HashMap;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Администратор on 21.03.2015.
@@ -245,18 +244,7 @@ public class CourseServiceImpl implements CourseService {
         if (!isOwner(id, userName)) throw new IsNotOwnerException();
 
         Course course = courseDAO.getCourse(id);
-        Hibernate.initialize(course.getAttenders());
-        Hibernate.initialize(course.getSubscribers());
-        if(course.getSubscribers().size()>0){
-            for(User user : course.getSubscribers()){
-                user.getCoursesSubscribe().remove(course);
-            }
-        }
-        if(course.getAttenders().size()>0){
-            for(User user : course.getAttenders()){
-                user.getCoursesAttendee().remove(course);
-            }
-        }
+
         courseDAO.deleteCourse(course);
         InternetAddress[] emails = mailService.getRecipient(course);
         mailService.sendEmail(id, Notification.COURSE_DELETE, emails, userName);

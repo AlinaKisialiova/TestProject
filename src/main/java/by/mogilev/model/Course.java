@@ -156,7 +156,7 @@ public class Course implements Serializable {
         this.lector = lector;
     }
 
-    @ManyToMany(mappedBy = "coursesAttendee",
+    @ManyToMany(mappedBy = "coursesAttendee",fetch = FetchType.LAZY,
             cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     public Set<User> getAttenders() {
         return attenders;
@@ -166,7 +166,7 @@ public class Course implements Serializable {
         this.attenders = attendees;
     }
 
-    @ManyToMany(mappedBy = "coursesSubscribe",
+    @ManyToMany(mappedBy = "coursesSubscribe",fetch = FetchType.LAZY,
             cascade={CascadeType.PERSIST, CascadeType.MERGE, CascadeType.REFRESH})
     public Set<User> getSubscribers() {
         return subscribers;

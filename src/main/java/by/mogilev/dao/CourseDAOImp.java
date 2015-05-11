@@ -113,8 +113,26 @@ public class CourseDAOImp implements CourseDAO {
     @Transactional
     public void deleteCourse(Course course) {
         Session session = this.sessionFactory.getCurrentSession();
+        Hibernate.initialize(course.getSubscribers());
+        if (course.getSubscribers().size() > 0) {
+
+            for (User user : course.getSubscribers()) {
+                Hibernate.initialize(user.getCoursesSubscribe());
+                user.getCoursesSubscribe().remove(course);
+            }
+        }
+
+        Hibernate.initialize(course.getAttenders());
+        if(course.getAttenders().size()>0){
+
+            for(User user : course.getAttenders()){
+                Hibernate.initialize(user.getCoursesAttendee());
+                user.getCoursesAttendee().remove(course);
+            }
+        }
         session.delete(course);
         session.flush();
+
     }
 
 }
