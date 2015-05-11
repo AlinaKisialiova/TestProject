@@ -10,13 +10,15 @@ import by.mogilev.service.UserService;
 import com.itextpdf.text.DocumentException;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
-import org.springframework.web.bind.annotation.*;
+import org.springframework.web.bind.annotation.ModelAttribute;
+import org.springframework.web.bind.annotation.RequestMapping;
+import org.springframework.web.bind.annotation.RequestMethod;
+import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.mail.internet.AddressException;
 import javax.servlet.http.HttpServletRequest;
 import java.io.IOException;
-import java.security.Principal;
 import java.util.List;
 import java.util.Set;
 
@@ -26,7 +28,7 @@ import java.util.Set;
 @Controller
 public class MySeminarsController {
     public final String MY_SEMINARS = "/mySeminars";
-    public final String ATTENDEE_LIST = "/attendeeList/{course.id}";
+
 
     @Autowired
     private CourseService courseService;
@@ -87,52 +89,5 @@ try {
 }
 
     }
-    @RequestMapping(value = ATTENDEE_LIST, method = RequestMethod.GET)
-    public ModelAndView AttendeeListGET(@PathVariable("course.id") Integer id) throws NotFoundCourseException {
-        ModelAndView mav = new ModelAndView("attendeeList");
-        try {
-            mav.addObject("checkCourse", courseService.getCourse(id));
-            mav.addObject("attendee", courseService.getCourse(id).getAttenders());
-            return mav;
 
-        } catch (NotFoundCourseException e) {
-            ModelAndView mavExc = new ModelAndView("informationBoard");
-            mavExc.addObject("modalTitle", "Ooops...");
-            mavExc.addObject("modalMessage", e.toString());
-            return mavExc;
-        }
-    }
-
-    @RequestMapping(value = ATTENDEE_LIST, method = RequestMethod.POST)
-    public ModelAndView AttendeeListPOST(@PathVariable("course.id") Integer id,
-                                         Principal principal, @RequestParam(value = "fieldForSubmit", required = false) ActionsOnPage action)
-            throws Exception {
-        ModelAndView mav = new ModelAndView("attendeeList");
-        try {
-            mav.addObject("checkCourse", courseService.getCourse(id));
-            String message = "";
-            switch (action) {
-                case ADD_IN_ATT:
-                    userService.addInAttSet(principal.getName(), id);
-                    message = "You are included in attenders list!";
-                    break;
-
-                case REMOTE_FROM_ATT:
-                    userService.removeFromAttSet(principal.getName(), id);
-                    message = "You are deleted from attenders list!";
-                    break;
-            }
-            mav.addObject("attendersMessage", message);
-            mav.addObject("attendee", courseService.getCourse(id).getAttenders());
-
-            return mav;
-
-    }catch (NotFoundCourseException e) {
-
-        mav.addObject("modalTitle", "Ooops...");
-        mav.addObject("modalMessage", e.toString());
-        return mav;
-    }
-
-}
     }

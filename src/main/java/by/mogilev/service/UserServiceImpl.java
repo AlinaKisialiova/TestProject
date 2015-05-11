@@ -153,7 +153,6 @@ public class UserServiceImpl implements UserService {
             userDAO.updateUser(userAtt);
         }
 
-        else throw new Exception();
     }
 
     @Override

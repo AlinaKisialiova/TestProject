@@ -8,6 +8,7 @@ import by.mogilev.service.MailService;
 import by.mogilev.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
+import org.springframework.ui.Model;
 import org.springframework.web.bind.annotation.PathVariable;
 import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
@@ -17,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.servlet.http.HttpServletRequest;
+import java.security.Principal;
 import java.util.HashSet;
 import java.util.List;
 import java.util.Set;
@@ -30,6 +32,7 @@ public class ParticipantAndReminderController {
     public final String EVAL_REMINDER = "/evaluationReminder/{course.id}";
     public final String SUBSCRIBE = "/subscribePage";
     public final String ATTENDEE = "/attendeePage";
+    public final String ATTENDEE_LIST = "/attendeeList/{id}";
 
 
     @Autowired
@@ -171,7 +174,14 @@ public class ParticipantAndReminderController {
     public ModelAndView AttendeePageGET(HttpServletRequest request) throws NotFoundUserException {
         try {
             ModelAndView mav = new ModelAndView("attendeePage");
-            Set<Course> coursesForList = userService.getCoursesSubscribeOfUser(userService.getUserFromSession(request));
+            Set<Course> courses = userService.getCoursesSubscribeOfUser(userService.getUserFromSession(request));
+            Set<Course> coursesForList = new HashSet<Course>();
+            for (Course c : courses) {
+                if (c.getAttenders().size() < Course.MAX_COUNT_ATT && (CourseStatus.DELIVERED.equals(c.getCourseStatus())
+                        || CourseStatus.APPROVE_KNOWLEDGE_MANAGER.equals(c.getCourseStatus()))) {
+                    coursesForList.add(c);
+                }
+            }
             mav.addObject("nameCourses", coursesForList);
             return mav;
 
@@ -186,13 +196,18 @@ public class ParticipantAndReminderController {
             @RequestParam(value = "selectCourse", required = false) Integer id_course,
             @RequestParam(value = "selectCategory", required = false) String selectCategory,
             @RequestParam(value = "fieldForSubmit", required = false) ActionsOnPage action,
-            HttpServletRequest request)
+            HttpServletRequest request, Model model)
             throws NotFoundCourseException, NotFoundUserException, AddressException {
         try {
-            if (ActionsOnPage.ADD_IN_ATT.equals(action)) {
-                return new ModelAndView("attendeeList/{id_course}");
-            }
+
+            if (id_course == null) throw new NotFoundCourseException();
             ModelAndView mav = new ModelAndView("attendeePage");
+            if (ActionsOnPage.ADD_IN_ATT.equals(action)) {
+
+                model.addAttribute("id", id_course);
+                return new ModelAndView("redirect:" + "/attendeeList/{id}");
+            }
+
             Set<Course> subcrCourse = userService.getCoursesSubscribeOfUser(userService.getUserFromSession(request));
             Set<Course> coursesForList = new HashSet<Course>();
             if ("All".equals(selectCategory))
@@ -211,5 +226,58 @@ public class ParticipantAndReminderController {
             return new ModelAndView("signin");
 
         }
+    }
+
+    @RequestMapping(value = ATTENDEE_LIST, method = RequestMethod.GET)
+    public ModelAndView AttendeeListGET(@PathVariable("id") Integer id, HttpServletRequest request) throws NotFoundCourseException {
+        ModelAndView mav = new ModelAndView("attendeeList");
+        try {
+            String userName = userService.getUserFromSession(request);
+            mav.addObject("checkCourse", courseService.getCourse(id));
+            mav.addObject("attendee", courseService.getCourse(id).getAttenders());
+            mav.addObject("attCourseOfUser", userService.getCoursesAttendeeOfUser(userName));
+            return mav;
+
+        } catch (NotFoundCourseException e) {
+            ModelAndView mavExc = new ModelAndView("informationBoard");
+            mavExc.addObject("modalTitle", "Ooops...");
+            mavExc.addObject("modalMessage", e.toString());
+            return mavExc;
+        } catch (NotFoundUserException e) {
+            return new ModelAndView("signin");
+        }
+    }
+
+    @RequestMapping(value = ATTENDEE_LIST, method = RequestMethod.POST)
+    public ModelAndView AttendeeListPOST(@PathVariable("id") Integer id,
+                                         Principal principal, @RequestParam(value = "fieldForSubmit", required = false) ActionsOnPage action)
+            throws Exception {
+        ModelAndView mav = new ModelAndView("attendeeList");
+        try {
+            mav.addObject("checkCourse", courseService.getCourse(id));
+            String message = "";
+            switch (action) {
+                case ADD_IN_ATT:
+                    userService.addInAttSet(principal.getName(), id);
+                    message = "You are included in attenders list!";
+                    break;
+
+                case REMOTE_FROM_ATT:
+                    userService.removeFromAttSet(principal.getName(), id);
+                    message = "You are deleted from attenders list!";
+                    break;
+            }
+            mav.addObject("attendersMessage", message);
+            mav.addObject("attendee", courseService.getCourse(id).getAttenders());
+
+            return mav;
+
+        } catch (NotFoundCourseException e) {
+
+            mav.addObject("modalTitle", "Ooops...");
+            mav.addObject("modalMessage", e.toString());
+            return mav;
+        }
+
     }
 }
