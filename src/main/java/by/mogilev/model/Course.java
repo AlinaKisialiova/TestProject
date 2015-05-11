@@ -191,7 +191,11 @@ public class Course implements Serializable {
 
     @Override
     public int hashCode() {
-        return getId()*11+11;
+        int result = id;
+        result = 31 * result + category.hashCode();
+        result = 31 * result + nameCourse.hashCode();
+        result = 31 * result + duration.hashCode();
+        return result;
     }
 
     @Override

@@ -16,7 +16,6 @@ public interface CourseDAO {
     public void registerCourse(Course course, String nameLector);
     public void updateCourse( Course course);
     public List getSelectedDao(String category);
-    public List<Course> getCoursesForUser(int id);
     public Course getCourseByNameDAO(String courseName);
 
 

@@ -131,8 +131,15 @@ public class User implements Serializable {
 
     @Override
     public int hashCode() {
-        return getId()*100;
+        int result = id;
+        result = 31 * result + username.hashCode();
+        result = 31 * result + password.hashCode();
+        result = 31 * result + authority.hashCode();
+        result = 31 * result + (name != null ? name.hashCode() : 0);
+        return result;
     }
+
+
 
     @Override
     public boolean equals(Object obj) {

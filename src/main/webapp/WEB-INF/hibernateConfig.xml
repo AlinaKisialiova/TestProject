@@ -35,6 +35,7 @@
                 <prop key="hibernate.enable_lazy_load_no_trans">true</prop>
             </props>
         </property>
+
     </bean>
 
     <context:component-scan base-package="by.mogilev.service"/>

@@ -75,9 +75,6 @@ public class CourseDAOImp implements CourseDAO {
 
     @Override
     public List getSelectedDao(String category) {
-//        Session session = this.sessionFactory.getCurrentSession();
-//       return sessionFactory.getCurrentSession().createQuery("from Course u where u.category=:category")
-//                .setParameter("category",category).list();
         Session session = this.sessionFactory.getCurrentSession();
 
         Criteria criteria=session.createCriteria(Course.class);
@@ -94,14 +91,6 @@ public class CourseDAOImp implements CourseDAO {
     }
 
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public List<Course> getCoursesForUser(int id) {
-
-
-        return null;
-    }
-
     @Override
     public Course getCourseByNameDAO(String courseName) {
         Session session = this.sessionFactory.getCurrentSession();
@@ -110,28 +99,31 @@ public class CourseDAOImp implements CourseDAO {
         return (Course) criteria.uniqueResult();
     }
 
-    @Transactional
+
     public void deleteCourse(Course course) {
         Session session = this.sessionFactory.getCurrentSession();
         Hibernate.initialize(course.getSubscribers());
-        if (course.getSubscribers().size() > 0) {
 
+        if (course.getSubscribers().size() > 0) {
             for (User user : course.getSubscribers()) {
                 Hibernate.initialize(user.getCoursesSubscribe());
                 user.getCoursesSubscribe().remove(course);
+                session.update(user);
             }
         }
-
         Hibernate.initialize(course.getAttenders());
-        if(course.getAttenders().size()>0){
 
+        if(course.getAttenders().size()>0){
             for(User user : course.getAttenders()){
                 Hibernate.initialize(user.getCoursesAttendee());
                 user.getCoursesAttendee().remove(course);
+                session.update(user);
             }
+
         }
+        session.update(course);
         session.delete(course);
-        session.flush();
+
 
     }
 
