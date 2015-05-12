@@ -124,10 +124,13 @@ public class ParticipantAndReminderController {
     }
 
     @RequestMapping(value = SUBSCRIBE, method = RequestMethod.GET)
-    public ModelAndView SubscrGET() {
+    public ModelAndView SubscrGET(HttpServletRequest request) throws NotFoundUserException {
         ModelAndView mav = new ModelAndView("subscribePage");
         List<Course> coursesForList = courseService.getAllCourse();
+        String userName = userService.getUserFromSession(request);
+        Set<Course> coursesForUser = userService.getCoursesSubscribeOfUser(userName);
         mav.addObject("nameCourses", coursesForList);
+        mav.addObject("coursesForUser", coursesForUser);
         return mav;
     }
 
@@ -198,10 +201,11 @@ public class ParticipantAndReminderController {
             @RequestParam(value = "fieldForSubmit", required = false) ActionsOnPage action,
             HttpServletRequest request, Model model)
             throws NotFoundCourseException, NotFoundUserException, AddressException {
+        ModelAndView mav = new ModelAndView("attendeePage");
         try {
 
             if (id_course == null) throw new NotFoundCourseException();
-            ModelAndView mav = new ModelAndView("attendeePage");
+
             if (ActionsOnPage.ADD_IN_ATT.equals(action)) {
 
                 model.addAttribute("id", id_course);
@@ -224,6 +228,13 @@ public class ParticipantAndReminderController {
 
         } catch (NotFoundUserException ex) {
             return new ModelAndView("signin");
+
+        } catch (NotFoundCourseException e) {
+
+
+            mav.addObject("modalTitle", "Ooops...");
+            mav.addObject("modalMessage","You dont select course");
+            return mav;
 
         }
     }

@@ -29,7 +29,7 @@
             <tr>
 <td> </td>
                 <td>
-                    <select multiple="multiple" size="10" name="selectCourse" id="selectCourse">
+                    <select multiple="multiple" size="10" name="selectCourse" id="selectCourse" onchange="setNameButton(this)">
                         <c:forEach var="courses" items="${nameCourses}">
                             <option value="${courses.id}"> ${courses.nameCourse}</option>
                         </c:forEach>
@@ -61,4 +61,7 @@
         $(".idC").val(id);
 
     }
+//    function setNameButton(id_course) {
+//alert(id_course);
+//    }
 </script>

@@ -25,13 +25,13 @@ public class CourseDAOImp implements CourseDAO {
 
     @SuppressWarnings("unchecked")
     @Transactional
-    public void registerCourse(Course newCourse, String loginLector)  {
+    public void registerCourse(Course newCourse, String loginLector) {
         Session session = this.sessionFactory.getCurrentSession();
 
         User lector;
         Criteria criteria = session.createCriteria(User.class);
         criteria.add(Restrictions.eq("username", loginLector));
-        lector= (User) criteria.uniqueResult();
+        lector = (User) criteria.uniqueResult();
         newCourse.setLector(lector);
         session.save(newCourse);
     }
@@ -54,7 +54,7 @@ public class CourseDAOImp implements CourseDAO {
         Session session = this.sessionFactory.getCurrentSession();
         Criteria criteria = session.createCriteria(Course.class);
         criteria.add(Restrictions.eq("id", id));
-       Course course=(Course) criteria.uniqueResult();
+        Course course = (Course) criteria.uniqueResult();
         Hibernate.initialize(course.getAttenders());
         Hibernate.initialize(course.getSubscribers());
         Hibernate.initialize(course.getEvalMap());
@@ -62,25 +62,25 @@ public class CourseDAOImp implements CourseDAO {
         return course;
     }
 
- @Override
+    @Override
     public void updateCourse(Course course) {
-     Session session = this.sessionFactory.getCurrentSession();
+        Session session = this.sessionFactory.getCurrentSession();
 
-         Hibernate.initialize(course.getAttenders());
-         Hibernate.initialize(course.getSubscribers());
-     Hibernate.initialize(course.getEvalMap());
+        Hibernate.initialize(course.getAttenders());
+        Hibernate.initialize(course.getSubscribers());
+        Hibernate.initialize(course.getEvalMap());
 
-     session.update(course);
+        session.update(course);
     }
 
     @Override
     public List getSelectedDao(String category) {
         Session session = this.sessionFactory.getCurrentSession();
 
-        Criteria criteria=session.createCriteria(Course.class);
+        Criteria criteria = session.createCriteria(Course.class);
         criteria.add(Restrictions.eq("category", category));
         List<Course> coursesList;
-        coursesList=criteria.list();
+        coursesList = criteria.list();
         for (Course course : coursesList) {
             Hibernate.initialize(course.getAttenders());
             Hibernate.initialize(course.getSubscribers());
@@ -94,8 +94,8 @@ public class CourseDAOImp implements CourseDAO {
     @Override
     public Course getCourseByNameDAO(String courseName) {
         Session session = this.sessionFactory.getCurrentSession();
-        Criteria criteria=session.createCriteria(Course.class);
-        criteria.add(Restrictions.eq("nameCourse",courseName));
+        Criteria criteria = session.createCriteria(Course.class);
+        criteria.add(Restrictions.eq("nameCourse", courseName));
         return (Course) criteria.uniqueResult();
     }
 
@@ -106,16 +106,16 @@ public class CourseDAOImp implements CourseDAO {
 
         if (course.getSubscribers().size() > 0) {
             for (User user : course.getSubscribers()) {
-                Hibernate.initialize(user.getCoursesSubscribe());
+//                Hibernate.initialize(user.getCoursesSubscribe());
                 user.getCoursesSubscribe().remove(course);
                 session.update(user);
             }
         }
-        Hibernate.initialize(course.getAttenders());
 
-        if(course.getAttenders().size()>0){
-            for(User user : course.getAttenders()){
-                Hibernate.initialize(user.getCoursesAttendee());
+        Hibernate.initialize(course.getAttenders());
+        if (course.getAttenders().size() > 0) {
+            for (User user : course.getAttenders()) {
+//                Hibernate.initialize(user.getCoursesAttendee());
                 user.getCoursesAttendee().remove(course);
                 session.update(user);
             }

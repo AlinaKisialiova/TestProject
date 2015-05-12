@@ -138,12 +138,12 @@
 
                     <c:choose>
                         <c:when test="${(attCourseOfUser.contains(course))}">
-                            <a href="<c:url value="/attendeeList/${course.id}" context="/project"/>" class="btn-danger">
+                            <a href="<c:url value="/AttendeeList/${course.id}" context="/project"/>" class="btn-danger">
                                 Exclude from Attenders List </a>
                         </c:when>
 
                         <c:otherwise>
-                            <a href="<c:url value="/attendeeList/${course.id}" context="/project"/>"
+                            <a href="<c:url value="/AttendeeList/${course.id}" context="/project"/>"
                                class="btn-primary btn-group-lg">
                                 Include Into Attenders List </a>
                         </c:otherwise>

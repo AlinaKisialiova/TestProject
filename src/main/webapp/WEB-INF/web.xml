@@ -40,7 +40,6 @@
 
     <!--&lt;!&ndash;for LAZY LOAD in delete course&ndash;&gt;-->
 <!--<filter>-->
-
     <!--<filter-name>hibernateFilter</filter-name>-->
     <!--<filter-class>org.springframework.orm.hibernate3.support.OpenSessionInViewFilter</filter-class>-->
     <!--<init-param>-->
