@@ -24,12 +24,12 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
 </sec:authorize>
 
 <sec:authorize access="hasRole('KNOWLEDGE_MANAGER')">
-    I am know that you are a KNOWLEDGE MANAGER!
+    I am know that you are a Knowledge Manager!
     <input type="hidden" id="manager" name="manager" value="KNOWLEDGE_MANAGER"/>
 </sec:authorize>
 
 <sec:authorize access="hasRole('DEPARTMENT_MANAGER')">
-    I am know that you are a DEPARTMENT_MANAGER!
+    I am know that you are a Department Manager!
     <input type="hidden" name="manager" id="manager" value="DEPARTMENT_MANAGER"/>
 </sec:authorize>
 

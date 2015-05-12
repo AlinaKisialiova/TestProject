@@ -104,6 +104,12 @@
         <put-attribute name="namePage" value="Attendee for the Course"/>
     </definition>
 
+    <definition name="approvePage" extends="defaultTemplate">
+        <put-attribute name="content" value="/WEB-INF/pages/approvePage.jsp"/>
+        <put-attribute name="title" value="Training Center - Approve for the Courses"/>
+        <put-attribute name="namePage" value="Approve Page"/>
+    </definition>
+
 
 
 </tiles-definitions>

@@ -19,7 +19,7 @@
         <li><a href="<c:url value="/registrationCourse" context="/project"/>">Register course</a></li>
     </sec:authorize>
     <sec:authorize access="hasAnyRole('KNOWLEDGE_MANAGER', 'DEPARTMENT_MANAGER')">
-        <li><a href="#">Approve Course</a></li>
+        <li><a href="<c:url value="/approvePage" context="/project"/>">Approve Course</a></li>
     </sec:authorize>
 </ul>
 </div>
