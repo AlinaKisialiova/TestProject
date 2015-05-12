@@ -11,8 +11,8 @@
 
 <div class="container">
 <ul class="nav nav-tabs nav-justified">
-    <li><a href="<c:url value="/informationBoard" context="/project"/>">Information Board</a></li>
     <li><a href="<c:url value="/mySeminars" context="/project"/>">My Seminars</a></li>
+    <li><a href="<c:url value="/informationBoard" context="/project"/>">Information Board</a></li>
     <li><a href="<c:url value="/subscribePage" context="/project"/>">Subscribe </a></li>
     <li><a href="<c:url value="/attendeePage" context="/project"/>">Participate</a></li>
     <sec:authorize access="hasRole('ROLE_LECTOR')">

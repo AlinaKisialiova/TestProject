@@ -13,5 +13,6 @@ public enum ActionsOnPage {
     REMOTE_FROM_ATT,
     SUBSCRIBE,
     START,
+    APPROVE,
     ActionsOnPage() {}
 }

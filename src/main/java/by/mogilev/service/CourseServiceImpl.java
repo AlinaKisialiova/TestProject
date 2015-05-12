@@ -6,6 +6,7 @@ import by.mogilev.exception.IsNotOwnerException;
 import by.mogilev.exception.NotFoundCourseException;
 import by.mogilev.exception.NotFoundUserException;
 import by.mogilev.model.Course;
+import by.mogilev.model.CourseStatus;
 import by.mogilev.model.Notification;
 import by.mogilev.model.User;
 import com.itextpdf.text.*;
@@ -300,5 +301,24 @@ public class CourseServiceImpl implements CourseService {
         return courseDAO.getCourseByNameDAO(courseName);
     }
 
+    @Override
+    public List<Course> getCourseForDepartmentManager() {
+        List<Course> coursesForApprove = getAllCourse();
+        for (Course c : coursesForApprove) {
+            if (!c.getCourseStatus().equals("") || !c.getCourseStatus().equals(CourseStatus.NOT_APPROVE))
+                coursesForApprove.remove(c);
+        }
+        return coursesForApprove;
 
+    }
+
+    @Override
+    public List<Course> getCourseForKnowledgeManagerManager() {
+        List<Course> coursesForApprove = getAllCourse();
+        for (Course c : coursesForApprove) {
+            if (!c.getCourseStatus().equals(CourseStatus.APPROVE_DEPARTMENT_MANAGER))
+                coursesForApprove.remove(c);
+        }
+        return coursesForApprove;
+    }
 }

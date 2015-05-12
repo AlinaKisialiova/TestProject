@@ -30,6 +30,7 @@
         <put-attribute name="title" value="Training Center - Sign Failure"/>
         <put-attribute name="namePage" value="Signin Failure"/>
         <put-attribute name="menu" value=""/>
+        <put-attribute name="logout" value=""/>
     </definition>
 
     <definition name="informationBoard" extends="defaultTemplate">
@@ -60,6 +61,7 @@
         <put-attribute name="content" value="/WEB-INF/pages/deniedPage.jsp"/>
         <put-attribute name="title" value="Training Center - Access is denied "/>
         <put-attribute name="namePage" value="Access is denied "/>
+        <put-attribute name="logout" value=""/>
     </definition>
 
     <definition name="participantsList" extends="defaultTemplate">

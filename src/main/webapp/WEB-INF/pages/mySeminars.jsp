@@ -78,7 +78,7 @@
                 <th>Course Category</th>
                 <th>Subscribed</th>
                 <th>Participated</th>
-                <th>Delivered Course</th>
+                <th>Course Status</th>
                 <th>Evaluation</th>
                 <th>Actions</th>
             </tr>

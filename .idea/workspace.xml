@@ -5,12 +5,19 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="98b99f8d-5f36-446d-86f7-56c1bdd37929" name="Default" comment="">
-      <change type="NEW" beforePath="" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/approvePage.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/by/mogilev/model/ActionsOnPage.java" afterPath="$PROJECT_DIR$/src/main/java/by/mogilev/model/ActionsOnPage.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/by/mogilev/controller/ApproveCourseController.java" afterPath="$PROJECT_DIR$/src/main/java/by/mogilev/controller/ApproveCourseController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/approveCourse.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/approveCourse.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/layout/logout.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/layout/logout.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/by/mogilev/service/CourseService.java" afterPath="$PROJECT_DIR$/src/main/java/by/mogilev/service/CourseService.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/by/mogilev/service/CourseServiceImpl.java" afterPath="$PROJECT_DIR$/src/main/java/by/mogilev/service/CourseServiceImpl.java" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/TestProject.iml" afterPath="$PROJECT_DIR$/TestProject.iml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/artifacts/TestProject_war_exploded.xml" afterPath="$PROJECT_DIR$/.idea/artifacts/TestProject_war_exploded.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/approvePage.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/approvePage.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/deniedPage.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/deniedPage.jsp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/layout/menu.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/layout/menu.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/mySeminars.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/mySeminars.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/user/signin_failure.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/user/signin_failure.jsp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/tilesDefinitions.xml" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/tilesDefinitions.xml" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <list id="31e2c0cc-8e2e-47aa-b863-f824285fb0c9" name="Failed commit: Default" comment="with services" />
@@ -35,6 +42,7 @@
     <SUITE FILE_PATH="coverage/TestProject$Launcher.coverage" NAME="Launcher Coverage Results" MODIFIED="1426078905182" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false">
       <FILTER>by.mogilev.service.*</FILTER>
     </SUITE>
+    <SUITE FILE_PATH="coverage/TestProject$Unnamed.coverage" NAME="Unnamed Coverage Results" MODIFIED="1431452464503" SOURCE_PROVIDER="com.intellij.coverage.DefaultCoverageFileProvider" RUNNER="idea" COVERAGE_BY_TEST_ENABLED="false" COVERAGE_TRACING_ENABLED="false" />
   </component>
   <component name="CreatePatchCommitExecutor">
     <option name="PATCH_PATH" value="D:\TestProject\TestProject" />
@@ -60,21 +68,76 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ApproveCourseController.java" pinned="false" current-in-tab="true">
+      <file leaf-file-name="ApproveCourseController.java" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/java/by/mogilev/controller/ApproveCourseController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.62475824" vertical-offset="1428" max-vertical-offset="2312">
-              <caret line="121" column="0" selection-start-line="121" selection-start-column="0" selection-end-line="121" selection-end-column="0" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="2261" max-vertical-offset="3213">
+              <caret line="144" column="0" selection-start-line="144" selection-start-column="0" selection-end-line="144" selection-end-column="0" />
+              <folding>
+                <element signature="imports" expanded="true" />
+                <element signature="e#5290#5298#0" expanded="true" />
+                <element signature="e#6950#6958#0" expanded="true" />
+                <element signature="e#7486#7494#0" expanded="true" />
+              </folding>
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="web.xml" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="254" max-vertical-offset="816">
+              <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="menu.jsp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/layout/menu.jsp">
+      <file leaf-file-name="pom.xml" pinned="false" current-in-tab="true">
+        <entry file="file://$PROJECT_DIR$/pom.xml">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-13.384615" vertical-offset="9" max-vertical-offset="510">
-              <caret line="21" column="47" selection-start-line="21" selection-start-column="47" selection-end-line="21" selection-end-column="47" />
+            <state vertical-scroll-proportion="1.28" vertical-offset="3421" max-vertical-offset="4233">
+              <caret line="237" column="32" selection-start-line="237" selection-start-column="32" selection-end-line="237" selection-end-column="32" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="mySeminars.jsp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/mySeminars.jsp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-17.5" vertical-offset="905" max-vertical-offset="3655">
+              <caret line="80" column="33" selection-start-line="80" selection-start-column="33" selection-end-line="80" selection-end-column="33" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="signin.jsp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/user/signin.jsp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-3.9230769" vertical-offset="0" max-vertical-offset="697">
+              <caret line="6" column="28" selection-start-line="6" selection-start-column="28" selection-end-line="6" selection-end-column="28" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CourseServiceImpl.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/by/mogilev/service/CourseServiceImpl.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="4388" max-vertical-offset="5032">
+              <caret line="292" column="9" selection-start-line="292" selection-start-column="9" selection-end-line="292" selection-end-column="9" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="CourseService.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/by/mogilev/service/CourseService.java">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="0.0" vertical-offset="580" max-vertical-offset="1173">
+              <caret line="69" column="62" selection-start-line="69" selection-start-column="62" selection-end-line="69" selection-end-column="62" />
               <folding />
             </state>
           </provider>
@@ -83,18 +146,18 @@
       <file leaf-file-name="approvePage.jsp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/approvePage.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-10.423077" vertical-offset="783" max-vertical-offset="1258">
-              <caret line="62" column="16" selection-start-line="62" selection-start-column="16" selection-end-line="62" selection-end-column="16" />
+            <state vertical-scroll-proportion="-11.346154" vertical-offset="283" max-vertical-offset="1122">
+              <caret line="34" column="135" selection-start-line="34" selection-start-column="135" selection-end-line="34" selection-end-column="135" />
               <folding />
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="attendeePage.jsp" pinned="false" current-in-tab="false">
-        <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/attendeePage.jsp">
+      <file leaf-file-name="ActionsOnPage.java" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/java/by/mogilev/model/ActionsOnPage.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="-10.423077" vertical-offset="783" max-vertical-offset="1258">
-              <caret line="62" column="10" selection-start-line="62" selection-start-column="10" selection-end-line="62" selection-end-column="10" />
+            <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="408">
+              <caret line="15" column="11" selection-start-line="15" selection-start-column="4" selection-end-line="15" selection-end-column="11" />
               <folding />
             </state>
           </provider>
@@ -104,7 +167,7 @@
         <entry file="file://$PROJECT_DIR$/src/main/java/by/mogilev/controller/ParticipantAndReminderController.java">
           <provider selected="true" editor-type-id="text-editor">
             <state vertical-scroll-proportion="0.0" vertical-offset="3230" max-vertical-offset="4862">
-              <caret line="218" column="76" selection-start-line="218" selection-start-column="15" selection-end-line="218" selection-end-column="76" />
+              <caret line="233" column="23" selection-start-line="221" selection-start-column="12" selection-end-line="233" selection-end-column="23" />
               <folding>
                 <element signature="e#8699#8707#0" expanded="true" />
                 <element signature="e#10282#10290#0" expanded="true" />
@@ -128,9 +191,6 @@
   <component name="IdeDocumentHistory">
     <option name="CHANGED_PATHS">
       <list>
-        <option value="$PROJECT_DIR$/src/main/webapp/resources/mytheme/js/min.js" />
-        <option value="$PROJECT_DIR$/src/main/java/by/mogilev/service/UserService.java" />
-        <option value="$PROJECT_DIR$/src/main/java/by/mogilev/dao/UserDAO.java" />
         <option value="$PROJECT_DIR$/src/main/java/by/mogilev/dao/UserDAOImp.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/part of page/menu.jsp" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/layout/defaultFooter.jsp" />
@@ -139,17 +199,14 @@
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/layout/namePage.jsp" />
         <option value="$PROJECT_DIR$/src/main/java/by/mogilev/controller/main.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/layout/defaultHeader.jsp" />
-        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/deniedPage.jsp" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/registrationCourse.jsp" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/participantsList.jsp" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/evaluationReminder.jsp" />
-        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/user/signin.jsp" />
         <option value="$PROJECT_DIR$/src/main/java/by/mogilev/exception/IsNotOwnerException.java" />
         <option value="$PROJECT_DIR$/src/main/java/by/mogilev/exception/NotFoundUserException.java" />
         <option value="$PROJECT_DIR$/src/main/java/by/mogilev/exception/NotFoundCourseException.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/resources/mytheme/js/trainigCenterScripts.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/layout/template.jsp" />
-        <option value="$PROJECT_DIR$/src/main/java/by/mogilev/service/CourseService.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/editCourse.jsp" />
         <option value="$PROJECT_DIR$/src/main/java/by/mogilev/controller/MySeminarsController.java" />
         <option value="$PROJECT_DIR$/src/main/java/by/mogilev/service/UserServiceImpl.java" />
@@ -158,15 +215,12 @@
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/user/attendeeList.jsp" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/informationBoard.jsp" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/courseDetails.jsp" />
-        <option value="$PROJECT_DIR$/src/main/java/by/mogilev/service/CourseServiceImpl.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/mvc-dispatcher-servlet.xml" />
         <option value="$PROJECT_DIR$/src/main/java/by/mogilev/model/Course.java" />
         <option value="$PROJECT_DIR$/src/main/java/by/mogilev/dao/CourseDAO.java" />
         <option value="$PROJECT_DIR$/src/main/java/by/mogilev/model/User.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/hibernateConfig.xml" />
-        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" />
         <option value="$PROJECT_DIR$/src/main/java/by/mogilev/dao/CourseDAOImp.java" />
-        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/mySeminars.jsp" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/layout/modalWindow.jsp" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/subscribePage.jsp" />
         <option value="$PROJECT_DIR$/src/main/java/by/mogilev/controller/ParticipantAndReminderController.java" />
@@ -175,10 +229,19 @@
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/layout/logout.jsp" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/approveCourse.jsp" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/approbePage.jsp" />
-        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/tilesDefinitions.xml" />
+        <option value="$PROJECT_DIR$/src/main/java/by/mogilev/model/ActionsOnPage.java" />
+        <option value="$PROJECT_DIR$/src/main/java/by/mogilev/service/CourseService.java" />
+        <option value="$PROJECT_DIR$/src/main/java/by/mogilev/service/CourseServiceImpl.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/approvePage.jsp" />
-        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/layout/menu.jsp" />
         <option value="$PROJECT_DIR$/src/main/java/by/mogilev/controller/ApproveCourseController.java" />
+        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/tilesDefinitions.xml" />
+        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/deniedPage.jsp" />
+        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/user/signin_failure.jsp" />
+        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/user/signin.jsp" />
+        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/layout/menu.jsp" />
+        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/mySeminars.jsp" />
+        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" />
+        <option value="$PROJECT_DIR$/pom.xml" />
       </list>
     </option>
   </component>
@@ -247,10 +310,8 @@
     </treeState>
   </component>
   <component name="ProjectFrameBounds">
-    <option name="x" value="-8" />
-    <option name="y" value="-8" />
-    <option name="width" value="1936" />
-    <option name="height" value="1056" />
+    <option name="width" value="1280" />
+    <option name="height" value="984" />
   </component>
   <component name="ProjectLevelVcsManager" settingsEditedManually="false">
     <OptionsSetting value="true" id="Add" />
@@ -476,6 +537,40 @@
             </PATH_ELEMENT>
             <PATH_ELEMENT>
               <option name="myItemId" value="pages" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+          </PATH>
+          <PATH>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TestProject" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.ProjectViewProjectNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="TestProject" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="src" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="main" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="webapp" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="WEB-INF" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="pages" />
+              <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
+            </PATH_ELEMENT>
+            <PATH_ELEMENT>
+              <option name="myItemId" value="user" />
               <option name="myItemType" value="com.intellij.ide.projectView.impl.nodes.PsiDirectoryNode" />
             </PATH_ELEMENT>
           </PATH>
@@ -1005,16 +1100,6 @@
       <option name="FILTER_LOGCAT_AUTOMATICALLY" value="true" />
       <method />
     </configuration>
-    <configuration default="true" type="BatchConfigurationType" factoryName="Batch">
-      <option name="INTERPRETER_OPTIONS" value="" />
-      <option name="WORKING_DIRECTORY" value="" />
-      <option name="PARENT_ENVS" value="true" />
-      <envs />
-      <module name="" />
-      <option name="SCRIPT_NAME" value="" />
-      <option name="PARAMETERS" value="" />
-      <method />
-    </configuration>
     <configuration default="true" type="#org.jetbrains.idea.devkit.run.PluginConfigurationType" factoryName="Plugin">
       <module name="" />
       <option name="VM_PARAMETERS" value="-Xmx512m -Xms256m -XX:MaxPermSize=250m -ea" />
@@ -1238,7 +1323,7 @@
       <option name="CONTEXT_PROVIDER" />
       <method />
     </configuration>
-    <configuration default="false" name="Unnamed" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 8.0.21" ALTERNATIVE_JRE_ENABLED="false" ALTERNATIVE_JRE_PATH="">
+    <configuration default="false" name="Unnamed" type="#com.intellij.j2ee.web.tomcat.TomcatRunConfigurationFactory" factoryName="Local" APPLICATION_SERVER_NAME="Tomcat 7.0" ALTERNATIVE_JRE_ENABLED="false" ALTERNATIVE_JRE_PATH="">
       <option name="UPDATING_POLICY" value="restart-server" />
       <deployment>
         <artifact name="TestProject:war exploded">
@@ -1315,12 +1400,12 @@
       </method>
     </configuration>
     <list size="6">
-      <item index="0" class="java.lang.String" itemvalue="Tomcat Server.Unnamed" />
-      <item index="1" class="java.lang.String" itemvalue="Application.App" />
-      <item index="2" class="java.lang.String" itemvalue="Application.Main" />
-      <item index="3" class="java.lang.String" itemvalue="JAR Application.os-javapdf-itextsample.jar" />
-      <item index="4" class="java.lang.String" itemvalue="Application.main" />
-      <item index="5" class="java.lang.String" itemvalue="Tomcat Server.attendeeList.jsp" />
+      <item index="0" class="java.lang.String" itemvalue="Application.App" />
+      <item index="1" class="java.lang.String" itemvalue="Application.Main" />
+      <item index="2" class="java.lang.String" itemvalue="JAR Application.os-javapdf-itextsample.jar" />
+      <item index="3" class="java.lang.String" itemvalue="Application.main" />
+      <item index="4" class="java.lang.String" itemvalue="Tomcat Server.attendeeList.jsp" />
+      <item index="5" class="java.lang.String" itemvalue="Tomcat Server.Unnamed" />
     </list>
     <recent_temporary>
       <list size="5">
@@ -1439,6 +1524,7 @@
       <workItem from="1431363814382" duration="11325000" />
       <workItem from="1431409893647" duration="6250000" />
       <workItem from="1431432498657" duration="6670000" />
+      <workItem from="1431452291256" duration="4809000" />
     </task>
     <task id="LOCAL-00001" summary="Ura!">
       <created>1425045838136</created>
@@ -1726,7 +1812,7 @@
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="646422000" />
+    <option name="totallyTimeSpent" value="651231000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -1749,7 +1835,7 @@
     </todo-panel>
   </component>
   <component name="ToolWindowManager">
-    <frame x="-8" y="-8" width="1936" height="1056" extended-state="6" />
+    <frame x="0" y="0" width="1280" height="984" extended-state="0" />
     <editor active="false" />
     <layout>
       <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
@@ -1757,68 +1843,34 @@
       <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
       <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.412973" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
       <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32863188" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven Projects" active="true" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.3160981" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
+      <window_info id="Maven Projects" active="true" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.31557378" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
       <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3283582" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24946696" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
+      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24918033" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
       <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4281081" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
+      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.48534584" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
       <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32722145" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
       <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3372973" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.6064865" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.60609615" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
+      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
       <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32863188" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
       <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.46810812" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.39675677" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.39507622" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
+      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32980332" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32863188" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.7643243" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
-      <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3511327" sideWeight="0.5057915" order="3" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.35714287" sideWeight="0.49382716" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.35127932" sideWeight="0.5045372" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.38921455" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
+      <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3511327" sideWeight="0.5057915" order="6" side_tool="true" content_ui="tabs" />
+      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.35655737" sideWeight="0.49382716" order="0" side_tool="false" content_ui="combo" />
+      <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.35127932" sideWeight="0.5045372" order="3" side_tool="true" content_ui="tabs" />
       <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.35737705" sideWeight="0.50617284" order="2" side_tool="true" content_ui="tabs" />
+      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.35737705" sideWeight="0.50617284" order="4" side_tool="true" content_ui="tabs" />
       <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
       <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
       <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
       <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32980332" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
       <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3264865" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
     </layout>
-    <layout-to-restore>
-      <window_info id="Palette" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Cvs" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="IDEtalk" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32995737" sideWeight="0.5" order="5" side_tool="false" content_ui="tabs" />
-      <window_info id="Message" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="Commander" active="false" anchor="right" auto_hide="false" internal_type="SLIDING" type="SLIDING" visible="false" weight="0.4" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Event Log" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.412973" sideWeight="0.5" order="5" side_tool="true" content_ui="tabs" />
-      <window_info id="Application Servers" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32863188" sideWeight="0.5" order="15" side_tool="false" content_ui="tabs" />
-      <window_info id="Maven Projects" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.31716418" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Designer" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Hierarchy" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="1" side_tool="false" content_ui="combo" />
-      <window_info id="Database" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3283582" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Structure" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.24946696" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Ant Build" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.25" sideWeight="0.5" order="0" side_tool="false" content_ui="tabs" />
-      <window_info id="UI Designer" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Debug" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.4302462" sideWeight="0.5" order="10" side_tool="false" content_ui="tabs" />
-      <window_info id="Changes" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32722145" sideWeight="0.5" order="7" side_tool="false" content_ui="tabs" />
-      <window_info id="TODO" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3372973" sideWeight="0.5" order="6" side_tool="false" content_ui="tabs" />
-      <window_info id="Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.60756755" sideWeight="0.5" order="8" side_tool="false" content_ui="tabs" />
-      <window_info id="Palette&#9;" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="3" side_tool="false" content_ui="tabs" />
-      <window_info id="Java Enterprise" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32863188" sideWeight="0.5" order="9" side_tool="false" content_ui="tabs" />
-      <window_info id="Inspection" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.4" sideWeight="0.5" order="4" side_tool="false" content_ui="tabs" />
-      <window_info id="Version Control" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.46810812" sideWeight="0.5" order="11" side_tool="false" content_ui="tabs" />
-      <window_info id="Run" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.39783785" sideWeight="0.5" order="2" side_tool="false" content_ui="tabs" />
-      <window_info id="Coverage" active="false" anchor="right" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32980332" sideWeight="0.5" order="7" side_tool="true" content_ui="tabs" />
-      <window_info id="Spring" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.32863188" sideWeight="0.5" order="12" side_tool="false" content_ui="tabs" />
-      <window_info id="Terminal" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.7643243" sideWeight="0.5" order="13" side_tool="false" content_ui="tabs" />
-      <window_info id="Persistence" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3511327" sideWeight="0.5057915" order="6" side_tool="true" content_ui="tabs" />
-      <window_info id="Project" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="true" weight="0.35737705" sideWeight="0.49420848" order="0" side_tool="false" content_ui="combo" />
-      <window_info id="Web" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.35127932" sideWeight="0.5045372" order="4" side_tool="true" content_ui="tabs" />
-      <window_info id="IDEtalk Messages" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.33" sideWeight="0.5" order="14" side_tool="false" content_ui="tabs" />
-      <window_info id="Find" active="false" anchor="bottom" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.3264865" sideWeight="0.5" order="1" side_tool="false" content_ui="tabs" />
-      <window_info id="Favorites" active="false" anchor="left" auto_hide="false" internal_type="DOCKED" type="DOCKED" visible="false" weight="0.35127932" sideWeight="0.5045372" order="5" side_tool="true" content_ui="tabs" />
-    </layout-to-restore>
   </component>
   <component name="Vcs.Log.UiProperties">
     <option name="RECENTLY_FILTERED_USER_GROUPS">
@@ -1891,47 +1943,11 @@
           <properties />
           <option name="timeStamp" value="325" />
         </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/by/mogilev/controller/ApproveCourseController.java</url>
-          <line>116</line>
-          <properties />
-          <option name="timeStamp" value="610" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/by/mogilev/controller/ApproveCourseController.java</url>
-          <line>118</line>
-          <properties />
-          <option name="timeStamp" value="612" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/by/mogilev/controller/ApproveCourseController.java</url>
-          <line>120</line>
-          <properties />
-          <option name="timeStamp" value="613" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/by/mogilev/controller/ApproveCourseController.java</url>
-          <line>127</line>
-          <properties />
-          <option name="timeStamp" value="615" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/by/mogilev/controller/ApproveCourseController.java</url>
-          <line>121</line>
-          <properties />
-          <option name="timeStamp" value="616" />
-        </line-breakpoint>
-        <line-breakpoint enabled="true" type="java-line">
-          <url>file://$PROJECT_DIR$/src/main/java/by/mogilev/controller/ApproveCourseController.java</url>
-          <line>122</line>
-          <properties />
-          <option name="timeStamp" value="617" />
-        </line-breakpoint>
       </breakpoints>
       <breakpoints-dialog>
         <breakpoints-dialog />
       </breakpoints-dialog>
-      <option name="time" value="618" />
+      <option name="time" value="622" />
     </breakpoint-manager>
     <watches-manager />
   </component>
@@ -1940,31 +1956,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/participantsList.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.23880596" vertical-offset="81" max-vertical-offset="952">
-          <caret line="17" column="12" selection-start-line="17" selection-start-column="12" selection-end-line="17" selection-end-column="37" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/user/signin.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-15.692307" vertical-offset="34" max-vertical-offset="697">
-          <caret line="26" column="46" selection-start-line="26" selection-start-column="46" selection-end-line="26" selection-end-column="78" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/by/mogilev/exception/NotFoundCourseException.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.32945737" vertical-offset="0" max-vertical-offset="516">
-          <caret line="10" column="5" selection-start-line="10" selection-start-column="5" selection-end-line="10" selection-end-column="5" />
-          <folding>
-            <element signature="e#234#235#0" expanded="false" />
-            <element signature="e#273#274#0" expanded="false" />
-          </folding>
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/by/mogilev/exception/NotFoundUserException.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.39534885" vertical-offset="0" max-vertical-offset="516">
@@ -1991,13 +1982,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/by/mogilev/model/ActionsOnPage.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.53797466" vertical-offset="0" max-vertical-offset="474">
-          <caret line="15" column="18" selection-start-line="15" selection-start-column="18" selection-end-line="15" selection-end-column="18" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/editCourse.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.48341233" vertical-offset="306" max-vertical-offset="1462">
@@ -2009,14 +1993,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="5" max-vertical-offset="765">
           <caret line="14" column="21" selection-start-line="14" selection-start-column="14" selection-end-line="14" selection-end-column="21" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/deniedPage.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.5345912" vertical-offset="0" max-vertical-offset="477">
-          <caret line="15" column="0" selection-start-line="15" selection-start-column="0" selection-end-line="15" selection-end-column="0" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2054,14 +2030,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.17056856" vertical-offset="0" max-vertical-offset="897">
           <caret line="9" column="13" selection-start-line="9" selection-start-column="4" selection-end-line="9" selection-end-column="13" />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/by/mogilev/service/CourseService.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="259" max-vertical-offset="1156">
-          <caret line="56" column="16" selection-start-line="56" selection-start-column="16" selection-end-line="56" selection-end-column="16" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2134,7 +2102,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.040572792" vertical-offset="0" max-vertical-offset="1360">
           <caret line="1" column="0" selection-start-line="1" selection-start-column="0" selection-end-line="1" selection-end-column="64" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2160,13 +2127,6 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/by/mogilev/service/CourseServiceImpl.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.29438204" vertical-offset="3507" max-vertical-offset="4709">
-          <caret line="247" column="25" selection-start-line="247" selection-start-column="25" selection-end-line="247" selection-end-column="25" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/by/mogilev/model/User.java">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.33333334" vertical-offset="190" max-vertical-offset="1938">
@@ -2176,14 +2136,6 @@
             <element signature="e#2630#2631#0" expanded="true" />
             <element signature="e#2669#2670#0" expanded="true" />
           </folding>
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/mySeminars.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.38526314" vertical-offset="2282" max-vertical-offset="3655">
-          <caret line="145" column="64" selection-start-line="145" selection-start-column="64" selection-end-line="145" selection-end-column="64" />
-          <folding />
         </state>
       </provider>
     </entry>
@@ -2213,14 +2165,6 @@
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.0" vertical-offset="54" max-vertical-offset="918">
           <caret line="20" column="23" selection-start-line="20" selection-start-column="23" selection-end-line="20" selection-end-column="23" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.7285429" vertical-offset="519" max-vertical-offset="1020">
-          <caret line="52" column="28" selection-start-line="52" selection-start-column="28" selection-end-line="52" selection-end-column="28" />
           <folding />
         </state>
       </provider>
@@ -2265,54 +2209,11 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/tilesDefinitions.xml">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.6606786" vertical-offset="1454" max-vertical-offset="2057">
-          <caret line="105" column="4" selection-start-line="105" selection-start-column="4" selection-end-line="105" selection-end-column="4" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/subscribePage.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.9663158" vertical-offset="765" max-vertical-offset="1462">
           <caret line="72" column="26" selection-start-line="72" selection-start-column="26" selection-end-line="72" selection-end-column="26" />
           <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/approveCourse.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="1.8637414" vertical-offset="961" max-vertical-offset="2227">
-          <caret line="104" column="43" selection-start-line="104" selection-start-column="43" selection-end-line="104" selection-end-column="43" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/attendeePage.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.423077" vertical-offset="783" max-vertical-offset="1258">
-          <caret line="62" column="10" selection-start-line="62" selection-start-column="10" selection-end-line="62" selection-end-column="10" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/approvePage.jsp">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-10.423077" vertical-offset="783" max-vertical-offset="1258">
-          <caret line="62" column="16" selection-start-line="62" selection-start-column="16" selection-end-line="62" selection-end-column="16" />
-          <folding />
-        </state>
-      </provider>
-    </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/by/mogilev/controller/ParticipantAndReminderController.java">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="3026" max-vertical-offset="4862">
-          <caret line="218" column="76" selection-start-line="218" selection-start-column="15" selection-end-line="218" selection-end-column="76" />
-          <folding>
-            <element signature="e#8699#8707#0" expanded="true" />
-            <element signature="e#10282#10290#0" expanded="true" />
-          </folding>
         </state>
       </provider>
     </entry>
@@ -2324,18 +2225,138 @@
         </state>
       </provider>
     </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/attendeePage.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6437055" vertical-offset="783" max-vertical-offset="1258">
+          <caret line="62" column="10" selection-start-line="62" selection-start-column="10" selection-end-line="62" selection-end-column="10" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/by/mogilev/model/ActionsOnPage.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="0" max-vertical-offset="408">
+          <caret line="15" column="11" selection-start-line="15" selection-start-column="4" selection-end-line="15" selection-end-column="11" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/by/mogilev/controller/ParticipantAndReminderController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="3230" max-vertical-offset="4862">
+          <caret line="233" column="23" selection-start-line="221" selection-start-column="12" selection-end-line="233" selection-end-column="23" />
+          <folding>
+            <element signature="e#8699#8707#0" expanded="true" />
+            <element signature="e#10282#10290#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/by/mogilev/service/CourseService.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="580" max-vertical-offset="1173">
+          <caret line="69" column="62" selection-start-line="69" selection-start-column="62" selection-end-line="69" selection-end-column="62" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/approvePage.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-11.346154" vertical-offset="283" max-vertical-offset="1122">
+          <caret line="34" column="135" selection-start-line="34" selection-start-column="135" selection-end-line="34" selection-end-column="135" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/by/mogilev/service/CourseServiceImpl.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="4388" max-vertical-offset="5032">
+          <caret line="292" column="9" selection-start-line="292" selection-start-column="9" selection-end-line="292" selection-end-column="9" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/approveCourse.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.4272388" vertical-offset="961" max-vertical-offset="2227">
+          <caret line="70" column="3" selection-start-line="70" selection-start-column="3" selection-end-line="70" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/tilesDefinitions.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.6643478" vertical-offset="689" max-vertical-offset="2091">
+          <caret line="63" column="35" selection-start-line="63" selection-start-column="35" selection-end-line="63" selection-end-column="35" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/deniedPage.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.27868852" vertical-offset="0" max-vertical-offset="549">
+          <caret line="9" column="3" selection-start-line="9" selection-start-column="3" selection-end-line="9" selection-end-column="42" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/user/signin_failure.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.15482695" vertical-offset="0" max-vertical-offset="549">
+          <caret line="5" column="6" selection-start-line="5" selection-start-column="6" selection-end-line="5" selection-end-column="6" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/user/signin.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-3.9230769" vertical-offset="0" max-vertical-offset="697">
+          <caret line="6" column="28" selection-start-line="6" selection-start-column="28" selection-end-line="6" selection-end-column="28" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/layout/menu.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="-13.384615" vertical-offset="9" max-vertical-offset="510">
-          <caret line="21" column="47" selection-start-line="21" selection-start-column="47" selection-end-line="21" selection-end-column="47" />
+        <state vertical-scroll-proportion="0.3715847" vertical-offset="0" max-vertical-offset="549">
+          <caret line="12" column="37" selection-start-line="12" selection-start-column="37" selection-end-line="12" selection-end-column="37" />
           <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/java/by/mogilev/controller/ApproveCourseController.java">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.62475824" vertical-offset="1428" max-vertical-offset="2312">
-          <caret line="121" column="0" selection-start-line="121" selection-start-column="0" selection-end-line="121" selection-end-column="0" />
+        <state vertical-scroll-proportion="0.0" vertical-offset="2261" max-vertical-offset="3213">
+          <caret line="144" column="0" selection-start-line="144" selection-start-column="0" selection-end-line="144" selection-end-column="0" />
+          <folding>
+            <element signature="imports" expanded="true" />
+            <element signature="e#5290#5298#0" expanded="true" />
+            <element signature="e#6950#6958#0" expanded="true" />
+            <element signature="e#7486#7494#0" expanded="true" />
+          </folding>
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/mySeminars.jsp">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="-17.5" vertical-offset="905" max-vertical-offset="3655">
+          <caret line="80" column="33" selection-start-line="80" selection-start-column="33" selection-end-line="80" selection-end-column="33" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.0" vertical-offset="254" max-vertical-offset="816">
+          <caret line="40" column="0" selection-start-line="40" selection-start-column="0" selection-end-line="40" selection-end-column="0" />
+          <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/pom.xml">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="1.28" vertical-offset="3421" max-vertical-offset="4233">
+          <caret line="237" column="32" selection-start-line="237" selection-start-column="32" selection-end-line="237" selection-end-column="32" />
           <folding />
         </state>
       </provider>

@@ -66,6 +66,8 @@ public interface CourseService {
 
     public Course getCourseByName(String courseName);
 
+    public List<Course> getCourseForDepartmentManager();
+    public List<Course> getCourseForKnowledgeManagerManager();
 
 
 

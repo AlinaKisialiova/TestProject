@@ -7,9 +7,9 @@
   To change this template use File | Settings | File Templates.
 --%>
 <div class="row">
-<div class="span12 offset1">
+    <div class="col-md-8 col-md-offset-3">
    <h1>Access to the specified resource has been forbidden.</h1>
-<div class="span8 offset4">
+    <div class="col-md-8 col-md-offset-3">
 <img src="<c:url value="/resources/img/denied.jpg"/>"/>
 </div>
  </div>
