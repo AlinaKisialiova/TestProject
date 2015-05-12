@@ -22,7 +22,7 @@
                         <option value="Development">Development</option>
                     </select>
                 </td>
-                <td><input type="submit" value="Ok"/></td>
+                <td><input type="submit" value="Ok" onclick="window.location.href=window.location.href"/></td>
             </tr>
             <tr><td><br></td></tr>
          <tr>  <td><b>Select Course </b></td></tr>
@@ -31,7 +31,18 @@
                 <td>
                     <select multiple="multiple" size="10" name="selectCourse" id="selectCourse" onchange="setNameButton(this)">
                         <c:forEach var="courses" items="${nameCourses}">
-                            <option value="${courses.id}"> ${courses.nameCourse}</option>
+                      <option value="${courses.id}"
+                              <c:choose>
+                             <c:when test="${coursesForUser.contains(courses)}">
+                                 style="color:#ee5f5b"
+                                    </c:when>
+                            <c:otherwise>
+                                style="color: #0e90d2"
+                            </c:otherwise>
+                              </c:choose>
+                             >
+
+                               ${courses.nameCourse}</option>
                         </c:forEach>
                     </select>
 </td>
@@ -39,7 +50,8 @@
             <tr><td> <br> </td></tr>
             <tr>
                 <td colspan="2">
-                    <input type="submit" onclick="setAction('SUBSCRIBE')" value="Subscribe/Delete" class="btn btn-primary btn-lg btn-block" />
+                    <input type="submit" onclick="setAction('SUBSCRIBE') " value="Subscribe" class="btn btn-primary btn-lg btn-block" />
+                    <input type="submit" onclick="setAction('SUBSCRIBE')" value="Delete" class="btn btn-danger btn-lg btn-block" />
                     <input type="hidden" name="fieldForSubmit" class="fieldForSubmit"/>
                 </td>
 
@@ -59,6 +71,8 @@
     function setAction(action) {
         $(".fieldForSubmit").val(action);
         $(".idC").val(id);
+
+
 
     }
 //    function setNameButton(id_course) {

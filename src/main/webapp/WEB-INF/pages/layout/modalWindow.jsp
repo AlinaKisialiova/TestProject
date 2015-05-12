@@ -14,7 +14,7 @@
                 </center>
             </div>
             <div class="modal-footer">
-                <button type="button" class="btn btn-default" data-dismiss="modal">Close</button>
+                <button type="button" class="btn btn-default" data-dismiss="modal" onclick="window.location.href=window.location.href">Close</button>
             </div>
 
         </div><!-- /.modal-content -->

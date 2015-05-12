@@ -5,11 +5,9 @@
   </component>
   <component name="ChangeListManager">
     <list default="true" id="98b99f8d-5f36-446d-86f7-56c1bdd37929" name="Default" comment="">
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/by/mogilev/dao/CourseDAOImp.java" afterPath="$PROJECT_DIR$/src/main/java/by/mogilev/dao/CourseDAOImp.java" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/java/by/mogilev/controller/ParticipantAndReminderController.java" afterPath="$PROJECT_DIR$/src/main/java/by/mogilev/controller/ParticipantAndReminderController.java" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/mySeminars.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/mySeminars.jsp" />
+      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/layout/modalWindow.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/layout/modalWindow.jsp" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/subscribePage.jsp" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/subscribePage.jsp" />
-      <change type="MODIFICATION" beforePath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" afterPath="$PROJECT_DIR$/src/main/webapp/WEB-INF/web.xml" />
       <change type="MODIFICATION" beforePath="$PROJECT_DIR$/.idea/workspace.xml" afterPath="$PROJECT_DIR$/.idea/workspace.xml" />
     </list>
     <list id="31e2c0cc-8e2e-47aa-b863-f824285fb0c9" name="Failed commit: Default" comment="with services" />
@@ -59,24 +57,34 @@
   </component>
   <component name="FileEditorManager">
     <leaf>
-      <file leaf-file-name="ParticipantAndReminderController.java" pinned="false" current-in-tab="false">
+      <file leaf-file-name="ParticipantAndReminderController.java" pinned="false" current-in-tab="true">
         <entry file="file://$PROJECT_DIR$/src/main/java/by/mogilev/controller/ParticipantAndReminderController.java">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.0" vertical-offset="1606" max-vertical-offset="4743">
-              <caret line="133" column="19" selection-start-line="133" selection-start-column="19" selection-end-line="133" selection-end-column="19" />
+            <state vertical-scroll-proportion="0.74081236" vertical-offset="2065" max-vertical-offset="4862">
+              <caret line="165" column="89" selection-start-line="165" selection-start-column="89" selection-end-line="165" selection-end-column="89" />
               <folding>
-                <element signature="e#8337#8345#0" expanded="true" />
-                <element signature="e#9920#9928#0" expanded="true" />
+                <element signature="e#8699#8707#0" expanded="true" />
+                <element signature="e#10282#10290#0" expanded="true" />
               </folding>
             </state>
           </provider>
         </entry>
       </file>
-      <file leaf-file-name="subscribePage.jsp" pinned="false" current-in-tab="true">
+      <file leaf-file-name="subscribePage.jsp" pinned="false" current-in-tab="false">
         <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/subscribePage.jsp">
           <provider selected="true" editor-type-id="text-editor">
-            <state vertical-scroll-proportion="0.32790223" vertical-offset="366" max-vertical-offset="1224">
-              <caret line="31" column="124" selection-start-line="31" selection-start-column="124" selection-end-line="31" selection-end-column="124" />
+            <state vertical-scroll-proportion="-1.9615384" vertical-offset="357" max-vertical-offset="1462">
+              <caret line="24" column="103" selection-start-line="24" selection-start-column="103" selection-end-line="24" selection-end-column="103" />
+              <folding />
+            </state>
+          </provider>
+        </entry>
+      </file>
+      <file leaf-file-name="modalWindow.jsp" pinned="false" current-in-tab="false">
+        <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/layout/modalWindow.jsp">
+          <provider selected="true" editor-type-id="text-editor">
+            <state vertical-scroll-proportion="-3.8846154" vertical-offset="171" max-vertical-offset="697">
+              <caret line="16" column="134" selection-start-line="16" selection-start-column="83" selection-end-line="16" selection-end-column="134" />
               <folding />
             </state>
           </provider>
@@ -100,7 +108,6 @@
         <option value="$PROJECT_DIR$/src/main/webapp/resources/mytheme/css/style.css" />
         <option value="$PROJECT_DIR$/src/main/webapp/resources/mytheme/js/bootstrap.min3.0.2.js" />
         <option value="$PROJECT_DIR$/src/main/webapp/resources/mytheme/js/min.js" />
-        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/layout/modalWindow.jsp" />
         <option value="$PROJECT_DIR$/src/main/java/by/mogilev/service/UserService.java" />
         <option value="$PROJECT_DIR$/src/main/java/by/mogilev/dao/UserDAO.java" />
         <option value="$PROJECT_DIR$/src/main/java/by/mogilev/dao/UserDAOImp.java" />
@@ -146,8 +153,9 @@
         <option value="$PROJECT_DIR$/src/main/java/by/mogilev/dao/CourseDAOImp.java" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/mySeminars.jsp" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/tilesDefinitions.xml" />
-        <option value="$PROJECT_DIR$/src/main/java/by/mogilev/controller/ParticipantAndReminderController.java" />
+        <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/layout/modalWindow.jsp" />
         <option value="$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/subscribePage.jsp" />
+        <option value="$PROJECT_DIR$/src/main/java/by/mogilev/controller/ParticipantAndReminderController.java" />
       </list>
     </option>
   </component>
@@ -1396,7 +1404,7 @@
       <workItem from="1431282877578" duration="9435000" />
       <workItem from="1431339749204" duration="14026000" />
       <workItem from="1431363814382" duration="11325000" />
-      <workItem from="1431409893647" duration="2681000" />
+      <workItem from="1431409893647" duration="5145000" />
     </task>
     <task id="LOCAL-00001" summary="Ura!">
       <created>1425045838136</created>
@@ -1662,11 +1670,17 @@
       <option name="project" value="LOCAL" />
       <updated>1431371335471</updated>
     </task>
-    <option name="localTasksCounter" value="45" />
+    <task id="LOCAL-00045" summary="correct delete course if has attenders and subscribers">
+      <created>1431412586648</created>
+      <option name="number" value="00045" />
+      <option name="project" value="LOCAL" />
+      <updated>1431412586648</updated>
+    </task>
+    <option name="localTasksCounter" value="46" />
     <servers />
   </component>
   <component name="TimeTrackingManager">
-    <option name="totallyTimeSpent" value="636183000" />
+    <option name="totallyTimeSpent" value="638647000" />
   </component>
   <component name="TodoView" selected-index="0">
     <todo-panel id="selected-file">
@@ -1777,7 +1791,6 @@
     <option name="myTodoPanelSettings">
       <TodoPanelSettings />
     </option>
-    <MESSAGE value="out list of courses in Excel" />
     <MESSAGE value="download files" />
     <MESSAGE value="mySeminar page" />
     <MESSAGE value="correctly getAllCourse" />
@@ -1802,7 +1815,8 @@
     <MESSAGE value="correctly view AttendeeList" />
     <MESSAGE value="display custom name course Status on pages" />
     <MESSAGE value="correct delete course if has attenders and subscribers (dont work)" />
-    <option name="LAST_COMMIT_MESSAGE" value="correct delete course if has attenders and subscribers (dont work)" />
+    <MESSAGE value="correct delete course if has attenders and subscribers" />
+    <option name="LAST_COMMIT_MESSAGE" value="correct delete course if has attenders and subscribers" />
   </component>
   <component name="XDebuggerManager">
     <breakpoint-manager>
@@ -1844,13 +1858,6 @@
     <option name="FILTER_TARGETS" value="false" />
   </component>
   <component name="editorHistoryManager">
-    <entry file="file://$PROJECT_DIR$/src/main/webapp/resources/mytheme/css/bootstrap.css">
-      <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.33333334" vertical-offset="44722" max-vertical-offset="120751">
-          <caret line="2637" column="172" selection-start-line="2637" selection-start-column="172" selection-end-line="2637" selection-end-column="172" />
-        </state>
-      </provider>
-    </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/evaluationReminder.jsp">
       <provider selected="true" editor-type-id="text-editor">
         <state vertical-scroll-proportion="0.39494833" vertical-offset="234" max-vertical-offset="1105">
@@ -2227,22 +2234,30 @@
         </state>
       </provider>
     </entry>
-    <entry file="file://$PROJECT_DIR$/src/main/java/by/mogilev/controller/ParticipantAndReminderController.java">
+    <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/layout/modalWindow.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.0" vertical-offset="1606" max-vertical-offset="4743">
-          <caret line="133" column="19" selection-start-line="133" selection-start-column="19" selection-end-line="133" selection-end-column="19" />
-          <folding>
-            <element signature="e#8337#8345#0" expanded="true" />
-            <element signature="e#9920#9928#0" expanded="true" />
-          </folding>
+        <state vertical-scroll-proportion="-3.8846154" vertical-offset="171" max-vertical-offset="697">
+          <caret line="16" column="134" selection-start-line="16" selection-start-column="83" selection-end-line="16" selection-end-column="134" />
+          <folding />
         </state>
       </provider>
     </entry>
     <entry file="file://$PROJECT_DIR$/src/main/webapp/WEB-INF/pages/subscribePage.jsp">
       <provider selected="true" editor-type-id="text-editor">
-        <state vertical-scroll-proportion="0.32790223" vertical-offset="366" max-vertical-offset="1224">
-          <caret line="31" column="124" selection-start-line="31" selection-start-column="124" selection-end-line="31" selection-end-column="124" />
+        <state vertical-scroll-proportion="-1.9615384" vertical-offset="357" max-vertical-offset="1462">
+          <caret line="24" column="103" selection-start-line="24" selection-start-column="103" selection-end-line="24" selection-end-column="103" />
           <folding />
+        </state>
+      </provider>
+    </entry>
+    <entry file="file://$PROJECT_DIR$/src/main/java/by/mogilev/controller/ParticipantAndReminderController.java">
+      <provider selected="true" editor-type-id="text-editor">
+        <state vertical-scroll-proportion="0.74081236" vertical-offset="2065" max-vertical-offset="4862">
+          <caret line="165" column="89" selection-start-line="165" selection-start-column="89" selection-end-line="165" selection-end-column="89" />
+          <folding>
+            <element signature="e#8699#8707#0" expanded="true" />
+            <element signature="e#10282#10290#0" expanded="true" />
+          </folding>
         </state>
       </provider>
     </entry>

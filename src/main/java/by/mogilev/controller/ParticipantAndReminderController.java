@@ -126,12 +126,17 @@ public class ParticipantAndReminderController {
     @RequestMapping(value = SUBSCRIBE, method = RequestMethod.GET)
     public ModelAndView SubscrGET(HttpServletRequest request) throws NotFoundUserException {
         ModelAndView mav = new ModelAndView("subscribePage");
-        List<Course> coursesForList = courseService.getAllCourse();
-        String userName = userService.getUserFromSession(request);
-        Set<Course> coursesForUser = userService.getCoursesSubscribeOfUser(userName);
-        mav.addObject("nameCourses", coursesForList);
-        mav.addObject("coursesForUser", coursesForUser);
-        return mav;
+        try {
+            List<Course> coursesForList = courseService.getAllCourse();
+            String userName = userService.getUserFromSession(request);
+            Set<Course> coursesForUser = userService.getCoursesSubscribeOfUser(userName);
+            mav.addObject("nameCourses", coursesForList);
+            mav.addObject("coursesForUser", coursesForUser);
+            return mav;
+
+        } catch (NotFoundUserException ex) {
+            return new ModelAndView("signin");
+        }
     }
 
     @RequestMapping(value = SUBSCRIBE, method = RequestMethod.POST)
@@ -157,6 +162,9 @@ public class ParticipantAndReminderController {
 
             List<Course> coursesForList = courseService.getSelected(selectCategory);
             mav.addObject("nameCourses", coursesForList);
+            String userName = userService.getUserFromSession(request);
+            Set<Course> coursesForUser = userService.getCoursesSubscribeOfUser(userName);
+            mav.addObject("coursesForUser", coursesForUser);
             return mav;
 
         } catch (NotFoundUserException ex) {
@@ -169,7 +177,6 @@ public class ParticipantAndReminderController {
             mavExc.addObject("modalTitle", "Ooops...");
             mavExc.addObject("modalMessage", "You dont select course");
             return mavExc;
-
         }
     }
 
