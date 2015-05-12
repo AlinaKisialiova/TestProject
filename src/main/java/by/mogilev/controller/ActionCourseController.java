@@ -83,7 +83,7 @@ public class ActionCourseController {
         try {
             String userName = userService.getUserFromSession(request);
                 courseService.deleteCourse(id, userName);
-            return new ModelAndView("informationBoard");
+            return new ModelAndView("redirect:/informationBoard");
         } catch (IsNotOwnerException e) {
             ModelAndView mav = new ModelAndView("courseDetails");
             mav.addObject("modalTitle", "Ooops...");

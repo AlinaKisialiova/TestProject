@@ -37,7 +37,7 @@ public class InformationBoardController {
     private UserService userService;
 
     @RequestMapping(value = INFORM_BOARD, method = RequestMethod.GET)
-    public ModelAndView listCourse() {
+    public ModelAndView informBoardGET() {
         ModelAndView mav = new ModelAndView("informationBoard");
 //        mav.addObject("modalTitle", "Ooops...");
 //        mav.addObject("modalMessage","Все сломал наглый поросенок");
@@ -46,7 +46,7 @@ public class InformationBoardController {
     }
 
     @RequestMapping(value = INFORM_BOARD, method = RequestMethod.POST)
-    public ModelAndView evRemindAndDelete(HttpServletRequest request,
+    public ModelAndView informBoardPOST(HttpServletRequest request,
                                           @RequestParam(value = "grade", required = false) Integer grade,
                                           @RequestParam(value = "fieldForSubmit", required = false) ActionsOnPage action,
                                           @RequestParam(value = "id", required = false) Integer id_course,
