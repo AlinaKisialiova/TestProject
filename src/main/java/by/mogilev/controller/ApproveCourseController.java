@@ -1,5 +1,4 @@
 package by.mogilev.controller;
-
 import by.mogilev.exception.NotFoundCourseException;
 import by.mogilev.exception.NotFoundUserException;
 import by.mogilev.model.*;
@@ -14,7 +13,6 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
-
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.servlet.http.HttpServletRequest;
@@ -40,7 +38,7 @@ public class ApproveCourseController {
     private MailService mailService;
 
     @RequestMapping(value = APPROVE_COURSE, method = RequestMethod.GET)
-    public ModelAndView approveCourseGet(@PathVariable("course.id") Integer id, HttpServletRequest request) throws NotFoundCourseException {
+    public ModelAndView approveCourseGet(@PathVariable("course.id") final Integer id, final HttpServletRequest request) throws NotFoundCourseException {
         ModelAndView mav = new ModelAndView("approveCourse");
         try {
             mav.addObject("courseList", courseService.getCourse(id));
@@ -59,8 +57,8 @@ public class ApproveCourseController {
     }
 
     @RequestMapping(value = APPROVE_COURSE, method = RequestMethod.POST)
-    public ModelAndView approveCoursePost(HttpServletRequest request, @PathVariable("course.id") Integer id, @RequestParam("approveToServ") String approve,
-                                          @RequestParam("reasonToServ") String reason, @RequestParam("manager") UserRole manager) throws AddressException, NotFoundCourseException, NotFoundUserException {
+    public ModelAndView approveCoursePost(final HttpServletRequest request, @PathVariable("course.id") final Integer id, @RequestParam("approveToServ") final String approve,
+                                          @RequestParam("reasonToServ") final String reason, @RequestParam("manager") final UserRole manager) throws AddressException, NotFoundCourseException, NotFoundUserException {
         try {
             Course appCourse = courseService.getCourse(id);
             String userName = userService.getUserFromSession(request);
@@ -112,7 +110,7 @@ public class ApproveCourseController {
 
 
     @RequestMapping(value = APPROVE, method = RequestMethod.GET)
-    public ModelAndView approveGet(HttpServletRequest request) throws AddressException {
+    public ModelAndView approveGet(final HttpServletRequest request) throws AddressException {
 
         ModelAndView mav = new ModelAndView("approvePage");
         List<Course> coursesForApprove = new ArrayList<Course>();
@@ -137,9 +135,9 @@ public class ApproveCourseController {
 
     @RequestMapping(value = APPROVE, method = RequestMethod.POST)
     public ModelAndView approvePost(HttpServletRequest request, Model model,
-                                    @RequestParam(value = "selectCourse", required = false) Integer id_course,
-                                    @RequestParam(value = "selectCategory", required = false) String selectCategory,
-                                    @RequestParam(value = "fieldForSubmit", required = false) ActionsOnPage action) throws NotFoundCourseException, NotFoundUserException {
+                                    @RequestParam(value = "selectCourse", required = false) final Integer id_course,
+                                    @RequestParam(value = "selectCategory", required = false) final String selectCategory,
+                                    @RequestParam(value = "fieldForSubmit", required = false) final ActionsOnPage action) throws NotFoundCourseException, NotFoundUserException {
         ModelAndView mav = new ModelAndView("approvePage");
         try {
            if (ActionsOnPage.APPROVE.equals(action)) {

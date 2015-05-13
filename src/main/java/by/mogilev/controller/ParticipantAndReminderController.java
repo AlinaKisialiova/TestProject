@@ -2,7 +2,10 @@ package by.mogilev.controller;
 
 import by.mogilev.exception.NotFoundCourseException;
 import by.mogilev.exception.NotFoundUserException;
-import by.mogilev.model.*;
+import by.mogilev.model.ActionsOnPage;
+import by.mogilev.model.Course;
+import by.mogilev.model.CourseStatus;
+import by.mogilev.model.User;
 import by.mogilev.service.CourseService;
 import by.mogilev.service.MailService;
 import by.mogilev.service.UserService;
@@ -16,7 +19,6 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.HashSet;
@@ -43,7 +45,7 @@ public class ParticipantAndReminderController {
     private UserService userService;
 
     @RequestMapping(value = PARTICIPANT_LIST, method = RequestMethod.GET)
-    public ModelAndView participantsListGET(@PathVariable("course.id") Integer id) throws NotFoundCourseException {
+    public ModelAndView participantsListGET(@PathVariable("course.id") final Integer id) throws NotFoundCourseException {
         try {
             ModelAndView mav = new ModelAndView("participantsList");
             mav.addObject("checkCourse", courseService.getCourse(id));
@@ -58,8 +60,8 @@ public class ParticipantAndReminderController {
     }
 
     @RequestMapping(value = PARTICIPANT_LIST, method = RequestMethod.POST)
-    public ModelAndView participantsListPOST(@PathVariable("course.id") Integer id,
-                                             @RequestParam(value = "selectParticipants", required = false) String select) throws NotFoundCourseException {
+    public ModelAndView participantsListPOST(@PathVariable("course.id") final Integer id,
+                                             @RequestParam(value = "selectParticipants", required = false) final String select) throws NotFoundCourseException {
         try {
             ModelAndView mav = new ModelAndView("participantsList");
             Set<User> participants = new HashSet<User>();
@@ -80,7 +82,7 @@ public class ParticipantAndReminderController {
     }
 
     @RequestMapping(value = EVAL_REMINDER, method = RequestMethod.GET)
-    public ModelAndView reminder(@PathVariable("course.id") Integer id) throws NotFoundCourseException {
+    public ModelAndView reminder(@PathVariable("course.id") final Integer id) throws NotFoundCourseException {
         ModelAndView mav = new ModelAndView("evaluationReminder");
         try {
             mav.addObject("checkCourse", courseService.getCourse(id));
@@ -95,23 +97,23 @@ public class ParticipantAndReminderController {
 
 
     @RequestMapping(value = EVAL_REMINDER, method = RequestMethod.POST)
-    public ModelAndView reminderStartorReset(@PathVariable("course.id") Integer id, HttpServletRequest request) throws AddressException, NotFoundCourseException, NotFoundUserException {
+    public ModelAndView reminderStartorReset(@PathVariable("course.id") final Integer id, final HttpServletRequest request) throws AddressException, NotFoundCourseException, NotFoundUserException {
         try {
             ModelAndView mav = new ModelAndView("evaluationReminder");
             Course course = courseService.getCourse(id);
             mav.addObject("checkCourse", course);
             String userName = userService.getUserFromSession(request);
-            String message = "";
-            if (courseService.startCourse(id, userName)) {
-                message = "Course " + course.getNameCourse() + " is started!";
-                course.setCourseStatus(CourseStatus.DELIVERED);
-                InternetAddress[] emails = mailService.getRecipient(course);
-                mailService.sendEmail(id, Notification.EVALUATION_REMINDER, emails, userName);
-
-            } else
-                message = "Course dont started!";
-
-            mav.addObject("startMessage", message);
+//            String message = "";
+//            if (courseService.startCourse(id, userName)) {
+//                message = "Course " + course.getNameCourse() + " is started!";
+//                course.setCourseStatus(CourseStatus.DELIVERED);
+//                InternetAddress[] emails = mailService.getRecipient(course);
+//                mailService.sendEmail(id, Notification.EVALUATION_REMINDER, emails, userName);
+//
+//            } else
+//                message = "Course dont started!";
+//
+//            mav.addObject("startMessage", message);
             return mav;
         } catch (NotFoundUserException ex) {
             return new ModelAndView("signin");
@@ -124,7 +126,7 @@ public class ParticipantAndReminderController {
     }
 
     @RequestMapping(value = SUBSCRIBE, method = RequestMethod.GET)
-    public ModelAndView SubscrGet(HttpServletRequest request) throws NotFoundUserException {
+    public ModelAndView SubscrGet(final HttpServletRequest request) throws NotFoundUserException {
         ModelAndView mav = new ModelAndView("subscribePage");
         try {
             List<Course> coursesForList = courseService.getAllCourse();
@@ -141,9 +143,9 @@ public class ParticipantAndReminderController {
 
     @RequestMapping(value = SUBSCRIBE, method = RequestMethod.POST)
     public ModelAndView SubscPost(
-            @RequestParam(value = "selectCourse", required = false) Integer id_course,
-            @RequestParam(value = "selectCategory", required = false) String selectCategory,
-            @RequestParam(value = "fieldForSubmit", required = false) ActionsOnPage action,
+            @RequestParam(value = "selectCourse", required = false) final Integer id_course,
+            @RequestParam(value = "selectCategory", required = false)final String selectCategory,
+            @RequestParam(value = "fieldForSubmit", required = false)final ActionsOnPage action,
             HttpServletRequest request)
             throws NotFoundCourseException, NotFoundUserException, AddressException {
         try {
@@ -181,7 +183,7 @@ public class ParticipantAndReminderController {
     }
 
     @RequestMapping(value = ATTENDEE, method = RequestMethod.GET)
-    public ModelAndView AttendeePageGet(HttpServletRequest request) throws NotFoundUserException {
+    public ModelAndView AttendeePageGet(final HttpServletRequest request) throws NotFoundUserException {
         try {
             ModelAndView mav = new ModelAndView("attendeePage");
             Set<Course> courses = userService.getCoursesSubscribeOfUser(userService.getUserFromSession(request));
@@ -203,9 +205,9 @@ public class ParticipantAndReminderController {
 
     @RequestMapping(value = ATTENDEE, method = RequestMethod.POST)
     public ModelAndView AttendeePagePost(
-            @RequestParam(value = "selectCourse", required = false) Integer id_course,
-            @RequestParam(value = "selectCategory", required = false) String selectCategory,
-            @RequestParam(value = "fieldForSubmit", required = false) ActionsOnPage action,
+            @RequestParam(value = "selectCourse", required = false) final Integer id_course,
+            @RequestParam(value = "selectCategory", required = false) final String selectCategory,
+            @RequestParam(value = "fieldForSubmit", required = false)final  ActionsOnPage action,
             HttpServletRequest request, Model model)
             throws NotFoundCourseException, NotFoundUserException, AddressException {
         ModelAndView mav = new ModelAndView("attendeePage");
@@ -247,7 +249,7 @@ public class ParticipantAndReminderController {
     }
 
     @RequestMapping(value = ATTENDEE_LIST, method = RequestMethod.GET)
-    public ModelAndView AttendeeListGet(@PathVariable("id") Integer id, HttpServletRequest request) throws NotFoundCourseException {
+    public ModelAndView AttendeeListGet(@PathVariable("id") final Integer id,final HttpServletRequest request) throws NotFoundCourseException {
         ModelAndView mav = new ModelAndView("attendeeList");
         try {
             String userName = userService.getUserFromSession(request);
@@ -267,8 +269,8 @@ public class ParticipantAndReminderController {
     }
 
     @RequestMapping(value = ATTENDEE_LIST, method = RequestMethod.POST)
-    public ModelAndView AttendeeListPost(@PathVariable("id") Integer id,
-                                         Principal principal, @RequestParam(value = "fieldForSubmit", required = false) ActionsOnPage action)
+    public ModelAndView AttendeeListPost(@PathVariable("id") final Integer id,
+                                         final Principal principal, @RequestParam(value = "fieldForSubmit", required = false) ActionsOnPage action)
             throws Exception {
         ModelAndView mav = new ModelAndView("attendeeList");
         try {

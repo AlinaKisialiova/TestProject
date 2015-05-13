@@ -38,8 +38,8 @@ import java.util.Map;
 @Service
 public class CourseServiceImpl implements CourseService {
 
-    final String NAME_FILE = "listOfCourses";
-    final String IMAGE_FOR_PDF = "D:\\1.JPG";
+    private final static String  NAME_FILE = "listOfCourses";
+    private final static String IMAGE_FOR_PDF = "D:\\1.JPG";
 
     CourseServiceImpl() {
     }
@@ -279,30 +279,10 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public boolean startCourse(int id, String userName) {
-        if (id < 1) throw new NullPointerException("Id course is null in startCourse()");
-//cheharda
-        Course course = courseDAO.getCourse(id);
-        if (course.getAttenders().size() >= Course.MIN_COUNT_SUBSCR && userDAO.getUser(userName) == course.getLector()) {
-
-            courseDAO.updateCourse(course);
-            return true;
-        }
-        return false;
-    }
-
-    @Override
-    public Course getCourseByName(String courseName) {
-        if (courseName == null) throw new NullPointerException("Username is null in getUser()");
-
-        return courseDAO.getCourseByNameDAO(courseName);
-    }
-
-    @Override
     public List<Course> getCourseForDepartmentManager() {
         List<Course> coursesForApprove = getAllCourse();
         for (Course c : coursesForApprove) {
-            if (!c.getCourseStatus().equals(CourseStatus.NOT_APPROVE))
+            if (!CourseStatus.NOT_APPROVE.equals(c.getCourseStatus()))
                 coursesForApprove.remove(c);
         }
         return coursesForApprove;

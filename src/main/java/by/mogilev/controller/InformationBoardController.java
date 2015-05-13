@@ -37,7 +37,7 @@ public class InformationBoardController {
     private UserService userService;
 
     @RequestMapping(value = INFORM_BOARD, method = RequestMethod.GET)
-    public ModelAndView informBoardGET() {
+    public ModelAndView informBoardGet() {
         ModelAndView mav = new ModelAndView("informationBoard");
 //        mav.addObject("modalTitle", "Ooops...");
 //        mav.addObject("modalMessage","Все сломал наглый поросенок");
@@ -46,11 +46,11 @@ public class InformationBoardController {
     }
 
     @RequestMapping(value = INFORM_BOARD, method = RequestMethod.POST)
-    public ModelAndView informBoardPOST(HttpServletRequest request,
-                                          @RequestParam(value = "grade", required = false) Integer grade,
-                                          @RequestParam(value = "fieldForSubmit", required = false) ActionsOnPage action,
-                                          @RequestParam(value = "id", required = false) Integer id_course,
-                                          @RequestParam(value = "selectCategory", required = false) String selectCategory,
+    public ModelAndView informBoardPost(HttpServletRequest request,
+                                          @RequestParam(value = "grade", required = false) final Integer grade,
+                                          @RequestParam(value = "fieldForSubmit", required = false)  ActionsOnPage action,
+                                          @RequestParam(value = "id", required = false) final Integer id_course,
+                                          @RequestParam(value = "selectCategory", required = false) final String selectCategory,
                                           HttpServletResponse response)
             throws IOException, DocumentException, AddressException, NotFoundUserException {
         ModelAndView mav = new ModelAndView("informationBoard");
@@ -76,9 +76,7 @@ public class InformationBoardController {
                 case OUT_EXCEL:
                     courseService.outInExcelAllCourse(response);
                     break;
-                case START:
-                    courseService.startCourse(id_course, userName);
-                    break;
+
             }
             mav.addObject("courseList", courseService.getAllCourse());
         } catch (IsNotOwnerException e) {

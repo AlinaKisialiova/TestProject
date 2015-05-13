@@ -25,7 +25,21 @@ public interface CourseService {
      */
    public boolean isOwner(int idCourse, String UserName) throws NotFoundUserException, NotFoundCourseException;
 
+    /**
+     * Method set mark to course and initialize send email
+     * @param id
+     * @param user
+     * @param grade
+     * @throws AddressException
+     * @throws NotFoundCourseException
+     * @throws NotFoundUserException
+     */
     public void remidEv(int id, User user, int grade) throws AddressException, NotFoundCourseException, NotFoundUserException;
+
+    /**
+     *Method return map with course category
+     * @return
+     */
     Map<String, String> getCategotyMap();
     /**
      *
@@ -45,28 +59,60 @@ public interface CourseService {
      *
      */
     List<Course> getSelected(String category);
+
     /**
-     *
-     * Method add user in set of attenders
-     *
+     * Method return all course that registration in center
+     * @return
      */
-
-
     public List<Course> getAllCourse();
 
+    /**
+     *  delete course
+     * @param id
+     * @param userName
+     * @throws AddressException
+     * @throws NotFoundCourseException
+     * @throws NotFoundUserException
+     * @throws IsNotOwnerException
+     */
     public void deleteCourse(int id, String userName) throws AddressException, NotFoundCourseException, NotFoundUserException, IsNotOwnerException;
 
+    /**
+     * get course for id
+     * @param id
+     * @return
+     * @throws NotFoundCourseException
+     */
     public Course getCourse(int id) throws NotFoundCourseException;
+
+    /**
+     * register new course
+     * @param course
+     * @param nameLector
+     * @throws AddressException
+     * @throws NotFoundUserException
+     */
 
     public void registerCourse(Course course, String nameLector) throws AddressException, NotFoundUserException;
 
+    /**
+     * update course
+     * @param updCourse
+     * @throws AddressException
+     * @throws NotFoundCourseException
+     */
     public void updateCourse(Course updCourse) throws AddressException, NotFoundCourseException;
 
-    public boolean startCourse(int id, String userName);
-
-    public Course getCourseByName(String courseName);
-
+    /**
+     * return course for approve department manager
+     * @return
+     */
     public List<Course> getCourseForDepartmentManager();
+
+    /**
+     * return course for approve knowledge manager
+     * @return
+     */
     public List<Course> getCourseForKnowledgeManagerManager();
 
 

@@ -29,7 +29,6 @@ import java.util.Set;
 public class MySeminarsController {
     public final static String MY_SEMINARS = "/mySeminars";
 
-
     @Autowired
     private CourseService courseService;
 
@@ -43,7 +42,7 @@ public class MySeminarsController {
     }
 
     @RequestMapping(value = MY_SEMINARS, method = RequestMethod.GET)
-    public ModelAndView listCourseUser(HttpServletRequest request) throws NotFoundUserException {
+    public ModelAndView listCourseUser( final HttpServletRequest request) throws NotFoundUserException {
         ModelAndView mav = new ModelAndView("mySeminars");
         try {
             String userName = userService.getUserFromSession(request);
@@ -59,11 +58,11 @@ public class MySeminarsController {
     }
 
     @RequestMapping(value = MY_SEMINARS, method = RequestMethod.POST)
-    public ModelAndView mySem(@RequestParam(value = "grade", required = false) Integer grade,
-                              @RequestParam(value = "fieldForSubmit", required = false) ActionsOnPage action,
-                              @RequestParam(value = "selectCourse", required = false) Integer id_course,
-                              @RequestParam(value = "selectCategory", required = false) String selectCategory,
-                              @RequestParam(value = "id", required = false) Integer id,
+    public ModelAndView mySem(@RequestParam(value = "grade", required = false) final Integer grade,
+                              @RequestParam(value = "fieldForSubmit", required = false) final ActionsOnPage action,
+                              @RequestParam(value = "selectCourse", required = false) final Integer id_course,
+                              @RequestParam(value = "selectCategory", required = false) final  String selectCategory,
+                              @RequestParam(value = "id", required = false) final Integer id,
                               HttpServletRequest request)
             throws IOException, DocumentException, AddressException, NotFoundUserException {
         ModelAndView mav = new ModelAndView("mySeminars");

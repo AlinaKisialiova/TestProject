@@ -114,9 +114,9 @@ public class ActionCourseController {
     }
 
     @RequestMapping(value = EDIT_COURSE, method = RequestMethod.POST)
-    public ModelAndView editCourse(@PathVariable("course.id") Integer id,
-                             @ModelAttribute("Course") Course updCourse,
-                             HttpServletRequest request, Model model) throws AddressException, NotFoundCourseException, NotFoundUserException, IsNotOwnerException {
+    public ModelAndView editCourse(@PathVariable("course.id") final Integer id,
+                             @ModelAttribute("Course") final Course updCourse,
+                             final HttpServletRequest  request, final Model model) throws AddressException, NotFoundCourseException, NotFoundUserException, IsNotOwnerException {
        try {
            model.addAttribute("categoryMap", courseService.getCategotyMap());
 
@@ -130,7 +130,8 @@ public class ActionCourseController {
            editCourse.setDuration(updCourse.getDuration());
 
            courseService.updateCourse(editCourse);
-           return new ModelAndView("redirect:/courseDetails/{course.id}");       }
+           return new ModelAndView("redirect:/courseDetails/{course.id}");
+       }
        catch (NotFoundUserException ex) {
            return new ModelAndView("signin");
        }
