@@ -11,7 +11,7 @@
         <div class="col-md-8 col-md-offset-5">
     <label for="j_username">Username: </label>
 
-    <input id="j_username" name="j_username" size="20" maxlength="50" type="text" required autofocus value="elvis"/>
+    <input id="j_username" name="j_username" size="20" maxlength="50" type="text"/>
 </div>
             </div>
 

@@ -26,9 +26,9 @@ import javax.servlet.http.HttpSession;
  */
 @Controller
 public class ActionCourseController {
-    public final String REGISTRATION_COURSE = "/registrationCourse";
-    public final String DETAIL_COURSE = "/courseDetails/{course.id}";
-    public final String EDIT_COURSE = "/editCourse/{course.id}";
+    public final static String REGISTRATION_COURSE = "/registrationCourse";
+    public final static String DETAIL_COURSE = "/courseDetails/{course.id}";
+    public final static String EDIT_COURSE = "/editCourse/{course.id}";
 
     @Autowired
     private CourseService courseService;
@@ -53,8 +53,6 @@ public class ActionCourseController {
     public ModelAndView regCourse(@ModelAttribute("Course") Course newCourse, BindingResult result, Model model,
                                   HttpSession session, HttpServletRequest request) throws AddressException, NotFoundUserException {
         try {
-            if (result.hasErrors())
-                new ModelAndView("redirect:/informationBoard");
             String userName = userService.getUserFromSession(request);
             courseService.registerCourse(newCourse, userName);
             return new ModelAndView("redirect:/informationBoard");

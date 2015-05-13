@@ -42,7 +42,7 @@
     <div class="col-md-8 col-md-offset-6">
         <div class="col-md-4"><strong>Reason</strong></div>
         <br>
-    <div class="col-md-4"><textarea  id="reasonDM" name="reasonDM"  <c:if test="${role != '[DEPARTMENT_MANAGER]'}"> disabled="disabled" </c:if> ></textarea></div>
+    <div class="col-md-4"><textarea  id="reasonDM" name="reasonDM"  <c:if test="${role != '[DEPARTMENT_MANAGER]'}"> disabled="disabled" </c:if> > ${reasonDM}</textarea></div>
 
         <hr>
     </div>

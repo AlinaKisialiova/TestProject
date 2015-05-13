@@ -57,8 +57,7 @@
                 <td><br></td>
                 <td><br></td>
                 <td><br></td>
-                <td><br>
-                <td>
+                <td><br>                <td>
                 <td>Course Category</td>
                 <td>
                     <select name="selectCategory" onchange="filter(this)">
@@ -69,6 +68,7 @@
                     </select>
 
                 </td>
+
             </tr>
 
 
@@ -103,8 +103,7 @@
                 <td>
                     <c:set var="NOT_APPROVE" value="<%=CourseStatus.NOT_APPROVE%>"/>
                     <c:set var="APPROVE_DEPARTMENT_MANAGER" value="<%=CourseStatus.APPROVE_DEPARTMENT_MANAGER%>"/>
-                    <c:set var="APPROVE_DEPARTMENT_MANAGER" value="<%=CourseStatus.APPROVE_DEPARTMENT_MANAGER%>"/>
-                    <c:set var="APPROVE_KNOWLEDGE_MANAGER" value="<%=CourseStatus.APPROVE_KNOWLEDGE_MANAGER%>"/>
+                         <c:set var="APPROVE_KNOWLEDGE_MANAGER" value="<%=CourseStatus.APPROVE_KNOWLEDGE_MANAGER%>"/>
                     <c:set var="DELIVERED" value="<%=CourseStatus.DELIVERED%>"/>
                     <c:choose>
                         <c:when test="${course.courseStatus eq NOT_APPROVE}">
@@ -138,14 +137,15 @@
 
                     <c:choose>
                         <c:when test="${(attCourseOfUser.contains(course))}">
-                            <a href="<c:url value="/AttendeeList/${course.id}" context="/project"/>" class="btn-danger">
+                            <a href="<c:url value="/attendeeList/${course.id}" context="/project"/>" class="btn-danger">
                                 Exclude from Attenders List </a>
                         </c:when>
 
                         <c:otherwise>
-                            <a href="<c:url value="/AttendeeList/${course.id}" context="/project"/>"
+                            <a href="<c:url value="/attendeeList/${course.id}" context="/project"/>"
                                class="btn-primary btn-group-lg">
                                 Include Into Attenders List </a>
+
                         </c:otherwise>
                     </c:choose>
 

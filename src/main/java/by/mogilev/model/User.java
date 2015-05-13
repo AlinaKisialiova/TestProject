@@ -15,7 +15,7 @@ import java.util.*;
 
 @Entity
 @Table(name = "USER")
-public class User implements Serializable {
+public class User  {
 
     private int id;
     private String username;

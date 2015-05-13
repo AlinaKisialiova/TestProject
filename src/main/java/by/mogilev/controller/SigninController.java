@@ -11,9 +11,9 @@ import org.springframework.web.bind.annotation.RequestMethod;
 
 @Controller
 public class SigninController {
-    public final String SIGNIN = "/signin";
-    public final String FAIL = "/signin-failure";
-    public final String DENIED = "/deniedPage";
+    public final static String SIGNIN = "/signin";
+    public final static String FAIL = "/signin-failure";
+    public final static String DENIED = "/deniedPage";
 
 
     @RequestMapping(value = SIGNIN, method = RequestMethod.GET)

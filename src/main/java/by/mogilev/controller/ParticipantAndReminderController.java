@@ -28,11 +28,11 @@ import java.util.Set;
  */
 @Controller
 public class ParticipantAndReminderController {
-    public final String PARTICIPANT_LIST = "/participantsList/{course.id}";
-    public final String EVAL_REMINDER = "/evaluationReminder/{course.id}";
-    public final String SUBSCRIBE = "/subscribePage";
-    public final String ATTENDEE = "/attendeePage";
-    public final String ATTENDEE_LIST = "/attendeeList/{id}";
+    public final static String  PARTICIPANT_LIST = "/participantsList/{course.id}";
+    public final static String  EVAL_REMINDER = "/evaluationReminder/{course.id}";
+    public final static String SUBSCRIBE = "/subscribePage";
+    public final static String ATTENDEE = "/attendeePage";
+    public final static String ATTENDEE_LIST = "/attendeeList/{id}";
 
 
     @Autowired
@@ -124,7 +124,7 @@ public class ParticipantAndReminderController {
     }
 
     @RequestMapping(value = SUBSCRIBE, method = RequestMethod.GET)
-    public ModelAndView SubscrGET(HttpServletRequest request) throws NotFoundUserException {
+    public ModelAndView SubscrGet(HttpServletRequest request) throws NotFoundUserException {
         ModelAndView mav = new ModelAndView("subscribePage");
         try {
             List<Course> coursesForList = courseService.getAllCourse();
@@ -140,7 +140,7 @@ public class ParticipantAndReminderController {
     }
 
     @RequestMapping(value = SUBSCRIBE, method = RequestMethod.POST)
-    public ModelAndView SubscPOST(
+    public ModelAndView SubscPost(
             @RequestParam(value = "selectCourse", required = false) Integer id_course,
             @RequestParam(value = "selectCategory", required = false) String selectCategory,
             @RequestParam(value = "fieldForSubmit", required = false) ActionsOnPage action,
@@ -181,7 +181,7 @@ public class ParticipantAndReminderController {
     }
 
     @RequestMapping(value = ATTENDEE, method = RequestMethod.GET)
-    public ModelAndView AttendeePageGET(HttpServletRequest request) throws NotFoundUserException {
+    public ModelAndView AttendeePageGet(HttpServletRequest request) throws NotFoundUserException {
         try {
             ModelAndView mav = new ModelAndView("attendeePage");
             Set<Course> courses = userService.getCoursesSubscribeOfUser(userService.getUserFromSession(request));
@@ -202,7 +202,7 @@ public class ParticipantAndReminderController {
     }
 
     @RequestMapping(value = ATTENDEE, method = RequestMethod.POST)
-    public ModelAndView AttendeePagePOST(
+    public ModelAndView AttendeePagePost(
             @RequestParam(value = "selectCourse", required = false) Integer id_course,
             @RequestParam(value = "selectCategory", required = false) String selectCategory,
             @RequestParam(value = "fieldForSubmit", required = false) ActionsOnPage action,
@@ -247,7 +247,7 @@ public class ParticipantAndReminderController {
     }
 
     @RequestMapping(value = ATTENDEE_LIST, method = RequestMethod.GET)
-    public ModelAndView AttendeeListGET(@PathVariable("id") Integer id, HttpServletRequest request) throws NotFoundCourseException {
+    public ModelAndView AttendeeListGet(@PathVariable("id") Integer id, HttpServletRequest request) throws NotFoundCourseException {
         ModelAndView mav = new ModelAndView("attendeeList");
         try {
             String userName = userService.getUserFromSession(request);
@@ -267,7 +267,7 @@ public class ParticipantAndReminderController {
     }
 
     @RequestMapping(value = ATTENDEE_LIST, method = RequestMethod.POST)
-    public ModelAndView AttendeeListPOST(@PathVariable("id") Integer id,
+    public ModelAndView AttendeeListPost(@PathVariable("id") Integer id,
                                          Principal principal, @RequestParam(value = "fieldForSubmit", required = false) ActionsOnPage action)
             throws Exception {
         ModelAndView mav = new ModelAndView("attendeeList");

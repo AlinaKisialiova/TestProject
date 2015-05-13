@@ -1,6 +1,7 @@
 package by.mogilev.dao;
 
 import by.mogilev.model.Course;
+import by.mogilev.model.CourseStatus;
 import by.mogilev.model.User;
 import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
@@ -33,6 +34,7 @@ public class CourseDAOImp implements CourseDAO {
         criteria.add(Restrictions.eq("username", loginLector));
         lector = (User) criteria.uniqueResult();
         newCourse.setLector(lector);
+        newCourse.setCourseStatus(CourseStatus.NOT_APPROVE);
         session.save(newCourse);
     }
 

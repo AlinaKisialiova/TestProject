@@ -220,25 +220,37 @@
         <!--</dependency>-->
 
     </dependencies>
-<!--<build>-->
 
-    <!--<plugins>-->
-        <!--<plugin>-->
-            <!--<groupId>org.apache.maven.plugins</groupId>-->
-            <!--<artifactId>maven-checkstyle-plugin</artifactId>-->
-            <!--<version>2.7</version>-->
-            <!--<configuration>-->
-                <!--<configLocation>config/sun_checks.xml</configLocation>-->
-                <!--<consoleOutput>true</consoleOutput>-->
-            <!--</configuration>-->
-            <!--<executions>-->
-                <!--<execution>-->
-                    <!--<phase>package</phase>-->
-                    <!--<goals><goal>check</goal></goals>-->
-                <!--</execution>-->
-            <!--</executions>-->
-        <!--</plugin>-->
+    <reporting>
+        <plugins>
+            <plugin>
+                <groupId>org.apache.maven.plugins</groupId>
+                <artifactId>maven-checkstyle-plugin</artifactId>
+                <version>2.15</version>
+                <reportSets>
+                    <reportSet>
+                        <reports>
+                            <report>checkstyle</report>
+                        </reports>
+                    </reportSet>
+                </reportSets>
+            </plugin>
 
-           <!--</plugins>-->
-<!--</build>-->
+            <plugin>
+                <groupId>org.codehaus.mojo</groupId>
+                <artifactId>findbugs-maven-plugin</artifactId>
+                <version>3.0.1</version>
+                <configuration>
+
+                    <effort>Max</effort>
+                    <!-- Reports all bugs (other values are medium and max) -->
+                    <threshold>Low</threshold>
+                    <!-- Produces XML report -->
+                    <xmlOutput>true</xmlOutput>
+                </configuration>
+            </plugin>
+        </plugins>
+    </reporting>
+
+
 </project>

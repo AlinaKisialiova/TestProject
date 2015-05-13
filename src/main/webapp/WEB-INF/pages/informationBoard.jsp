@@ -169,12 +169,21 @@
                     </a>
                     </c:if>
                     </c:if>
+                            <c:set var="NOT_APPROVE" value="<%=CourseStatus.NOT_APPROVE%>"/>
+                            <c:set var="APPROVE_DEPARTMENT_MANAGER" value="<%=CourseStatus.APPROVE_DEPARTMENT_MANAGER%>"/>
 
+
+                            <sec:authentication property="authorities" var="role" scope="page"/>
                     <sec:authorize access="hasAnyRole('DEPARTMENT_MANAGER','KNOWLEDGE_MANAGER')">
+                        <c:if test="${(course.courseStatus eq NOT_APPROVE and role eq '[DEPARTMENT_MANAGER]') or
+                        (course.courseStatus eq APPROVE_DEPARTMENT_MANAGER and role eq '[KNOWLEDGE_MANAGER]')}">
                     <a href="<c:url value="/approveCourse/${course.id}" context="/project"/>">
                         <input type="button" id="approve" value="Approve Course" class="btn"/>
                     </a>
+                       </c:if>
                     </sec:authorize>
+
+
                     <input type="hidden" name="fieldForSubmit" class="fieldForSubmit"/>
                     <input type="hidden" class="idC" name="id" />
 

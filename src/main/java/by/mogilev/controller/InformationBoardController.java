@@ -28,7 +28,7 @@ import java.security.Principal;
 
 @Controller
 public class InformationBoardController {
-    public final String INFORM_BOARD = "/informationBoard";
+    public final static String INFORM_BOARD = "/informationBoard";
 
     @Autowired
     private CourseService courseService;

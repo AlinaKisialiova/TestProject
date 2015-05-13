@@ -13,13 +13,11 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.CMYKColor;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
-import com.itextpdf.text.pdf.PdfWriter;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
 import org.apache.poi.ss.usermodel.Sheet;
 import org.apache.poi.ss.usermodel.Workbook;
-import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Service;
 
@@ -29,10 +27,10 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
-import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.*;
+import java.util.HashMap;
 import java.util.List;
+import java.util.Map;
 
 /**
  * Created by Администратор on 21.03.2015.
@@ -69,8 +67,7 @@ public class CourseServiceImpl implements CourseService {
     public void outInPdfAllCourse(HttpServletResponse response) throws IOException, DocumentException {
 
         Document document = new Document(PageSize.A4, 50, 50, 50, 50);
-        PdfWriter writer = PdfWriter.getInstance(document,
-                new FileOutputStream(NAME_FILE + ".pdf"));
+
         document.open();
         Paragraph paragraph1 = new Paragraph("This is list of courses a Training Center",
                 FontFactory.getFont(FontFactory.COURIER, 14, Font.BOLD,
@@ -136,7 +133,7 @@ public class CourseServiceImpl implements CourseService {
             out.write(bytes);
         }
         out.close();
-
+        fileInputStream.close();
 
     }
 
@@ -305,7 +302,7 @@ public class CourseServiceImpl implements CourseService {
     public List<Course> getCourseForDepartmentManager() {
         List<Course> coursesForApprove = getAllCourse();
         for (Course c : coursesForApprove) {
-            if (!c.getCourseStatus().equals("") || !c.getCourseStatus().equals(CourseStatus.NOT_APPROVE))
+            if (!c.getCourseStatus().equals(CourseStatus.NOT_APPROVE))
                 coursesForApprove.remove(c);
         }
         return coursesForApprove;
@@ -316,7 +313,7 @@ public class CourseServiceImpl implements CourseService {
     public List<Course> getCourseForKnowledgeManagerManager() {
         List<Course> coursesForApprove = getAllCourse();
         for (Course c : coursesForApprove) {
-            if (!c.getCourseStatus().equals(CourseStatus.APPROVE_DEPARTMENT_MANAGER))
+            if (!(CourseStatus.APPROVE_DEPARTMENT_MANAGER).equals(c.getCourseStatus()))
                 coursesForApprove.remove(c);
         }
         return coursesForApprove;

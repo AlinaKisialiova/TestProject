@@ -19,18 +19,16 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.servlet.http.HttpServletRequest;
 import java.util.ArrayList;
-import java.util.HashSet;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by akiseleva on 13.04.2015.
  */
 @Controller
 public class ApproveCourseController {
-    public final String APPROVE_COURSE = "/approveCourse/{course.id}";
+    public final static String APPROVE_COURSE = "/approveCourse/{course.id}";
 
-    public final String APPROVE = "/approvePage";
+    public final static String APPROVE = "/approvePage";
 
     @Autowired
     private CourseService courseService;
@@ -48,6 +46,8 @@ public class ApproveCourseController {
             mav.addObject("courseList", courseService.getCourse(id));
             User user = userService.getUser(userService.getUserFromSession(request));
             mav.addObject("nameUser", user.getName());
+            String reasonDM = courseService.getCourse(id).getDepartmentManagerReason();
+            mav.addObject("reasonDM", reasonDM);
             return mav;
         } catch (NotFoundCourseException ex) {
             mav.addObject("modalTitle", "Ooops...");
@@ -68,6 +68,7 @@ public class ApproveCourseController {
                 case DEPARTMENT_MANAGER:
                     if ("approve".equals(approve)) {
                         appCourse.setCourseStatus(CourseStatus.APPROVE_DEPARTMENT_MANAGER);
+                        appCourse.setDepartmentManagerReason(reason);
                         InternetAddress[] emails = new InternetAddress[]{
                                 new InternetAddress("aflamma@yandex.ru")};
                         mailService.sendEmail(id, Notification.COURSE_APPOVAL_STATUS, emails, userName);
@@ -78,11 +79,10 @@ public class ApproveCourseController {
                     }
                     break;
 
-
                 case KNOWLEDGE_MANAGER:
                     if ("approve".equals(approve)) {
                         appCourse.setCourseStatus(CourseStatus.APPROVE_KNOWLEDGE_MANAGER);
-
+                        appCourse.setKnowledgeManagerReason(reason);
                         InternetAddress[] emails = mailService.getRecipient(appCourse);
 
                         mailService.sendEmail(id, Notification.NEW_COURSE_ADDED, emails, userName);
@@ -94,7 +94,7 @@ public class ApproveCourseController {
                     break;
             }
 
-            appCourse.setKnowledgeManagerReason(reason);
+
             courseService.updateCourse(appCourse);
 
             ModelAndView mav = new ModelAndView("informationBoard");
@@ -112,7 +112,7 @@ public class ApproveCourseController {
 
 
     @RequestMapping(value = APPROVE, method = RequestMethod.GET)
-    public ModelAndView approveGET(HttpServletRequest request) throws AddressException {
+    public ModelAndView approveGet(HttpServletRequest request) throws AddressException {
 
         ModelAndView mav = new ModelAndView("approvePage");
         List<Course> coursesForApprove = new ArrayList<Course>();
@@ -136,7 +136,7 @@ public class ApproveCourseController {
     }
 
     @RequestMapping(value = APPROVE, method = RequestMethod.POST)
-    public ModelAndView approveGET(HttpServletRequest request, Model model,
+    public ModelAndView approvePost(HttpServletRequest request, Model model,
                                     @RequestParam(value = "selectCourse", required = false) Integer id_course,
                                     @RequestParam(value = "selectCategory", required = false) String selectCategory,
                                     @RequestParam(value = "fieldForSubmit", required = false) ActionsOnPage action) throws NotFoundCourseException, NotFoundUserException {
@@ -144,10 +144,10 @@ public class ApproveCourseController {
         try {
            if (ActionsOnPage.APPROVE.equals(action)) {
                if (id_course == null) throw new NotFoundCourseException();
-               model.addAttribute("id", id_course);
-               return new ModelAndView("redirect:" + "/approveCourse/{id}");
+               model.addAttribute("course.id", id_course);
+               return new ModelAndView("redirect:" + "/approveCourse/{course.id}");
            }
-
+            String reasonDM = "";
            List<Course> courses = new ArrayList<Course>();
            User user = userService.getUser(userService.getUserFromSession(request));
            switch (user.getAuthority()) {
@@ -161,6 +161,7 @@ public class ApproveCourseController {
                }
            }
            List<Course> coursesForApprove = new ArrayList<Course>();
+
            if ("All".equals(selectCategory))
                coursesForApprove = courses;
            else {
@@ -172,6 +173,7 @@ public class ApproveCourseController {
            }
 
            mav.addObject("coursesForApprove", coursesForApprove);
+
            return mav;
        } catch (NotFoundCourseException ex) {
            mav.addObject("modalTitle", "Ooops...");

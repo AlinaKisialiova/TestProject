@@ -27,7 +27,7 @@ import java.util.Set;
  */
 @Controller
 public class MySeminarsController {
-    public final String MY_SEMINARS = "/mySeminars";
+    public final static String MY_SEMINARS = "/mySeminars";
 
 
     @Autowired
