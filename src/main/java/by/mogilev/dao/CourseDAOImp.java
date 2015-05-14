@@ -94,7 +94,7 @@ public class CourseDAOImp implements CourseDAO {
 
 
     @Override
-    public Course getCourseByNameDAO(String courseName) {
+    public Course getCourseByNameDao(String courseName) {
         Session session = this.sessionFactory.getCurrentSession();
         Criteria criteria = session.createCriteria(Course.class);
         criteria.add(Restrictions.eq("nameCourse", courseName));

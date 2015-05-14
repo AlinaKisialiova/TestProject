@@ -46,13 +46,13 @@ public interface CourseService {
      * Method out in pdf-file list of courses
      *
      */
-    public void outInPdfAllCourse(HttpServletResponse response) throws IOException, DocumentException;
+    public void outInPdfAllCourse(HttpServletResponse response, List<Course> courses) throws IOException, DocumentException;
     /**
      *
      * Method out in Excel list of courses
      *
      */
-    public void outInExcelAllCourse(HttpServletResponse response) throws IOException;
+    public void outInExcelAllCourse(HttpServletResponse response, List<Course> courses) throws IOException;
     /**
      *
      * Method selected on choose category

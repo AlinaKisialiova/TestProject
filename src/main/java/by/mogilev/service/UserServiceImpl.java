@@ -94,7 +94,7 @@ public class UserServiceImpl implements UserService {
 
         if (course.getSubscribers().size() >= Course.MIN_COUNT_SUBSCR) {
             course.setCourseStatus(CourseStatus.DELIVERED);
-            InternetAddress[] emails = mailService.getRecipient(course);
+            InternetAddress[] emails = mailService.getRecipientSubsc(course);
             mailService.sendEmail(id_course, Notification.COURSE_APPOINTED, emails, username);
         }
 

@@ -2,10 +2,7 @@ package by.mogilev.controller;
 
 import by.mogilev.exception.NotFoundCourseException;
 import by.mogilev.exception.NotFoundUserException;
-import by.mogilev.model.ActionsOnPage;
-import by.mogilev.model.Course;
-import by.mogilev.model.CourseStatus;
-import by.mogilev.model.User;
+import by.mogilev.model.*;
 import by.mogilev.service.CourseService;
 import by.mogilev.service.MailService;
 import by.mogilev.service.UserService;
@@ -19,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 import javax.servlet.http.HttpServletRequest;
 import java.security.Principal;
 import java.util.HashSet;
@@ -98,30 +96,24 @@ public class ParticipantAndReminderController {
 
     @RequestMapping(value = EVAL_REMINDER, method = RequestMethod.POST)
     public ModelAndView reminderStartorReset(@PathVariable("course.id") final Integer id, final HttpServletRequest request) throws AddressException, NotFoundCourseException, NotFoundUserException {
+        ModelAndView mav = new ModelAndView("evaluationReminder");
         try {
-            ModelAndView mav = new ModelAndView("evaluationReminder");
+
             Course course = courseService.getCourse(id);
             mav.addObject("checkCourse", course);
             String userName = userService.getUserFromSession(request);
-//            String message = "";
-//            if (courseService.startCourse(id, userName)) {
-//                message = "Course " + course.getNameCourse() + " is started!";
-//                course.setCourseStatus(CourseStatus.DELIVERED);
-//                InternetAddress[] emails = mailService.getRecipient(course);
-//                mailService.sendEmail(id, Notification.EVALUATION_REMINDER, emails, userName);
-//
-//            } else
-//                message = "Course dont started!";
-//
-//            mav.addObject("startMessage", message);
+                InternetAddress[] emails = mailService.getRecipientAtt(course);
+                mailService.sendEmail(id, Notification.EVALUATION_REMINDER, emails, userName);
+
+            mav.addObject("modalTitle", "Sending");
+            mav.addObject("modalMessage", "Notifications send!");
             return mav;
         } catch (NotFoundUserException ex) {
             return new ModelAndView("signin");
         } catch (NotFoundCourseException e) {
-            ModelAndView mavExc = new ModelAndView("informationBoard");
-            mavExc.addObject("modalTitle", "Ooops...");
-            mavExc.addObject("modalMessage", e.toString());
-            return mavExc;
+            mav.addObject("modalTitle", "Ooops...");
+            mav.addObject("modalMessage", e.toString());
+            return mav;
         }
     }
 
@@ -297,7 +289,8 @@ public class ParticipantAndReminderController {
                     message = "You are deleted from attenders list!";
                     break;
             }
-            mav.addObject("attendersMessage", message);
+            mav.addObject("modalTitle", "Participate");
+            mav.addObject("modalMessage", message);
             mav.addObject("attendee", courseService.getCourse(id).getAttenders());
 
             return mav;

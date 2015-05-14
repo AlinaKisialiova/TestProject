@@ -18,6 +18,7 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.mail.internet.AddressException;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 import java.util.Set;
@@ -62,8 +63,7 @@ public class MySeminarsController {
                               @RequestParam(value = "fieldForSubmit", required = false) final ActionsOnPage action,
                               @RequestParam(value = "selectCourse", required = false) final Integer id_course,
                               @RequestParam(value = "selectCategory", required = false) final  String selectCategory,
-                              @RequestParam(value = "id", required = false) final Integer id,
-                              HttpServletRequest request)
+                             final HttpServletRequest request,   HttpServletResponse response)
             throws IOException, DocumentException, AddressException, NotFoundUserException {
         ModelAndView mav = new ModelAndView("mySeminars");
 try {
@@ -71,8 +71,22 @@ try {
         mav.addObject("nameCourses", coursesForSelect);
 
         User user = userService.getUser(userService.getUserFromSession(request));
-        if (ActionsOnPage.EVAL_REM.equals(action))
+    switch (action){
+        case EVAL_REM: {
             courseService.remidEv(id_course, user, grade);
+            break;
+                    }
+        case OUT_EXCEL:{
+            courseService.outInExcelAllCourse(response, courseService.getAllCourse());
+            break;
+        }
+        case OUT_PDF: {
+            courseService.outInPdfAllCourse(response, courseService.getAllCourse());
+            break;
+        }
+    }
+
+
 
         Set<Course> coursesForList = userService.getCoursesSubscribeOfUser(userService.getUserFromSession(request));
         mav.addObject("courseList", coursesForList);

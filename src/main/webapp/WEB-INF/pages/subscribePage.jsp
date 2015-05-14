@@ -75,7 +75,5 @@
 
 
     }
-//    function setNameButton(id_course) {
-//alert(id_course);
-//    }
+
 </script>

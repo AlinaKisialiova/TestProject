@@ -13,51 +13,68 @@
 
 <div class="row">
 
-    <div id='EvalRemindBlock' style="display: none;" class="table">
+    <div id='EvalRemindBlock' style="display: none;" class="col-md-4 col-md-offset-4">
         <form method="post" action="informationBoard">
             <input type="hidden" class="idC" name="id"/>
-            <table id="evalRemindTable">
-                <tr>
-                    <td>Course Lector</td>
+            <table id="evalRemindTable" class="table">
+                <thead>
+                <tr class="danger">
+                    <th colspan="2">Please, put mark for this course</th>
+                </thead>
+                <tbody>
+                <tr class="active">
+                    <td><strong>Course Lector:</strong></td>
                     <td class="lect">
                     </td>
                 </tr>
-                <tr>
-                    <td>Course name</td>
+                <tr class="active">
+                    <td><strong>Course name:</strong></td>
                     <td class="cours">
                     </td>
                 </tr>
-                <tr>
-                    <td>Course Grade</td>
-                    <td>
-                        <input type="text" name="grade" class="grade"/>
+                <tr class="danger">
+                    <td><strong>Course Grade:</strong></td>
+                    <td><input type="text" name="grade" class="grade"/>
+                        <span style="color:red" class="errGrade"></span>
                         <input type="hidden" name="fieldForSubmit" class="fieldForSubmit"/>
 
                     </td>
 
                 </tr>
-                <tr>
-                    <td>
-                        <input type="submit" value="Save"/>
+                <tr class="active">
+                    <td align="right">
+                        <input type="submit" value="Save" onclick="return val_ev();" class="btn btn-primary"/>
                     </td>
                     <td>
-                        <input type="button" value="Cancel" onclick="hide('#EvalRemindBlock');"/>
+                        <input type="button" value="Cancel" onclick="hide('#EvalRemindBlock');" class="btn"/>
 
                     </td>
                 </tr>
+                </tbody>
             </table>
         </form>
     </div>
 
-
     <table align="justify" id="tableCourse">
         <form action="mySeminars" method="post">
             <tr>
+                <th>
+                    <input type="submit" onclick="outPdf()" name="pdfOut"
+                           value="Click for Output in PDF" class="btn btn-primary">
+                </th>
+
+
+                <th>
+
+                    <input type="submit" onclick="outExcel()" name="excelOut"
+                           value="Click for Output in Excel" class="btn btn-primary">
+
+                </th>
+
                 <td><br></td>
                 <td><br></td>
-                <td><br></td>
-                <td><br></td>
-                <td><br>                <td>
+                <td><br>
+                <td>
                 <td>Course Category</td>
                 <td>
                     <select name="selectCategory" onchange="filter(this)">
@@ -68,7 +85,6 @@
                     </select>
 
                 </td>
-
             </tr>
 
 
@@ -162,49 +178,17 @@
 
 </div>
 
+<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 
-<script language="JavaScript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>
 <script>
+function outPdf() {
+$(".fieldForSubmit").val("OUT_PDF");
+}
 
+function outExcel() {
+$(".fieldForSubmit").val("OUT_EXCEL");
 
-    function show(id, element) {
-        if (element == "#EvalRemindBlock") {
-            $(element).show();
-            var lCourse = $(".lector_" + id).html();
-            var nCourse = $(".course_" + id).html();
-            var gCourse = $(".hiddenEval_" + id).val();
-
-            $(".lect").text(lCourse);
-            $(".cours").text(nCourse);
-            $(".grade").val(gCourse);
-            $(".idC").val(id);
-            $(".fieldForSubmit").val("EVAL_REM");
-        }
-        if (element == "#SubscOnCourse")
-            $(element).show();
-    }
-    function hide(element) {
-        if (element == "#EvalRemindBlock")
-            $(element).hide();
-
-        if (element == "#SubscOnCourse")
-            $(element).hide();
-    }
-
-
-    function att(yesOrNo, id) {
-        $(".idC").val(id);
-        if (yesOrNo == "yes") {
-            $(".yes").val("Not to participate");
-            $(".no").val("Not to participate");
-            $(".fieldForSubmit").val("ADD_IN_ATT");
-        }
-        else if (yesOrNo == "no") {
-            $(".yes").val("Participate");
-            $(".no").val("Participate");
-            $(".fieldForSubmit").val("REMOTE_FROM_ATT");
-        }
-    }
-
+}
 
 </script>
+

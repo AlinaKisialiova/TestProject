@@ -20,6 +20,7 @@ import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.security.Principal;
+import java.util.Set;
 
 
 /**
@@ -50,7 +51,6 @@ public class InformationBoardController {
                                           @RequestParam(value = "grade", required = false) final Integer grade,
                                           @RequestParam(value = "fieldForSubmit", required = false)  ActionsOnPage action,
                                           @RequestParam(value = "id", required = false) final Integer id_course,
-                                          @RequestParam(value = "selectCategory", required = false) final String selectCategory,
                                           HttpServletResponse response)
             throws IOException, DocumentException, AddressException, NotFoundUserException {
         ModelAndView mav = new ModelAndView("informationBoard");
@@ -68,13 +68,20 @@ public class InformationBoardController {
                     break;
                 case EVAL_REM:
                     User user = userService.getUser(userName);
+                    Set<User> attenders = courseService.getCourse(id_course).getAttenders();
+                    if (attenders.contains(user))
                     courseService.remidEv(id_course, user, grade);
+                    else {
+                        mav.addObject("modalTitle", "Ooops...");
+                        mav.addObject("modalMessage", "You don't put make because you don't attendee!");
+                    }
+
                     break;
                 case OUT_PDF:
-                    courseService.outInPdfAllCourse(response);
+                    courseService.outInPdfAllCourse(response, courseService.getAllCourse());
                     break;
                 case OUT_EXCEL:
-                    courseService.outInExcelAllCourse(response);
+                    courseService.outInExcelAllCourse(response, courseService.getAllCourse());
                     break;
 
             }

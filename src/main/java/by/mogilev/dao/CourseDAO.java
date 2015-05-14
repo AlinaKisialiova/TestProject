@@ -9,14 +9,51 @@ import java.util.List;
  */
 
 public interface CourseDAO {
-
+    /**
+     * Method delete checed course
+     * @param course
+     */
     public void deleteCourse(Course course);
+
+    /**
+     * Method return all course from db
+     * @return
+     */
     public List<Course> getAllCourse();
+
+    /**
+     * Get course for id
+     * @param id
+     * @return
+     */
     public Course getCourse(int id);
+
+    /**
+     * Register new course
+     * @param course
+     * @param nameLector
+     */
     public void registerCourse(Course course, String nameLector);
+
+    /**
+     * Update date about course
+     * @param course
+     */
     public void updateCourse( Course course);
+
+    /**
+     * Get list of course for checked category
+     * @param category
+     * @return
+     */
     public List getSelectedDao(String category);
-    public Course getCourseByNameDAO(String courseName);
+
+    /**
+     * Get course for name of Course
+     * @param courseName
+     * @return
+     */
+    public Course getCourseByNameDao(String courseName);
 
 
 }

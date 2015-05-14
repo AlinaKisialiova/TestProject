@@ -37,7 +37,7 @@
         <tr><td><strong>Attendee List: </strong></td>
             <td>
                 <c:forEach items="${attendee}" var="att">
-                    <c:out value="${att.name}"/>
+                    <c:out value="${att.name}"/> ,
                 </c:forEach>
             </td>
         </tr>

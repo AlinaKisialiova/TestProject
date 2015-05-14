@@ -37,12 +37,8 @@ public class UserDAOImp  implements UserDAO {
         return (User) criteria.uniqueResult();
     }
 
-    @Override
-    public void addUser(User user)  {
-        Session session = this.sessionFactory.getCurrentSession();;
-            session.save(user);
 
-    }
+
     @SuppressWarnings("unchecked")
     public List<User> getAllUser()  {
         Session session = this.sessionFactory.getCurrentSession();

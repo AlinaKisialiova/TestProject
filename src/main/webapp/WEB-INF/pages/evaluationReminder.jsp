@@ -11,49 +11,53 @@
 
 <div class="row">
 
-    <div class="col-md-8 col-md-offset-4"">
-        <div class="control-group">
-            <div class="control-label"> <b>Course Category: </b>
-                ${checkCourse.category}</div>
-        </div>
-    </div>
-
-    <div class="col-md-8 col-md-offset-4"">
-        <div class="control-group">
-            <div class="control-label" ><b>Course Name: </b>
-                <a href="<c:url value="/courseDetails/${checkCourse.id}" context="/project/"/>" >
-                ${checkCourse.nameCourse}
-                </a>
-            </div>
-
-        </div>
-    </div>
-
-
     <div class="col-md-8 col-md-offset-4">
-        <div class="control-group">
-            <div class="control-label html-editor-bold"><b>Participants</b></div>
+        <table>
+            <tbody>
+            <tr>
+                <td>
+                    <b>Course Category: </b></td>
+                <td> ${checkCourse.category}</td>
+            </tr>
+            <tr>
+                <td>
+                    <b>Course Name: </b></td>
+                <td><a href="<c:url value="/courseDetails/${checkCourse.id}" context="/project/"/>">
+                    ${checkCourse.nameCourse}
+                </a>
+                </td>
+            </tr>
+            <tr>
+                <td><br></td>
+            </tr>
+            <tr>
+                <td colspan="2">
+                    <b>Participants:</b>
+                </td>
+            </tr>
+
             <c:forEach items="${checkCourse.attenders}" var="attend">
-                <div class="controls text">
-                           <c:out value="${attend.name}" escapeXml="true"/>
-                    <span class="controls text"><c:out value="${attend.email}" escapeXml="true"/></span>
-
-                </div>
+                <tr>
+                    <td><c:out value="${attend.name}" escapeXml="true"/></td>
+                    <td><c:out value="${attend.email}" escapeXml="true"/></td>
+                </tr>
             </c:forEach>
-        </div>
-    </div>
 
-<div class="col-md-8 col-md-offset-4"">
-    <div class="btn-group">
-        <form action="<c:url value="/evaluationReminder/${checkCourse.id}" context="/project/"/>" method="post">
-        <input type="submit" value="Start" class="btn-primary"/>
-        <input type="submit" value="Reset" class="btn-info">
-        </form>
-        </div>
-</div>
-<div class="col-md-8 col-md-offset-4">
-   <h2> ${startMessage}</h2>
-    </div>
+            <tr>
 
-</div>
+                <form action="<c:url value="/evaluationReminder/${checkCourse.id}" context="/project/"/>" method="post">
+                    <td>
+                        <input type="submit" value="Send notification" class="btn btn-primary"/>
+                    </td>
+                    <td>
+                        <a href="<c:url value="/informationBoard" context="/project"/>">
+                           <input type="button" value="Cancel"
+                                   class="btn"></a>
+                    </td>
+                </form>
+            </tr>
+            </tbody>
+
+        </table>
+    </div>
 </div>

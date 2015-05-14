@@ -1,7 +1,6 @@
 package by.mogilev.service;
 
 import by.mogilev.dao.CourseDAO;
-import by.mogilev.dao.UserDAO;
 import by.mogilev.exception.IsNotOwnerException;
 import by.mogilev.exception.NotFoundCourseException;
 import by.mogilev.exception.NotFoundUserException;
@@ -13,6 +12,7 @@ import com.itextpdf.text.*;
 import com.itextpdf.text.pdf.CMYKColor;
 import com.itextpdf.text.pdf.PdfPCell;
 import com.itextpdf.text.pdf.PdfPTable;
+import com.itextpdf.text.pdf.PdfWriter;
 import org.apache.poi.hssf.usermodel.HSSFWorkbook;
 import org.apache.poi.ss.usermodel.Cell;
 import org.apache.poi.ss.usermodel.Row;
@@ -27,6 +27,7 @@ import javax.servlet.ServletOutputStream;
 import javax.servlet.http.HttpServletResponse;
 import java.io.File;
 import java.io.FileInputStream;
+import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
 import java.util.List;
@@ -48,9 +49,6 @@ public class CourseServiceImpl implements CourseService {
     private CourseDAO courseDAO;
 
     @Autowired
-    private UserDAO userDAO;
-
-    @Autowired
     private MailService mailService;
 
     @Override
@@ -64,10 +62,11 @@ public class CourseServiceImpl implements CourseService {
 
 
     @Override
-    public void outInPdfAllCourse(HttpServletResponse response) throws IOException, DocumentException {
+    public void outInPdfAllCourse(HttpServletResponse response, List<Course> courses) throws IOException, DocumentException {
 
         Document document = new Document(PageSize.A4, 50, 50, 50, 50);
-
+        PdfWriter writer = PdfWriter.getInstance(document,
+                new FileOutputStream(NAME_FILE + ".pdf"));
         document.open();
         Paragraph paragraph1 = new Paragraph("This is list of courses a Training Center",
                 FontFactory.getFont(FontFactory.COURIER, 14, Font.BOLD,
@@ -103,7 +102,7 @@ public class CourseServiceImpl implements CourseService {
                 new CMYKColor(100, 78, 0, 44))));
         t.addCell(c7);
 
-        java.util.List<Course> courses = courseDAO.getAllCourse();
+
 
         for (Course c : courses) {
             t.addCell(c.getLector().getName());
@@ -138,7 +137,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public void outInExcelAllCourse(HttpServletResponse response) throws IOException {
+    public void outInExcelAllCourse(HttpServletResponse response, List<Course> courses) throws IOException {
 
         final String[] titles = {
                 "Lector Name", "Course Name", "Course Category", "Subscribed", "Participated", "Delivered Course", "Evaluation"};
@@ -158,9 +157,6 @@ public class CourseServiceImpl implements CourseService {
             Cell cell = titleRow.createCell(i);
             cell.setCellValue(titles[i]);
         }
-
-        java.util.List<Course> courses = courseDAO.getAllCourse();
-
         for (Course c : courses) {
 
             String[] data =
@@ -204,6 +200,7 @@ public class CourseServiceImpl implements CourseService {
             mapEval.replace(user, grade);
         else
         mapEval.put(user, grade);
+
         changeEvalCourse.setEvalMap(mapEval);
         courseDAO.updateCourse(changeEvalCourse);
 
@@ -216,8 +213,6 @@ public class CourseServiceImpl implements CourseService {
         changeEvalCourse.setEvaluation(evaluat / changeEvalCourse.getEvalMap().size());
         courseDAO.updateCourse(changeEvalCourse);
 
-        InternetAddress[] emails = mailService.getRecipient(changeEvalCourse);
-        mailService.sendEmail(id, Notification.EVALUATION_REMINDER, emails, changeEvalCourse.getLector().getName());
     }
 
     @SuppressWarnings("unchecked")
@@ -244,7 +239,7 @@ public class CourseServiceImpl implements CourseService {
         Course course = courseDAO.getCourse(id);
 
         courseDAO.deleteCourse(course);
-        InternetAddress[] emails = mailService.getRecipient(course);
+        InternetAddress[] emails = mailService.getRecipientSubsc(course);
         mailService.sendEmail(id, Notification.COURSE_DELETE, emails, userName);
     }
 
@@ -258,7 +253,7 @@ public class CourseServiceImpl implements CourseService {
     public void registerCourse(Course course, String nameLector) throws AddressException, NotFoundUserException {
         if (nameLector == null) throw new NotFoundUserException();
         courseDAO.registerCourse(course, nameLector);
-        int id = courseDAO.getCourseByNameDAO(course.getNameCourse()).getId();
+        int id = courseDAO.getCourseByNameDao(course.getNameCourse()).getId();
         InternetAddress[] emails= new InternetAddress[]{
                 new InternetAddress("aflamma@yandex.ru")};
         mailService.sendEmail(id, Notification.COURSE_ANNOUNCEMENT, emails, nameLector);
@@ -270,7 +265,7 @@ public class CourseServiceImpl implements CourseService {
 
         if (updCourse == null) throw  new NotFoundCourseException();
         courseDAO.updateCourse(updCourse);
-//        InternetAddress[] emails = mailService.getRecipient(updCourse);
+//        InternetAddress[] emails = mailService.getRecipientSubsc(updCourse);
     InternetAddress [] emails = new InternetAddress[2];
         emails[0] =new InternetAddress("aflamma@yandex.ru");
         emails[1] =new InternetAddress("alina@gorad.by");

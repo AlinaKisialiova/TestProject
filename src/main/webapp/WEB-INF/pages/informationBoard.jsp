@@ -3,78 +3,70 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+<c:set var="NOT_APPROVE" value="<%=CourseStatus.NOT_APPROVE%>"/>
+<c:set var="APPROVE_DEPARTMENT_MANAGER" value="<%=CourseStatus.APPROVE_DEPARTMENT_MANAGER%>"/>
+<c:set var="APPROVE_KNOWLEDGE_MANAGER" value="<%=CourseStatus.APPROVE_KNOWLEDGE_MANAGER%>"/>
+<c:set var="DELIVERED" value="<%=CourseStatus.DELIVERED%>"/>
+<sec:authentication property="authorities" var="role" scope="page"/>
+<security:authentication property="principal.username" var="user"/>
 
-<div id='EvalRemindBlock' style="display: none;">
+<div id='EvalRemindBlock' style="display: none;" class="col-md-4 col-md-offset-4">
     <form method="post" action="informationBoard">
         <input type="hidden" class="idC" name="id"/>
-        <table id="evalRemindTable">
-            <tr>
-                <td>Course Lector</td>
+        <table id="evalRemindTable" class="table">
+            <thead>
+            <tr class="danger">
+                <th colspan="2">Please, put mark for this course</th>
+            </thead>
+            <tbody>
+            <tr class="active">
+                <td><strong>Course Lector:</strong></td>
                 <td class="lect">
                 </td>
             </tr>
-            <tr>
-                <td>Course name</td>
+            <tr class="active">
+                <td><strong>Course name:</strong></td>
                 <td class="cours">
                 </td>
             </tr>
-            <tr>
-                <td>Course Grade</td>
+            <tr class="danger">
+                <td><strong>Course Grade:</strong></td>
                 <td><input type="text" name="grade" class="grade"/>
+                    <span style="color:red" class="errGrade"></span>
                     <input type="hidden" name="fieldForSubmit" class="fieldForSubmit"/>
 
                 </td>
 
             </tr>
-            <tr>
-                <td>
-                    <input type="submit" value="Save"/>
+            <tr class="active">
+                <td align="right">
+                    <input type="submit" value="Save" onclick="return val_ev();" class="btn btn-primary"/>
                 </td>
                 <td>
-                    <input type="button" value="Cancel" onclick="hide();"/>
+                    <input type="button" value="Cancel" onclick="hide('#EvalRemindBlock');" class="btn"/>
 
                 </td>
             </tr>
-
+            </tbody>
         </table>
     </form>
 </div>
 <br>
 
-<%--<tr>--%>
-<%--<form>--%>
-<%--<td><br></td>--%>
-<%--<td><br></td>--%>
-<%--<td><br></td>--%>
-<%--<br>--%>
-<%--<td><br></td>--%>
-<%--<br>--%>
-<%--<td><br>--%>
-<%--<td><br></td>--%>
-<%--<td>Filter</td>--%>
-<%--<td>--%>
-<%--<select class="btn dropdown-toggle">--%>
-<%--<option selected value="All Course">All Course</option>--%>
-<%--<option value="Given Courses">Given Courses</option>--%>
-<%--<option value="Popular Courses "> Popular Courses</option>--%>
-<%--<option value="Evaluation"> Evaluation</option>--%>
-<%--</select></td>--%>
-<%--</form>--%>
-<%--</tr>--%>
 
 <table align="justify" id="tableCourse">
     <form action="informationBoard" method="post">
         <tr>
             <th>
                 <input type="submit" onclick="outPdf()" name="pdfOut"
-                       value="Click for Output in PDF" class="btn-primary">
+                       value="Click for Output in PDF" class="btn btn-primary">
             </th>
 
 
             <th>
 
                 <input type="submit" onclick="outExcel()" name="excelOut"
-                       value="Click for Output in Excel" class="btn-primary">
+                       value="Click for Output in Excel" class="btn btn-primary">
 
             </th>
 
@@ -125,11 +117,7 @@
                 </a>
             </td>
 
-            <td> <c:set var="NOT_APPROVE" value="<%=CourseStatus.NOT_APPROVE%>"/>
-                <c:set var="APPROVE_DEPARTMENT_MANAGER" value="<%=CourseStatus.APPROVE_DEPARTMENT_MANAGER%>"/>
-                <c:set var="APPROVE_DEPARTMENT_MANAGER" value="<%=CourseStatus.APPROVE_DEPARTMENT_MANAGER%>"/>
-                <c:set var="APPROVE_KNOWLEDGE_MANAGER" value="<%=CourseStatus.APPROVE_KNOWLEDGE_MANAGER%>"/>
-                <c:set var="DELIVERED" value="<%=CourseStatus.DELIVERED%>"/>
+            <td>
                 <c:choose>
                     <c:when test="${course.courseStatus eq NOT_APPROVE}">
                         <c:out value="Not Approve" escapeXml="true"/>
@@ -149,7 +137,7 @@
         </td>
             <td>
                 <c:if test="${course.courseStatus eq 'DELIVERED'}">
-                    <a href="#" onclick="show(${course.id})" title="click to put mark">
+                    <a href="#" onclick="show(${course.id}, '#EvalRemindBlock')" title="click to put mark">
                         <c:out value="${course.evaluation}" escapeXml="true"/>
                     </a>
                     <input class="grade_${course.id}" type="hidden" value="${course.evaluation}"/>
@@ -157,23 +145,19 @@
             </td>
 
             <td>
-                <div class="btn-group">
-
-                    <c:if test="${ user eq course.lector.username}">
-                    <c:if test="${course.courseStatus != 'DELIVERED'}">
-                    <input type="submit" name="delete" value="Delete" onclick="del(${course.id})" class="btn"/>
+                                   <c:if test="${user eq course.lector.username}">
+                    <c:choose>
+                        <c:when test="${course.courseStatus eq DELIVERED}">
+                        <a href="<c:url value="/evaluationReminder/${course.id}" context="/project"/>">
+                            <input type="button" id="Eval" value="Evaluation Reminder" class="btn btn-success"/>
+                        </a>
+                    </c:when>
+                    <c:otherwise>
+                        <input type="submit" name="delete" value="Delete" onclick="del(${course.id})" class="btn"/>
+                        </c:otherwise>
+                        </c:choose>
                     </c:if>
-                    <c:if test="${course.courseStatus eq 'DELIVERED'}">
-                    <a href="<c:url value="/evaluationReminder/${course.id}" context="/project"/>">
-                        <input type="button" id="Eval" value="Evaluation Reminder" class="btn"/>
-                    </a>
-                    </c:if>
-                    </c:if>
-                            <c:set var="NOT_APPROVE" value="<%=CourseStatus.NOT_APPROVE%>"/>
-                            <c:set var="APPROVE_DEPARTMENT_MANAGER" value="<%=CourseStatus.APPROVE_DEPARTMENT_MANAGER%>"/>
 
-
-                            <sec:authentication property="authorities" var="role" scope="page"/>
                     <sec:authorize access="hasAnyRole('DEPARTMENT_MANAGER','KNOWLEDGE_MANAGER')">
                         <c:if test="${(course.courseStatus eq NOT_APPROVE and role eq '[DEPARTMENT_MANAGER]') or
                         (course.courseStatus eq APPROVE_DEPARTMENT_MANAGER and role eq '[KNOWLEDGE_MANAGER]')}">
@@ -182,7 +166,7 @@
                     </a>
                        </c:if>
                     </sec:authorize>
-
+</td>
 
                     <input type="hidden" name="fieldForSubmit" class="fieldForSubmit"/>
                     <input type="hidden" class="idC" name="id" />
@@ -199,22 +183,9 @@
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/bootstrap.min3.0.2.js"/>"></script>
+
 <script>
 
-    function show(id) {
-        $("#EvalRemindBlock").show();
-        var lCourse = $(".lector_" + id).html();
-        var nCourse = $(".course_" + id).html();
-        var gCourse = $(".grade_" + id).val();
-        $(".lect").text(lCourse);
-        $(".cours").text(nCourse);
-        $(".grade").val(gCourse);
-        $(".idC").val(id);
-        $(".fieldForSubmit").val("EVAL_REM");
-    }
-    function hide() {
-        $("#EvalRemindBlock").hide();
-    }
 
     function outPdf() {
         $(".fieldForSubmit").val("OUT_PDF");

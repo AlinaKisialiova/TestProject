@@ -55,7 +55,7 @@ public class MailServiceImpl implements MailService {
     }
 
     @Override
-    public InternetAddress[] getRecipient(Course course) throws AddressException {
+    public InternetAddress[] getRecipientSubsc(Course course) throws AddressException {
         Set<User> subscr = course.getSubscribers();
         InternetAddress[] emails= new InternetAddress[subscr.size()];
 
@@ -66,6 +66,19 @@ public class MailServiceImpl implements MailService {
         }
         return emails;
 
+    }
+
+    @Override
+    public InternetAddress[] getRecipientAtt(Course course) throws AddressException {
+
+        Set<User> att = course.getAttenders();
+        InternetAddress[] emails= new InternetAddress[att.size()];
+        int i = 0;
+        for (User u : att) {
+            emails[i] = new InternetAddress(u.getEmail());
+            i++;
+        }
+        return emails;
     }
 }
 
