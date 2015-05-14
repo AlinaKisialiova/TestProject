@@ -118,7 +118,7 @@ public class UserServiceImpl implements UserService {
     }
 
     @Override
-    public void addInAttSet(String username, int id_course) throws Exception {
+    public boolean addInAttSet(String username, int id_course) throws Exception {
         if (username == null) throw new NotFoundUserException();
         if (id_course < 1) throw new NotFoundCourseException();
 
@@ -128,13 +128,15 @@ public class UserServiceImpl implements UserService {
         if (!courses.contains(course) && course.getAttenders().size() < Course.MAX_COUNT_ATT) {
             courses.add(course);
             userDAO.updateUser(userAtt);
-        } else throw new Exception();
+            return true;
+        }
 
+return false;
 
     }
 
     @Override
-    public void removeFromAttSet(String username, int id_course) throws Exception {
+    public boolean removeFromAttSet(String username, int id_course) throws Exception {
         if (username == null) throw new NotFoundUserException();
         if (id_course < 1) throw new NotFoundCourseException();
 
@@ -145,7 +147,14 @@ public class UserServiceImpl implements UserService {
         if (courses.contains(course)) {
             courses.remove(course);
             userDAO.updateUser(userAtt);
+
+            if(course.getAttenders().size() == 0) {
+                course.setCourseStatus(CourseStatus.APPROVE_KNOWLEDGE_MANAGER);
+                courseDAO.updateCourse(course);
+            }
+            return true;
         }
+        return false;
 
     }
 

@@ -196,6 +196,9 @@ public class ParticipantAndReminderController {
                     coursesForList.add(c);
                 }
             }
+            String userName = userService.getUserFromSession(request);
+            Set<Course> coursesForUser = userService.getCoursesAttendeeOfUser(userName);
+            mav.addObject("coursesForUser", coursesForUser);
             mav.addObject("nameCourses", coursesForList);
             return mav;
 
@@ -280,13 +283,17 @@ public class ParticipantAndReminderController {
             String message = "";
             switch (action) {
                 case ADD_IN_ATT:
-                    userService.addInAttSet(principal.getName(), id);
-                    message = "You are included in attenders list!";
+                    if (userService.addInAttSet(principal.getName(), id))
+                    message = "You include in attenders list!";
+                    else
+                    message = "You already include in Attenders!";
                     break;
 
                 case REMOTE_FROM_ATT:
-                    userService.removeFromAttSet(principal.getName(), id);
-                    message = "You are deleted from attenders list!";
+                   if (userService.removeFromAttSet(principal.getName(), id))
+                    message = "You delete from attenders list!";
+                    else
+                   message = "You can't remove from Attenders because you don't include!";
                     break;
             }
             mav.addObject("modalTitle", "Participate");

@@ -32,7 +32,16 @@
                         <td>
                             <select multiple="multiple" size="10" name="selectCourse" id="selectCourse" onchange="setId(this)">
                                 <c:forEach var="course" items="${nameCourses}">
-                                    <option value="${course.id}"> ${course.nameCourse}</option>
+                                    <option value="${course.id}"
+                                            <c:choose>
+                                                <c:when test="${coursesForUser.contains(course)}">
+                                                    style="color:#ee5f5b"
+                                                </c:when>
+                                                <c:otherwise>
+                                                    style="color: #0e90d2"
+                                                </c:otherwise>
+                                            </c:choose>
+                                            > ${course.nameCourse}</option>
                                 </c:forEach>
                             </select>
                         </td>

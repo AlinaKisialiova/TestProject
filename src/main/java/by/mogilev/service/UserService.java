@@ -46,9 +46,9 @@ public interface UserService {
      * @param username
      * @param id_course
      */
-    public void addInAttSet(String username, int id_course) throws Exception;
+    public boolean addInAttSet(String username, int id_course) throws Exception;
 
-    public void removeFromAttSet(String username, int id_course) throws Exception;
+    public boolean removeFromAttSet(String username, int id_course) throws Exception;
 
     public User getUser(String userName) throws NotFoundUserException;
 

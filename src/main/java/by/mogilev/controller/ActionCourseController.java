@@ -54,6 +54,15 @@ public class ActionCourseController {
                                   HttpSession session, HttpServletRequest request) throws AddressException, NotFoundUserException {
         try {
             String userName = userService.getUserFromSession(request);
+            for(Course c : courseService.getAllCourse()) {
+                if (c.getNameCourse().equals(newCourse.getNameCourse())) {
+                    ModelAndView mav = new ModelAndView("registrationCourse");
+                    mav.addObject("modalTitle", "Ooops...");
+                    mav.addObject("modalMessage", "Course with this name already exist!");
+                    return mav;
+                }
+            }
+
             courseService.registerCourse(newCourse, userName);
             return new ModelAndView("redirect:/informationBoard");
         } catch (NotFoundUserException ex) {

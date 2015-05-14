@@ -46,7 +46,7 @@
                 <td colspan="2">
                     <c:choose>
                         <c:when test="${(attCourseOfUser.contains(course))}">
-                            <input type="submit" class="btn btn-primary btn-lg btn-block"name="REMOTE_FROM_ATT" value="Exclude me from Exclude List" onclick="setAction('REMOTE_FROM_ATT') ">
+                            <input type="submit" class="btn btn-danger btn-lg btn-block"name="REMOTE_FROM_ATT" value="Exclude me from Exclude List" onclick="setAction('REMOTE_FROM_ATT') ">
                         </c:when>
                         <c:otherwise>
                             <input type="submit" class="btn btn-primary btn-lg btn-block" name="ADD_IN_ATT" value="Include me into Attendee List" onclick="setAction('ADD_IN_ATT')"
