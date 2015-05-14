@@ -150,23 +150,33 @@ public class ParticipantAndReminderController {
             throws NotFoundCourseException, NotFoundUserException, AddressException {
         try {
             ModelAndView mav = new ModelAndView("subscribePage");
-            if (ActionsOnPage.SUBSCRIBE.equals(action)) {
-                if (id_course == null) throw new NotFoundCourseException();
-                String message = "";
-                if (userService.addInSubscribers(userService.getUserFromSession(request), id_course))
-                    message = "You are subscribed!";
-                else
-                    message = "You are deleted from subscribe list!!";
+            String message = "";
+            switch (action){
+                case ADD_IN_SUBSCR: {
 
-                mav.addObject("modalTitle", "Subscribe");
-                mav.addObject("modalMessage", message);
+                    if (userService.addInSubscribers(userService.getUserFromSession(request), id_course))
+                        message = "You are subscribed!";
+                    else
+                        message = "You can't subscribe twice!";
+                    break;
+                }
+                case REMOVE_FROM_SUBSCR: {
+                    if (userService.removeFromSubscribers(userService.getUserFromSession(request), id_course))
+                        message = "You delete from Subscribers this course";
+                    else
+                    message = "You can't delete because you don't subscribe!";
+                    break;
+                }
+                default:{
+                    List<Course> coursesForList = courseService.getSelected(selectCategory);
+                    mav.addObject("nameCourses", coursesForList);
+                    String userName = userService.getUserFromSession(request);
+                    Set<Course> coursesForUser = userService.getCoursesSubscribeOfUser(userName);
+                    mav.addObject("coursesForUser", coursesForUser);
+                }
             }
-
-            List<Course> coursesForList = courseService.getSelected(selectCategory);
-            mav.addObject("nameCourses", coursesForList);
-            String userName = userService.getUserFromSession(request);
-            Set<Course> coursesForUser = userService.getCoursesSubscribeOfUser(userName);
-            mav.addObject("coursesForUser", coursesForUser);
+            mav.addObject("modalTitle", "Subscribe");
+            mav.addObject("modalMessage", message);
             return mav;
 
         } catch (NotFoundUserException ex) {

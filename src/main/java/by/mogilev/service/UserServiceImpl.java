@@ -8,11 +8,8 @@ import by.mogilev.model.Course;
 import by.mogilev.model.CourseStatus;
 import by.mogilev.model.Notification;
 import by.mogilev.model.User;
-import org.hibernate.Criteria;
 import org.hibernate.Hibernate;
-import org.hibernate.Session;
 import org.hibernate.SessionFactory;
-import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -50,16 +47,10 @@ public class UserServiceImpl implements UserService {
     @SuppressWarnings("unchecked")
     @Override
     public Set<Course> getCoursesSubscribeOfUser(String username) throws NotFoundUserException {
-        Session session = this.sessionFactory.getCurrentSession();
+
         if (username == null) throw new NotFoundUserException();
-
-        int id_user=getIdByUsername(username);
-        Criteria criteria = session.createCriteria(User.class);
-        criteria.add(Restrictions.eq("id", id_user));
-        User user = (User) criteria.uniqueResult();
-        Set<Course> coursesList;
-        coursesList = user.getCoursesSubscribe();
-
+         User user = getUser(username);
+        Set<Course> coursesList = user.getCoursesSubscribe();
         for (Course course : coursesList) {
             Hibernate.initialize(course.getAttenders());
             Hibernate.initialize(course.getSubscribers());
@@ -70,16 +61,9 @@ public class UserServiceImpl implements UserService {
     @SuppressWarnings("unchecked")
     @Override
     public Set<Course> getCoursesAttendeeOfUser(String username) throws NotFoundUserException {
-        Session session = this.sessionFactory.getCurrentSession();
         if (username == null) throw new NotFoundUserException();
-
-        int id_user=getIdByUsername(username);
-
-        Criteria criteria = session.createCriteria(User.class);
-        criteria.add(Restrictions.eq("id", id_user));
-        User user = (User) criteria.uniqueResult();
-        Set<Course> coursesList;
-        coursesList = user.getCoursesAttendee();
+        User user = getUser(username);
+        Set<Course> coursesList = user.getCoursesAttendee();
 
         for (Course course : coursesList) {
             Hibernate.initialize(course.getAttenders());
@@ -98,7 +82,29 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean addInSubscribers(String username, int id_course) throws AddressException, NotFoundUserException, NotFoundCourseException {
         if (username == null) throw new NotFoundUserException();
-        if (id_course < 1) throw  new NotFoundCourseException();
+        if (id_course < 1) throw new NotFoundCourseException();
+
+        User userSubscr = userDAO.getUser(username);
+        Course course = courseDAO.getCourse(id_course);
+        Set<Course> courses = userSubscr.getCoursesSubscribe();
+        if (courses.contains(course)) return false;
+
+        courses.add(course);
+        userDAO.updateUser(userSubscr);
+
+        if (course.getSubscribers().size() >= Course.MIN_COUNT_SUBSCR) {
+            course.setCourseStatus(CourseStatus.DELIVERED);
+            InternetAddress[] emails = mailService.getRecipient(course);
+            mailService.sendEmail(id_course, Notification.COURSE_APPOINTED, emails, username);
+        }
+
+        return true;
+    }
+
+    @Override
+    public boolean removeFromSubscribers(String username, int id_course) throws AddressException, NotFoundUserException, NotFoundCourseException {
+        if (username == null) throw new NotFoundUserException();
+        if (id_course < 1) throw new NotFoundCourseException();
 
         User userSubscr = userDAO.getUser(username);
         Course course = courseDAO.getCourse(id_course);
@@ -106,35 +112,23 @@ public class UserServiceImpl implements UserService {
         if (courses.contains(course)) {
             userSubscr.getCoursesSubscribe().remove(course);
             userDAO.updateUser(userSubscr);
-            return false;
+            return true;
         }
-
-        courses.add(course);
-        userDAO.updateUser(userSubscr);
-
-
-        if (course.getSubscribers().size() >= Course.MIN_COUNT_SUBSCR) {
-            course.setCourseStatus(CourseStatus.DELIVERED);
-            InternetAddress[] emails = mailService.getRecipient(course);
-            mailService.sendEmail(id_course, Notification.COURSE_APPOINTED, emails, username);
-        }
-        return true;
+        return false;
     }
 
     @Override
     public void addInAttSet(String username, int id_course) throws Exception {
         if (username == null) throw new NotFoundUserException();
-        if (id_course < 1) throw  new NotFoundCourseException();
+        if (id_course < 1) throw new NotFoundCourseException();
 
         User userAtt = userDAO.getUser(username);
         Course course = courseDAO.getCourse(id_course);
-            Set<Course> courses = userAtt.getCoursesAttendee();
-        if(! courses.contains(course) && course.getAttenders().size() < Course.MAX_COUNT_ATT) {
+        Set<Course> courses = userAtt.getCoursesAttendee();
+        if (!courses.contains(course) && course.getAttenders().size() < Course.MAX_COUNT_ATT) {
             courses.add(course);
             userDAO.updateUser(userAtt);
-        }
-        else throw new Exception();
-
+        } else throw new Exception();
 
 
     }
@@ -142,7 +136,7 @@ public class UserServiceImpl implements UserService {
     @Override
     public void removeFromAttSet(String username, int id_course) throws Exception {
         if (username == null) throw new NotFoundUserException();
-        if (id_course < 1) throw  new NotFoundCourseException();
+        if (id_course < 1) throw new NotFoundCourseException();
 
         User userAtt = userDAO.getUser(username);
         Course course = courseDAO.getCourse(id_course);
@@ -159,7 +153,7 @@ public class UserServiceImpl implements UserService {
     public User getUser(String userName) throws NotFoundUserException {
         if (userName == null) throw new NotFoundUserException();
 
-     return userDAO.getUser(userName);
+        return userDAO.getUser(userName);
     }
 
     @Override
@@ -168,8 +162,7 @@ public class UserServiceImpl implements UserService {
         Principal principal = request.getUserPrincipal();
         if (principal != null && principal.getName() != null) {
             userName = principal.getName();
-        }
-        else throw new NotFoundUserException();
+        } else throw new NotFoundUserException();
 
         return userName;
     }

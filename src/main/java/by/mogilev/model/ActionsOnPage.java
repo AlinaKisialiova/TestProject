@@ -11,7 +11,8 @@ public enum ActionsOnPage {
     OUT_EXCEL,
     ADD_IN_ATT,
     REMOTE_FROM_ATT,
-    SUBSCRIBE,
+    ADD_IN_SUBSCR,
+    REMOVE_FROM_SUBSCR,
     START,
     APPROVE,
     ActionsOnPage() {}

@@ -36,6 +36,12 @@ public interface UserService {
      */
     public boolean addInSubscribers(String username, int id) throws AddressException, NotFoundUserException, NotFoundCourseException;
     /**
+     * Method remove  cheked course from list courses on which he is subscriber
+     * @param username
+     * @param id
+     */
+    public boolean removeFromSubscribers(String username, int id) throws AddressException, NotFoundUserException, NotFoundCourseException;
+    /**
      * Method add cheked course in list courses on which he is attenders
      * @param username
      * @param id_course

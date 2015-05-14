@@ -50,8 +50,8 @@
             <tr><td> <br> </td></tr>
             <tr>
                 <td colspan="2">
-                    <input type="submit" onclick="setAction('SUBSCRIBE') " value="Subscribe" class="btn btn-primary btn-lg btn-block" />
-                    <input type="submit" onclick="setAction('SUBSCRIBE')" value="Delete" class="btn btn-danger btn-lg btn-block" />
+                    <input type="submit" onclick="setAction('ADD_IN_SUBSCR') " value="Subscribe" class="btn btn-primary btn-lg btn-block" />
+                    <input type="submit" onclick="setAction('REMOVE_FROM_SUBSCR')" value="Delete" class="btn btn-danger btn-lg btn-block" />
                     <input type="hidden" name="fieldForSubmit" class="fieldForSubmit"/>
                 </td>
 
