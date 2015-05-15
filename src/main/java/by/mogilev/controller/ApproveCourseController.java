@@ -25,7 +25,6 @@ import java.util.List;
 @Controller
 public class ApproveCourseController {
     public final static String APPROVE_COURSE = "/approveCourse/{course.id}";
-
     public final static String APPROVE = "/approvePage";
 
     @Autowired
@@ -38,7 +37,8 @@ public class ApproveCourseController {
     private MailService mailService;
 
     @RequestMapping(value = APPROVE_COURSE, method = RequestMethod.GET)
-    public ModelAndView approveCourseGet(@PathVariable("course.id") final Integer id, final HttpServletRequest request) throws NotFoundCourseException {
+    public ModelAndView approveCourseGet(@PathVariable("course.id") final Integer id, final HttpServletRequest request)
+            throws NotFoundCourseException {
         ModelAndView mav = new ModelAndView("approveCourse");
         try {
             mav.addObject("courseList", courseService.getCourse(id));
@@ -46,19 +46,25 @@ public class ApproveCourseController {
             mav.addObject("nameUser", user.getName());
             String reasonDM = courseService.getCourse(id).getDepartmentManagerReason();
             mav.addObject("reasonDM", reasonDM);
+            String reasonKM = courseService.getCourse(id).getKnowledgeManagerReason();
+            mav.addObject("reasonKM", reasonKM);
             return mav;
         } catch (NotFoundCourseException ex) {
-            mav.addObject("modalTitle", "Ooops...");
-            mav.addObject("modalMessage", ex.toString());
-            return mav;
+            ModelAndView mavExc = new ModelAndView("informationBoard");
+            mavExc.addObject("modalTitle", "Ooops...");
+            mavExc.addObject("modalMessage", ex.toString());
+            return mavExc;
         } catch (NotFoundUserException e) {
             return new ModelAndView("signin");
         }
     }
 
     @RequestMapping(value = APPROVE_COURSE, method = RequestMethod.POST)
-    public ModelAndView approveCoursePost(final HttpServletRequest request, @PathVariable("course.id") final Integer id, @RequestParam("approveToServ") final String approve,
-                                          @RequestParam("reasonToServ") final String reason, @RequestParam("manager") final UserRole manager) throws AddressException, NotFoundCourseException, NotFoundUserException {
+    public ModelAndView approveCoursePost(final HttpServletRequest request, @PathVariable("course.id") final Integer id,
+                                          @RequestParam("approveToServ") final String approve,
+                                          @RequestParam("reasonToServ") final String reason,
+                                          @RequestParam("manager") final UserRole manager)
+            throws AddressException, NotFoundCourseException, NotFoundUserException {
         try {
             Course appCourse = courseService.getCourse(id);
             String userName = userService.getUserFromSession(request);
@@ -82,7 +88,6 @@ public class ApproveCourseController {
                         appCourse.setCourseStatus(CourseStatus.APPROVE_KNOWLEDGE_MANAGER);
                         appCourse.setKnowledgeManagerReason(reason);
                         InternetAddress[] emails = mailService.getRecipientSubsc(appCourse);
-
                         mailService.sendEmail(id, Notification.NEW_COURSE_ADDED, emails, userName);
                     } else {
                         appCourse.setCourseStatus(CourseStatus.APPROVE_DEPARTMENT_MANAGER);
@@ -137,7 +142,8 @@ public class ApproveCourseController {
     public ModelAndView approvePost(HttpServletRequest request, Model model,
                                     @RequestParam(value = "selectCourse", required = false) final Integer id_course,
                                     @RequestParam(value = "selectCategory", required = false) final String selectCategory,
-                                    @RequestParam(value = "fieldForSubmit", required = false) final ActionsOnPage action) throws NotFoundCourseException, NotFoundUserException {
+                                    @RequestParam(value = "fieldForSubmit", required = false) final ActionsOnPage action)
+            throws NotFoundCourseException, NotFoundUserException {
         ModelAndView mav = new ModelAndView("approvePage");
         try {
            if (ActionsOnPage.APPROVE.equals(action)) {
@@ -145,7 +151,7 @@ public class ApproveCourseController {
                model.addAttribute("course.id", id_course);
                return new ModelAndView("redirect:" + "/approveCourse/{course.id}");
            }
-            String reasonDM = "";
+
            List<Course> courses = new ArrayList<Course>();
            User user = userService.getUser(userService.getUserFromSession(request));
            switch (user.getAuthority()) {
@@ -175,7 +181,7 @@ public class ApproveCourseController {
            return mav;
        } catch (NotFoundCourseException ex) {
            mav.addObject("modalTitle", "Ooops...");
-           mav.addObject("modalMessage", ex.toString());
+           mav.addObject("modalMessage", "You don't select course!");
            return mav;
        }
 

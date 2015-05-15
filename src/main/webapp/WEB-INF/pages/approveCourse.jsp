@@ -1,13 +1,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: akiseleva
-  Date: 13.04.2015
-  Time: 6:42
-  To change this template use File | Settings | File Templates.
---%>
+
 <c:set  var="course" value="${courseList}"/>
 <sec:authentication property="authorities" var="role" scope="page"/>
 <form method="post" action="${pageContext.request.contextPath}/approveCourse/${course.id}">
@@ -32,21 +26,31 @@
 
     <div class="col-md-8 col-md-offset-4">
 
-    <div class="col-md-1"><c:if test="${role == '[DEPARTMENT_MANAGER]'}">${nameUser} </c:if></div>   <div class="col-md-2"> Departament manager</div>
-    <div class="col-md-5"><select  id="approveDM" name="approveDM"
-            <c:if test="${role != '[DEPARTMENT_MANAGER]'}"> disabled="disabled" </c:if> onchange=>
+    <div class="col-md-1">
+        <c:if test="${role == '[DEPARTMENT_MANAGER]'}">${nameUser} </c:if></div>
+        <div class="col-md-2"> Departament manager</div>
+    <div class="col-md-5">
+        <select  id="approveDM" name="approveDM"
+            <c:if test="${role != '[DEPARTMENT_MANAGER]'}"> disabled="disabled" </c:if>>
         <option>approve</option>
         <option> not approve</option>
-    </select></div>
+    </select>
+    </div>
         </div>
+
     <div class="col-md-8 col-md-offset-6">
-        <div class="col-md-4"><strong>Reason</strong></div>
+        <div class="col-md-4">
+            <strong>Reason</strong></div>
         <br>
-    <div class="col-md-4"><textarea  id="reasonDM" name="reasonDM"  <c:if test="${role != '[DEPARTMENT_MANAGER]'}"> disabled="disabled" </c:if> > ${reasonDM}</textarea></div>
+    <div class="col-md-4">
+        <textarea  id="reasonDM" name="reasonDM"
+                <c:if test="${role != '[DEPARTMENT_MANAGER]'}"> disabled="disabled" </c:if> >
+                 ${reasonDM}
+        </textarea>
+    </div>
 
         <hr>
     </div>
-
 
 
     <div class="col-md-8 col-md-offset-4">
@@ -54,15 +58,24 @@
         <div class="col-md-1"> <c:if test="${role == '[KNOWLEDGE_MANAGER]'}">${nameUser}</c:if></div>
         <div class="col-md-2"> Knowledge manager</div>
         <div class="col-md-4"><select id="approveKM" name="approveKM"
-                <c:if test="${role != '[KNOWLEDGE_MANAGER]' && course.courseStatus != 'APPROVE_DEPARTMENT_MANAGER'}"> disabled="disabled" </c:if> >
+                <c:if test="${role != '[KNOWLEDGE_MANAGER]' && course.courseStatus != 'APPROVE_DEPARTMENT_MANAGER'}">
+                    disabled="disabled" </c:if> >
             <option>approve</option>
             <option> not approve</option>
         </select></div>
     </div>
     <div class="col-md-8 col-md-offset-6">
-        <div class="col-md-4"><strong>Reason</strong></div>
+        <div class="col-md-4">
+            <strong>Reason</strong>
+        </div>
         <br>
-        <div class="col-md-4"><textarea  id="reasonKM" name="reasonKM" <c:if test="${role != '[KNOWLEDGE_MANAGER]' && course.courseStatus != 'APPROVE_DEPARTMENT_MANAGER'}"> disabled="disabled" </c:if>></textarea></div>
+        <div class="col-md-4">
+            <textarea  id="reasonKM" name="reasonKM"
+                    <c:if test="${role != '[KNOWLEDGE_MANAGER]' && course.courseStatus != 'APPROVE_DEPARTMENT_MANAGER'}">
+                        disabled="disabled" </c:if>>
+                        ${reasonKM}
+            </textarea>
+        </div>
     </div>
 </div>
     <div class="row">
@@ -70,7 +83,7 @@
         </div>
     <div class="col-md-8 col-md-offset-5">
         <br>
-        <input type="submit" value="Save" name="save" class="btn-primary btn-lg">
+        <input type="submit" value="Save" name="save" class="btn btn-large btn-primary">
 <a href="<c:url value="/informationBoard" context="/project"/>" class="btn">Cancel</a>
 
     </div>
@@ -82,18 +95,15 @@
 <input type="hidden" id="reasonToServ" name="reasonToServ" />
 
     <sec:authorize access="hasRole('KNOWLEDGE_MANAGER')">
-
         <input type="hidden" id="manager" name="manager" value="KNOWLEDGE_MANAGER"/>
     </sec:authorize>
 
     <sec:authorize access="hasRole('DEPARTMENT_MANAGER')">
-
         <input type="hidden" name="manager" id="manager" value="DEPARTMENT_MANAGER"/>
     </sec:authorize>
 
 
 </form>
-<%--<script language="JavaScript" src="https://ajax.googleapis.com/ajax/libs/jquery/1.5.0/jquery.min.js"></script>--%>
 <script src="http://code.jquery.com/jquery-latest.js"></script>
 
 <script>

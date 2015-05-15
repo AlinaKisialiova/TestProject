@@ -30,6 +30,7 @@ import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
 import java.util.HashMap;
+import java.util.Iterator;
 import java.util.List;
 import java.util.Map;
 
@@ -240,8 +241,8 @@ public class CourseServiceImpl implements CourseService {
         if (!isOwner(id, userName)) throw new IsNotOwnerException();
 
         Course course = courseDAO.getCourse(id);
-
         courseDAO.deleteCourse(course);
+
         InternetAddress[] emails = mailService.getRecipientSubsc(course);
         mailService.sendEmail(id, Notification.COURSE_DELETE, emails, userName);
     }
@@ -270,8 +271,8 @@ public class CourseServiceImpl implements CourseService {
         courseDAO.updateCourse(updCourse);
 //        InternetAddress[] emails = mailService.getRecipientSubsc(updCourse);
     InternetAddress [] emails = new InternetAddress[2];
-        emails[0] =new InternetAddress("aflamma@yandex.ru");
-        emails[1] =new InternetAddress("alina@gorad.by");
+        emails[0] = new InternetAddress("aflamma@yandex.ru");
+        emails[1] = new InternetAddress("alina@gorad.by");
         mailService.sendEmail(updCourse.getId(), Notification.COURSE_UPDATE, emails, "alex Ivanov");
 
     }
@@ -279,9 +280,10 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<Course> getCourseForDepartmentManager() {
         List<Course> coursesForApprove = getAllCourse();
-        for (Course c : coursesForApprove) {
-            if (!CourseStatus.NOT_APPROVE.equals(c.getCourseStatus()))
-                coursesForApprove.remove(c);
+        Iterator<Course> c = coursesForApprove.iterator();
+       while(c.hasNext()) {
+            if (!CourseStatus.NOT_APPROVE.equals(c.next().getCourseStatus()))
+               c.remove();
         }
         return coursesForApprove;
 
@@ -290,9 +292,10 @@ public class CourseServiceImpl implements CourseService {
     @Override
     public List<Course> getCourseForKnowledgeManagerManager() {
         List<Course> coursesForApprove = getAllCourse();
-        for (Course c : coursesForApprove) {
-            if (!(CourseStatus.APPROVE_DEPARTMENT_MANAGER).equals(c.getCourseStatus()))
-                coursesForApprove.remove(c);
+        Iterator<Course> c = coursesForApprove.iterator();
+        while(c.hasNext()) {
+            if (!CourseStatus.APPROVE_DEPARTMENT_MANAGER.equals(c.next().getCourseStatus()))
+                c.remove();
         }
         return coursesForApprove;
     }

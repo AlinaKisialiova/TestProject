@@ -51,10 +51,10 @@
             <c:out value="${course.evaluation}"/>
         </td>
     </tr>
-
+<tr><td><br></td></tr>
     <tr>
-        <td align="center"><input type="submit" value="Save" onclick="return validate();" class="btn btn-large btn-primary"/></td>
-        <td><a href="<c:url value="/courseDetails/${course.id}" context="/project"/> "> Cancel</a> </td>
+        <td align="right"><input type="submit" value="Save" onclick="return validate();" class="btn btn-large btn-primary"style="width: 100px"/></td>
+        <td><a href="<c:url value="/courseDetails/${course.id}" context="/project"/> " class="btn btn-large" style="width: 100px"> Cancel</a> </td>
 
     </tr>
 </table>

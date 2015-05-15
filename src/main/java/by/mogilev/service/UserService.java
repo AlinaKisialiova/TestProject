@@ -27,7 +27,6 @@ public interface UserService {
      */
     public Set<Course> getCoursesAttendeeOfUser(String username) throws NotFoundUserException;
 
-    public  int getIdByUsername(String username) throws NotFoundUserException;
 
     /**
      * Method add cheked course in list courses on which he is subscriber

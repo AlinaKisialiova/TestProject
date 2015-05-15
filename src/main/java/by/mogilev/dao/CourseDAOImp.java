@@ -28,7 +28,6 @@ public class CourseDAOImp implements CourseDAO {
     @Transactional
     public void registerCourse(Course newCourse, String loginLector) {
         Session session = this.sessionFactory.getCurrentSession();
-
         User lector;
         Criteria criteria = session.createCriteria(User.class);
         criteria.add(Restrictions.eq("username", loginLector));
@@ -60,18 +59,15 @@ public class CourseDAOImp implements CourseDAO {
         Hibernate.initialize(course.getAttenders());
         Hibernate.initialize(course.getSubscribers());
         Hibernate.initialize(course.getEvalMap());
-
         return course;
     }
 
     @Override
     public void updateCourse(Course course) {
         Session session = this.sessionFactory.getCurrentSession();
-
         Hibernate.initialize(course.getAttenders());
         Hibernate.initialize(course.getSubscribers());
         Hibernate.initialize(course.getEvalMap());
-
         session.update(course);
     }
 
@@ -108,7 +104,6 @@ public class CourseDAOImp implements CourseDAO {
 
         if (course.getSubscribers().size() > 0) {
             for (User user : course.getSubscribers()) {
-//                Hibernate.initialize(user.getCoursesSubscribe());
                 user.getCoursesSubscribe().remove(course);
                 session.update(user);
             }
@@ -117,7 +112,6 @@ public class CourseDAOImp implements CourseDAO {
         Hibernate.initialize(course.getAttenders());
         if (course.getAttenders().size() > 0) {
             for (User user : course.getAttenders()) {
-//                Hibernate.initialize(user.getCoursesAttendee());
                 user.getCoursesAttendee().remove(course);
                 session.update(user);
             }

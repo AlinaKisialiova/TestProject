@@ -3,6 +3,7 @@
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
+
 <c:set var="NOT_APPROVE" value="<%=CourseStatus.NOT_APPROVE%>"/>
 <c:set var="APPROVE_DEPARTMENT_MANAGER" value="<%=CourseStatus.APPROVE_DEPARTMENT_MANAGER%>"/>
 <c:set var="APPROVE_KNOWLEDGE_MANAGER" value="<%=CourseStatus.APPROVE_KNOWLEDGE_MANAGER%>"/>
@@ -34,7 +35,6 @@
                 <td><input type="text" name="grade" class="grade"/>
                     <span style="color:red" class="errGrade"></span>
                     <input type="hidden" name="fieldForSubmit" class="fieldForSubmit"/>
-
                 </td>
 
             </tr>
@@ -61,7 +61,6 @@
                 <input type="submit" onclick="outPdf()" name="pdfOut"
                        value="Click for Output in PDF" class="btn btn-primary">
             </th>
-
 
             <th>
 
@@ -145,18 +144,13 @@
             </td>
 
             <td>
-                                   <c:if test="${user eq course.lector.username}">
-                    <c:choose>
-                        <c:when test="${course.courseStatus eq DELIVERED}">
+                                   <c:if test="${user eq course.lector.username and course.courseStatus eq DELIVERED}">
+
                         <a href="<c:url value="/evaluationReminder/${course.id}" context="/project"/>">
                             <input type="button" id="Eval" value="Evaluation Reminder" class="btn btn-success"/>
                         </a>
-                    </c:when>
-                    <c:otherwise>
-                        <input type="submit" name="delete" value="Delete" onclick="del(${course.id})" class="btn"/>
-                        </c:otherwise>
-                        </c:choose>
                     </c:if>
+
 
                     <sec:authorize access="hasAnyRole('DEPARTMENT_MANAGER','KNOWLEDGE_MANAGER')">
                         <c:if test="${(course.courseStatus eq NOT_APPROVE and role eq '[DEPARTMENT_MANAGER]') or
@@ -166,19 +160,14 @@
                     </a>
                        </c:if>
                     </sec:authorize>
+                <input type="hidden" name="fieldForSubmit" class="fieldForSubmit"/>
+                <input type="hidden" class="idC" name="id" />
 </td>
-
-                    <input type="hidden" name="fieldForSubmit" class="fieldForSubmit"/>
-                    <input type="hidden" class="idC" name="id" />
-
-
-    </form>
-    </div>
     </tr>
-
-
     </c:forEach>
+    </form>
 </table>
+
 
 
     <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
@@ -198,6 +187,7 @@
     function del(id) {
         $(".idC").val(id);
         $(".fieldForSubmit").val("DEL");
+
     }
 
 </script>

@@ -2,8 +2,8 @@
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="c" uri="http://java.sun.com/jsp/jstl/core" %>
-
-<form:form action="registrationCourse" method="post" name="regForm" class="form-horizontal" modelAttribute="Course">    <fieldset>
+<security:authentication property="principal.username" var="user"/>
+<form:form action="registrationCourse" method="post" name="regForm" modelAttribute="Course">
 <div class="row">
     <div class="col-md-8 col-md-offset-4">
     <div class="control-group">
@@ -47,12 +47,12 @@
                 <span style="color:red" id="errDuration"/>
                 </div>
             </div>
-       <security:authentication property="principal.username" var="user"/>
-
+    <br>
+    <div class="col-md-6 col-md-offset-1">
 
             <input type="submit" value="Save" onclick="return validate();" class="btn btn-primary"/>
     <a href="<c:url value="/informationBoard" context="/project"/>" > Cancel</a>
-
+    </div>
 
 </form:form>
 

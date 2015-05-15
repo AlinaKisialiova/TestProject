@@ -58,15 +58,17 @@
     <security:authentication property="principal.username" var="user"/>
     <c:if test="${user eq course.lector.username}">
     <form action="<c:url value="/courseDetails/${course.id}"/>" method="post" >
+    <tr><td><br></td></tr>
+
     <tr>
-        <td>
-        <a href="<c:url value="/editCourse/${course.id}"/>" class="btn-info"> <b>Edit Course </b></a>
+        <td align="center">
+        <a href="<c:url value="/editCourse/${course.id}"/>" class="btn btn-info" style="width: 100px"> <b>Edit Course </b></a>
     </td>
 
 
             <td>
                 <c:if test="${course.courseStatus != DELIVERED}">
-                <input type="submit" name="deleteCourse" value="Delete" class="btn-danger"/>
+                <input type="submit" name="deleteCourse" value="Delete" class="btn btn-danger" style="width: 100px"/>
                 </c:if>
             </td>
 

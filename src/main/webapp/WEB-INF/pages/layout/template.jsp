@@ -32,6 +32,15 @@
         select {
             width: 300px;
         }
+
+        input[type="text"] {
+            width: 300px;
+        }
+
+        textarea {
+            width: 300px;
+            height: 100px;
+        }
     </style>
 
 </head>
@@ -44,29 +53,29 @@
                 <tiles:insertAttribute name="header"/>
             </div>
 
-<div align="right"><tiles:insertAttribute name="logout"/> </div>
+            <div align="right"><tiles:insertAttribute name="logout"/></div>
         </div>
-</div>
+    </div>
 
 
     <hr>
-<div class="row">
-    <div class="span9 offset4">
-        <div class="content">
-            <tiles:insertAttribute name="menu"/>
+    <div class="row">
+        <div class="span9 offset4">
+            <div class="content">
+                <tiles:insertAttribute name="menu"/>
 
-              <div align="center"><h1><tiles:insertAttribute name="namePage"/>         </div>
-            <tiles:insertAttribute name="content"/>
-            <tiles:insertAttribute name="modalWindow"/>
+                <div align="center"><h1><tiles:insertAttribute name="namePage"/></div>
+                <tiles:insertAttribute name="content"/>
+                <tiles:insertAttribute name="modalWindow"/>
+            </div>
         </div>
-        </div>
-</div>
+    </div>
     <div class="row">
         <div class="span9" align="center">
             <tiles:insertAttribute name="footer"/>
         </div>
-</div>
     </div>
+</div>
 
 
 </body>

@@ -73,11 +73,6 @@ public class UserServiceImpl implements UserService {
 
     }
 
-    @Override
-    public int getIdByUsername(String username) throws NotFoundUserException {
-        if (username == null) throw new NotFoundUserException();
-        return userDAO.getIdByUsername(username);
-    }
 
     @Override
     public boolean addInSubscribers(String username, int id_course) throws AddressException, NotFoundUserException, NotFoundCourseException {
@@ -160,8 +155,6 @@ return false;
 
     @Override
     public User getUser(String userName) throws NotFoundUserException {
-        if (userName == null) throw new NotFoundUserException();
-
         return userDAO.getUser(userName);
     }
 

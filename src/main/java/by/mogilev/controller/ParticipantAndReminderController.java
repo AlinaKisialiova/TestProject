@@ -28,8 +28,8 @@ import java.util.Set;
  */
 @Controller
 public class ParticipantAndReminderController {
-    public final static String  PARTICIPANT_LIST = "/participantsList/{course.id}";
-    public final static String  EVAL_REMINDER = "/evaluationReminder/{course.id}";
+    public final static String PARTICIPANT_LIST = "/participantsList/{course.id}";
+    public final static String EVAL_REMINDER = "/evaluationReminder/{course.id}";
     public final static String SUBSCRIBE = "/subscribePage";
     public final static String ATTENDEE = "/attendeePage";
     public final static String ATTENDEE_LIST = "/attendeeList/{id}";
@@ -95,15 +95,15 @@ public class ParticipantAndReminderController {
 
 
     @RequestMapping(value = EVAL_REMINDER, method = RequestMethod.POST)
-    public ModelAndView reminderStartorReset(@PathVariable("course.id") final Integer id, final HttpServletRequest request) throws AddressException, NotFoundCourseException, NotFoundUserException {
+    public ModelAndView reminder(@PathVariable("course.id") final Integer id, final HttpServletRequest request) throws AddressException, NotFoundCourseException, NotFoundUserException {
         ModelAndView mav = new ModelAndView("evaluationReminder");
         try {
 
             Course course = courseService.getCourse(id);
             mav.addObject("checkCourse", course);
             String userName = userService.getUserFromSession(request);
-                InternetAddress[] emails = mailService.getRecipientAtt(course);
-                mailService.sendEmail(id, Notification.EVALUATION_REMINDER, emails, userName);
+            InternetAddress[] emails = mailService.getRecipientAtt(course);
+            mailService.sendEmail(id, Notification.EVALUATION_REMINDER, emails, userName);
 
             mav.addObject("modalTitle", "Sending");
             mav.addObject("modalMessage", "Notifications send!");
@@ -136,7 +136,7 @@ public class ParticipantAndReminderController {
     @RequestMapping(value = SUBSCRIBE, method = RequestMethod.POST)
     public ModelAndView SubscPost(
             @RequestParam(value = "selectCourse", required = false) final Integer id_course,
-            @RequestParam(value = "selectCategory", required = false)final String selectCategory,
+            @RequestParam(value = "selectCategory", required = false) final String selectCategory,
             @RequestParam(value = "fieldForSubmit", required = false) ActionsOnPage action,
             HttpServletRequest request)
             throws NotFoundCourseException, NotFoundUserException, AddressException {
@@ -147,7 +147,6 @@ public class ParticipantAndReminderController {
 
             switch (action) {
                 case ADD_IN_SUBSCR: {
-
                     if (userService.addInSubscribers(userService.getUserFromSession(request), id_course))
                         message = "You are subscribed!";
                     else
@@ -171,7 +170,6 @@ public class ParticipantAndReminderController {
                 }
             }
 
-
             mav.addObject("modalTitle", "Subscribe");
             mav.addObject("modalMessage", message);
             return mav;
@@ -184,7 +182,7 @@ public class ParticipantAndReminderController {
             List<Course> coursesForList = courseService.getSelected(selectCategory);
             mavExc.addObject("nameCourses", coursesForList);
             mavExc.addObject("modalTitle", "Ooops...");
-            mavExc.addObject("modalMessage", "You dont select course");
+            mavExc.addObject("modalMessage", "You don't select course");
             return mavExc;
         }
     }
@@ -217,7 +215,7 @@ public class ParticipantAndReminderController {
     public ModelAndView AttendeePagePost(
             @RequestParam(value = "selectCourse", required = false) final Integer id_course,
             @RequestParam(value = "selectCategory", required = false) final String selectCategory,
-            @RequestParam(value = "fieldForSubmit", required = false)  ActionsOnPage action,
+            @RequestParam(value = "fieldForSubmit", required = false) ActionsOnPage action,
             HttpServletRequest request, Model model)
             throws NotFoundCourseException, NotFoundUserException, AddressException {
 
@@ -248,17 +246,15 @@ public class ParticipantAndReminderController {
             return new ModelAndView("signin");
 
         } catch (NotFoundCourseException e) {
-
-
             mav.addObject("modalTitle", "Ooops...");
-            mav.addObject("modalMessage","You dont select course");
+            mav.addObject("modalMessage", "You don't select course");
             return mav;
 
         }
     }
 
     @RequestMapping(value = ATTENDEE_LIST, method = RequestMethod.GET)
-    public ModelAndView AttendeeListGet(@PathVariable("id") final Integer id,final HttpServletRequest request) throws NotFoundCourseException {
+    public ModelAndView AttendeeListGet(@PathVariable("id") final Integer id, final HttpServletRequest request) throws NotFoundCourseException {
         ModelAndView mav = new ModelAndView("attendeeList");
         try {
             String userName = userService.getUserFromSession(request);
@@ -288,16 +284,16 @@ public class ParticipantAndReminderController {
             switch (action) {
                 case ADD_IN_ATT:
                     if (userService.addInAttSet(principal.getName(), id))
-                    message = "You include in attenders list!";
+                        message = "You include in attenders list!";
                     else
-                    message = "You already include in Attenders!";
+                        message = "You already include in Attenders!";
                     break;
 
                 case REMOTE_FROM_ATT:
-                   if (userService.removeFromAttSet(principal.getName(), id))
-                    message = "You delete from attenders list!";
+                    if (userService.removeFromAttSet(principal.getName(), id))
+                        message = "You delete from attenders list!";
                     else
-                   message = "You can't remove from Attenders because you don't include!";
+                        message = "You can't remove from Attenders because you don't include!";
                     break;
             }
             mav.addObject("modalTitle", "Participate");

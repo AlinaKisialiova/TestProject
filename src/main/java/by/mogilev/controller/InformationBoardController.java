@@ -1,6 +1,5 @@
 package by.mogilev.controller;
 
-import by.mogilev.exception.IsNotOwnerException;
 import by.mogilev.exception.NotFoundCourseException;
 import by.mogilev.exception.NotFoundUserException;
 import by.mogilev.model.ActionsOnPage;
@@ -19,7 +18,6 @@ import javax.mail.internet.AddressException;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
-import java.security.Principal;
 import java.util.Set;
 
 
@@ -40,8 +38,6 @@ public class InformationBoardController {
     @RequestMapping(value = INFORM_BOARD, method = RequestMethod.GET)
     public ModelAndView informBoardGet() {
         ModelAndView mav = new ModelAndView("informationBoard");
-//        mav.addObject("modalTitle", "Ooops...");
-//        mav.addObject("modalMessage","Все сломал наглый поросенок");
         mav.addObject("courseList", courseService.getAllCourse());
         return mav;
     }
@@ -55,18 +51,12 @@ public class InformationBoardController {
             throws IOException, DocumentException, AddressException, NotFoundUserException {
         ModelAndView mav = new ModelAndView("informationBoard");
         try {
-            String userName = "";
-            Principal principal = request.getUserPrincipal();
-            if (principal != null && principal.getName() != null) {
-                userName = principal.getName();
-            } else throw new NotFoundUserException();
-
+            String userName = userService.getUserFromSession(request);
+            if (userName == null) throw new NotFoundUserException();
             if (action == null) action = ActionsOnPage.NO_ACTION;
+
             switch (action) {
-                case DEL:
-                    courseService.deleteCourse(id_course, userName);
-                    break;
-                case EVAL_REM:
+                    case EVAL_REM:
                     User user = userService.getUser(userName);
                     Set<User> attenders = courseService.getCourse(id_course).getAttenders();
                     if (attenders.contains(user))
@@ -75,7 +65,6 @@ public class InformationBoardController {
                         mav.addObject("modalTitle", "Ooops...");
                         mav.addObject("modalMessage", "You don't put make because you don't attendee!");
                     }
-
                     break;
                 case OUT_PDF:
                     courseService.outInPdfAllCourse(response, courseService.getAllCourse());
@@ -86,10 +75,6 @@ public class InformationBoardController {
 
             }
             mav.addObject("courseList", courseService.getAllCourse());
-        } catch (IsNotOwnerException e) {
-            mav.addObject("modalTitle", "Ooops...");
-            mav.addObject("modalMessage", e.toString());
-            return new ModelAndView("courseDetails/{course.id}");
         } catch (NotFoundUserException ex) {
             return new ModelAndView("signin");
         } catch (NotFoundCourseException e) {

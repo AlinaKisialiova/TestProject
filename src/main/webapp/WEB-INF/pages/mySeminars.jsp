@@ -3,16 +3,8 @@
 <%@ taglib prefix="form" uri="http://www.springframework.org/tags/form" %>
 <%@ taglib prefix="security" uri="http://www.springframework.org/security/tags" %>
 <%@ taglib prefix="sec" uri="http://www.springframework.org/security/tags" %>
-<%--
-  Created by IntelliJ IDEA.
-  User: akiseleva
-  Date: 02.04.2015
-  Time: 9:54
-  To change this template use File | Settings | File Templates.
---%>
 
 <div class="row">
-
     <div id='EvalRemindBlock' style="display: none;" class="col-md-4 col-md-offset-4">
         <form method="post" action="informationBoard">
             <input type="hidden" class="idC" name="id"/>

@@ -19,7 +19,6 @@ import org.springframework.web.servlet.ModelAndView;
 
 import javax.mail.internet.AddressException;
 import javax.servlet.http.HttpServletRequest;
-import javax.servlet.http.HttpSession;
 
 /**
  * Created by akiseleva on 09.03.2015.
@@ -51,7 +50,7 @@ public class ActionCourseController {
 
     @RequestMapping(value = REGISTRATION_COURSE, method = RequestMethod.POST)
     public ModelAndView regCourse(@ModelAttribute("Course") Course newCourse, BindingResult result, Model model,
-                                  HttpSession session, HttpServletRequest request) throws AddressException, NotFoundUserException {
+                                 HttpServletRequest request) throws AddressException, NotFoundUserException {
         try {
             String userName = userService.getUserFromSession(request);
             for(Course c : courseService.getAllCourse()) {
@@ -62,7 +61,6 @@ public class ActionCourseController {
                     return mav;
                 }
             }
-
             courseService.registerCourse(newCourse, userName);
             return new ModelAndView("redirect:/informationBoard");
         } catch (NotFoundUserException ex) {
@@ -82,7 +80,7 @@ public class ActionCourseController {
         } catch (NotFoundCourseException e) {
             mav.addObject("modalTitle", "Ooops...");
             mav.addObject("modalMessage", e.toString());
-            return new ModelAndView("courseDetails/{course.id}");
+            return new ModelAndView("informationBoard");
         }
 
     }
@@ -91,21 +89,20 @@ public class ActionCourseController {
     public ModelAndView deleteCourse(@PathVariable("course.id") Integer id, HttpServletRequest request) throws AddressException, NotFoundUserException, NotFoundCourseException {
         try {
             String userName = userService.getUserFromSession(request);
-                courseService.deleteCourse(id, userName);
+            courseService.deleteCourse(id, userName);
             return new ModelAndView("redirect:/informationBoard");
         } catch (IsNotOwnerException e) {
             ModelAndView mav = new ModelAndView("courseDetails");
             mav.addObject("modalTitle", "Ooops...");
             mav.addObject("modalMessage", e.toString());
             return new ModelAndView("courseDetails/{course.id}");
-
         } catch (NotFoundUserException ex) {
             return new ModelAndView("signin");
         } catch (NotFoundCourseException e) {
             ModelAndView mav = new ModelAndView("courseDetails");
             mav.addObject("modalTitle", "Ooops...");
             mav.addObject("modalMessage", e.toString());
-            return new ModelAndView("courseDetails/{course.id}");
+            return new ModelAndView("informationBoard");
         }
 
     }
@@ -147,7 +144,7 @@ public class ActionCourseController {
            return new ModelAndView("signin");
        }
        catch (NotFoundCourseException ex) {
-           ModelAndView mav = new ModelAndView("courseDetails/{course.id}");
+           ModelAndView mav = new ModelAndView("informationBoard");
            mav.addObject("modalTitle", "Ooops...");
            mav.addObject("modalMessage", ex.toString());
            return mav;
