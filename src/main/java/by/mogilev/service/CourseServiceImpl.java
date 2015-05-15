@@ -205,12 +205,15 @@ public class CourseServiceImpl implements CourseService {
         courseDAO.updateCourse(changeEvalCourse);
 
         int evaluat = 0;
+        int count = 0;
         for (Map.Entry<User, Integer> entry : changeEvalCourse.getEvalMap().entrySet()) {
-            if (entry.getValue() != null)
-            evaluat += entry.getValue();
+            if (entry.getValue() != null || entry.getValue() != 0) {
+                evaluat += entry.getValue();
+                count++;
+            }
         }
 
-        changeEvalCourse.setEvaluation(evaluat / changeEvalCourse.getEvalMap().size());
+        changeEvalCourse.setEvaluation(evaluat / count);
         courseDAO.updateCourse(changeEvalCourse);
 
     }
@@ -250,7 +253,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public void registerCourse(Course course, String nameLector) throws AddressException, NotFoundUserException {
+    public void registerCourse(Course course, String nameLector) throws AddressException, NotFoundUserException, NotFoundCourseException {
         if (nameLector == null) throw new NotFoundUserException();
         courseDAO.registerCourse(course, nameLector);
         int id = courseDAO.getCourseByNameDao(course.getNameCourse()).getId();
@@ -261,7 +264,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public void updateCourse(Course updCourse) throws AddressException, NotFoundCourseException {
+    public void updateCourse(Course updCourse) throws AddressException, NotFoundCourseException, NotFoundUserException {
 
         if (updCourse == null) throw  new NotFoundCourseException();
         courseDAO.updateCourse(updCourse);

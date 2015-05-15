@@ -65,7 +65,9 @@
 
 
             <td>
+                <c:if test="${course.courseStatus != DELIVERED}">
                 <input type="submit" name="deleteCourse" value="Delete" class="btn-danger"/>
+                </c:if>
             </td>
 
         </tr>

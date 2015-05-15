@@ -10,19 +10,18 @@
             </div>
             <div class="modal-body">
                 <center><h4>${modalMessage}</h4>
-                    <img src="resources/img/ooops.png"/>
+                    <img src="<c:url value="/resources/img/ooops.png"/>">
                 </center>
             </div>
             <div class="modal-footer">
                 <button type="button" class="btn btn-default" data-dismiss="modal" onclick="window.location.href=window.location.href">Close</button>
             </div>
 
-        </div><!-- /.modal-content -->
-    </div><!-- /.modal-dialog -->
-</div><!-- /.modal -->
+        </div>
+    </div>
+</div>
 
 <input type="hidden" value="${modalMessage}" id="mMess"/>
-
 
 <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
 <script type="text/javascript" src="<c:url value="/resources/js/bootstrap.min3.0.2.js"/>"></script>

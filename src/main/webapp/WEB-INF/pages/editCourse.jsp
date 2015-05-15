@@ -53,8 +53,9 @@
     </tr>
 
     <tr>
+        <td align="center"><input type="submit" value="Save" onclick="return validate();" class="btn btn-large btn-primary"/></td>
         <td><a href="<c:url value="/courseDetails/${course.id}" context="/project"/> "> Cancel</a> </td>
-        <td><input type="submit" value="OK" onclick="return validate();" class="btn-primary"/></td>
+
     </tr>
 </table>
 </form:form>

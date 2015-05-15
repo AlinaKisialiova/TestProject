@@ -15,5 +15,6 @@ public enum ActionsOnPage {
     REMOVE_FROM_SUBSCR,
     START,
     APPROVE,
+    SELECT,
     ActionsOnPage() {}
 }

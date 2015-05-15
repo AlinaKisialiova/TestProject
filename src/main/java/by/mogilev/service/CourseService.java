@@ -93,7 +93,7 @@ public interface CourseService {
      * @throws NotFoundUserException
      */
 
-    public void registerCourse(Course course, String nameLector) throws AddressException, NotFoundUserException;
+    public void registerCourse(Course course, String nameLector) throws AddressException, NotFoundUserException, NotFoundCourseException;
 
     /**
      * update course
@@ -101,7 +101,7 @@ public interface CourseService {
      * @throws AddressException
      * @throws NotFoundCourseException
      */
-    public void updateCourse(Course updCourse) throws AddressException, NotFoundCourseException;
+    public void updateCourse(Course updCourse) throws AddressException, NotFoundCourseException, NotFoundUserException;
 
     /**
      * return course for approve department manager

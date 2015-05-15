@@ -1,5 +1,7 @@
 package by.mogilev.service;
 
+import by.mogilev.exception.NotFoundCourseException;
+import by.mogilev.exception.NotFoundUserException;
 import by.mogilev.model.Course;
 import by.mogilev.model.Notification;
 
@@ -17,7 +19,7 @@ public interface MailService {
      * @param emails
      * @param userName
      */
-    public void sendEmail(int id_course, Notification notification, InternetAddress[] emails, String userName);
+    public void sendEmail(int id_course, Notification notification, InternetAddress[] emails, String userName) throws NotFoundUserException, NotFoundCourseException;
 
     /**
      * Get list of email for send notifications

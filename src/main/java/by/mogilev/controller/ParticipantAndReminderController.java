@@ -137,13 +137,15 @@ public class ParticipantAndReminderController {
     public ModelAndView SubscPost(
             @RequestParam(value = "selectCourse", required = false) final Integer id_course,
             @RequestParam(value = "selectCategory", required = false)final String selectCategory,
-            @RequestParam(value = "fieldForSubmit", required = false)final ActionsOnPage action,
+            @RequestParam(value = "fieldForSubmit", required = false) ActionsOnPage action,
             HttpServletRequest request)
             throws NotFoundCourseException, NotFoundUserException, AddressException {
+        if (action == null) action = ActionsOnPage.SELECT;
         try {
             ModelAndView mav = new ModelAndView("subscribePage");
             String message = "";
-            switch (action){
+
+            switch (action) {
                 case ADD_IN_SUBSCR: {
 
                     if (userService.addInSubscribers(userService.getUserFromSession(request), id_course))
@@ -156,17 +158,20 @@ public class ParticipantAndReminderController {
                     if (userService.removeFromSubscribers(userService.getUserFromSession(request), id_course))
                         message = "You delete from Subscribers this course";
                     else
-                    message = "You can't delete because you don't subscribe!";
+                        message = "You can't delete because you don't subscribe!";
                     break;
                 }
-                default:{
+                case SELECT: {
                     List<Course> coursesForList = courseService.getSelected(selectCategory);
                     mav.addObject("nameCourses", coursesForList);
                     String userName = userService.getUserFromSession(request);
                     Set<Course> coursesForUser = userService.getCoursesSubscribeOfUser(userName);
                     mav.addObject("coursesForUser", coursesForUser);
+                    break;
                 }
             }
+
+
             mav.addObject("modalTitle", "Subscribe");
             mav.addObject("modalMessage", message);
             return mav;
@@ -212,16 +217,15 @@ public class ParticipantAndReminderController {
     public ModelAndView AttendeePagePost(
             @RequestParam(value = "selectCourse", required = false) final Integer id_course,
             @RequestParam(value = "selectCategory", required = false) final String selectCategory,
-            @RequestParam(value = "fieldForSubmit", required = false)final  ActionsOnPage action,
+            @RequestParam(value = "fieldForSubmit", required = false)  ActionsOnPage action,
             HttpServletRequest request, Model model)
             throws NotFoundCourseException, NotFoundUserException, AddressException {
+
         ModelAndView mav = new ModelAndView("attendeePage");
         try {
 
-            if (id_course == null) throw new NotFoundCourseException();
-
             if (ActionsOnPage.ADD_IN_ATT.equals(action)) {
-
+                if (id_course == null) throw new NotFoundCourseException();
                 model.addAttribute("id", id_course);
                 return new ModelAndView("redirect:" + "/attendeeList/{id}");
             }

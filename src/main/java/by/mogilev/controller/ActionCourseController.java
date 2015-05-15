@@ -68,6 +68,8 @@ public class ActionCourseController {
         } catch (NotFoundUserException ex) {
             return new ModelAndView("signin");
 
+        } catch (NotFoundCourseException e) {
+            return new ModelAndView("redirect:/informationBoard");
         }
     }
 
