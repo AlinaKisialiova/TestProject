@@ -9,8 +9,6 @@
   To change this template use File | Settings | File Templates.
 --%>
 
-<h2> ${message}</h2>
-
 <form:form method="post" name="editForm"  modelAttribute="Course">
 <table align="center">
     <tr><td><strong>Course Category</strong></td>
@@ -61,21 +59,3 @@
 </form:form>
 
 </div>
-
-<script type="text/javascript">
-
-    function validate() {
-        var nameCourse = document.forms["editForm"]["updCourseName"].value;
-        var durCourse = document.forms["editForm"]["updCourseDuration"].value;
-        if (nameCourse.length==0 ){
-            document.getElementById("errName").innerHTML="*required field";
-            return false;
-        }
-        var par_pattern=/^\d+$/;
-        if (durCourse.length==0 || parseInt(durCourse) < 1 || !(par_pattern.test(durCourse)) ){
-            document.getElementById("errDuration").innerHTML="*incorrectly field";
-            return false;
-        }
-
-    }
-</script>

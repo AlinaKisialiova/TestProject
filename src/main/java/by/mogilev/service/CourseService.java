@@ -12,6 +12,7 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
+import java.util.Set;
 
 /**
  * Created by Администратор on 21.03.2015.
@@ -116,5 +117,5 @@ public interface CourseService {
     public List<Course> getCourseForKnowledgeManagerManager();
 
 
-
+    public Course getCourseByName(String courseName) throws NotFoundUserException;
 }

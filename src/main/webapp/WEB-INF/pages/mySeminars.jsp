@@ -51,14 +51,14 @@
         <form action="mySeminars" method="post">
             <tr>
                 <th>
-                    <input type="submit" onclick="outPdf()" name="pdfOut"
+                    <input type="submit" onclick="setAction('OUT_PDF')" name="pdfOut"
                            value="Click for Output in PDF" class="btn btn-primary">
                 </th>
 
 
                 <th>
 
-                    <input type="submit" onclick="outExcel()" name="excelOut"
+                    <input type="submit" onclick="setAction('OUT_EXCEL')" name="excelOut"
                            value="Click for Output in Excel" class="btn btn-primary">
 
                 </th>
@@ -170,17 +170,4 @@
 
 </div>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-
-<script>
-function outPdf() {
-$(".fieldForSubmit").val("OUT_PDF");
-}
-
-function outExcel() {
-$(".fieldForSubmit").val("OUT_EXCEL");
-
-}
-
-</script>
 

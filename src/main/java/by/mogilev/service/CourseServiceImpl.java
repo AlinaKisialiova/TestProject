@@ -244,7 +244,7 @@ public class CourseServiceImpl implements CourseService {
         courseDAO.deleteCourse(course);
 
         InternetAddress[] emails = mailService.getRecipientSubsc(course);
-        mailService.sendEmail(id, Notification.COURSE_DELETE, emails, userName);
+        mailService.sendEmail(id, Notification.COURSE_DELETE, emails, userName, "");
     }
 
     @Override
@@ -260,7 +260,7 @@ public class CourseServiceImpl implements CourseService {
         int id = courseDAO.getCourseByNameDao(course.getNameCourse()).getId();
         InternetAddress[] emails= new InternetAddress[]{
                 new InternetAddress("aflamma@yandex.ru")};
-        mailService.sendEmail(id, Notification.COURSE_ANNOUNCEMENT, emails, nameLector);
+        mailService.sendEmail(id, Notification.COURSE_ANNOUNCEMENT, emails, nameLector,"");
 
     }
 
@@ -273,7 +273,7 @@ public class CourseServiceImpl implements CourseService {
     InternetAddress [] emails = new InternetAddress[2];
         emails[0] = new InternetAddress("aflamma@yandex.ru");
         emails[1] = new InternetAddress("alina@gorad.by");
-        mailService.sendEmail(updCourse.getId(), Notification.COURSE_UPDATE, emails, "alex Ivanov");
+        mailService.sendEmail(updCourse.getId(), Notification.COURSE_UPDATE, emails, "alex Ivanov","");
 
     }
 
@@ -299,4 +299,12 @@ public class CourseServiceImpl implements CourseService {
         }
         return coursesForApprove;
     }
+
+    @Override
+    public Course getCourseByName(String courseName) throws NotFoundUserException {
+        if (courseName == null) throw new NotFoundUserException();
+
+        return courseDAO.getCourseByNameDao(courseName);
+    }
+
 }

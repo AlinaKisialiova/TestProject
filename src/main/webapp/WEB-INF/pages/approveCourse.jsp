@@ -126,9 +126,6 @@ var manager = $("#manager").val();
 
         $("#approveToServ").val(approveToServ);
         $("#reasonToServ").val(reasonToServ);
-
-
-
     });
 
 

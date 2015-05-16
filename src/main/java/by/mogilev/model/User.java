@@ -25,8 +25,8 @@ public class User  {
     private String email;
     private Set<Course> course;
     private boolean enabled;
-    private Set<Course> coursesSubscribe = new HashSet<Course>();
-    private Set<Course> coursesAttendee = new HashSet<Course>();
+    private List<Course> coursesSubscribe = new ArrayList<Course>();
+    private List<Course> coursesAttendee = new ArrayList<Course>();
 
     public User() {
     }
@@ -109,11 +109,11 @@ public class User  {
     @JoinTable(name = "COURSE_SUBSCRIBERS",
             joinColumns = @JoinColumn(name = "id_user"),
             inverseJoinColumns = @JoinColumn(name = "id_course"))
-    public Set<Course> getCoursesSubscribe() {
+    public List<Course> getCoursesSubscribe() {
         return coursesSubscribe;
     }
 
-    public void setCoursesSubscribe(Set<Course> coursesSubscribe) {
+    public void setCoursesSubscribe(List<Course> coursesSubscribe) {
         this.coursesSubscribe = coursesSubscribe;
     }
 
@@ -121,11 +121,11 @@ public class User  {
     @JoinTable(name = "COURSE_ATTENDERS",
             joinColumns = @JoinColumn(name = "id_user"),
             inverseJoinColumns = @JoinColumn(name = "id_course"))
-    public Set<Course> getCoursesAttendee() {
+    public List<Course> getCoursesAttendee() {
         return coursesAttendee;
     }
 
-    public void setCoursesAttendee(Set<Course> coursesAttendee) {
+    public void setCoursesAttendee(List<Course> coursesAttendee) {
         this.coursesAttendee = coursesAttendee;
     }
 

@@ -63,16 +63,3 @@
 </div>
 
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<script type="text/javascript" src="<c:url value="/resources/js/bootstrap.min3.0.2.js"/>"></script>
-<script>
-
-function setId(id) {
-$(".id_c").val(id);
-return id;
-}
-function setAction(action) {
-    $(".fieldForSubmit").val(action);
-
-}
-</script>

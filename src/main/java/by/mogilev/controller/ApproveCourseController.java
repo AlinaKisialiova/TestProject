@@ -1,6 +1,7 @@
 package by.mogilev.controller;
 import by.mogilev.exception.NotFoundCourseException;
 import by.mogilev.exception.NotFoundUserException;
+import by.mogilev.exception.SendingNotificationsException;
 import by.mogilev.model.*;
 import by.mogilev.service.CourseService;
 import by.mogilev.service.MailService;
@@ -65,9 +66,9 @@ public class ApproveCourseController {
                                           @RequestParam("reasonToServ") final String reason,
                                           @RequestParam("manager") final UserRole manager)
             throws AddressException, NotFoundCourseException, NotFoundUserException {
+        String userName = userService.getUserFromSession(request);
         try {
             Course appCourse = courseService.getCourse(id);
-            String userName = userService.getUserFromSession(request);
             switch (manager) {
                 case DEPARTMENT_MANAGER:
                     if ("approve".equals(approve)) {
@@ -75,11 +76,11 @@ public class ApproveCourseController {
                         appCourse.setDepartmentManagerReason(reason);
                         InternetAddress[] emails = new InternetAddress[]{
                                 new InternetAddress("aflamma@yandex.ru")};
-                        mailService.sendEmail(id, Notification.COURSE_APPOVAL_STATUS, emails, userName);
+                        mailService.sendEmail(id, Notification.COURSE_APPOVAL_STATUS, emails, userName,"");
                     } else {
                         appCourse.setCourseStatus(CourseStatus.NOT_APPROVE);
                         InternetAddress[] emails = new InternetAddress[]{new InternetAddress(appCourse.getLector().getEmail())};
-                        mailService.sendEmail(id, Notification.COURSE_REJECTED, emails, userName);
+                        mailService.sendEmail(id, Notification.COURSE_REJECTED, emails, userName,"");
                     }
                     break;
 
@@ -88,11 +89,11 @@ public class ApproveCourseController {
                         appCourse.setCourseStatus(CourseStatus.APPROVE_KNOWLEDGE_MANAGER);
                         appCourse.setKnowledgeManagerReason(reason);
                         InternetAddress[] emails = mailService.getRecipientSubsc(appCourse);
-                        mailService.sendEmail(id, Notification.NEW_COURSE_ADDED, emails, userName);
+                        mailService.sendEmail(id, Notification.NEW_COURSE_ADDED, emails, userName,"");
                     } else {
                         appCourse.setCourseStatus(CourseStatus.APPROVE_DEPARTMENT_MANAGER);
                         InternetAddress[] emails = new InternetAddress[]{new InternetAddress(appCourse.getLector().getEmail())};
-                        mailService.sendEmail(id, Notification.COURSE_REJECTED, emails, userName);
+                        mailService.sendEmail(id, Notification.COURSE_REJECTED, emails, userName,"");
                     }
                     break;
             }
@@ -110,6 +111,18 @@ public class ApproveCourseController {
             mav.addObject("modalTitle", "Ooops...");
             mav.addObject("modalMessage", ex.toString());
             return mav;
+        }
+        catch (AddressException e) {
+            try {
+                throw new SendingNotificationsException(courseService.getCourse(id), e.toString());
+            } catch (SendingNotificationsException e1) {
+                InternetAddress[] email = InternetAddress.parse(courseService.getCourse(id).getLector().getEmail());
+                e1.sendExceptionEmail(email,userName);
+                ModelAndView mav = new ModelAndView("informationBoard");
+                mav.addObject("courseList", courseService.getAllCourse());
+                return mav;
+            }
+
         }
     }
 

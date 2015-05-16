@@ -18,6 +18,7 @@ import javax.mail.internet.InternetAddress;
 import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.security.Principal;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -46,11 +47,11 @@ public class UserServiceImpl implements UserService {
 
     @SuppressWarnings("unchecked")
     @Override
-    public Set<Course> getCoursesSubscribeOfUser(String username) throws NotFoundUserException {
+    public List<Course> getCoursesSubscribeOfUser(String username) throws NotFoundUserException {
 
         if (username == null) throw new NotFoundUserException();
          User user = getUser(username);
-        Set<Course> coursesList = user.getCoursesSubscribe();
+        List<Course> coursesList = user.getCoursesSubscribe();
         for (Course course : coursesList) {
             Hibernate.initialize(course.getAttenders());
             Hibernate.initialize(course.getSubscribers());
@@ -60,10 +61,10 @@ public class UserServiceImpl implements UserService {
 
     @SuppressWarnings("unchecked")
     @Override
-    public Set<Course> getCoursesAttendeeOfUser(String username) throws NotFoundUserException {
+    public List<Course> getCoursesAttendeeOfUser(String username) throws NotFoundUserException {
         if (username == null) throw new NotFoundUserException();
         User user = getUser(username);
-        Set<Course> coursesList = user.getCoursesAttendee();
+        List<Course> coursesList = user.getCoursesAttendee();
 
         for (Course course : coursesList) {
             Hibernate.initialize(course.getAttenders());
@@ -81,7 +82,7 @@ public class UserServiceImpl implements UserService {
 
         User userSubscr = userDAO.getUser(username);
         Course course = courseDAO.getCourse(id_course);
-        Set<Course> courses = userSubscr.getCoursesSubscribe();
+        List<Course> courses = userSubscr.getCoursesSubscribe();
         if (courses.contains(course)) return false;
 
         courses.add(course);
@@ -90,7 +91,7 @@ public class UserServiceImpl implements UserService {
         if (course.getSubscribers().size() >= Course.MIN_COUNT_SUBSCR) {
             course.setCourseStatus(CourseStatus.DELIVERED);
             InternetAddress[] emails = mailService.getRecipientSubsc(course);
-            mailService.sendEmail(id_course, Notification.COURSE_APPOINTED, emails, username);
+            mailService.sendEmail(id_course, Notification.COURSE_APPOINTED, emails, username,"");
         }
 
         return true;
@@ -103,7 +104,7 @@ public class UserServiceImpl implements UserService {
 
         User userSubscr = userDAO.getUser(username);
         Course course = courseDAO.getCourse(id_course);
-        Set<Course> courses = userSubscr.getCoursesSubscribe();
+        List<Course> courses = userSubscr.getCoursesSubscribe();
         if (courses.contains(course)) {
             userSubscr.getCoursesSubscribe().remove(course);
             userDAO.updateUser(userSubscr);
@@ -119,7 +120,7 @@ public class UserServiceImpl implements UserService {
 
         User userAtt = userDAO.getUser(username);
         Course course = courseDAO.getCourse(id_course);
-        Set<Course> courses = userAtt.getCoursesAttendee();
+        List<Course> courses = userAtt.getCoursesAttendee();
         if (!courses.contains(course) && course.getAttenders().size() < Course.MAX_COUNT_ATT) {
             courses.add(course);
             userDAO.updateUser(userAtt);
@@ -137,7 +138,7 @@ return false;
 
         User userAtt = userDAO.getUser(username);
         Course course = courseDAO.getCourse(id_course);
-        Set<Course> courses = userAtt.getCoursesAttendee();
+        List<Course> courses = userAtt.getCoursesAttendee();
 
         if (courses.contains(course)) {
             courses.remove(course);

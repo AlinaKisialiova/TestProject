@@ -1,0 +1,18 @@
+<html>
+<body>
+<h3>Error sending email notification for course </h3>
+--------------------------------------------------------------------
+<br>
+<h5>Error: </h5>  ${errEmail}
+<table>
+    <tr><th align="left">Category:</th>   <td>    ${message.category}</td></tr>
+    <tr> <th align="left">Name:     </th>     <td>   ${message.nameCourse}</td></tr>
+    <tr><th align="left">Description: </th>    <td>  ${message.description}</td></tr>
+    <tr><th align="left">Links:      </th>     <td>  ${message.links}</td></tr>
+    <tr> <th align="left">Duration:   </th>     <td>  ${message.duration}</td></tr>
+</table>
+<br>
+---------------------------------------------------------------------
+
+ </body>
+ </html>

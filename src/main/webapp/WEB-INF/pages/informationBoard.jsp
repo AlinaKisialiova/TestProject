@@ -58,13 +58,13 @@
     <form action="informationBoard" method="post">
         <tr>
             <th>
-                <input type="submit" onclick="outPdf()" name="pdfOut"
+                <input type="submit" onclick="setAction('OUT_PDF')" name="pdfOut"
                        value="Click for Output in PDF" class="btn btn-primary">
             </th>
 
             <th>
 
-                <input type="submit" onclick="outExcel()" name="excelOut"
+                <input type="submit" onclick="setAction('OUT_EXCEL')" name="excelOut"
                        value="Click for Output in Excel" class="btn btn-primary">
 
             </th>
@@ -168,26 +168,3 @@
     </form>
 </table>
 
-
-
-    <script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-<script type="text/javascript" src="<c:url value="/resources/js/bootstrap.min3.0.2.js"/>"></script>
-
-<script>
-
-
-    function outPdf() {
-        $(".fieldForSubmit").val("OUT_PDF");
-    }
-
-    function outExcel() {
-        $(".fieldForSubmit").val("OUT_EXCEL");
-
-    }
-    function del(id) {
-        $(".idC").val(id);
-        $(".fieldForSubmit").val("DEL");
-
-    }
-
-</script>

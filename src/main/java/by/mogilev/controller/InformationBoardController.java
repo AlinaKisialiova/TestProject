@@ -2,6 +2,7 @@ package by.mogilev.controller;
 
 import by.mogilev.exception.NotFoundCourseException;
 import by.mogilev.exception.NotFoundUserException;
+import by.mogilev.exception.SendingNotificationsException;
 import by.mogilev.model.ActionsOnPage;
 import by.mogilev.model.User;
 import by.mogilev.service.CourseService;
@@ -15,6 +16,7 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
@@ -48,11 +50,11 @@ public class InformationBoardController {
                                           @RequestParam(value = "fieldForSubmit", required = false)  ActionsOnPage action,
                                           @RequestParam(value = "id", required = false) final Integer id_course,
                                           HttpServletResponse response)
-            throws IOException, DocumentException, AddressException, NotFoundUserException {
+            throws IOException, DocumentException, NotFoundUserException, NotFoundCourseException, AddressException {
         ModelAndView mav = new ModelAndView("informationBoard");
+        String userName = userService.getUserFromSession(request);
         try {
-            String userName = userService.getUserFromSession(request);
-            if (userName == null) throw new NotFoundUserException();
+
             if (action == null) action = ActionsOnPage.NO_ACTION;
 
             switch (action) {
@@ -75,15 +77,27 @@ public class InformationBoardController {
 
             }
             mav.addObject("courseList", courseService.getAllCourse());
+            return mav;
         } catch (NotFoundUserException ex) {
             return new ModelAndView("signin");
         } catch (NotFoundCourseException e) {
-            mav.addObject("excTitle", "Ooops...");
-            mav.addObject("excMessage", e.toString());
+            mav.addObject("modalTitle", "Ooops...");
+            mav.addObject("modalMessage", e.toString());
             return new ModelAndView("informationBoard");
         }
 
-        return mav;
+        catch (AddressException e) {
+            try {
+                throw new SendingNotificationsException(courseService.getCourse(id_course), e.toString());
+            } catch (SendingNotificationsException e1) {
+                InternetAddress[] email = InternetAddress.parse(courseService.getCourse(id_course).getLector().getEmail());
+                e1.sendExceptionEmail(email,userName);
+                mav.addObject("courseList", courseService.getAllCourse());
+                return mav;
+            }
+
+        }
+
 
     }
 

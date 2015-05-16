@@ -19,7 +19,8 @@ public interface MailService {
      * @param emails
      * @param userName
      */
-    public void sendEmail(int id_course, Notification notification, InternetAddress[] emails, String userName) throws NotFoundUserException, NotFoundCourseException;
+    public void sendEmail(int id_course, Notification notification, InternetAddress[] emails, String userName, String errEmail)
+            throws NotFoundUserException, NotFoundCourseException;
 
     /**
      * Get list of email for send notifications

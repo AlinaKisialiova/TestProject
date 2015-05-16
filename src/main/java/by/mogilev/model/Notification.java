@@ -12,4 +12,5 @@ public enum Notification {
     COURSE_APPOINTED,
     COURSE_REJECTED,
     EVALUATION_REMINDER,
+    ADDRESS_EXCEPTION_MESSAGE,
     }

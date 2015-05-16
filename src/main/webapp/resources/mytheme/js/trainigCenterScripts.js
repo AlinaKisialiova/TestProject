@@ -79,5 +79,14 @@ function hide(element) {
         $(element).hide();
 }
 
+function setAction(action) {
+    $(".fieldForSubmit").val(action);
+    $(".idC").val(id);
+}
+
+function setId(id) {
+    $(".id_c").val(id);
+    return id;
+}
 
 

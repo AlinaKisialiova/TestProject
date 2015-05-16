@@ -3,7 +3,9 @@ package by.mogilev.controller;
 import by.mogilev.exception.IsNotOwnerException;
 import by.mogilev.exception.NotFoundCourseException;
 import by.mogilev.exception.NotFoundUserException;
+import by.mogilev.exception.SendingNotificationsException;
 import by.mogilev.model.Course;
+import by.mogilev.model.Notification;
 import by.mogilev.service.CourseService;
 import by.mogilev.service.MailService;
 import by.mogilev.service.UserService;
@@ -18,6 +20,7 @@ import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 import javax.servlet.http.HttpServletRequest;
 
 /**
@@ -50,10 +53,10 @@ public class ActionCourseController {
 
     @RequestMapping(value = REGISTRATION_COURSE, method = RequestMethod.POST)
     public ModelAndView regCourse(@ModelAttribute("Course") Course newCourse, BindingResult result, Model model,
-                                 HttpServletRequest request) throws AddressException, NotFoundUserException {
+                                  HttpServletRequest request) throws NotFoundUserException, AddressException {
         try {
             String userName = userService.getUserFromSession(request);
-            for(Course c : courseService.getAllCourse()) {
+            for (Course c : courseService.getAllCourse()) {
                 if (c.getNameCourse().equals(newCourse.getNameCourse())) {
                     ModelAndView mav = new ModelAndView("registrationCourse");
                     mav.addObject("modalTitle", "Ooops...");
@@ -61,8 +64,21 @@ public class ActionCourseController {
                     return mav;
                 }
             }
-            courseService.registerCourse(newCourse, userName);
-            return new ModelAndView("redirect:/informationBoard");
+            try {
+                courseService.registerCourse(newCourse, userName);
+                return new ModelAndView("redirect:/informationBoard");
+
+            } catch (AddressException e) {
+                try {
+                    throw new SendingNotificationsException(newCourse, e.toString());
+                } catch (SendingNotificationsException e1) {
+                    InternetAddress[] email = InternetAddress.parse(newCourse.getLector().getEmail());
+                    e1.sendExceptionEmail(email, userName);
+                    return new ModelAndView("redirect:/informationBoard");
+                }
+
+            }
+
         } catch (NotFoundUserException ex) {
             return new ModelAndView("signin");
 
@@ -70,6 +86,7 @@ public class ActionCourseController {
             return new ModelAndView("redirect:/informationBoard");
         }
     }
+
 
     @RequestMapping(value = DETAIL_COURSE, method = RequestMethod.GET)
     public ModelAndView detailsCourse(@PathVariable("course.id") Integer id) throws NotFoundCourseException {
@@ -85,10 +102,11 @@ public class ActionCourseController {
 
     }
 
+
     @RequestMapping(value = DETAIL_COURSE, method = RequestMethod.POST)
-    public ModelAndView deleteCourse(@PathVariable("course.id") Integer id, HttpServletRequest request) throws AddressException, NotFoundUserException, NotFoundCourseException {
+    public ModelAndView deleteCourse(@PathVariable("course.id") Integer id, HttpServletRequest request) throws NotFoundUserException, NotFoundCourseException, AddressException {
+        String userName = userService.getUserFromSession(request);
         try {
-            String userName = userService.getUserFromSession(request);
             courseService.deleteCourse(id, userName);
             return new ModelAndView("redirect:/informationBoard");
         } catch (IsNotOwnerException e) {
@@ -103,6 +121,16 @@ public class ActionCourseController {
             mav.addObject("modalTitle", "Ooops...");
             mav.addObject("modalMessage", e.toString());
             return new ModelAndView("informationBoard");
+        }
+        catch (AddressException e) {
+            try {
+                throw new SendingNotificationsException(courseService.getCourse(id), e.toString());
+            } catch (SendingNotificationsException e1) {
+                InternetAddress[] email = InternetAddress.parse(courseService.getCourse(id).getLector().getEmail());
+                e1.sendExceptionEmail(email,userName);
+                return new ModelAndView("redirect:/informationBoard");
+            }
+
         }
 
     }
@@ -125,10 +153,9 @@ public class ActionCourseController {
     public ModelAndView editCourse(@PathVariable("course.id") final Integer id,
                              @ModelAttribute("Course") final Course updCourse,
                              final HttpServletRequest  request, final Model model) throws AddressException, NotFoundCourseException, NotFoundUserException, IsNotOwnerException {
-       try {
+        String userName = userService.getUserFromSession(request);
+        try {
            model.addAttribute("categoryMap", courseService.getCategotyMap());
-
-           String userName = userService.getUserFromSession(request);
            if (!(courseService.isOwner(id, userName))) throw new IsNotOwnerException();
            Course editCourse = courseService.getCourse(id);
            editCourse.setCategory(updCourse.getCategory());
@@ -155,6 +182,16 @@ public class ActionCourseController {
             mav.addObject("modalMessage", ex.toString());
             return mav;
         }
+       catch (AddressException e) {
+           try {
+               throw new SendingNotificationsException(courseService.getCourse(id), e.toString());
+           } catch (SendingNotificationsException e1) {
+               InternetAddress[] email = InternetAddress.parse(courseService.getCourse(id).getLector().getEmail());
+               e1.sendExceptionEmail(email,userName);
+               return new ModelAndView("redirect:/courseDetails/{course.id}");
+           }
+
+       }
 
 
 

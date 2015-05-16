@@ -68,12 +68,5 @@
     <script type="text/javascript" src="<c:url value="/resources/js/bootstrap.min3.0.2.js"/>"></script>
     <script>
 
-    function setAction(action) {
-        $(".fieldForSubmit").val(action);
-        $(".idC").val(id);
-
-
-
-    }
 
 </script>

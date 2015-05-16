@@ -55,5 +55,4 @@ public interface CourseDAO {
      */
     public Course getCourseByNameDao(String courseName);
 
-
 }

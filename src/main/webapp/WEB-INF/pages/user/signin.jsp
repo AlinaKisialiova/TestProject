@@ -26,10 +26,8 @@
         <div class="col-sm-3  col-md-offset-5">
     <input type="submit" value="Login" class="btn btn-primary btn-lg btn-block"/>
             </div>
-
-
-
-
+</div>
 </form>
+
 
 

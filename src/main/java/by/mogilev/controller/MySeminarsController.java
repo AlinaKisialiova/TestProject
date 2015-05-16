@@ -1,8 +1,11 @@
 package by.mogilev.controller;
 
+import by.mogilev.exception.NotFoundCourseException;
 import by.mogilev.exception.NotFoundUserException;
+import by.mogilev.exception.SendingNotificationsException;
 import by.mogilev.model.ActionsOnPage;
 import by.mogilev.model.Course;
+import by.mogilev.model.User;
 import by.mogilev.service.CourseService;
 import by.mogilev.service.UserService;
 import com.itextpdf.text.DocumentException;
@@ -15,9 +18,11 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.mail.internet.AddressException;
+import javax.mail.internet.InternetAddress;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
+import java.util.List;
 import java.util.Set;
 
 /**
@@ -40,7 +45,7 @@ public class MySeminarsController {
     }
 
     @RequestMapping(value = MY_SEMINARS, method = RequestMethod.GET)
-    public ModelAndView listCourseUser( final HttpServletRequest request) throws NotFoundUserException {
+    public ModelAndView listCourseUser(final HttpServletRequest request) throws NotFoundUserException {
         ModelAndView mav = new ModelAndView("mySeminars");
         try {
             String userName = userService.getUserFromSession(request);
@@ -57,30 +62,39 @@ public class MySeminarsController {
     public ModelAndView mySem(@RequestParam(value = "grade", required = false) final Integer grade,
                               @RequestParam(value = "fieldForSubmit", required = false) final ActionsOnPage action,
                               @RequestParam(value = "selectCourse", required = false) final Integer id_course,
-                              @RequestParam(value = "selectCategory", required = false) final  String selectCategory,
-                             final HttpServletRequest request,   HttpServletResponse response)
-            throws IOException, DocumentException, AddressException, NotFoundUserException {
+                              @RequestParam(value = "selectCategory", required = false) final String selectCategory,
+                              final HttpServletRequest request, HttpServletResponse response)
+            throws IOException, DocumentException, AddressException, NotFoundUserException, NotFoundCourseException {
         ModelAndView mav = new ModelAndView("mySeminars");
-try {
-    switch (action){
-               case OUT_EXCEL:{
-            courseService.outInExcelAllCourse(response, courseService.getAllCourse());
-            break;
+        String userName = userService.getUserFromSession(request);
+        try {
+          List<Course> courseList = userService.getCoursesSubscribeOfUser(userService.getUserFromSession(request));
+            if (courseList.size() == 0) {
+                mav.addObject("modalTitle", "Ooops...");
+                mav.addObject("modalMessage", "List is empty!");
+                return mav;
+            }
+
+            switch (action) {
+                case OUT_EXCEL: {
+                    courseService.outInExcelAllCourse(response,courseList);
+                    break;
+                }
+                case OUT_PDF: {
+                    courseService.outInPdfAllCourse(response, courseList);
+                    break;
+                }
+            }
+            List<Course> coursesForList = userService.getCoursesSubscribeOfUser(userName);
+            mav.addObject("courseList", coursesForList);
+            mav.addObject("nameCourses", courseService.getAllCourse());
+            mav.addObject("attCourseOfUser", userService.getCoursesAttendeeOfUser(userService.getUserFromSession(request)));
+            return mav;
+        } catch (NotFoundUserException ex) {
+            return new ModelAndView("signin");
         }
-        case OUT_PDF: {
-            courseService.outInPdfAllCourse(response, courseService.getAllCourse());
-            break;
-        }
-    }
-        Set<Course> coursesForList = userService.getCoursesSubscribeOfUser(userService.getUserFromSession(request));
-        mav.addObject("courseList", coursesForList);
-        mav.addObject("nameCourses", courseService.getAllCourse());
-        mav.addObject("attCourseOfUser", userService.getCoursesAttendeeOfUser(userService.getUserFromSession(request)));
-        return mav;
-    } catch (NotFoundUserException ex) {
-        return new ModelAndView("signin");
-    }
+
 
     }
 
-    }
+}
