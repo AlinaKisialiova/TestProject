@@ -9,7 +9,6 @@ import by.mogilev.model.CourseStatus;
 import by.mogilev.model.Notification;
 import by.mogilev.model.User;
 import org.hibernate.Hibernate;
-import org.hibernate.SessionFactory;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -19,7 +18,6 @@ import javax.servlet.http.HttpServletRequest;
 import javax.transaction.Transactional;
 import java.security.Principal;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by akiseleva on 03.04.2015.
@@ -27,9 +25,6 @@ import java.util.Set;
 @Repository
 @Transactional
 public class UserServiceImpl implements UserService {
-
-    @Autowired
-    private SessionFactory sessionFactory;
 
     @Autowired
     private UserDAO userDAO;
@@ -47,21 +42,13 @@ public class UserServiceImpl implements UserService {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<Course> getCoursesSubscribeOfUser(String username) throws NotFoundUserException {
-
-        if (username == null) throw new NotFoundUserException();
-         User user = getUser(username);
-        List<Course> coursesList = user.getCoursesSubscribe();
-        for (Course course : coursesList) {
-            Hibernate.initialize(course.getAttenders());
-            Hibernate.initialize(course.getSubscribers());
-        }
-        return coursesList;
+    public List<Course> getCoursesSubscribeByUser(String username) throws NotFoundUserException {
+        return courseDAO.getCoursesAttendersByUserDao(username);
     }
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<Course> getCoursesAttendeeOfUser(String username) throws NotFoundUserException {
+    public List<Course> getCoursesAttendeeByUser(String username) throws NotFoundUserException {
         if (username == null) throw new NotFoundUserException();
         User user = getUser(username);
         List<Course> coursesList = user.getCoursesAttendee();
@@ -90,7 +77,7 @@ public class UserServiceImpl implements UserService {
 
         if (course.getSubscribers().size() >= Course.MIN_COUNT_SUBSCR) {
             course.setCourseStatus(CourseStatus.DELIVERED);
-            InternetAddress[] emails = mailService.getRecipientSubsc(course);
+            InternetAddress[] emails = mailService.getRecipient(course.getSubscribers());
             mailService.sendEmail(id_course, Notification.COURSE_APPOINTED, emails, username,"");
         }
 

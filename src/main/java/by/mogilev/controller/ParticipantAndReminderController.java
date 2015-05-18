@@ -105,7 +105,7 @@ public class ParticipantAndReminderController {
         try {
             Course course = courseService.getCourse(id);
             mav.addObject("checkCourse", course);
-            InternetAddress[] emails = mailService.getRecipientAtt(course);
+            InternetAddress[] emails = mailService.getRecipient(course.getAttenders());
             mailService.sendEmail(id, Notification.EVALUATION_REMINDER, emails, userName, "");
 
             mav.addObject("modalTitle", "Sending");
@@ -137,7 +137,7 @@ public class ParticipantAndReminderController {
         try {
             List<Course> coursesForList = courseService.getAllCourse();
             String userName = userService.getUserFromSession(request);
-            List<Course> coursesForUser = userService.getCoursesSubscribeOfUser(userName);
+            List<Course> coursesForUser = userService.getCoursesSubscribeByUser(userName);
             mav.addObject("nameCourses", coursesForList);
             mav.addObject("coursesForUser", coursesForUser);
             return mav;
@@ -177,7 +177,7 @@ public class ParticipantAndReminderController {
                 case SELECT: {
                     List<Course> coursesForList = courseService.getSelected(selectCategory);
                     mav.addObject("nameCourses", coursesForList);
-                    List<Course> coursesForUser = userService.getCoursesSubscribeOfUser(userName);
+                    List<Course> coursesForUser = userService.getCoursesSubscribeByUser(userName);
                     mav.addObject("coursesForUser", coursesForUser);
                     break;
                 }
@@ -216,7 +216,7 @@ public class ParticipantAndReminderController {
     public ModelAndView AttendeePageGet(final HttpServletRequest request) throws NotFoundUserException {
         try {
             ModelAndView mav = new ModelAndView("attendeePage");
-            List<Course> courses = userService.getCoursesSubscribeOfUser(userService.getUserFromSession(request));
+            List<Course> courses = userService.getCoursesSubscribeByUser(userService.getUserFromSession(request));
             Set<Course> coursesForList = new HashSet<Course>();
             for (Course c : courses) {
                 if (c.getAttenders().size() < Course.MAX_COUNT_ATT && (CourseStatus.DELIVERED.equals(c.getCourseStatus())
@@ -225,7 +225,7 @@ public class ParticipantAndReminderController {
                 }
             }
             String userName = userService.getUserFromSession(request);
-            List<Course> coursesForUser = userService.getCoursesAttendeeOfUser(userName);
+            List<Course> coursesForUser = userService.getCoursesAttendeeByUser(userName);
             mav.addObject("coursesForUser", coursesForUser);
             mav.addObject("nameCourses", coursesForList);
             return mav;
@@ -254,7 +254,7 @@ public class ParticipantAndReminderController {
                 return new ModelAndView("redirect:" + "/attendeeList/{id}");
             }
 
-            List<Course> subcrCourse = userService.getCoursesSubscribeOfUser(userService.getUserFromSession(request));
+            List<Course> subcrCourse = userService.getCoursesSubscribeByUser(userService.getUserFromSession(request));
 
             if ("All".equals(selectCategory))
                 coursesForList = subcrCourse;
@@ -288,7 +288,7 @@ public class ParticipantAndReminderController {
             String userName = userService.getUserFromSession(request);
             mav.addObject("checkCourse", courseService.getCourse(id));
             mav.addObject("attendee", courseService.getCourse(id).getAttenders());
-            mav.addObject("attCourseOfUser", userService.getCoursesAttendeeOfUser(userName));
+            mav.addObject("attCourseOfUser", userService.getCoursesAttendeeByUser(userName));
             return mav;
 
         } catch (NotFoundCourseException e) {

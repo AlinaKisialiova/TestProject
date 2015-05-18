@@ -54,10 +54,12 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public boolean isOwner(int id_course, String userName) throws NotFoundCourseException, NotFoundUserException {
-        if (id_course < 1) throw new NotFoundCourseException();
+
         if (userName == null) throw  new NotFoundUserException();
 
         Course checkCourse = courseDAO.getCourse(id_course);
+        if (checkCourse == null) throw  new NotFoundCourseException();
+
         return checkCourse.getLector().getUsername().equals(userName);
     }
 
@@ -192,9 +194,10 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public void remidEv(int id, User user, int grade) throws AddressException, NotFoundCourseException, NotFoundUserException {
-        if (id < 1) throw new NotFoundCourseException();
+
         if (user == null) throw new NotFoundUserException();
         Course changeEvalCourse = courseDAO.getCourse(id);
+        if (changeEvalCourse == null) throw new NotFoundCourseException();
 
         Map<User, Integer> mapEval = changeEvalCourse.getEvalMap();
         if(mapEval.containsKey(user))
@@ -236,20 +239,22 @@ public class CourseServiceImpl implements CourseService {
 
     @Override
     public void deleteCourse(int id, String userName) throws AddressException, NotFoundCourseException, NotFoundUserException, IsNotOwnerException {
-        if (id < 1) throw new NotFoundCourseException();
+
         if(userName == null) throw new NotFoundUserException();
-        if (!isOwner(id, userName)) throw new IsNotOwnerException();
 
         Course course = courseDAO.getCourse(id);
+        if (course == null) throw new NotFoundCourseException();
+        if (!isOwner(id, userName)) throw new IsNotOwnerException();
         courseDAO.deleteCourse(course);
 
-        InternetAddress[] emails = mailService.getRecipientSubsc(course);
+        InternetAddress[] emails = mailService.getRecipient(course.getSubscribers());
         mailService.sendEmail(id, Notification.COURSE_DELETE, emails, userName, "");
     }
 
     @Override
     public Course getCourse(int id) throws NotFoundCourseException {
-        if (id < 1) throw new NotFoundCourseException();
+        if (courseDAO.getCourse(id) == null) throw  new NotFoundCourseException();
+            else
         return courseDAO.getCourse(id);
     }
 
@@ -257,7 +262,9 @@ public class CourseServiceImpl implements CourseService {
     public void registerCourse(Course course, String nameLector) throws AddressException, NotFoundUserException, NotFoundCourseException {
         if (nameLector == null) throw new NotFoundUserException();
         courseDAO.registerCourse(course, nameLector);
-        int id = courseDAO.getCourseByNameDao(course.getNameCourse()).getId();
+        Course newCourse = courseDAO.getCourseByNameDao(course.getNameCourse());
+        if (newCourse == null) throw new NotFoundCourseException();
+        int id = newCourse.getId();
         InternetAddress[] emails= new InternetAddress[]{
                 new InternetAddress("aflamma@yandex.ru")};
         mailService.sendEmail(id, Notification.COURSE_ANNOUNCEMENT, emails, nameLector,"");

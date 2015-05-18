@@ -42,7 +42,7 @@
                               </c:choose>
                              >
 
-                               ${courses.nameCourse}</option>
+                            <c:out value="${courses.nameCourse}" escapeXml="true"/> </option>
                         </c:forEach>
                     </select>
 </td>
@@ -64,9 +64,3 @@
     </div>
 
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
-    <script type="text/javascript" src="<c:url value="/resources/js/bootstrap.min3.0.2.js"/>"></script>
-    <script>
-
-
-</script>

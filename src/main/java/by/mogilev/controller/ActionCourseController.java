@@ -5,7 +5,6 @@ import by.mogilev.exception.NotFoundCourseException;
 import by.mogilev.exception.NotFoundUserException;
 import by.mogilev.exception.SendingNotificationsException;
 import by.mogilev.model.Course;
-import by.mogilev.model.Notification;
 import by.mogilev.service.CourseService;
 import by.mogilev.service.MailService;
 import by.mogilev.service.UserService;
@@ -53,38 +52,29 @@ public class ActionCourseController {
 
     @RequestMapping(value = REGISTRATION_COURSE, method = RequestMethod.POST)
     public ModelAndView regCourse(@ModelAttribute("Course") Course newCourse, BindingResult result, Model model,
-                                  HttpServletRequest request) throws NotFoundUserException, AddressException {
-        try {
-            String userName = userService.getUserFromSession(request);
-            for (Course c : courseService.getAllCourse()) {
-                if (c.getNameCourse().equals(newCourse.getNameCourse())) {
-                    ModelAndView mav = new ModelAndView("registrationCourse");
-                    mav.addObject("modalTitle", "Ooops...");
-                    mav.addObject("modalMessage", "Course with this name already exist!");
-                    return mav;
-                }
+                                  HttpServletRequest request) throws NotFoundUserException, AddressException, NotFoundCourseException {
+
+        String userName = userService.getUserFromSession(request);
+        for (Course c : courseService.getAllCourse()) {
+            if (c.getNameCourse().equals(newCourse.getNameCourse())) {
+                ModelAndView mav = new ModelAndView("registrationCourse");
+                mav.addObject("modalTitle", "Ooops...");
+                mav.addObject("modalMessage", "Course with this name already exist!");
+                return mav;
             }
-            try {
-                courseService.registerCourse(newCourse, userName);
-                return new ModelAndView("redirect:/informationBoard");
-
-            } catch (AddressException e) {
-                try {
-                    throw new SendingNotificationsException(newCourse, e.toString());
-                } catch (SendingNotificationsException e1) {
-                    InternetAddress[] email = InternetAddress.parse(newCourse.getLector().getEmail());
-                    e1.sendExceptionEmail(email, userName);
-                    return new ModelAndView("redirect:/informationBoard");
-                }
-
-            }
-
-        } catch (NotFoundUserException ex) {
-            return new ModelAndView("signin");
-
-        } catch (NotFoundCourseException e) {
-            return new ModelAndView("redirect:/informationBoard");
         }
+        courseService.registerCourse(newCourse, userName);
+        return new ModelAndView("redirect:/informationBoard");
+
+//            } catch (AddressException e) {
+//                try {
+//                    throw new SendingNotificationsException(newCourse, e.toString());
+//                } catch (SendingNotificationsException e1) {
+//                    InternetAddress[] email = InternetAddress.parse(newCourse.getLector().getEmail());
+//                    e1.sendExceptionEmail(email, userName);
+//                    return new ModelAndView("redirect:/informationBoard");
+//                }
+
     }
 
 
@@ -113,7 +103,7 @@ public class ActionCourseController {
             ModelAndView mav = new ModelAndView("courseDetails");
             mav.addObject("modalTitle", "Ooops...");
             mav.addObject("modalMessage", e.toString());
-            return new ModelAndView("courseDetails/{course.id}");
+            return mav;
         } catch (NotFoundUserException ex) {
             return new ModelAndView("signin");
         } catch (NotFoundCourseException e) {

@@ -1,9 +1,6 @@
 package by.mogilev.model;
 
-import com.sun.javafx.scene.layout.region.Margins;
-
 import javax.persistence.*;
-import java.io.Serializable;
 import java.util.HashMap;
 import java.util.HashSet;
 import java.util.Map;
@@ -28,7 +25,6 @@ public class Course  {
     private String description;
     private String links;
     private int evaluation;
-    private Set<Course> course;
     private CourseStatus courseStatus;
     private String departmentManagerReason;
     private String  knowledgeManagerReason;
@@ -189,19 +185,19 @@ public class Course  {
              this.evalMap = evalMap;
     }
 
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + category.hashCode();
-        result = 31 * result + nameCourse.hashCode();
-        result = 31 * result + duration.hashCode();
-        return result;
-    }
+//    @Override
+//    public int hashCode() {
+//        int result = id;
+//        result = 31 * result + category.hashCode();
+//        result = 31 * result + nameCourse.hashCode();
+//        result = 31 * result + duration.hashCode();
+//        return result;
+//    }
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == null || !(obj instanceof Course))
-            return false;
+//        if (obj == null || !(obj instanceof Course))
+//            return false;
         Course objCourse = (Course) obj;
         return this.getId() == objCourse.getId();
     }

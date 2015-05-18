@@ -39,5 +39,10 @@
 	</servlet-mapping>
 
 
-
+    <error-page>
+        <exception-type>
+          by.mogilev.exception.TrainingCenterException
+        </exception-type >
+        <location>/error</location>
+    </error-page>
 </web-app>

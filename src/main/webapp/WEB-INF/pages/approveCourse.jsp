@@ -45,7 +45,7 @@
     <div class="col-md-4">
         <textarea  id="reasonDM" name="reasonDM"
                 <c:if test="${role != '[DEPARTMENT_MANAGER]'}"> disabled="disabled" </c:if> >
-                 ${reasonDM}
+                 <c:out value="${reasonDM}" escapeXml="true"/>
         </textarea>
     </div>
 
@@ -73,7 +73,7 @@
             <textarea  id="reasonKM" name="reasonKM"
                     <c:if test="${role != '[KNOWLEDGE_MANAGER]' && course.courseStatus != 'APPROVE_DEPARTMENT_MANAGER'}">
                         disabled="disabled" </c:if>>
-                        ${reasonKM}
+                        <c:out value="${reasonKM}" escapeXml="true"/>
             </textarea>
         </div>
     </div>

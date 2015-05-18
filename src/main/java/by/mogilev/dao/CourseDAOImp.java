@@ -14,6 +14,7 @@ import org.springframework.stereotype.Repository;
 import javax.transaction.Transactional;
 import java.util.List;
 
+
 /**
  * Created by akiseleva on 03.03.2015.
  */
@@ -97,10 +98,33 @@ public class CourseDAOImp implements CourseDAO {
         return (Course) criteria.uniqueResult();
     }
 
+    @Override
+    public List<Course> getCoursesSubscribeByUserDao(String userName) {
+        Session session = this.sessionFactory.getCurrentSession();
+        Criteria criteria = session.createCriteria(User.class);
+        criteria.add(Restrictions.eq("username", userName));
+        User user = (User) criteria.uniqueResult();
+        List<Course> courses =user.getCoursesAttendee();
+        Hibernate.initialize(courses);
+        return courses;
+    }
+
+    @Override
+    public List<Course> getCoursesAttendersByUserDao(String userName) {
+        Session session = this.sessionFactory.getCurrentSession();
+        Criteria criteria = session.createCriteria(User.class);
+        criteria.add(Restrictions.eq("username", userName));
+        User user = (User) criteria.uniqueResult();
+        List<Course> courses =user.getCoursesSubscribe();
+        Hibernate.initialize(courses);
+        return courses;
+       }
+
 
     public void deleteCourse(Course course) {
         Session session = this.sessionFactory.getCurrentSession();
         Hibernate.initialize(course.getSubscribers());
+
 
         if (course.getSubscribers().size() > 0) {
             for (User user : course.getSubscribers()) {

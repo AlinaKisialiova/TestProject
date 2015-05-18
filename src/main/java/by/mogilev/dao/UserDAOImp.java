@@ -10,7 +10,6 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 
 import javax.transaction.Transactional;
-import java.util.List;
 
 @Component
 @Transactional
@@ -35,18 +34,6 @@ public class UserDAOImp  implements UserDAO {
         Criteria criteria=session.createCriteria(User.class);
         criteria.add(Restrictions.eq("username",username));
         return (User) criteria.uniqueResult();
-    }
-
-
-
-    @SuppressWarnings("unchecked")
-    public List<User> getAllUser()  {
-        Session session = this.sessionFactory.getCurrentSession();
-        Criteria criteria=session.createCriteria(User.class);
-        return  criteria.list();
-
-//          users=session.createQuery("from USER").list();
-//        return users;
     }
 
     @Override

@@ -19,14 +19,14 @@ public interface UserService {
      * @param username
      * @return
      */
-    public List<Course> getCoursesSubscribeOfUser(String username) throws NotFoundUserException;
+    public List<Course> getCoursesSubscribeByUser(String username) throws NotFoundUserException;
 
     /**
      * Method is return list of course on which user was attendeed
      * @param username
      * @return
      */
-    public List<Course> getCoursesAttendeeOfUser(String username) throws NotFoundUserException;
+    public List<Course> getCoursesAttendeeByUser(String username) throws NotFoundUserException;
 
 
     /**

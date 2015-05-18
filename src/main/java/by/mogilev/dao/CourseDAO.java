@@ -55,4 +55,7 @@ public interface CourseDAO {
      */
     public Course getCourseByNameDao(String courseName);
 
+    public List<Course> getCoursesSubscribeByUserDao(String userName);
+    public List<Course> getCoursesAttendersByUserDao(String userName);
+
 }

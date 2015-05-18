@@ -3,7 +3,7 @@ package by.mogilev.exception;
 /**
  * Created by akiseleva on 04.05.2015.
  */
-public class NotFoundCourseException extends Exception {
+public class NotFoundCourseException extends TrainingCenterException {
     private String exceptionMessage = "This course does not exist.";
 
     public String toString() {

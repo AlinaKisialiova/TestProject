@@ -17,13 +17,13 @@
             <tr>
                 <td>
                     <b>Course Category: </b></td>
-                <td> ${checkCourse.category}</td>
+                <td> <c:out value="${checkCourse.category}" escapeXml="true"/> </td>
             </tr>
             <tr>
                 <td>
                     <b>Course Name: </b></td>
                 <td><a href="<c:url value="/courseDetails/${checkCourse.id}" context="/project/"/>">
-                    ${checkCourse.nameCourse}
+                    <c:out value="${checkCourse.nameCourse}"/>
                 </a>
                 </td>
             </tr>

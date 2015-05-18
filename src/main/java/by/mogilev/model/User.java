@@ -129,22 +129,22 @@ public class User  {
         this.coursesAttendee = coursesAttendee;
     }
 
-    @Override
-    public int hashCode() {
-        int result = id;
-        result = 31 * result + username.hashCode();
-        result = 31 * result + password.hashCode();
-        result = 31 * result + authority.hashCode();
-        result = 31 * result + (name != null ? name.hashCode() : 0);
-        return result;
-    }
+//    @Override
+//    public int hashCode() {
+//        int result = id;
+//        result = 31 * result + username.hashCode();
+//        result = 31 * result + password.hashCode();
+//        result = 31 * result + authority.hashCode();
+//        result = 31 * result + (name != null ? name.hashCode() : 0);
+//        return result;
+//    }
 
 
 
     @Override
     public boolean equals(Object obj) {
-        if (obj == null || !(obj instanceof User))
-            return false;
+//        if (obj == null || !(obj instanceof User))
+//            return false;
       User objUser = (User) obj;
         return this.getId() == objUser.getId();
     }

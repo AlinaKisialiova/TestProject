@@ -11,14 +11,14 @@
 <div class="col-md-8 col-md-offset-4">
 <div class="control-group">
     <div class="control-label"> <b>Lector Name: </b>
-    ${checkCourse.lector.name}</div>
+        <c:out value="${checkCourse.lector.name}" escapeXml="true"/> </div>
 </div>
     </div>
 
 <div class="col-md-8 col-md-offset-4">
     <div class="control-group">
         <div class="control-label" ><b>Course Name: </b>
-       ${checkCourse.nameCourse}</div>
+            <c:out value="${checkCourse.nameCourse}" escapeXml="true"/> </div>
     </div>
 </div>
 

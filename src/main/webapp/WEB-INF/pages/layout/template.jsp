@@ -23,25 +23,26 @@
     <link href="<c:url value="/resources/css/bootstrap.min.css" />" rel="stylesheet">
     <link href="<c:url value="/resources/css/bootstrap-theme.css" />" rel="stylesheet">
     <link href="<c:url value="/resources/css/bootstrap-theme.min.css" />" rel="stylesheet">
+    <link href="<c:url value="/resources/css/style.css" />" rel="stylesheet">
 
     <script type="text/javascript" src="<c:url value="/resources/js/bootstrap.min3.0.2.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/resources/js/bootstrap3.0.2.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/resources/js/jquery-1.8.1.min.js"/>"></script>
     <script type="text/javascript" src="<c:url value="/resources/js/trainigCenterScripts.js"/>"></script>
-    <style>
-        select {
-            width: 300px;
-        }
+    <%--<style>--%>
+        <%--select {--%>
+            <%--width: 300px;--%>
+        <%--}--%>
 
-        input[type="text"] {
-            width: 300px;
-        }
+        <%--input[type="text"] {--%>
+            <%--width: 300px;--%>
+        <%--}--%>
 
-        textarea {
-            width: 300px;
-            height: 100px;
-        }
-    </style>
+        <%--textarea {--%>
+            <%--width: 300px;--%>
+            <%--height: 100px;--%>
+        <%--}--%>
+    <%--</style>--%>
 
 </head>
 <body>
@@ -64,7 +65,7 @@
             <div class="content">
                 <tiles:insertAttribute name="menu"/>
 
-                <div align="center"><h1><tiles:insertAttribute name="namePage"/></div>
+                <div align="center"><h1><tiles:insertAttribute name="namePage"/></h1></div>
                 <tiles:insertAttribute name="content"/>
                 <tiles:insertAttribute name="modalWindow"/>
             </div>

@@ -88,7 +88,7 @@ public class ApproveCourseController {
                     if ("approve".equals(approve)) {
                         appCourse.setCourseStatus(CourseStatus.APPROVE_KNOWLEDGE_MANAGER);
                         appCourse.setKnowledgeManagerReason(reason);
-                        InternetAddress[] emails = mailService.getRecipientSubsc(appCourse);
+                        InternetAddress[] emails = mailService.getRecipient(appCourse.getSubscribers());
                         mailService.sendEmail(id, Notification.NEW_COURSE_ADDED, emails, userName,"");
                     } else {
                         appCourse.setCourseStatus(CourseStatus.APPROVE_DEPARTMENT_MANAGER);

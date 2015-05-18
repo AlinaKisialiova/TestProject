@@ -112,6 +112,12 @@
         <put-attribute name="namePage" value="Approve Page"/>
     </definition>
 
+    <definition name="error" extends="defaultTemplate">
+        <put-attribute name="content" value="/WEB-INF/pages/error.jsp"/>
+        <put-attribute name="title" value="Training Center - Error Page"/>
+        <put-attribute name="namePage" value="Error Page"/>
+    </definition>
+
 
 
 </tiles-definitions>

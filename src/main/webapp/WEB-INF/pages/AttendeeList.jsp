@@ -60,7 +60,6 @@
         </tr>
     </table>
 
-    <div class="span12"><h2> ${attendersMessage} </h2></div>
 
 </div>
 

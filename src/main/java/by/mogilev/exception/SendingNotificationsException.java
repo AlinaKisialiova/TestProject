@@ -11,11 +11,11 @@ import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 
 /**
- * Created by Администратор on 16.05.2015.
+ * Created by пїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅпїЅ on 16.05.2015.
  */
 
 
-public class SendingNotificationsException extends Exception {
+public class SendingNotificationsException extends TrainingCenterException {
     @Autowired
     private MailService mailService;
 

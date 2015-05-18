@@ -2,10 +2,8 @@ package by.mogilev.controller;
 
 import by.mogilev.exception.NotFoundCourseException;
 import by.mogilev.exception.NotFoundUserException;
-import by.mogilev.exception.SendingNotificationsException;
 import by.mogilev.model.ActionsOnPage;
 import by.mogilev.model.Course;
-import by.mogilev.model.User;
 import by.mogilev.service.CourseService;
 import by.mogilev.service.UserService;
 import com.itextpdf.text.DocumentException;
@@ -18,12 +16,10 @@ import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
 
 import javax.mail.internet.AddressException;
-import javax.mail.internet.InternetAddress;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by akiseleva on 03.04.2015.
@@ -50,8 +46,8 @@ public class MySeminarsController {
         try {
             String userName = userService.getUserFromSession(request);
             mav.addObject("nameCourses", courseService.getAllCourse());
-            mav.addObject("courseList", userService.getCoursesSubscribeOfUser(userName));
-            mav.addObject("attCourseOfUser", userService.getCoursesAttendeeOfUser(userName));
+            mav.addObject("courseList", userService.getCoursesSubscribeByUser(userName));
+            mav.addObject("attCourseOfUser", userService.getCoursesAttendeeByUser(userName));
             return mav;
         } catch (NotFoundUserException ex) {
             return new ModelAndView("signin");
@@ -68,7 +64,7 @@ public class MySeminarsController {
         ModelAndView mav = new ModelAndView("mySeminars");
         String userName = userService.getUserFromSession(request);
         try {
-          List<Course> courseList = userService.getCoursesSubscribeOfUser(userService.getUserFromSession(request));
+          List<Course> courseList = userService.getCoursesSubscribeByUser(userService.getUserFromSession(request));
             if (courseList.size() == 0) {
                 mav.addObject("modalTitle", "Ooops...");
                 mav.addObject("modalMessage", "List is empty!");
@@ -85,10 +81,10 @@ public class MySeminarsController {
                     break;
                 }
             }
-            List<Course> coursesForList = userService.getCoursesSubscribeOfUser(userName);
+            List<Course> coursesForList = userService.getCoursesSubscribeByUser(userName);
             mav.addObject("courseList", coursesForList);
             mav.addObject("nameCourses", courseService.getAllCourse());
-            mav.addObject("attCourseOfUser", userService.getCoursesAttendeeOfUser(userService.getUserFromSession(request)));
+            mav.addObject("attCourseOfUser", userService.getCoursesAttendeeByUser(userService.getUserFromSession(request)));
             return mav;
         } catch (NotFoundUserException ex) {
             return new ModelAndView("signin");

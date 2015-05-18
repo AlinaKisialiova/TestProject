@@ -41,7 +41,7 @@
                                                     style="color: #0e90d2"
                                                 </c:otherwise>
                                             </c:choose>
-                                            > ${course.nameCourse}</option>
+                                            > <c:out value="${course.nameCourse}" escapeXml="true"/> </option>
                                 </c:forEach>
                             </select>
                         </td>

@@ -20,9 +20,7 @@ import org.springframework.ui.velocity.VelocityEngineUtils;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
-import java.util.HashMap;
-import java.util.Map;
-import java.util.Set;
+import java.util.*;
 
 @Service
 public class MailServiceImpl implements MailService {
@@ -68,30 +66,15 @@ public class MailServiceImpl implements MailService {
 
 
     @Override
-    public InternetAddress[] getRecipientSubsc(Course course) throws AddressException {
-        Set<User> subscr = course.getSubscribers();
-        InternetAddress[] emails = new InternetAddress[subscr.size()];
-        int i = 0;
-        for (User u : subscr) {
-            emails[i] = new InternetAddress(u.getEmail());
-            i++;
-        }
-        return emails;
+    public InternetAddress[] getRecipient(Set<User> users) throws AddressException {
+    List<InternetAddress> addressList = new ArrayList<InternetAddress>(users.size());
+      for (User user : users)
+          addressList.add(new InternetAddress(user.getEmail()));
 
+        return (InternetAddress[]) addressList.toArray();
     }
 
-    @Override
-    public InternetAddress[] getRecipientAtt(Course course) throws AddressException {
 
-        Set<User> att = course.getAttenders();
-        InternetAddress[] emails = new InternetAddress[att.size()];
-        int i = 0;
-        for (User u : att) {
-            emails[i] = new InternetAddress(u.getEmail());
-            i++;
-        }
-        return emails;
-    }
 }
 
 

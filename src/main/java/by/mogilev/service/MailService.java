@@ -2,11 +2,12 @@ package by.mogilev.service;
 
 import by.mogilev.exception.NotFoundCourseException;
 import by.mogilev.exception.NotFoundUserException;
-import by.mogilev.model.Course;
 import by.mogilev.model.Notification;
+import by.mogilev.model.User;
 
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
+import java.util.Set;
 
 /**
  * Created by ������������� on 29.04.2015.
@@ -28,7 +29,7 @@ public interface MailService {
      * @return
      * @throws AddressException
      */
-    public InternetAddress[] getRecipientSubsc(Course course) throws AddressException;
+    public InternetAddress[] getRecipient(Set<User> users) throws AddressException;
 
     /**
      * Get list of email for send notifications
@@ -36,5 +37,5 @@ public interface MailService {
      * @return
      * @throws AddressException
      */
-    public InternetAddress[] getRecipientAtt(Course course) throws AddressException;
+
 }
