@@ -57,9 +57,11 @@ public class CourseDAOImp implements CourseDAO {
         Criteria criteria = session.createCriteria(Course.class);
         criteria.add(Restrictions.eq("id", id));
         Course course = (Course) criteria.uniqueResult();
-        Hibernate.initialize(course.getAttenders());
-        Hibernate.initialize(course.getSubscribers());
-        Hibernate.initialize(course.getEvalMap());
+        if (course != null) {
+            Hibernate.initialize(course.getAttenders());
+            Hibernate.initialize(course.getSubscribers());
+            Hibernate.initialize(course.getEvalMap());
+        }
         return course;
     }
 

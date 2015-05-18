@@ -19,7 +19,7 @@ public class ExceptionController {
     @RequestMapping(value = ERROR, method = RequestMethod.GET)
     public ModelAndView displayError(HttpServletRequest request) {
         ModelAndView mav = new ModelAndView("error");
-        TrainingCenterException message = (TrainingCenterException) request.getAttribute("by.mogilev.exception.TrainingCenterException");
+        TrainingCenterException message = (TrainingCenterException) request.getAttribute("javax.servlet.error.exception");
         mav.addObject("message", message.toString());
         return mav;
     }

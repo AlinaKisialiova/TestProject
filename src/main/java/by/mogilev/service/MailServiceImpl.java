@@ -67,11 +67,12 @@ public class MailServiceImpl implements MailService {
 
     @Override
     public InternetAddress[] getRecipient(Set<User> users) throws AddressException {
-    List<InternetAddress> addressList = new ArrayList<InternetAddress>(users.size());
-      for (User user : users)
-          addressList.add(new InternetAddress(user.getEmail()));
-
-        return (InternetAddress[]) addressList.toArray();
+//    List<InternetAddress> addressList = new ArrayList<InternetAddress>(users.size());
+//      for (User user : users)
+//          addressList.add(new InternetAddress(user.getEmail()));
+//
+//        return (InternetAddress[]) addressList.toArray();
+        return null;
     }
 
 

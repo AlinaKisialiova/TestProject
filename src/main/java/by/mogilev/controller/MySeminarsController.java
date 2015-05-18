@@ -43,15 +43,13 @@ public class MySeminarsController {
     @RequestMapping(value = MY_SEMINARS, method = RequestMethod.GET)
     public ModelAndView listCourseUser(final HttpServletRequest request) throws NotFoundUserException {
         ModelAndView mav = new ModelAndView("mySeminars");
-        try {
+
             String userName = userService.getUserFromSession(request);
             mav.addObject("nameCourses", courseService.getAllCourse());
             mav.addObject("courseList", userService.getCoursesSubscribeByUser(userName));
             mav.addObject("attCourseOfUser", userService.getCoursesAttendeeByUser(userName));
             return mav;
-        } catch (NotFoundUserException ex) {
-            return new ModelAndView("signin");
-        }
+
     }
 
     @RequestMapping(value = MY_SEMINARS, method = RequestMethod.POST)
@@ -63,7 +61,7 @@ public class MySeminarsController {
             throws IOException, DocumentException, AddressException, NotFoundUserException, NotFoundCourseException {
         ModelAndView mav = new ModelAndView("mySeminars");
         String userName = userService.getUserFromSession(request);
-        try {
+
           List<Course> courseList = userService.getCoursesSubscribeByUser(userService.getUserFromSession(request));
             if (courseList.size() == 0) {
                 mav.addObject("modalTitle", "Ooops...");
@@ -86,9 +84,8 @@ public class MySeminarsController {
             mav.addObject("nameCourses", courseService.getAllCourse());
             mav.addObject("attCourseOfUser", userService.getCoursesAttendeeByUser(userService.getUserFromSession(request)));
             return mav;
-        } catch (NotFoundUserException ex) {
-            return new ModelAndView("signin");
-        }
+
+
 
 
     }

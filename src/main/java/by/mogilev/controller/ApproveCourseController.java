@@ -1,7 +1,6 @@
 package by.mogilev.controller;
 import by.mogilev.exception.NotFoundCourseException;
 import by.mogilev.exception.NotFoundUserException;
-import by.mogilev.exception.SendingNotificationsException;
 import by.mogilev.model.*;
 import by.mogilev.service.CourseService;
 import by.mogilev.service.MailService;
@@ -14,6 +13,7 @@ import org.springframework.web.bind.annotation.RequestMapping;
 import org.springframework.web.bind.annotation.RequestMethod;
 import org.springframework.web.bind.annotation.RequestParam;
 import org.springframework.web.servlet.ModelAndView;
+
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.servlet.http.HttpServletRequest;
@@ -39,9 +39,9 @@ public class ApproveCourseController {
 
     @RequestMapping(value = APPROVE_COURSE, method = RequestMethod.GET)
     public ModelAndView approveCourseGet(@PathVariable("course.id") final Integer id, final HttpServletRequest request)
-            throws NotFoundCourseException {
+            throws NotFoundCourseException, NotFoundUserException {
         ModelAndView mav = new ModelAndView("approveCourse");
-        try {
+
             mav.addObject("courseList", courseService.getCourse(id));
             User user = userService.getUser(userService.getUserFromSession(request));
             mav.addObject("nameUser", user.getName());
@@ -50,14 +50,7 @@ public class ApproveCourseController {
             String reasonKM = courseService.getCourse(id).getKnowledgeManagerReason();
             mav.addObject("reasonKM", reasonKM);
             return mav;
-        } catch (NotFoundCourseException ex) {
-            ModelAndView mavExc = new ModelAndView("informationBoard");
-            mavExc.addObject("modalTitle", "Ooops...");
-            mavExc.addObject("modalMessage", ex.toString());
-            return mavExc;
-        } catch (NotFoundUserException e) {
-            return new ModelAndView("signin");
-        }
+
     }
 
     @RequestMapping(value = APPROVE_COURSE, method = RequestMethod.POST)
@@ -67,7 +60,7 @@ public class ApproveCourseController {
                                           @RequestParam("manager") final UserRole manager)
             throws AddressException, NotFoundCourseException, NotFoundUserException {
         String userName = userService.getUserFromSession(request);
-        try {
+
             Course appCourse = courseService.getCourse(id);
             switch (manager) {
                 case DEPARTMENT_MANAGER:
@@ -104,35 +97,29 @@ public class ApproveCourseController {
             ModelAndView mav = new ModelAndView("informationBoard");
             mav.addObject("courseList", courseService.getAllCourse());
             return mav;
-        } catch (NotFoundUserException ex) {
-            return new ModelAndView("signin");
-        } catch (NotFoundCourseException ex) {
-            ModelAndView mav = new ModelAndView("informationBoard");
-            mav.addObject("modalTitle", "Ooops...");
-            mav.addObject("modalMessage", ex.toString());
-            return mav;
-        }
-        catch (AddressException e) {
-            try {
-                throw new SendingNotificationsException(courseService.getCourse(id), e.toString());
-            } catch (SendingNotificationsException e1) {
-                InternetAddress[] email = InternetAddress.parse(courseService.getCourse(id).getLector().getEmail());
-                e1.sendExceptionEmail(email,userName);
-                ModelAndView mav = new ModelAndView("informationBoard");
-                mav.addObject("courseList", courseService.getAllCourse());
-                return mav;
-            }
 
-        }
+//        catch (AddressException e) {
+//            try {
+//                throw new SendingNotificationsException(courseService.getCourse(id), e.toString());
+//            } catch (SendingNotificationsException e1) {
+//                InternetAddress[] email = InternetAddress.parse(courseService.getCourse(id).getLector().getEmail());
+//                e1.sendExceptionEmail(email,userName);
+//                ModelAndView mav = new ModelAndView("informationBoard");
+//                mav.addObject("courseList", courseService.getAllCourse());
+//                return mav;
+//            }
+// }
+
+
     }
 
 
     @RequestMapping(value = APPROVE, method = RequestMethod.GET)
-    public ModelAndView approveGet(final HttpServletRequest request) throws AddressException {
+    public ModelAndView approveGet(final HttpServletRequest request) throws AddressException, NotFoundUserException {
 
         ModelAndView mav = new ModelAndView("approvePage");
         List<Course> coursesForApprove = new ArrayList<Course>();
-        try {
+
             User user = userService.getUser(userService.getUserFromSession(request));
             switch (user.getAuthority()) {
                 case DEPARTMENT_MANAGER: {
@@ -146,9 +133,7 @@ public class ApproveCourseController {
             }
             mav.addObject("coursesForApprove", coursesForApprove);
             return mav;
-        } catch (NotFoundUserException ex) {
-            return new ModelAndView("signin");
-        }
+
     }
 
     @RequestMapping(value = APPROVE, method = RequestMethod.POST)
@@ -158,7 +143,7 @@ public class ApproveCourseController {
                                     @RequestParam(value = "fieldForSubmit", required = false) final ActionsOnPage action)
             throws NotFoundCourseException, NotFoundUserException {
         ModelAndView mav = new ModelAndView("approvePage");
-        try {
+
            if (ActionsOnPage.APPROVE.equals(action)) {
                if (id_course == null) throw new NotFoundCourseException();
                model.addAttribute("course.id", id_course);
@@ -192,11 +177,6 @@ public class ApproveCourseController {
            mav.addObject("coursesForApprove", coursesForApprove);
 
            return mav;
-       } catch (NotFoundCourseException ex) {
-           mav.addObject("modalTitle", "Ooops...");
-           mav.addObject("modalMessage", "You don't select course!");
-           return mav;
-       }
 
     }
 }
