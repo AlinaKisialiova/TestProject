@@ -41,6 +41,9 @@ public class ExceptionController {
         ModelAndView mav = new ModelAndView("error");
         TrainingCenterException message = (TrainingCenterException) request.getAttribute("javax.servlet.error.exception");
 
+        if (message instanceof NotFoundUserException)
+            return new ModelAndView("signin");
+
         if (message instanceof SendingNotificationsException) {
         HttpSession session = request.getSession();
         SecurityContext ctx = (SecurityContext) session.getAttribute("SPRING_SECURITY_CONTEXT");
@@ -49,9 +52,9 @@ public class ExceptionController {
         String requestUri = (String) request.getAttribute("javax.servlet.error.request_uri");
         char[] reqUriChar = requestUri.toCharArray();
         List<Character> id_courseChar = new ArrayList<Character>();
-        for (int i = requestUri.length() - 1; reqUriChar[i] != '/'; i--) {
+        for (int i = requestUri.length() - 1; reqUriChar[i] != '/'; i--)
             id_courseChar.add(reqUriChar[i]);
-        }
+
         List<Character> idChar =new ArrayList<Character>();
         for (int i = id_courseChar.size() - 1, j = 0; i >= 0; i--) {
             idChar.add(id_courseChar.get(i));

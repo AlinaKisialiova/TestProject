@@ -43,7 +43,7 @@ public class UserServiceImpl implements UserService {
     @SuppressWarnings("unchecked")
     @Override
     public List<Course> getCoursesSubscribeByUser(String username) throws NotFoundUserException {
-        return courseDAO.getCoursesAttendersByUserDao(username);
+        return courseDAO.getCoursesSubscribersByUserDao(username);
     }
 
     @SuppressWarnings("unchecked")

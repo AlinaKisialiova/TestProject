@@ -1,15 +1,17 @@
 package by.mogilev.dao;
 
+import by.mogilev.exception.NotFoundUserException;
 import by.mogilev.model.Course;
 import by.mogilev.model.CourseStatus;
 import by.mogilev.model.User;
 import org.hibernate.*;
-import org.hibernate.criterion.Restrictions;
+import org.hibernate.criterion.*;
 import org.hibernate.sql.JoinType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
 import javax.transaction.Transactional;
+import java.util.ArrayList;
 import java.util.List;
 
 
@@ -22,6 +24,9 @@ public class CourseDAOImp implements CourseDAO {
 
     @Autowired
     private SessionFactory sessionFactory;
+
+    @Autowired
+    private UserDAO userDAO;
 
     @SuppressWarnings("unchecked")
     @Transactional
@@ -110,22 +115,20 @@ public class CourseDAOImp implements CourseDAO {
     }
 
     @Override
-    public List<Course> getCoursesAttendersByUserDao(String userName) {
+    public List<Course> getCoursesSubscribersByUserDao(String userName) throws NotFoundUserException {
         Session session = this.sessionFactory.getCurrentSession();
-//        Criteria criteria = session.createCriteria(User.class);
-//        criteria.add(Restrictions.eq("username", userName));
-//        User user = (User) criteria.uniqueResult();
-//        List<Course> courses =user.getCoursesSubscribe();
-//        Hibernate.initialize(courses);
-//        return courses;
-        List<Course> courses;
-        Criteria criteria = session.createCriteria(User.class);
-        criteria.add(Restrictions.eq("username", userName));
-        criteria.createAlias("coursesAttendee", "ca", JoinType.RIGHT_OUTER_JOIN);
-        criteria.setFetchMode("coursesAttendee", FetchMode.JOIN);
-        courses = criteria.list();
 
-         Hibernate.initialize(courses);
+        List coursesId;
+        Criteria criteria = session.createCriteria(User.class, "u");
+        criteria.setFetchMode("coursesSubscribe", FetchMode.JOIN);
+        criteria.createAlias("coursesSubscribe", "sc")
+                .setProjection(Projections.property("sc.id"));
+        coursesId = criteria.list();
+
+        List<Course> courses = new ArrayList<Course>();
+        for (Object o : coursesId)
+            courses.add(getCourse((Integer) o));
+
 
         return courses;
 

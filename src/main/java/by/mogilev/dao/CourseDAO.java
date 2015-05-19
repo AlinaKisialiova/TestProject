@@ -1,5 +1,6 @@
 package by.mogilev.dao;
 
+import by.mogilev.exception.NotFoundUserException;
 import by.mogilev.model.Course;
 
 import java.util.List;
@@ -56,6 +57,6 @@ public interface CourseDAO {
     public Course getCourseByNameDao(String courseName);
 
     public List<Course> getCoursesSubscribeByUserDao(String userName);
-    public List<Course> getCoursesAttendersByUserDao(String userName);
+    public List getCoursesSubscribersByUserDao(String userName) throws NotFoundUserException;
 
 }
