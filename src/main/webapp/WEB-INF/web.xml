@@ -43,6 +43,12 @@
         <exception-type>
           by.mogilev.exception.TrainingCenterException
         </exception-type >
+            <location>/error</location>
+    </error-page>
+    <error-page>
+        <exception-type>
+            javax.mail.internet.AddressException
+        </exception-type >
         <location>/error</location>
     </error-page>
 </web-app>

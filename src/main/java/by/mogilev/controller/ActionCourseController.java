@@ -5,7 +5,6 @@ import by.mogilev.exception.NotFoundCourseException;
 import by.mogilev.exception.NotFoundUserException;
 import by.mogilev.model.Course;
 import by.mogilev.service.CourseService;
-import by.mogilev.service.MailService;
 import by.mogilev.service.UserService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Controller;
@@ -35,8 +34,6 @@ public class ActionCourseController {
     @Autowired
     private UserService userService;
 
-    @Autowired
-    private MailService mailService;
 
     @ModelAttribute("Course")
     public Course newCourse() {

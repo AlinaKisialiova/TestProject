@@ -36,7 +36,7 @@ public class SendingNotificationsException extends TrainingCenterException {
         return exceptionMessage;
     }
 
-    public void sendExceptionEmail(InternetAddress[] email, String userName) throws NotFoundUserException, AddressException, NotFoundCourseException {
+    public void sendExceptionEmail(int id, Notification addressExceptionMessage, InternetAddress[] email, String userName, TrainingCenterException message) throws NotFoundUserException, AddressException, NotFoundCourseException {
 
         mailService.sendEmail(course.getId(), Notification.ADDRESS_EXCEPTION_MESSAGE, email, userName, exceptionMessage);
 

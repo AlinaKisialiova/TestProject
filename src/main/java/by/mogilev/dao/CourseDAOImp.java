@@ -3,11 +3,9 @@ package by.mogilev.dao;
 import by.mogilev.model.Course;
 import by.mogilev.model.CourseStatus;
 import by.mogilev.model.User;
-import org.hibernate.Criteria;
-import org.hibernate.Hibernate;
-import org.hibernate.Session;
-import org.hibernate.SessionFactory;
+import org.hibernate.*;
 import org.hibernate.criterion.Restrictions;
+import org.hibernate.sql.JoinType;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -106,7 +104,7 @@ public class CourseDAOImp implements CourseDAO {
         Criteria criteria = session.createCriteria(User.class);
         criteria.add(Restrictions.eq("username", userName));
         User user = (User) criteria.uniqueResult();
-        List<Course> courses =user.getCoursesAttendee();
+        List<Course> courses = user.getCoursesAttendee();
         Hibernate.initialize(courses);
         return courses;
     }
@@ -114,13 +112,24 @@ public class CourseDAOImp implements CourseDAO {
     @Override
     public List<Course> getCoursesAttendersByUserDao(String userName) {
         Session session = this.sessionFactory.getCurrentSession();
+//        Criteria criteria = session.createCriteria(User.class);
+//        criteria.add(Restrictions.eq("username", userName));
+//        User user = (User) criteria.uniqueResult();
+//        List<Course> courses =user.getCoursesSubscribe();
+//        Hibernate.initialize(courses);
+//        return courses;
+        List<Course> courses;
         Criteria criteria = session.createCriteria(User.class);
         criteria.add(Restrictions.eq("username", userName));
-        User user = (User) criteria.uniqueResult();
-        List<Course> courses =user.getCoursesSubscribe();
-        Hibernate.initialize(courses);
+        criteria.createAlias("coursesAttendee", "ca", JoinType.RIGHT_OUTER_JOIN);
+        criteria.setFetchMode("coursesAttendee", FetchMode.JOIN);
+        courses = criteria.list();
+
+         Hibernate.initialize(courses);
+
         return courses;
-       }
+
+    }
 
 
     public void deleteCourse(Course course) {
