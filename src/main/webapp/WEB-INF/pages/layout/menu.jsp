@@ -10,6 +10,8 @@
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
 
 <div class="container">
+
+
 <ul class="nav nav-tabs nav-justified">
     <li><a href="<c:url value="/mySeminars" context="/project"/>">My Seminars</a></li>
     <li><a href="<c:url value="/informationBoard" context="/project"/>">Information Board</a></li>
@@ -23,3 +25,5 @@
     </sec:authorize>
 </ul>
 </div>
+
+    </div>

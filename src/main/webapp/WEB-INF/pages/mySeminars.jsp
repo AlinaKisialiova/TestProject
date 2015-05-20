@@ -27,7 +27,7 @@
                 <tr class="danger">
                     <td><strong>Course Grade:</strong></td>
                     <td><input type="text" name="grade" class="grade"/>
-                        <span style="color:red" class="errGrade"></span>
+                        <span class="errorText" id="errGrade"></span>
                         <input type="hidden" name="fieldForSubmit" class="fieldForSubmit"/>
 
                     </td>
@@ -159,8 +159,6 @@
 
                 </td>
                 <input type="hidden" name="fieldForSubmit" class="fieldForSubmit"/>
-
-
                 <input type="hidden" class="idC" name="id"/>
 
             </tr>

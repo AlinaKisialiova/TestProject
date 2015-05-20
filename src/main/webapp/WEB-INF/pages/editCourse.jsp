@@ -19,8 +19,7 @@
     <tr><th>Course Name</th>
         <td>
             <form:input path="nameCourse" id="updCourseName" value="${course.nameCourse}"/>
-            <span style="color:red" id="errName"></span></td>
-        </td>
+            <span  id="errName" class="errorText"></span></td>
     </tr>
     <tr><th>Course Description</th>
         <td><form:input path="description" id="updCourseDescription" value="${course.description}"/>
@@ -32,7 +31,7 @@
     </tr>
     <tr><th>Course Duration</th>
         <td><form:input path="duration" id="updCourseDuration" value="${course.duration}" />
-            <span style="color:red" id="errDuration"/>
+            <span id="errDuration" class="errorText"></span>
         </td>
     </tr>
     <tr><th>Numbers of Subscribers</th>
@@ -58,4 +57,4 @@
 </table>
 </form:form>
 
-</div>
+

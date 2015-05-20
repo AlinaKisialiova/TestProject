@@ -34,7 +34,6 @@ public class ActionCourseController {
     @Autowired
     private UserService userService;
 
-
     @ModelAttribute("Course")
     public Course newCourse() {
         return new Course();
@@ -60,7 +59,6 @@ public class ActionCourseController {
         }
         courseService.registerCourse(newCourse, userName);
         return new ModelAndView("redirect:/informationBoard");
-
 
     }
 

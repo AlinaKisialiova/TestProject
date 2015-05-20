@@ -10,8 +10,10 @@
   To change this template use File | Settings | File Templates.
 --%>
 <%@ page contentType="text/html;charset=UTF-8" language="java" %>
-
-Hello, <security:authentication property="principal.username" var="user"/> ${user}!
+<br>
+<br>
+<div>
+Hello, <security:authentication property="principal.username" var="user"/> ${user}
 <a href="<c:url value="/j_spring_security_logout" context="/project"/>"> Logout</a>
 <br>
 
@@ -34,4 +36,4 @@ Hello, <security:authentication property="principal.username" var="user"/> ${use
 </sec:authorize>
 
 
-
+</div>

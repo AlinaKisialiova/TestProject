@@ -22,7 +22,7 @@ function val_ev() {
     var grade = $(".grade").val();
     var par_pattern = /^\d+$/;
     if (grade.length == 0 || parseInt(grade) < 1 || parseInt(grade) > 10 || !(par_pattern.test(grade))) {
-        $(".errGrade").html("*incorrectly field");
+        $("#errGrade").html("*incorrectly field");
         return false;
     }
 }

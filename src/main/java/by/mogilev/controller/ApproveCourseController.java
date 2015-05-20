@@ -91,7 +91,6 @@ public class ApproveCourseController {
                     break;
             }
 
-
             courseService.updateCourse(appCourse);
 
             ModelAndView mav = new ModelAndView("informationBoard");
@@ -149,18 +148,8 @@ public class ApproveCourseController {
                    break;
                }
            }
-           List<Course> coursesForApprove = new ArrayList<Course>();
 
-           if ("All".equals(selectCategory))
-               coursesForApprove = courses;
-           else {
-
-               for (Course c : courses) {
-                   if (c.getCategory().equals(selectCategory))
-                       coursesForApprove.add(c);
-               }
-           }
-
+           List<Course> coursesForApprove = courseService.getSortList(courses, selectCategory);
            mav.addObject("coursesForApprove", coursesForApprove);
 
            return mav;

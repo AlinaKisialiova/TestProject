@@ -53,12 +53,6 @@ public interface CourseService {
      *
      */
     public void outInExcelAllCourse(HttpServletResponse response, List<Course> courses) throws IOException;
-    /**
-     *
-     * Method selected on choose category
-     *
-     */
-    List<Course> getSelected(String category);
 
     /**
      * Method return all course that registration in center
@@ -130,5 +124,5 @@ public interface CourseService {
      * @return
      * @throws NotFoundUserException
      */
-    public List<Course> getSortListForAttendee(List<Course> courseAtt, String category) throws NotFoundUserException;
+    public List<Course> getSortList(List<Course> courseAtt, String category) throws NotFoundUserException;
 }

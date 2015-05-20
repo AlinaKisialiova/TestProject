@@ -1,6 +1,5 @@
 package by.mogilev.dao;
 
-import by.mogilev.exception.NotFoundUserException;
 import by.mogilev.model.User;
 
 /**
@@ -20,11 +19,4 @@ public interface UserDAO {
      */
     public void updateUser(User user);
 
-    /**
-     * Get id course for his name
-     * @param username
-     * @return
-     * @throws NotFoundUserException
-     */
-    public int getIdByUsername(String username) throws NotFoundUserException;
-}
+ }

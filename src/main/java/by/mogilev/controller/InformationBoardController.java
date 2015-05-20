@@ -52,7 +52,6 @@ public class InformationBoardController {
         ModelAndView mav = new ModelAndView("informationBoard");
         String userName = userService.getUserFromSession(request);
 
-
             if (action == null) action = ActionsOnPage.NO_ACTION;
 
             switch (action) {

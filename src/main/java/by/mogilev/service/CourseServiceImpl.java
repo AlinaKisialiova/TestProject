@@ -54,10 +54,8 @@ public class CourseServiceImpl implements CourseService {
     public boolean isOwner(int id_course, String userName) throws NotFoundCourseException, NotFoundUserException {
 
         if (userName == null) throw  new NotFoundUserException();
-
         Course checkCourse = courseDAO.getCourse(id_course);
         if (checkCourse == null) throw  new NotFoundCourseException();
-
         return checkCourse.getLector().getUsername().equals(userName);
     }
 
@@ -102,7 +100,6 @@ public class CourseServiceImpl implements CourseService {
         PdfPCell c7 = new PdfPCell(new Phrase("Evaluation", FontFactory.getFont(FontFactory.TIMES_ROMAN, 12, Font.BOLD,
                 new CMYKColor(100, 78, 0, 44))));
         t.addCell(c7);
-
 
 
         for (Course c : courses) {
@@ -220,15 +217,7 @@ public class CourseServiceImpl implements CourseService {
 
     }
 
-    @SuppressWarnings("unchecked")
-    @Override
-    public java.util.List<Course> getSelected(String category) {
-        if (category == null) category = "All";
-        if (category.equals("All"))
-            return courseDAO.getAllCourse();
-        else
-            return courseDAO.getSelectedDao(category);
-    }
+
 
     @Override
     public List<Course> getAllCourse() {
@@ -274,7 +263,6 @@ public class CourseServiceImpl implements CourseService {
 
         if (updCourse == null) throw  new NotFoundCourseException();
         courseDAO.updateCourse(updCourse);
-//        InternetAddress[] emails = mailService.getRecipientSubsc(updCourse);
     InternetAddress [] emails = new InternetAddress[2];
         emails[0] = new InternetAddress("aflamma@yandex.ru");
         emails[1] = new InternetAddress("alina@gorad.by");
@@ -320,7 +308,7 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public List<Course> getSortListForAttendee(List<Course> courseAtt, String selectCategory) throws NotFoundUserException {
+    public List<Course> getSortList(List<Course> courseAtt, String selectCategory) throws NotFoundUserException {
         List<Course> coursesForListSort = new ArrayList<Course>();
         if ("All".equals(selectCategory))
             coursesForListSort = courseAtt;

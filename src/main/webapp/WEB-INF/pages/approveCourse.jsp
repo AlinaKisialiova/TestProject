@@ -27,7 +27,7 @@
     <div class="col-md-8 col-md-offset-4">
 
     <div class="col-md-1">
-        <c:if test="${role == '[DEPARTMENT_MANAGER]'}">${nameUser} </c:if></div>
+        <c:if test="${role == '[DEPARTMENT_MANAGER]'}"><c:out value="${nameUser}" escapeXml="true"/> </c:if></div>
         <div class="col-md-2"> Departament manager</div>
     <div class="col-md-5">
         <select  id="approveDM" name="approveDM"
@@ -55,7 +55,7 @@
 
     <div class="col-md-8 col-md-offset-4">
         <div class="row"> <hr></div>
-        <div class="col-md-1"> <c:if test="${role == '[KNOWLEDGE_MANAGER]'}">${nameUser}</c:if></div>
+        <div class="col-md-1"> <c:if test="${role == '[KNOWLEDGE_MANAGER]'}"><c:out value="${nameUser}" escapeXml="true"/> </c:if></div>
         <div class="col-md-2"> Knowledge manager</div>
         <div class="col-md-4"><select id="approveKM" name="approveKM"
                 <c:if test="${role != '[KNOWLEDGE_MANAGER]' && course.courseStatus != 'APPROVE_DEPARTMENT_MANAGER'}">
@@ -104,7 +104,6 @@
 
 
 </form>
-<script src="http://code.jquery.com/jquery-latest.js"></script>
 
 <script>
     $('input[name="save"]').on("click",function(){
@@ -127,7 +126,5 @@ var manager = $("#manager").val();
         $("#approveToServ").val(approveToServ);
         $("#reasonToServ").val(reasonToServ);
     });
-
-
 
     </script>

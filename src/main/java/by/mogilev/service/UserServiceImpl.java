@@ -67,10 +67,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean addInSubscribers(String username, int id_course) throws AddressException, NotFoundUserException, NotFoundCourseException {
         if (username == null) throw new NotFoundUserException();
-        if (id_course < 1) throw new NotFoundCourseException();
-
         User userSubscr = userDAO.getUser(username);
         Course course = courseDAO.getCourse(id_course);
+        if (course == null)  throw new NotFoundCourseException();
+
         List<Course> courses = userSubscr.getCoursesSubscribe();
         if (courses.contains(course)) return false;
 
@@ -89,10 +89,11 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean removeFromSubscribers(String username, int id_course) throws AddressException, NotFoundUserException, NotFoundCourseException {
         if (username == null) throw new NotFoundUserException();
-        if (id_course < 1) throw new NotFoundCourseException();
 
         User userSubscr = userDAO.getUser(username);
         Course course = courseDAO.getCourse(id_course);
+        if (course == null) throw new NotFoundCourseException();
+
         List<Course> courses = userSubscr.getCoursesSubscribe();
         if (courses.contains(course)) {
             userSubscr.getCoursesSubscribe().remove(course);
@@ -105,10 +106,10 @@ public class UserServiceImpl implements UserService {
     @Override
     public boolean addInAttSet(String username, int id_course) throws Exception {
         if (username == null) throw new NotFoundUserException();
-        if (id_course < 1) throw new NotFoundCourseException();
-
         User userAtt = userDAO.getUser(username);
         Course course = courseDAO.getCourse(id_course);
+        if(course == null) throw new NotFoundCourseException();
+
         List<Course> courses = userAtt.getCoursesAttendee();
         if (!courses.contains(course) && course.getAttenders().size() < Course.MAX_COUNT_ATT) {
             courses.add(course);
@@ -123,10 +124,10 @@ return false;
     @Override
     public boolean removeFromAttSet(String username, int id_course) throws Exception {
         if (username == null) throw new NotFoundUserException();
-        if (id_course < 1) throw new NotFoundCourseException();
 
         User userAtt = userDAO.getUser(username);
         Course course = courseDAO.getCourse(id_course);
+        if(course == null) throw new NotFoundCourseException();
         List<Course> courses = userAtt.getCoursesAttendee();
 
         if (courses.contains(course)) {

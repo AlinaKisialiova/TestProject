@@ -52,8 +52,6 @@ public class ParticipantAndReminderController {
         mav.addObject("checkCourse", courseService.getCourse(id));
         mav.addObject("participants", courseService.getCourse(id).getSubscribers());
         return mav;
-
-
     }
 
     @RequestMapping(value = PARTICIPANT_LIST, method = RequestMethod.POST)
@@ -77,11 +75,8 @@ public class ParticipantAndReminderController {
     @RequestMapping(value = EVAL_REMINDER, method = RequestMethod.GET)
     public ModelAndView reminder(@PathVariable("course.id") final Integer id) throws NotFoundCourseException {
         ModelAndView mav = new ModelAndView("evaluationReminder");
-
         mav.addObject("checkCourse", courseService.getCourse(id));
         return mav;
-
-
     }
 
 
@@ -142,7 +137,7 @@ public class ParticipantAndReminderController {
                 break;
             }
             case SELECT: {
-                List<Course> coursesForList = courseService.getSelected(selectCategory);
+                List<Course> coursesForList = courseService.getSortList(courseService.getAllCourse(),selectCategory);
                 mav.addObject("nameCourses", coursesForList);
                 List<Course> coursesForUser = userService.getCoursesSubscribersByUser(userName);
                 mav.addObject("coursesForUser", coursesForUser);
@@ -188,7 +183,7 @@ public class ParticipantAndReminderController {
 
         List<Course> subcrCourse = userService.getCoursesSubscribersByUser(userService.getUserFromSession(request));
         List<Course> coursesForList = courseService.getListForAttendee(subcrCourse);
-        List<Course> coursesForListSort=courseService.getSortListForAttendee(coursesForList,selectCategory);
+        List<Course> coursesForListSort=courseService.getSortList(coursesForList, selectCategory);
 
         mav.addObject("nameCourses", coursesForListSort);
         List<Course> coursesForUser = userService.getCoursesAttendeeByUser(userService.getUserFromSession(request));

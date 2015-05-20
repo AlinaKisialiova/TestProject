@@ -42,12 +42,6 @@ public interface CourseDAO {
      */
     public void updateCourse( Course course);
 
-    /**
-     * Get list of course for checked category
-     * @param category
-     * @return
-     */
-    public List getSelectedDao(String category);
 
     /**
      * Get course for name of Course

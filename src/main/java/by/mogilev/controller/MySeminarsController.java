@@ -53,10 +53,7 @@ public class MySeminarsController {
     }
 
     @RequestMapping(value = MY_SEMINARS, method = RequestMethod.POST)
-    public ModelAndView mySem(@RequestParam(value = "grade", required = false) final Integer grade,
-                              @RequestParam(value = "fieldForSubmit", required = false) final ActionsOnPage action,
-                              @RequestParam(value = "selectCourse", required = false) final Integer id_course,
-                              @RequestParam(value = "selectCategory", required = false) final String selectCategory,
+    public ModelAndView mySem(@RequestParam(value = "fieldForSubmit", required = false) final ActionsOnPage action,
                               final HttpServletRequest request, HttpServletResponse response)
             throws IOException, DocumentException, AddressException, NotFoundUserException, NotFoundCourseException {
         ModelAndView mav = new ModelAndView("mySeminars");

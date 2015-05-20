@@ -74,23 +74,6 @@ public class CourseDAOImp implements CourseDAO {
         session.update(course);
     }
 
-    @Override
-    public List getSelectedDao(String category) {
-        Session session = this.sessionFactory.getCurrentSession();
-
-        Criteria criteria = session.createCriteria(Course.class);
-        criteria.add(Restrictions.eq("category", category));
-        List<Course> coursesList;
-        coursesList = criteria.list();
-        for (Course course : coursesList) {
-            Hibernate.initialize(course.getAttenders());
-            Hibernate.initialize(course.getSubscribers());
-            Hibernate.initialize(course.getEvalMap());
-        }
-
-        return coursesList;
-    }
-
 
     @Override
     public Course getCourseByNameDao(String courseName) {

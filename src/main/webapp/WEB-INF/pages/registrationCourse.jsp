@@ -7,7 +7,7 @@
 <div class="row">
     <div class="col-md-8 col-md-offset-4">
     <div class="control-group">
-    <label class="control-label">  Course Category</label>
+    <label class="control-label"> Course Category</label>
         <div class="controls">
     <form:select path="category" name="category"  class="span5">
     <form:option value="Project Management" label="Project Management" />
@@ -19,7 +19,7 @@
     <label class="control-label">Course Name </label>
         <div class="controls">
 <form:input path="nameCourse" class="span5" id="newCourseName"/>
-                <span style="color:red" id="errName"></span>
+                <span class="errorText" id="errName"></span>
         </div>
         </div>
 
@@ -27,7 +27,7 @@
             <label class="control-label">Course Description</label>
         <div class="controls">
             <form:input path="description" name="newCourseDescription" cssClass="span5"/>
-            <span style="color:red" id="errDescription"></span>
+            <span id="errDescription" class="errorText"></span>
             </div>
             </div>
 
@@ -44,7 +44,7 @@
             <label class="control-label">Course Duration</label>
             <div class="controls">
             <form:input type="text" id="newCourseDuration" path="duration"/>
-                <span style="color:red" id="errDuration"/>
+                <span class="errorText" id="errDuration"></span>
                 </div>
             </div>
     <br>

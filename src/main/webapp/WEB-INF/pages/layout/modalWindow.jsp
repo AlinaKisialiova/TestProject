@@ -23,7 +23,7 @@
 
 <input type="hidden" value="${modalMessage}" id="mMess"/>
 
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/1.11.2/jquery.min.js"></script>
+
 <script type="text/javascript" src="<c:url value="/resources/js/bootstrap.min3.0.2.js"/>"></script>
 <script>
 var exc = $("#mMess").val();
