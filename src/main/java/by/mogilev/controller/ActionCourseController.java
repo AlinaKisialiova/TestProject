@@ -61,14 +61,6 @@ public class ActionCourseController {
         courseService.registerCourse(newCourse, userName);
         return new ModelAndView("redirect:/informationBoard");
 
-//            } catch (AddressException e) {
-//                try {
-//                    throw new SendingNotificationsException(newCourse, e.toString());
-//                } catch (SendingNotificationsException e1) {
-//                    InternetAddress[] email = InternetAddress.parse(newCourse.getLector().getEmail());
-//                    e1.sendExceptionEmail(email, userName);
-//                    return new ModelAndView("redirect:/informationBoard");
-//                }
 
     }
 
@@ -89,20 +81,6 @@ public class ActionCourseController {
 
             courseService.deleteCourse(id, userName);
             return new ModelAndView("redirect:/informationBoard");
-
-
-//        }
-//        catch (AddressException e) {
-//            try {
-//                throw new SendingNotificationsException(courseService.getCourse(id), e.toString());
-//            } catch (SendingNotificationsException e1) {
-//                InternetAddress[] email = InternetAddress.parse(courseService.getCourse(id).getLector().getEmail());
-//                e1.sendExceptionEmail(email,userName);
-//                return new ModelAndView("redirect:/informationBoard");
-//            }
-//
-//        }
-
     }
 
     @RequestMapping(value = EDIT_COURSE, method = RequestMethod.GET)
@@ -131,18 +109,6 @@ public class ActionCourseController {
 
            courseService.updateCourse(editCourse);
            return new ModelAndView("redirect:/courseDetails/{course.id}");
-
-//       catch (AddressException e) {
-//           try {
-//               throw new SendingNotificationsException(courseService.getCourse(id), e.toString());
-//           } catch (SendingNotificationsException e1) {
-//               InternetAddress[] email = InternetAddress.parse(courseService.getCourse(id).getLector().getEmail());
-//               e1.sendExceptionEmail(email,userName);
-//               return new ModelAndView("redirect:/courseDetails/{course.id}");
-//           }
-
-
-
 
 
 }

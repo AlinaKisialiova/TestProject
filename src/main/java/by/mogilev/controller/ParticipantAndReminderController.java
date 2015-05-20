@@ -112,8 +112,6 @@ public class ParticipantAndReminderController {
         mav.addObject("nameCourses", coursesForList);
         mav.addObject("coursesForUser", coursesForUser);
         return mav;
-
-
     }
 
     @RequestMapping(value = SUBSCRIBE, method = RequestMethod.POST)

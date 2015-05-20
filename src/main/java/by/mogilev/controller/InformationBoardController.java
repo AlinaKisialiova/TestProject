@@ -77,21 +77,7 @@ public class InformationBoardController {
             mav.addObject("courseList", courseService.getAllCourse());
             return mav;
 
-
-//        catch (AddressException e) {
-//            try {
-//                throw new SendingNotificationsException(courseService.getCourse(id_course), e.toString());
-//            } catch (SendingNotificationsException e1) {
-//                InternetAddress[] email = InternetAddress.parse(courseService.getCourse(id_course).getLector().getEmail());
-//                e1.sendExceptionEmail(email,userName);
-//                mav.addObject("courseList", courseService.getAllCourse());
-//                return mav;
-//            }
-//
-//        }
-
-
-    }
+            }
 
 }
 

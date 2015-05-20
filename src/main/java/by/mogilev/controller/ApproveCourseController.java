@@ -98,19 +98,6 @@ public class ApproveCourseController {
             mav.addObject("courseList", courseService.getAllCourse());
             return mav;
 
-//        catch (AddressException e) {
-//            try {
-//                throw new SendingNotificationsException(courseService.getCourse(id), e.toString());
-//            } catch (SendingNotificationsException e1) {
-//                InternetAddress[] email = InternetAddress.parse(courseService.getCourse(id).getLector().getEmail());
-//                e1.sendExceptionEmail(email,userName);
-//                ModelAndView mav = new ModelAndView("informationBoard");
-//                mav.addObject("courseList", courseService.getAllCourse());
-//                return mav;
-//            }
-// }
-
-
     }
 
 

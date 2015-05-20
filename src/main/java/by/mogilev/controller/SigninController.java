@@ -21,7 +21,6 @@ public class SigninController {
         return "signin";
     }
 
-
     @RequestMapping(value = FAIL, method = RequestMethod.GET)
     public String signinFailure() {
         return "signin_failure";
