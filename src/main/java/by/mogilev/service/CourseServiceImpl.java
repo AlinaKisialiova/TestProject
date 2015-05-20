@@ -29,10 +29,8 @@ import java.io.File;
 import java.io.FileInputStream;
 import java.io.FileOutputStream;
 import java.io.IOException;
-import java.util.HashMap;
-import java.util.Iterator;
+import java.util.*;
 import java.util.List;
-import java.util.Map;
 
 /**
  * Created by Администратор on 21.03.2015.
@@ -308,10 +306,33 @@ public class CourseServiceImpl implements CourseService {
     }
 
     @Override
-    public Course getCourseByName(String courseName) throws NotFoundUserException {
-        if (courseName == null) throw new NotFoundUserException();
+    public List<Course> getListForAttendee(List<Course> subcrCourse) throws NotFoundUserException {
+        List<Course> coursesForList = new ArrayList<Course>();
+        for (Course c : subcrCourse) {
+            if (c.getAttenders().size() < Course.MAX_COUNT_ATT && (CourseStatus.DELIVERED.equals(c.getCourseStatus())
+                    || CourseStatus.APPROVE_KNOWLEDGE_MANAGER.equals(c.getCourseStatus()))) {
+                coursesForList.add(c);
+            }
+        }
+        return coursesForList;
 
-        return courseDAO.getCourseByNameDao(courseName);
+
+    }
+
+    @Override
+    public List<Course> getSortListForAttendee(List<Course> courseAtt, String selectCategory) throws NotFoundUserException {
+        List<Course> coursesForListSort = new ArrayList<Course>();
+        if ("All".equals(selectCategory))
+            coursesForListSort = courseAtt;
+        else {
+
+            for (Course c : courseAtt) {
+                if (c.getCategory().equals(selectCategory))
+                    coursesForListSort.add(c);
+            }
+        }
+        return coursesForListSort;
+
     }
 
 }

@@ -24,7 +24,7 @@
                         <td>
                             <select multiple="multiple" size="10" name="selectCourse" id="selectCourse" onchange="setId(this)">
                                 <c:forEach var="course" items="${coursesForApprove}">
-                                    <option value="${course.id}"> ${course.nameCourse}</option>
+                                    <option value="${course.id}"> <c:out value="${course.nameCourse}" escapeXml="true"/> </option>
                                 </c:forEach>
                             </select>
                         </td>

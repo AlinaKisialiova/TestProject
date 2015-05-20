@@ -7,6 +7,7 @@ import by.mogilev.model.User;
 
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
+import javax.servlet.http.HttpServletRequest;
 import java.util.Set;
 
 /**
@@ -25,17 +26,17 @@ public interface MailService {
 
     /**
      * Get list of email for send notifications
-     * @param course
+     * @param
      * @return
      * @throws AddressException
      */
     public InternetAddress[] getRecipient(Set<User> users) throws AddressException;
 
     /**
-     * Get list of email for send notifications
-     * @param course
+     * Get id for send error notifications
+     * @param
      * @return
-     * @throws AddressException
-     */
+        */
+    public int getIdCourseFromUri(HttpServletRequest request);
 
 }

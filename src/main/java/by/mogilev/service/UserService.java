@@ -8,7 +8,6 @@ import by.mogilev.model.User;
 import javax.mail.internet.AddressException;
 import javax.servlet.http.HttpServletRequest;
 import java.util.List;
-import java.util.Set;
 
 /**
  * Created by akiseleva on 03.04.2015.
@@ -19,7 +18,7 @@ public interface UserService {
      * @param username
      * @return
      */
-    public List<Course> getCoursesSubscribeByUser(String username) throws NotFoundUserException;
+    public List<Course> getCoursesSubscribersByUser(String username) throws NotFoundUserException;
 
     /**
      * Method is return list of course on which user was attendeed

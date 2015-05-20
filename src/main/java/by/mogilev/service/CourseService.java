@@ -12,7 +12,6 @@ import javax.servlet.http.HttpServletResponse;
 import java.io.IOException;
 import java.util.List;
 import java.util.Map;
-import java.util.Set;
 
 /**
  * Created by Администратор on 21.03.2015.
@@ -116,6 +115,20 @@ public interface CourseService {
      */
     public List<Course> getCourseForKnowledgeManagerManager();
 
+    /**
+     * get list attenders for this course
+     * @param courseSubscr
+     * @return
+     * @throws NotFoundUserException
+     */
+    public List<Course> getListForAttendee(List<Course> courseSubscr) throws NotFoundUserException;
 
-    public Course getCourseByName(String courseName) throws NotFoundUserException;
+    /***
+     * select course on category
+     * @param courseAtt
+     * @param category
+     * @return
+     * @throws NotFoundUserException
+     */
+    public List<Course> getSortListForAttendee(List<Course> courseAtt, String category) throws NotFoundUserException;
 }

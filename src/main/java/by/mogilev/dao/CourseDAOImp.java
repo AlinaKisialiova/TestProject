@@ -5,8 +5,8 @@ import by.mogilev.model.Course;
 import by.mogilev.model.CourseStatus;
 import by.mogilev.model.User;
 import org.hibernate.*;
-import org.hibernate.criterion.*;
-import org.hibernate.sql.JoinType;
+import org.hibernate.criterion.Projections;
+import org.hibernate.criterion.Restrictions;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Repository;
 
@@ -24,9 +24,6 @@ public class CourseDAOImp implements CourseDAO {
 
     @Autowired
     private SessionFactory sessionFactory;
-
-    @Autowired
-    private UserDAO userDAO;
 
     @SuppressWarnings("unchecked")
     @Transactional
@@ -103,37 +100,25 @@ public class CourseDAOImp implements CourseDAO {
         return (Course) criteria.uniqueResult();
     }
 
-    @Override
-    public List<Course> getCoursesSubscribeByUserDao(String userName) {
-        Session session = this.sessionFactory.getCurrentSession();
-        Criteria criteria = session.createCriteria(User.class);
-        criteria.add(Restrictions.eq("username", userName));
-        User user = (User) criteria.uniqueResult();
-        List<Course> courses = user.getCoursesAttendee();
-        Hibernate.initialize(courses);
-        return courses;
-    }
 
     @Override
     public List<Course> getCoursesSubscribersByUserDao(String userName) throws NotFoundUserException {
         Session session = this.sessionFactory.getCurrentSession();
 
         List coursesId;
-        Criteria criteria = session.createCriteria(User.class, "u");
+        Criteria criteria = session.createCriteria(User.class);
         criteria.setFetchMode("coursesSubscribe", FetchMode.JOIN);
         criteria.createAlias("coursesSubscribe", "sc")
-                .setProjection(Projections.property("sc.id"));
+                .setProjection(Projections.distinct(Projections.property("sc.id")));
+
         coursesId = criteria.list();
 
         List<Course> courses = new ArrayList<Course>();
         for (Object o : coursesId)
             courses.add(getCourse((Integer) o));
-
-
         return courses;
 
     }
-
 
     public void deleteCourse(Course course) {
         Session session = this.sessionFactory.getCurrentSession();

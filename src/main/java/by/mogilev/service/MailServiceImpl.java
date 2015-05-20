@@ -20,6 +20,7 @@ import org.springframework.ui.velocity.VelocityEngineUtils;
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.mail.internet.MimeMessage;
+import javax.servlet.http.HttpServletRequest;
 import java.util.*;
 
 @Service
@@ -67,12 +68,30 @@ public class MailServiceImpl implements MailService {
 
     @Override
     public InternetAddress[] getRecipient(Set<User> users) throws AddressException {
-//    List<InternetAddress> addressList = new ArrayList<InternetAddress>(users.size());
-//      for (User user : users)
-//          addressList.add(new InternetAddress(user.getEmail()));
-//
-//        return (InternetAddress[]) addressList.toArray();
-        return null;
+    List<InternetAddress> addressList = new ArrayList<InternetAddress>(users.size());
+      for (User user : users)
+          addressList.add(new InternetAddress(user.getEmail()));
+
+        return (InternetAddress[]) addressList.toArray();
+
+    }
+
+    @Override
+    public int getIdCourseFromUri(HttpServletRequest request) {
+        String requestUri = (String) request.getAttribute("javax.servlet.error.request_uri");
+        char[] reqUriChar = requestUri.toCharArray();
+        List<Character> id_courseChar = new ArrayList<Character>();
+        for (int i = requestUri.length() - 1; reqUriChar[i] != '/'; i--)
+            id_courseChar.add(reqUriChar[i]);
+
+        List<Character> idCharRevert =new ArrayList<Character>();
+        for (int i = id_courseChar.size() - 1, j = 0; i >= 0; i--)
+            idCharRevert.add(id_courseChar.get(i));
+        String id="";
+        for(Character c : idCharRevert )
+            id+=c;
+
+        return Integer.valueOf(id);
     }
 
 

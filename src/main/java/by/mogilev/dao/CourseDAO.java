@@ -56,7 +56,7 @@ public interface CourseDAO {
      */
     public Course getCourseByNameDao(String courseName);
 
-    public List<Course> getCoursesSubscribeByUserDao(String userName);
+
     public List getCoursesSubscribersByUserDao(String userName) throws NotFoundUserException;
 
 }

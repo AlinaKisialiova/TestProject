@@ -46,7 +46,7 @@ public class MySeminarsController {
 
             String userName = userService.getUserFromSession(request);
             mav.addObject("nameCourses", courseService.getAllCourse());
-            mav.addObject("courseList", userService.getCoursesSubscribeByUser(userName));
+            mav.addObject("courseList", userService.getCoursesSubscribersByUser(userName));
             mav.addObject("attCourseOfUser", userService.getCoursesAttendeeByUser(userName));
             return mav;
 
@@ -62,7 +62,7 @@ public class MySeminarsController {
         ModelAndView mav = new ModelAndView("mySeminars");
         String userName = userService.getUserFromSession(request);
 
-          List<Course> courseList = userService.getCoursesSubscribeByUser(userService.getUserFromSession(request));
+          List<Course> courseList = userService.getCoursesSubscribersByUser(userService.getUserFromSession(request));
             if (courseList.size() == 0) {
                 mav.addObject("modalTitle", "Ooops...");
                 mav.addObject("modalMessage", "List is empty!");
@@ -79,7 +79,7 @@ public class MySeminarsController {
                     break;
                 }
             }
-            List<Course> coursesForList = userService.getCoursesSubscribeByUser(userName);
+            List<Course> coursesForList = userService.getCoursesSubscribersByUser(userName);
             mav.addObject("courseList", coursesForList);
             mav.addObject("nameCourses", courseService.getAllCourse());
             mav.addObject("attCourseOfUser", userService.getCoursesAttendeeByUser(userService.getUserFromSession(request)));

@@ -23,7 +23,7 @@
                                 <option value="Development">Development</option>
                             </select>
                         </td>
-                        <td><input type="submit" value="Ok"/></td>
+                        <td><input type="submit" value="Ok" onclick="window.location.href=window.location.href"/></td>
                     </tr>
                     <tr><td><br></td></tr>
                     <tr>  <td><b>Select Course </b></td></tr>

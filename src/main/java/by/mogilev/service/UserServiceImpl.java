@@ -10,13 +10,15 @@ import by.mogilev.model.Notification;
 import by.mogilev.model.User;
 import org.hibernate.Hibernate;
 import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.security.core.Authentication;
+import org.springframework.security.core.context.SecurityContext;
 import org.springframework.stereotype.Repository;
 
 import javax.mail.internet.AddressException;
 import javax.mail.internet.InternetAddress;
 import javax.servlet.http.HttpServletRequest;
+import javax.servlet.http.HttpSession;
 import javax.transaction.Transactional;
-import java.security.Principal;
 import java.util.List;
 
 /**
@@ -42,7 +44,7 @@ public class UserServiceImpl implements UserService {
 
     @SuppressWarnings("unchecked")
     @Override
-    public List<Course> getCoursesSubscribeByUser(String username) throws NotFoundUserException {
+    public List<Course> getCoursesSubscribersByUser(String username) throws NotFoundUserException {
         return courseDAO.getCoursesSubscribersByUserDao(username);
     }
 
@@ -148,12 +150,10 @@ return false;
 
     @Override
     public String getUserFromSession(HttpServletRequest request) throws NotFoundUserException {
-        String userName = "";
-        Principal principal = request.getUserPrincipal();
-        if (principal != null && principal.getName() != null) {
-            userName = principal.getName();
-        } else throw new NotFoundUserException();
-
-        return userName;
+        HttpSession session = request.getSession();
+        SecurityContext ctx = (SecurityContext) session.getAttribute("SPRING_SECURITY_CONTEXT");
+        Authentication auth = ctx.getAuthentication();
+        if (auth.getName() == null) throw  new NotFoundUserException();
+        return  auth.getName();
     }
 }
